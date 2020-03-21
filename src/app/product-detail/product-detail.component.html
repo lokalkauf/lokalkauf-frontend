@@ -1,12 +1,14 @@
-<mat-card>
-  <img mat-card-avatar src="test.png">
-</mat-card>
-<div *ngIf="product$ | async as product">
-  <h1>{{product.name}}</h1>
-  <div *ngIf="product.description">
-    {{product.description}}
-  </div>
-  <div>
-    {{product.price}}
+<div id="details">
+  <mat-card>
+    <img mat-card-avatar src="test.png">
+  </mat-card>
+  <div *ngIf="product$ | async as product">
+    <h1>{{product.name}}</h1>
+    <div *ngIf="product.description" id="description">
+      {{product.description}}
+    </div>
+    <div id="price">
+      {{product.price}}
+    </div>
   </div>
 </div>

@@ -4,6 +4,8 @@ import { Component, OnInit, Input } from '@angular/core';
   selector: 'app-product-item',
   template: `
       <mat-card class="product-item">
+        <div class="image">
+        </div>
         <img class="product-item-image" [src]="imageUrl">
         <mat-card-header>
           <mat-card-title>{{ name }}</mat-card-title>
