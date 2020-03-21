@@ -1,5 +1,5 @@
 <div id="scalingbar">
-  <div class="link" *ngFor="let link of links" (click)="clicked(link)">
+  <div class="link" *ngFor="let link of links" (click)="clicked(link)" [ngClass]="{'activeLink': link.activated}">
     <div class="content">
       {{link.getName()}}
     </div>

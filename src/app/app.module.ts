@@ -14,6 +14,8 @@ import { ProductOverviewComponent } from './product-overview/product-overview.co
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
+import { MapComponent } from './map/map.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -26,7 +28,8 @@ const routes: Routes = [
     HorizontalScalingBarComponent,
     TestRoutingPageComponent,
     StartComponent,
-    ProductOverviewComponent
+    ProductOverviewComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +39,8 @@ const routes: Routes = [
     BrowserAnimationsModule,
     RouterModule.forRoot(routes),
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    LeafletModule.forRoot()
   ],
   exports: [
     RouterModule

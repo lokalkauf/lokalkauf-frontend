@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-product-overview',
   template: `
-  hallo
   <ul>
     <li *ngFor="let item of items | async">
       {{ item.name }}

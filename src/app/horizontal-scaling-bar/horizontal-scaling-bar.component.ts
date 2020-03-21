@@ -1,8 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { Link } from '../models/link';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
-import { ElementRef } from '@angular/core'; // at the top of component.ts
+import { ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-horizontal-scaling-bar',
@@ -16,28 +15,34 @@ export class HorizontalScalingBarComponent implements OnInit {
   constructor(private router: Router, private myElement: ElementRef) { }
 
   ngOnInit(): void {
-    // tslint:disable-next-line: max-line-length
-    this.activateAndScrollIntoView();
 
     this.router.events
                .subscribe(x => this.activateAndScrollIntoView());
+
+    this.activateAndScrollIntoView();
   }
 
-  activateAndScrollIntoView()
-  {
-    this.links.forEach(x => x.activated = x.getUrl() === this.router.url.replace('^/', ''));
+  activateAndScrollIntoView() {
+    this.links.forEach(x => x.activated = x.getUrl() === this.router.url);
+    this.scrollIntoView();
+  }
 
-    let el = this.myElement.nativeElement.querySelector('.active');
-    //el.scrollIntoView();
+  scrollIntoView() {
+    window.setTimeout(_ => {
+      const el = document.getElementsByClassName('activeLink');
+      if (el.length > 0) {
+        el[0].scrollIntoView();
+      }
+    }, 50);
   }
 
   clicked(link: Link) {
     this.links.forEach(x => x.activated = false);
     link.activated = true;
-
     if (link.getUrl()) {
       this.router.navigate([link.getUrl()]);
     }
+    this.scrollIntoView();
     this.clickedLink.emit(link);
   }
 }
