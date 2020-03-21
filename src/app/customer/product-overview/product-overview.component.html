@@ -1,0 +1,3 @@
+<div class="product-overview">
+  <app-product-item *ngFor="let item of items$ | async" [name]="item.name" [imageUrl]="item.image" [id]="item.id"></app-product-item>
+</div>

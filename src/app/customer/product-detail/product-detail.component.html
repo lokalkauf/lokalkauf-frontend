@@ -1,0 +1,14 @@
+<div *ngIf="product$ | async as product" id="details">
+  <mat-card>
+    <img mat-card-avatar [src]="product.image">
+  </mat-card>
+  <div>
+    <h1>{{product.name}}</h1>
+    <div *ngIf="product.description" id="description">
+      {{product.description}}
+    </div>
+    <div id="price">
+      {{product.price}}
+    </div>
+  </div>
+</div>

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import { Link } from './models/link';
 import { Router } from '@angular/router';
 
 @Component({

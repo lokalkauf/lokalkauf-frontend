@@ -1,44 +1,44 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { HorizontalScalingBarComponent } from './horizontal-scaling-bar/horizontal-scaling-bar.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Routes, RouterModule } from '@angular/router';
-import { TestRoutingPageComponent } from './test-routing-page/test-routing-page.component';
-import { StartComponent } from './start/start.component';
-import { ProductOverviewComponent } from './product-overview/product-overview.component';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
-import { MapComponent } from './map/map.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { ProductItemComponent } from './product-item/product-item.component';
+
+import { CustomerModule } from './customer/customer.module';
+import { TraderModule } from './trader/trader.module';
+import { TransportModule } from './transport/transport.module';
+
+import { StartComponent } from './start/start.component';
 import { ImprintComponent } from './imprint/imprint.component';
-import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { LoginComponent } from './login/login.component';
+import { HorizontalScalingBarComponent } from './reusables/horizontal-scaling-bar/horizontal-scaling-bar.component';
+import { MapComponent } from './reusables/map/map.component';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
-  { path: 'imprint', component: ImprintComponent },
-  { path: 'detail/:id', component: ProductDetailComponent },
-  { path: 'test', component: TestRoutingPageComponent },
+  { path: 'register', component: RegistrationComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'imprint', component: ImprintComponent }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    HorizontalScalingBarComponent,
-    TestRoutingPageComponent,
     StartComponent,
-    ProductOverviewComponent,
-    MapComponent,
-    ProductItemComponent,
     ImprintComponent,
-    ProductDetailComponent
+    RegistrationComponent,
+    LoginComponent,
+    HorizontalScalingBarComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -47,10 +47,13 @@ const routes: Routes = [
     MatSidenavModule,
     MatCardModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(routes),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    LeafletModule.forRoot()
+    CustomerModule,
+    TraderModule,
+    TransportModule,
+    LeafletModule.forRoot(),
+    RouterModule.forRoot(routes)
   ],
   exports: [
     RouterModule
