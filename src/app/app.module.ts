@@ -10,6 +10,10 @@ import { HorizontalScalingBarComponent } from './horizontal-scaling-bar/horizont
 import { Routes, RouterModule } from '@angular/router';
 import { TestRoutingPageComponent } from './test-routing-page/test-routing-page.component';
 import { StartComponent } from './start/start.component';
+import { ProductOverviewComponent } from './product-overview/product-overview.component';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -21,7 +25,8 @@ const routes: Routes = [
     AppComponent,
     HorizontalScalingBarComponent,
     TestRoutingPageComponent,
-    StartComponent
+    StartComponent,
+    ProductOverviewComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +34,9 @@ const routes: Routes = [
     MatIconModule,
     MatSidenavModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
   exports: [
     RouterModule
