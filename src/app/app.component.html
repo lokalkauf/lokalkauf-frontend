@@ -1,1 +1,38 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')"
+               (closed)="events.push('close!')">
+    <br />
+    <br />
+    <br />
+    <br />Hallo
+    <br />Menü
+    <br />
+    <br />
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <p><button mat-button (click)="sidenav.toggle()">sidenav.toggle()</button></p>
 TODO <mat-icon>thumb_up</mat-icon>
+<div width="100%" id="header">
+  <div id="logo">
+    <img src="/assets/logo.png" />
+  </div>
+  <div id="name">
+    <span id="name-firstword">lokal</span>
+    <span id="name-lastword">kauf</span>
+  </div> - Einkaufswagensymbol - burger menu
+</div>
+<div id="main_body">
+  <div id="horizontal-scaling-bar" width="100%">
+    <app-horizontal-scaling-bar>
+
+    </app-horizontal-scaling-bar>
+    Bäcker - Fashion - Metzger - Kiosk - ...
+  </div>
+  <div>
+    Body (details) or list of product - this is a test
+  </div>
+</div>
+
+</mat-sidenav-content>
+
+</mat-sidenav-container>

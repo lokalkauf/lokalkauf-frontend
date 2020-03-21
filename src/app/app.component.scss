@@ -1,0 +1,41 @@
+#header {
+  height: 50px;
+
+  div {
+    height: 50px;
+  }
+
+  #logo {
+    img {
+      width: auto;
+      height: 50px;
+    }
+
+    width: 33px;
+    float: left;
+    margin-right: 10px;
+  }
+
+  color: rgb(152, 211, 90);
+  font-family: Helvetica, Arial, sans-serif;
+
+  #name {
+    line-height: 60px;
+    font-size: 20pt;
+    letter-spacing: 3px;
+    display: inline-block;
+
+    #name-lastword {
+      font-weight: bold;
+    }
+  }
+}
+
+
+.example-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
