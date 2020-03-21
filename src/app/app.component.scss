@@ -3,6 +3,7 @@
 
   div {
     height: 50px;
+    display: inline-block;
   }
 
   #logo {
@@ -11,6 +12,7 @@
       height: 50px;
     }
 
+    display: block;
     width: 33px;
     float: left;
     margin-right: 10px;
@@ -29,11 +31,27 @@
       font-weight: bold;
     }
   }
+
+  #shopping-cart {
+    float: right;
+    width: 20px;
+    display: block;
+    margin-right: 50px;
+
+    mat-icon {
+      line-height: 60px;
+    }
+  }
 }
 
 
-.example-container {
-  position: absolute;
+#sidenav-right {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 1.4rem;
+  font-weight: lighter;
+  width: 200px;
+  background-color:#ffffff;
+  height: 100%;
   top: 0;
   bottom: 0;
   left: 0;

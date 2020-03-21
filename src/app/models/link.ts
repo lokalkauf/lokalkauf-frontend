@@ -3,7 +3,7 @@ export class Link {
   private url: string;
   private feedback: string;
 
-  constructor(name: string, urlOrFeedback: string, useUrl: true)
+  constructor(name: string, urlOrFeedback: string, useUrl: boolean)
   {
     this.name = name;
 
