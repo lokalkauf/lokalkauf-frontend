@@ -10,7 +10,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 import { CustomerModule } from './customer/customer.module';
 import { TraderModule } from './trader/trader.module';
@@ -20,8 +19,7 @@ import { StartComponent } from './start/start.component';
 import { ImprintComponent } from './imprint/imprint.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
-import { HorizontalScalingBarComponent } from './reusables/horizontal-scaling-bar/horizontal-scaling-bar.component';
-import { MapComponent } from './reusables/map/map.component';
+import { ReusablesModule } from './reusables/reusables.module';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -36,9 +34,7 @@ const routes: Routes = [
     StartComponent,
     ImprintComponent,
     RegistrationComponent,
-    LoginComponent,
-    HorizontalScalingBarComponent,
-    MapComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -52,8 +48,8 @@ const routes: Routes = [
     CustomerModule,
     TraderModule,
     TransportModule,
-    LeafletModule.forRoot(),
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    ReusablesModule
   ],
   exports: [
     RouterModule

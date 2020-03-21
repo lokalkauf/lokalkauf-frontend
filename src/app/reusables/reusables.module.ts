@@ -16,6 +16,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     LeafletModule.forRoot()
   ],
   exports: [
+    MapComponent,
+    HorizontalScalingBarComponent,
   ]
 })
 export class ReusablesModule { }

@@ -18,7 +18,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ProductItemComponent implements OnInit {
 
-  @Input() id: string
+  @Input() id: string;
   @Input() name: string;
   @Input() imageUrl: string;
 
