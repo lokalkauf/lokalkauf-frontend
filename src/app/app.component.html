@@ -1,13 +1,16 @@
-<mat-sidenav-container>
+<mat-sidenav-container #idenavContainer>
   <mat-sidenav #sidenav position="end" mode="over" [(opened)]="opened" (opened)="events.push('open!')"
                (closed)="events.push('close!')">
     <div id="sidenav-right">
-    <br />Menü
-
+      <div class="sidenav-right-item sitenav-right-item-menu">Menü</div>
+      <div class="sidenav-right-item">Käufer</div>
+      <div class="sidenav-right-item">Verkäufer</div>
+      <div class="sidenav-right-item">Lieferant</div>
+      <div class="sidenav-right-item">Profil</div>
+      <div class="sidenav-right-item">Impressum</div>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
-    <p><button mat-button (click)="sidenav.toggle()">BURGER</button></p>
 <div width="100%" id="header">
   <div id="logo">
     <img src="/assets/logo.png" />
@@ -16,9 +19,13 @@
     <span id="name-firstword">lokal</span>
     <span id="name-lastword">kauf</span>
   </div>
+  <div id="burger-menu">
+    <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+  </div>
   <div id="shopping-cart">
     <mat-icon>shopping_cart</mat-icon>
-  </div> - burger menu
+  </div>
+
 </div>
 <div id="main_body">
   <router-outlet></router-outlet>

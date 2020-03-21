@@ -1,5 +1,8 @@
 #header {
   height: 50px;
+  margin-bottom: 30px;
+  margin-top: 20px;
+  margin-left: 20px;
 
   div {
     height: 50px;
@@ -32,7 +35,7 @@
     }
   }
 
-  #shopping-cart {
+  #shopping-cart, #burger-menu {
     float: right;
     width: 20px;
     display: block;
@@ -42,13 +45,23 @@
       line-height: 60px;
     }
   }
+
+  #burger-menu {
+    cursor: pointer;
+  }
 }
 
+.mat-drawer-container{
+  height:100%;
+}
 
-#sidenav-right {
+#sidenav-right, .sidenav-right-item, .sitenav-right-item-menu {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 1.4rem;
-  font-weight: lighter;
+  font-weight: 100;
+}
+
+#sidenav-right {
   width: 200px;
   background-color:#ffffff;
   height: 100%;
@@ -56,4 +69,18 @@
   bottom: 0;
   left: 0;
   right: 0;
+  border-left: 0.1rem solid darkgray;
+}
+
+.sidenav-right-item, .sitenav-right-item-menu {
+  cursor: pointer;
+  padding-top: 2.4rem;
+  padding-bottom: .6rem;
+  margin-left: 1rem;
+}
+
+.sitenav-right-item-menu {
+  border-bottom: solid .01rem rgb(152, 211, 90);
+  padding-top: 1.2rem;
+  margin-right: 4.4rem;
 }

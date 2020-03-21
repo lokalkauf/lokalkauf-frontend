@@ -1,1 +1,9 @@
-<span *ngFor="let link of links" (click)="clicked(link)">{{link.getName()}} - </span>
+<div id="scalingbar">
+  <div class="link" *ngFor="let link of links" (click)="clicked(link)">
+    <div class="content">
+      {{link.getName()}}
+    </div>
+    <div class="activebar" [ngClass]="{'active': link.activated}">
+    </div>
+  </div>
+</div>

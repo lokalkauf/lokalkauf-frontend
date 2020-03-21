@@ -2,6 +2,7 @@ export class Link {
   private name: string;
   private url: string;
   private feedback: string;
+  public activated: boolean;
 
   constructor(name: string, urlOrFeedback: string, useUrl: boolean)
   {

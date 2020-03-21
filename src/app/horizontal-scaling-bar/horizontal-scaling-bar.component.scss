@@ -1,0 +1,28 @@
+.link {
+  display: inline-block;
+  margin-left: 10px;
+  margin-right: 10px;
+
+  .active {
+    height: 1px;
+    border-radius: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: rgb(152, 211, 90);
+  }
+}
+
+#scalingbar {
+  overflow-x: scroll;
+  white-space:nowrap;
+  overflow-y: hide;
+  -webkit-overflow-scrolling:touch;
+  margin-bottom: 10px;
+}
+
+@media only screen and (min-width: 800px) {
+  #scalingbar {
+    overflow-x: auto;
+    white-space: normal;
+  }
+}

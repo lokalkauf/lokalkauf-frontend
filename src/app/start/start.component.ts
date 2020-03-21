@@ -12,7 +12,7 @@ export class StartComponent implements OnInit {
     new Link('Fashion ', '#fashion', false),
     new Link('Metzger', '#fleisch', false),
     new Link('Kiosk', '#bier', false),
-    new Link('Weiteres', 'test', true),
+    new Link('Weiteres', '/test', true),
   ];
 
   constructor() { }
