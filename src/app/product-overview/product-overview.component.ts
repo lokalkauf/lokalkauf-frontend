@@ -4,17 +4,12 @@ import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-product-overview',
-  template: `
-  <ul>
-    <li *ngFor="let item of items | async">
-      {{ item.name }}
-    </li>
-  </ul>
-  `
+  templateUrl: './product-overview.component.html',
+  styleUrls: ['./product-overview.component.scss']
 })
 export class ProductOverviewComponent {
-  items: Observable<any[]>;
+  items$: Observable<any[]>;
   constructor(db: AngularFirestore) {
-    this.items = db.collection('Products').valueChanges();
+    this.items$ = db.collection('Products').valueChanges();
   }
 }

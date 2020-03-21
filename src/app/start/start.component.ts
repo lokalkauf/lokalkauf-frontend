@@ -8,7 +8,7 @@ import { Link } from '../models/link';
 })
 export class StartComponent implements OnInit {
   links = [
-    new Link('Bäcker', '#baecker', false),
+    new Link('Bäcker', '/', true),
     new Link('Fashion ', '#fashion', false),
     new Link('Metzger', '#fleisch', false),
     new Link('Kiosk', '#bier', false),

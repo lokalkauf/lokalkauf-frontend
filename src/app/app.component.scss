@@ -37,12 +37,15 @@
 
   #shopping-cart, #burger-menu {
     float: right;
-    width: 20px;
+    width: 30px;
     display: block;
-    margin-right: 50px;
+    margin-right: 20px;
 
-    mat-icon {
+    .mat-icon {
       line-height: 60px;
+      width: 30px;
+      height: 30px;
+      font-size: 30px;
     }
   }
 
@@ -57,8 +60,6 @@
 
 #sidenav-right, .sidenav-right-item, .sitenav-right-item-menu {
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 1.4rem;
-  font-weight: 100;
 }
 
 #sidenav-right {
@@ -69,18 +70,36 @@
   bottom: 0;
   left: 0;
   right: 0;
-  border-left: 0.1rem solid darkgray;
+  border-left: 1px solid darkgray;
+
+  #close {
+    position: relative;
+    top: 0.8rem;
+    right: 0.8rem;
+    float: right;
+    width: 30px;
+    height: 30px;
+    .mat-icon {
+      width: 30px;
+      height: 30px;
+      font-size: 30px;
+    }
+  }
 }
 
 .sidenav-right-item, .sitenav-right-item-menu {
   cursor: pointer;
-  padding-top: 2.4rem;
+  padding-top: 10px;
   padding-bottom: .6rem;
   margin-left: 1rem;
 }
 
 .sitenav-right-item-menu {
+  cursor: default;
+}
+
+.sitenav-right-item-menu {
   border-bottom: solid .01rem rgb(152, 211, 90);
-  padding-top: 1.2rem;
-  margin-right: 4.4rem;
+  padding-top: 1rem;
+  margin-right: 1rem;
 }
