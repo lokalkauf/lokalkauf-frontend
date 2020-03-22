@@ -34,11 +34,15 @@
     color: rgb(116, 181, 48);
     box-sizing: border-box;
     border-radius: 20px;
-    box-shadow: 6px 6px 21px 0px rgba(0,0,0,0.2);
+    box-shadow: 6px 6px 21px 0px rgba(0, 0, 0, 0.2);
     font-size: 1rem;
     font-weight: 100;
     min-width: 10rem;
     height: 2.4rem;
     letter-spacing: 1.5px;
   }
+}
+
+.snackbar {
+  background-color: red;
 }
