@@ -1,6 +1,6 @@
 .mat-card {
-  box-shadow: 0 0 1em rgba(0, 0, 0, 0.2);
   border-radius: 10px;
+  border: dashed 1px rgb(152, 211, 90);
 
   img {
     width: 100%;
@@ -8,8 +8,7 @@
   }
 }
 
-h1 {
-  margin-top: 1.6rem;
+#title {
   font-size: 1.2rem;
   font-weight: bolder;
 }
