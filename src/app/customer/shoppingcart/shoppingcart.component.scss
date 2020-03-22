@@ -1,18 +1,35 @@
 #before {
   text-align: center;
+
+  span {
+    display: inline-block;
+    margin:20px;
+    font-size: .8rem;
+  }
+
 }
 
 #fullsum {
   text-align: center;
   .label {
-
+      margin:20px;
+      font-size:.8rem;
   }
 
   .sum {
     color: rgb(152, 211, 90);
+    margin:15px;
   }
 
   .order-button {
-    color: rgb(152, 211, 90);
+    margin-top: 30px;
+    color: rgb(110, 193, 23);
+    border-radius: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
+    border:none;
+    box-shadow: 6px 6px 21px 0px rgba(0,0,0,0.1);
+    font-weight: 100;
+    letter-spacing: 1.5px;
   }
 }
