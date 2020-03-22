@@ -9,7 +9,7 @@ export const environment = {
     // authDomain: '<your-project-authdomain>',
     databaseURL: 'https://lokalkauf-271814.firebaseio.com',
     projectId: 'lokalkauf-271814',
-    // storageBucket: '<your-storage-bucket>',
+    storageBucket: 'lokalkauf-271814.appspot.com',
     // messagingSenderId: '<your-messaging-sender-id>'
   }
 };

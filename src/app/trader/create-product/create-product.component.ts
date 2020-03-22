@@ -3,7 +3,11 @@ import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Product } from '../../models/product';
 import { Trader } from '../../models/trader';
-import { AngularFireStorage } from '@angular/fire/storage';
+import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
+import { map, tap } from 'rxjs/operators';
+import { v4 as uuid } from 'uuid';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-product',
@@ -28,12 +32,17 @@ export class CreateProductComponent implements OnInit {
     ]),
     description: new FormControl('', [
       Validators.nullValidator
-    ])
+    ]),
+    file: new FormControl('')
   });
 
-  constructor(private db: AngularFirestore, private storage: AngularFireStorage) { }
+  uploadState?: Observable<number>;
+  uploadedImage?: string;
+
+  constructor(private db: AngularFirestore, private storage: AngularFireStorage, private router: Router) { }
 
   ngOnInit(): void {
+    this.productForm.get('file').valueChanges.pipe(tap(console.log));
   }
 
   async onSubmit() {
@@ -42,14 +51,28 @@ export class CreateProductComponent implements OnInit {
     const price = Number.parseFloat(this.productForm.get('price').value);
     const description = this.productForm.get('description').value;
 
-    await this.db.collection<Omit<Product, 'id'>>(`Traders/${this.traderId}/Products`).add({
+
+
+    const product = await this.db.collection<Omit<Product, 'id'>>(`Traders/${this.traderId}/Products`).add({
       name,
       price,
-      image: '',
+      image: this.uploadedImage ? this.uploadedImage : '',
       description
     });
 
-    console.log('done');
+    this.router.navigateByUrl(`/trader/${this.traderId}/product-detail/${product.id}`);
+  }
+
+  async uploadImage(event) {
+    const file = event.target.files[0];
+    const filePath = `${this.traderId}/${uuid()}-${file}`;
+    const task = this.storage.upload(filePath, file);
+    this.uploadState = task.percentageChanges();
+    console.log(task);
+    await task.then(async snapshot => {
+      this.uploadedImage = await snapshot.ref.getDownloadURL();
+      this.uploadState = null;
+    });
   }
 
 }

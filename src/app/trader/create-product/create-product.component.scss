@@ -5,11 +5,30 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
 		grid-template-rows: auto;
 		column-gap: 10px;
-    grid-template-areas:
+		grid-template-areas:
+			"image image image image"
       "name name name ."
       "category category price price"
 			"description description description description"
 			". button button .";
+
+		.product-image {
+			grid-area: image;
+			padding: 20px;
+			border-radius: 5px;
+			border: 1px solid grey;
+			margin-bottom: 30px;
+
+			input {
+				display: none;
+			}
+
+			.uploaded-image {
+				background-size: cover;
+				width: 100px;
+				height: 100px;
+			}
+		}
 
     .product-name {
       grid-area: name;

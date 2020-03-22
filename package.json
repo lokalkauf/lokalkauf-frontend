@@ -27,6 +27,7 @@
     "leaflet": "^1.6.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
+    "uuid": "^7.0.2",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
@@ -38,6 +39,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/leaflet": "^1.5.12",
     "@types/node": "^12.11.1",
+    "@types/uuid": "^7.0.2",
     "codelyzer": "^5.1.2",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",

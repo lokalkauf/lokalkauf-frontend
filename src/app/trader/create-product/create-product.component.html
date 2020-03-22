@@ -1,6 +1,11 @@
 <div class="create-product">
 	<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
-		<input type="file">
+		<label class="product-image">
+			Bild hochladen
+			<input type="file" (change)="uploadImage($event)">
+			<div class="uploaded-image" *ngIf="uploadedImage" [ngStyle]="{'background-image': 'url(' + uploadedImage + ')'}"></div>
+			<p *ngIf="uploadState | async as percent">{{ percent }} %</p>
+		</label>
 		<mat-form-field appearance="outline" class="product-name">
 			<mat-label>Produktname*</mat-label>
 			<input matInput formControlName="name">
@@ -17,6 +22,6 @@
 			<mat-label>Beschreibung</mat-label>
 			<input matInput formControlName="description">
 		</mat-form-field>
-		<button mat-button [disabled]="!productForm.valid">Abschicken</button>
+		<button mat-button [disabled]="!productForm.valid && !uploadState">Abschicken</button>
 	</form>
 </div>
