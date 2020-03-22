@@ -1,10 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
-BODY, HTML {
-    height: 100%;
-    min-height: 100%;
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 1.2rem;
-    font-weight: 100;
+BODY,
+HTML {
+  height: 100%;
+  min-height: 100%;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 100;
+  overflow-y: hidden;
 }

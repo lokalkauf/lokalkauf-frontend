@@ -1,8 +1,9 @@
 .product-overview {
-	margin: 20px auto;
+	margin: 20px;
 	display: grid;
-	grid-template-columns: repeat(auto-fill, 200px);
+	grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 	grid-gap: 1.5rem;
-	width: 100%;
+	width: calc(100% - 40px);
+	max-width: 900px;
 	justify-content: space-around;
 }

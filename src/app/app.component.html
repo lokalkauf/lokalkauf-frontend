@@ -1,37 +1,36 @@
 <mat-sidenav-container #idenavContainer>
   <mat-sidenav #sidenav position="end" mode="over" [(opened)]="opened" (opened)="events.push('open!')"
-               (closed)="events.push('close!')">
+    (closed)="events.push('close!')">
     <div id="sidenav-right">
-      <div id="close"><mat-icon (click)="opened = false">close</mat-icon></div>
+      <div id="close">
+        <mat-icon (click)="opened = false">close</mat-icon>
+      </div>
       <div class="sidenav-right-item sitenav-right-item-menu">Menü</div>
       <div class="sidenav-right-item" (click)="navigate('/')">Käufer</div>
-      <div class="sidenav-right-item">Verkäufer</div>
-      <div class="sidenav-right-item">Lieferant</div>
+      <div class="sidenav-right-item" (click)="navigate('/verkaeufer')">Verkäufer</div>
+      <div class="sidenav-right-item" (click)="navigate('/transport')">Lieferant</div>
       <div class="sidenav-right-item">Profil</div>
       <div class="sidenav-right-item" (click)="navigate('/imprint')">Impressum</div>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
-<div width="100%" id="header">
-  <div id="logo" (click)="navigate('/')">
-    <img src="/assets/logo.png" />
-  </div>
-  <div id="name" (click)="navigate('/')">
-    <span id="name-firstword">lokal</span>
-    <span id="name-lastword">kauf</span>
-  </div>
-  <div id="burger-menu">
-    <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
-  </div>
-  <div id="shopping-cart" (click)="navigate('/cart')">
-    <mat-icon>shopping_cart</mat-icon>
-  </div>
-
-</div>
-<div id="main_body">
-  <router-outlet></router-outlet>
-</div>
-
-</mat-sidenav-content>
-
+    <div width="100%" id="header">
+      <div id="logo" (click)="navigate('/')">
+        <img src="/assets/logo.png" />
+      </div>
+      <div id="name" (click)="navigate('/')">
+        <span id="name-firstword">lokal</span>
+        <span id="name-lastword">kauf</span>
+      </div>
+      <div id="burger-menu">
+        <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+      </div>
+      <div id="shopping-cart" (click)="navigate('/cart')">
+        <mat-icon>shopping_cart</mat-icon>
+      </div>
+    </div>
+    <div id="main_body">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
 </mat-sidenav-container>

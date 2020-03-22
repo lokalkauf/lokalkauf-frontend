@@ -4,7 +4,7 @@ import { TransportOffersComponent } from './transport-offers/transport-offers.co
 import { TransportDetailComponent } from './transport-detail/transport-detail.component';
 import { TransportItemComponent } from './transport-item/transport-item.component';
 import { TakeTransportComponent } from './take-transport/take-transport.component';
-
+import { TransportMainComponent } from './transport-main/transport-main.compontent';
 
 
 @NgModule({
@@ -12,7 +12,8 @@ import { TakeTransportComponent } from './take-transport/take-transport.componen
     TransportOffersComponent,
     TransportDetailComponent,
     TransportItemComponent,
-    TakeTransportComponent
+    TakeTransportComponent,
+    TransportMainComponent
   ],
   imports: [
     CommonModule

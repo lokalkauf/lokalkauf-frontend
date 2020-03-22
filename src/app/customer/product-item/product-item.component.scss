@@ -8,14 +8,19 @@ a {
 	box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
 	height: 100%;
 	width: 100%;
+	font-size: 20px;
 
 	.image-wrapper {
-		width: 100%;
-		height: 120px;
-		overflow: hidden;
-		.product-item-image {
-			width: 100%;
-		}
+		height: 150px;
+		background-size: cover;
+	}
+
+	.price {
+		color: green;
+	}
+
+	.shopping-cart-icon {
+		float: right;
 	}
 }
 
