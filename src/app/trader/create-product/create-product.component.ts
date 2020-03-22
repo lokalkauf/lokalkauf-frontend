@@ -41,15 +41,14 @@ export class CreateProductComponent implements OnInit {
     const price = Number.parseFloat(this.productForm.get('price').value);
     const description = this.productForm.get('description').value;
 
-    // const added = await this.db.collection<Omit<Product, 'id'>>('Products').add({
-    //   name,
-    //   price,
-    //   image: '',
-    // });
+    await this.db.collection<Omit<Product, 'id'>>(`Traders/${this.traderId}/Products`).add({
+      name,
+      price,
+      image: '',
+      description
+    });
 
-    // const doc = await this.db.collection<Omit<Trader, 'id'>>('Traders').doc(this.traderId + "/Products").get().toPromise();
-    // doc
-    // await this.db.collection<Omit<Trader, 'id'>>('Traders').doc(this.traderId).update({})
+    console.log("done");
   }
 
 }
