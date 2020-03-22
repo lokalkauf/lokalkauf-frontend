@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MapComponent } from './map/map.component';
 import { HorizontalScalingBarComponent } from './horizontal-scaling-bar/horizontal-scaling-bar.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { InputFldComponent } from './input-fld/input-fld.component';
 
 
 
@@ -10,6 +11,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
   declarations: [
     MapComponent,
     HorizontalScalingBarComponent,
+    InputFldComponent,
   ],
   imports: [
     CommonModule,
@@ -18,6 +20,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
   exports: [
     MapComponent,
     HorizontalScalingBarComponent,
+    InputFldComponent
   ]
 })
 export class ReusablesModule { }

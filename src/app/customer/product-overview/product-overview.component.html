@@ -1,8 +1,5 @@
-<div class="product-overview">
-  <app-product-item *ngFor="let item of items$ | async" 
-    [name]="item.name" 
-    [imageUrl]="item.image" 
-    [id]="item.id"
-    [price]="item.price"
+<div class="product-overview" *ngIf="products$ | async as products">
+  <app-product-item *ngFor="let product of products" 
+    [product]="product"
   ></app-product-item>
 </div>

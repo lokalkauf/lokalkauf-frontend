@@ -1,1 +1,5 @@
-<p>trader-overview works!</p>
+<div class="trader-overview">
+  <app-trader-item *ngFor="let trader of traders$ | async" 
+    [trader]="trader"
+  ></app-trader-item>
+</div>

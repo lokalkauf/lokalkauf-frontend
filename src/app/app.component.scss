@@ -31,10 +31,6 @@
     font-size: 20pt;
     letter-spacing: 3px;
     display: inline-block;
-
-    #name-lastword {
-      font-weight: bold;
-    }
   }
 
   #shopping-cart,
@@ -61,10 +57,22 @@
   height: 100%;
 }
 
+
+
+
 #sidenav-right,
 .sidenav-right-item,
 .sitenav-right-item-menu {
-  font-family: Helvetica, Arial, sans-serif;
+  overflow: visible !important;
+
+}
+
+.mat-drawer-inner-container,
+.mat-drawer-opened,
+.mat-drawer-opened>.mat-drawer-inner-container {
+
+  overflow: visible !important;
+  overflow-x: visible !important;
 }
 
 #sidenav-right {
@@ -73,9 +81,14 @@
   height: 100%;
   top: 0;
   bottom: 0;
-  left: 0;
   right: 0;
-  border-left: 1px solid darkgray;
+  overflow: visible !important;
+
+  font-size: 0.9rem;
+
+  -webkit-box-shadow: -8px 3px 20px 0px rgba(0, 0, 0, 0.16);
+  -moz-box-shadow: -8px 3px 20px 0px rgba(0, 0, 0, 0.16);
+  box-shadow: -8px 3px 20px 0px rgba(0, 0, 0, 0.16);
 
   #close {
     position: relative;
@@ -96,8 +109,7 @@
 .sidenav-right-item,
 .sitenav-right-item-menu {
   cursor: pointer;
-  padding-top: 10px;
-  padding-bottom: .6rem;
+  padding-top: .3rem;
   margin-left: 1rem;
   cursor: pointer;
 
@@ -106,8 +118,22 @@
   }
 }
 
+.sitenav-right-item:hover {
+  color: rgb(152, 211, 90) !important;
+}
+
 .sitenav-right-item-menu {
   border-bottom: solid .01rem rgb(152, 211, 90);
   padding-top: 1.6rem;
   margin-right: 1rem;
+}
+
+#main_body {
+  margin: 1.2rem;
+}
+
+
+.mat-drawer-container {
+  background-color: #fff;
+  
 }

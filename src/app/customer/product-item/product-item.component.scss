@@ -5,10 +5,16 @@ a {
 
 .product-item {
 	box-sizing: border-box;
-	box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
+	
+	-webkit-box-shadow: 7px 6px 20px 0px rgba(0,0,0,0.16);
+	-moz-box-shadow: 7px 6px 20px 0px rgba(0,0,0,0.16);
+	box-shadow: 7px 6px 20px 0px rgba(0,0,0,0.16);
+
 	height: 100%;
 	width: 100%;
 	font-size: 20px;
+
+	border-radius: 10px;
 
 	.image-wrapper {
 		height: 150px;
