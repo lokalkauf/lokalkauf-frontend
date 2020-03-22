@@ -1,27 +1,24 @@
 <div class="create-product">
 	<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
 		<label class="product-image">
-			Bild hochladen
-			<input type="file" (change)="uploadImage($event)">
+			<mat-icon *ngIf="!uploadedImage && !uploadState" class="add-image-icon">add_photo_alternate</mat-icon>
 			<div class="uploaded-image" *ngIf="uploadedImage" [ngStyle]="{'background-image': 'url(' + uploadedImage + ')'}"></div>
-			<p *ngIf="uploadState | async as percent">{{ percent }} %</p>
+			<div class="uploaded-image" *ngIf="uploadState | async as percent">{{ percent }} %</div>
+			<div class="label">Bild hochladen...</div>
+			<input type="file" (change)="uploadImage($event)">
 		</label>
-		<mat-form-field appearance="outline" class="product-name">
-			<mat-label>Produktname*</mat-label>
-			<input matInput formControlName="name">
-		</mat-form-field>
-		<mat-form-field appearance="outline" class="product-category">
-			<mat-label>Kategorie*</mat-label>
-			<input matInput formControlName="category">
-		</mat-form-field>
-		<mat-form-field appearance="outline" class="product-price">
-			<mat-label>Preis*</mat-label>
-			<input matInput formControlName="price">
-		</mat-form-field>
-		<mat-form-field appearance="outline" class="product-description">
-			<mat-label>Beschreibung</mat-label>
-			<input matInput formControlName="description">
-		</mat-form-field>
-		<button mat-button [disabled]="!productForm.valid && !uploadState">Abschicken</button>
+		<div class="product-name">
+			<input type="text" formControlName="name" placeholder="Produktname*">
+		</div>
+		<div class="product-category">
+			<input type="text" formControlName="category" placeholder="Kategorie">
+		</div>
+		<div class="product-price">
+			<input type="text" formControlName="price" placeholder="Preis">
+		</div>
+		<div class="product-description">
+			<input type="text" formControlName="description" placeholder="Beschreibung">
+		</div>
+		<button mat-stroked-button [disabled]="!productForm.valid && !uploadState">Abschicken</button>
 	</form>
 </div>
