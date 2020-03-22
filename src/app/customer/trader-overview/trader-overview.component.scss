@@ -1,9 +1,9 @@
 .trader-overview {
-	margin: 20px;
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-	grid-gap: 1.5rem;
-	width: calc(100% - 40px);
-	max-width: 900px;
-	justify-content: space-around;
+  margin: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-gap: 1.5rem;
+  width: calc(100% - 40px);
+  max-width: 900px;
+  justify-content: space-around;
 }
