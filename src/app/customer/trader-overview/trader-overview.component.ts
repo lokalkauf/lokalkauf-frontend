@@ -11,7 +11,7 @@ import { Trader } from '../../models/trader';
 export class TraderOverviewComponent {
   traders$: Observable<Trader[]>;
   constructor(db: AngularFirestore) {
-    this.traders$ = db.collection<Trader>('Traders').valueChanges();
+    this.traders$ = db.collection<Omit<Trader, 'id'>>('Traders').valueChanges({ idField: 'id' });
   }
 
 }

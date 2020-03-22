@@ -13,11 +13,14 @@ import { Product } from 'src/app/models/product';
 export class ProductDetailComponent implements OnInit {
 
   product$: Observable<Product>;
-  
+
   constructor(db: AngularFirestore, private route: ActivatedRoute) {
     this.product$ = this.route.params.pipe(
-      flatMap(params =>  db.collection('Products').doc<Product>(params.id).valueChanges())
-    );
+      flatMap(params => db.collection('Products')
+          .doc<Omit<Product, 'id'>>(params.id)
+          .valueChanges()
+          .pipe(map(x => ({ ...x, id: params.id }))))
+    ).pipe(tap(console.log));
   }
 
   ngOnInit(): void {

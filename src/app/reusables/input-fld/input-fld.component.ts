@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class InputFldComponent implements OnInit {
 
-  @Input() value:string;
+  @Input() value: string;
 
   constructor() { }
 

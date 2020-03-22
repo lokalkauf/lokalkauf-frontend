@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, combineLatest } from 'rxjs';
 import { Product } from '../../models/product';
+import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -19,7 +20,10 @@ export class ProductOverviewComponent implements OnInit {
 
   ngOnInit() {
     this.products$ = combineLatest(this.productIds.map(itemId =>
-      this.db.collection('Products').doc<Product>(itemId).valueChanges()
+      this.db.collection('Products')
+        .doc<Product>(itemId)
+        .valueChanges()
+        .pipe(map(x => ({ ...x, id: itemId })))
     ));
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
+import { flatMap, map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Trader } from '../../models/trader';
 
@@ -13,10 +13,13 @@ import { Trader } from '../../models/trader';
 export class TraderDetailComponent implements OnInit {
 
   trader$: Observable<Trader>;
-  constructor(private db: AngularFirestore, private route: ActivatedRoute) {
+  constructor(db: AngularFirestore, private route: ActivatedRoute) {
     this.trader$ = this.route.params.pipe(
       flatMap(params =>
-        this.db.collection('Traders').doc<Trader>(params.id).valueChanges()
+        db.collection('Traders')
+          .doc<Omit<Trader, 'id'>>(params.id)
+          .valueChanges()
+          .pipe(map(x => ({ ...x, id: params.id })))
       )
     );
   }
