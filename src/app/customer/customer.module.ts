@@ -17,7 +17,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { ShoppingcartItemComponent } from './shoppingcart-item/shoppingcart-item.component';
 
 const routes: Routes = [
-  { path: 'product-detail/:id', component: ProductDetailComponent },
+  { path: 'trader/:traderId/product-detail/:productId', component: ProductDetailComponent },
   { path: 'buy/confirmation', component: BuyConfirmationComponent },
   { path: 'cart', component: ShoppingcartComponent },
   { path: 'localtraders', component: TraderOverviewComponent },

@@ -2,5 +2,5 @@
   <div class="trader-headline">{{ trader.name }}</div>
   <div class="trader-product-star"><img src="assets/star5.png" /></div>
   <p class="trader-product-amount"><span class="product-amount">{{ trader.products.length }}</span> Produkte</p>
-  <app-product-overview [productIds]="trader.products"></app-product-overview>
+  <app-product-overview [traderId]="trader.id"></app-product-overview>
 </div>

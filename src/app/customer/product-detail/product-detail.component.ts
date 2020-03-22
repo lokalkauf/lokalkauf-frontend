@@ -16,10 +16,10 @@ export class ProductDetailComponent implements OnInit {
 
   constructor(db: AngularFirestore, private route: ActivatedRoute) {
     this.product$ = this.route.params.pipe(
-      flatMap(params => db.collection('Products')
-          .doc<Omit<Product, 'id'>>(params.id)
+      flatMap(params => db.collection(`Traders/${params.traderId}/Products`)
+          .doc<Omit<Product, 'id'>>(params.productId)
           .valueChanges()
-          .pipe(map(x => ({ ...x, id: params.id }))))
+          .pipe(map(x => ({ ...x, id: params.productId }))))
     ).pipe(tap(console.log));
   }
 

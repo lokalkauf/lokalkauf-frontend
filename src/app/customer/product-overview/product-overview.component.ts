@@ -12,18 +12,14 @@ import { map } from 'rxjs/operators';
 })
 export class ProductOverviewComponent implements OnInit {
 
-  @Input() productIds: string[];
+  @Input() traderId: string;
 
   products$: Observable<Product[]>;
   constructor(private db: AngularFirestore) {
   }
 
   ngOnInit() {
-    this.products$ = combineLatest(this.productIds.map(itemId =>
-      this.db.collection('Products')
-        .doc<Product>(itemId)
-        .valueChanges()
-        .pipe(map(x => ({ ...x, id: itemId })))
-    ));
+    this.products$ = this.db.collection<Omit<Product, 'id'>>(`Traders/${this.traderId}/Products`)
+        .valueChanges({ idField: 'id' });
   }
 }
