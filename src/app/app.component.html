@@ -5,7 +5,7 @@
       <div id="close">
         <mat-icon (click)="opened = false">close</mat-icon>
       </div>
-      <div class="sidenav-right-item sitenav-right-item-menu">Menü</div>
+      <div class="sidenav-right-item sitenav-right-item-menu">&nbsp;</div>
       <div class="sidenav-right-item" (click)="navigate('/localtraders')">Käufer</div>
       <div class="sidenav-right-item" (click)="navigate('/verkaeufer')">Verkäufer</div>
       <div class="sidenav-right-item" (click)="navigate('/transport')">Lieferant</div>
@@ -16,7 +16,7 @@
   <mat-sidenav-content>
     <div width="100%" id="header">
       <div *ngIf="router.url !== '/'" id="logo" (click)="navigate('/')">
-        <img src="/assets/logo.png" />
+        <img src="/assets/logo.png" height="30" />
       </div>
       <div *ngIf="router.url !== '/'" id="name" (click)="navigate('/')">
         <span id="name-firstword">lokal</span>

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Placeholder } from '@angular/compiler/src/i18n/i18n_ast';
 
 @Component({
   selector: 'app-input-fld',
@@ -8,6 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class InputFldComponent implements OnInit {
 
   @Input() value:string;
+  @Input() placeholder:string;
 
   constructor() { }
 
