@@ -1,6 +1,7 @@
 .mat-card {
   border-radius: 10px;
   border: dashed 1px rgb(152, 211, 90);
+  box-shadow: none !important;
 
   img {
     width: 100%;
@@ -8,17 +9,35 @@
   }
 }
 
-#title {
-  font-size: 1.2rem;
-  font-weight: bolder;
+#product-detail-title {
+  padding-top: 1.6rem;
+  font-size: 0.9rem;
+  font-weight: 200;
 }
 
 #description {
-  margin: 1.2rem 0rem;
+  margin-top: 1.2rem;
   font-size: 0.9rem;
 }
 
-#price {
+#product-detail-price {
+  margin-top: 1.2rem;
   color: rgb(152, 211, 90);
   font-size: 0.9rem;
+}
+
+#product-detail-button {
+  margin-top: 1.2rem;
+  text-align: center;
+
+  .order-button {
+    color: rgb(152, 211, 90);
+    box-sizing: border-box;
+    border-radius: 20px;
+    box-shadow: 0 0 1em rgba(0, 0, 0, 0.2);
+    font-size: 1rem;
+    font-weight: 100;
+    min-width: 10rem;
+    height: 2.4rem;
+  }
 }
