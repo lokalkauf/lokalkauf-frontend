@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ export class AppComponent {
   events: string[] = [];
   opened: boolean;
 
-  constructor(private router: Router) {
+  constructor(public router: Router) {
   }
 
   navigate(route: string) {
