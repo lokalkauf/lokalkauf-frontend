@@ -11,6 +11,10 @@ import { TraderOverviewComponent } from './trader-overview/trader-overview.compo
 import { TraderItemComponent } from './trader-item/trader-item.component';
 import { TraderDetailComponent } from './trader-detail/trader-detail.component';
 import { TraderMapComponent } from './trader-map/trader-map.component';
+import { MatIconModule } from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import { ShoppingcartItemComponent } from './shoppingcart-item/shoppingcart-item.component';
 
 const routes: Routes = [
   { path: 'product-detail/:id', component: ProductDetailComponent },
@@ -31,12 +35,16 @@ const routes: Routes = [
     TraderOverviewComponent,
     TraderItemComponent,
     TraderDetailComponent,
-    TraderMapComponent
+    TraderMapComponent,
+    ShoppingcartItemComponent
   ],
   imports: [
     CommonModule,
     MatCardModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    MatIconModule,
+    MatInputModule,
+    MatButtonModule
   ],
   exports: [
     ProductOverviewComponent,
