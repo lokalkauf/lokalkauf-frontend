@@ -9,11 +9,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Routes, RouterModule } from '@angular/router';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
+import { FormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 
 import { CustomerModule } from './customer/customer.module';
 import { TraderModule } from './trader/trader.module';
 import { TransportModule } from './transport/transport.module';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { StartComponent } from './start/start.component';
 import { ImprintComponent } from './imprint/imprint.component';
@@ -29,7 +31,7 @@ const routes: Routes = [
   { path: 'register', component: RegistrationComponent },
   { path: 'login', component: LoginComponent },
   { path: 'imprint', component: ImprintComponent },
-  {path: 'transport', component: TransportMainComponent},
+  { path: 'transport', component: TransportMainComponent },
   { path: 'verkaeufer', component: TraderMainComponent}
 ];
 
@@ -54,7 +56,9 @@ const routes: Routes = [
     TraderModule,
     TransportModule,
     RouterModule.forRoot(routes),
-    ReusablesModule
+    ReusablesModule,
+    FormsModule,
+    AngularFireAuthModule
   ],
   exports: [
     RouterModule
