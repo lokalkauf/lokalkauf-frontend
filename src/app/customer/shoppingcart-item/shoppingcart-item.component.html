@@ -8,20 +8,20 @@
     </div>
     <div class="count">
       <form>
-        <span (click)="addCount(cartEntry, -1)">-</span>
+        <span (click)="addCount(cartEntry, -1, productDetails)">-</span>
         <mat-form-field class="counterplusminus">
           <mat-label>Count</mat-label>
           <input matInput placeholder="1" type="number" name="count" [(ngModel)]="cartEntry.count" />
         </mat-form-field>
-        <span (click)="addCount(cartEntry, 1)">+</span>
+        <span (click)="addCount(cartEntry, 1, productDetails)">+</span>
       </form>
     </div>
   </div>
   <div class="price-delete">
     <div class="price">
-      {{productDetails.price}}
+      {{round(productDetails.price * cartEntry.count)}}
     </div>
-    <div class="delete" (click)="deleteItem(cartEntry)">
+    <div class="delete" (click)="clickDelete()">
       <mat-icon>delete</mat-icon>
     </div>
   </div>

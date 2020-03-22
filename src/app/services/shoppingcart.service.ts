@@ -35,10 +35,10 @@ export class ShoppingcartService {
   delete(cartEntry: CartEntry) {
     this.loadIfNull();
 
-    const foundIndex = this.cartItems.findIndex(x => x === cartEntry);
+    const foundIndex = this.cartItems.findIndex(x => x.productId === cartEntry.productId);
 
     if (foundIndex >= 0) {
-      this.cartItems = this.cartItems.splice(foundIndex, 1);
+      this.cartItems.splice(foundIndex, 1);
     }
     this.saveChanges();
   }
@@ -46,7 +46,7 @@ export class ShoppingcartService {
   update(cartEntry: CartEntry) {
     this.loadIfNull();
 
-    const foundIndex = this.cartItems.findIndex(x => x === cartEntry);
+    const foundIndex = this.cartItems.findIndex(x => x.productId === cartEntry.productId);
 
     this.cartItems[foundIndex] = cartEntry;
     this.saveChanges();
