@@ -21,6 +21,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
 import { ReusablesModule } from './reusables/reusables.module';
 import { TransportMainComponent } from './transport/transport-main/transport-main.compontent';
+import { TraderMainComponent } from './trader/trader-main/trader-main.component';
 
 
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'imprint', component: ImprintComponent },
   {path: 'transport', component: TransportMainComponent},
+  { path: 'verkaeufer', component: TraderMainComponent}
 ];
 
 @NgModule({
