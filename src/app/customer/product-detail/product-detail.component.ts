@@ -6,6 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/models/product';
 import { ShoppingcartService } from 'src/app/services/shoppingcart.service';
 import { ProductService } from 'src/app/services/product.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import { ProductDetailFeedbackComponent } from '../product-detail-feedback/product-detail-feedback.component';
 
 @Component({
   selector: 'app-product-detail',
@@ -17,7 +19,11 @@ export class ProductDetailComponent implements OnInit {
   product$: Observable<Product>;
   traderId: string;
 
-  constructor(private route: ActivatedRoute, private cartService: ShoppingcartService, private productService: ProductService) {
+  constructor(private route: ActivatedRoute,
+              private cartService: ShoppingcartService,
+              private productService: ProductService,
+              private snackBar: MatSnackBar,
+              ) {
   }
 
   ngOnInit(): void {
@@ -32,6 +38,11 @@ export class ProductDetailComponent implements OnInit {
       count: 1,
       productId: product.id,
       traderId: this.traderId
+    });
+
+    this.snackBar.openFromComponent(ProductDetailFeedbackComponent, {
+      duration: 3000,
+      panelClass: ['snackbar']
     });
   }
 

@@ -17,6 +17,8 @@ import {MatButtonModule} from '@angular/material/button';
 import { ShoppingcartItemComponent } from './shoppingcart-item/shoppingcart-item.component';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../services/product.service';
+import { ProductDetailFeedbackComponent } from './product-detail-feedback/product-detail-feedback.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const routes: Routes = [
   { path: 'trader/:traderId/product-detail/:productId', component: ProductDetailComponent },
@@ -32,6 +34,7 @@ const routes: Routes = [
     ProductOverviewComponent,
     ProductItemComponent,
     ProductDetailComponent,
+    ProductDetailFeedbackComponent,
     BuyConfirmationComponent,
     ShoppingcartComponent,
     TraderOverviewComponent,
@@ -43,6 +46,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     MatCardModule,
+    MatSnackBarModule,
     RouterModule.forRoot(routes),
     MatIconModule,
     MatInputModule,
