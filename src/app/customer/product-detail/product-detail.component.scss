@@ -1,6 +1,7 @@
 .mat-card {
   border-radius: 10px;
   border: dashed 1px rgb(152, 211, 90);
+  box-shadow: none !important;
 
   img {
     width: 100%;
@@ -11,7 +12,7 @@
 #title {
   padding-top: 1.6rem;
   font-size: 0.9rem;
-  font-weight: bolder;
+  font-weight: 200;
 }
 
 #description {
