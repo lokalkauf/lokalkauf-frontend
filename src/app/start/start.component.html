@@ -5,20 +5,30 @@
 </div> -->
 
 <div class="home-start">
-  <img src="/assets/logo-big.png"/>
+
+  <img src="/assets/logo-big.png" />
 
   <div class="intro-text">
     <p>Vielen lokalen Geschäften fehlen aufgrund der Corona-Pandemie Kunden und Umsätze brechen ein.</p>
     <p>Du kannst ihnen jetzt helfen!</p>
     <p>
-    Finde schnell und einfach Händler in deiner Umgebung, bei denen du online bestellen kannst.
+      Finde schnell und einfach Händler in deiner Umgebung, bei denen du online bestellen kannst.
     </p>
-    <br/><br/>
-
+    <br />
+    <br />
+    <!--
     <img src="/assets/fake-controlls.png" width="100%" (click)='action()'/> 
+-->
+  <div>
+    <div id="start-button-wo">
+      <button mat-raised-button class="start-button" (click)="action()">Was?</button>
+    </div>
+    <div id="start-button-wie">
+      <button mat-raised-button class="start-button" (click)="action()">Wo?</button>
+    </div>
   </div>
 
-<!-- 
+  <!-- 
   <div class="start-form">    
     <app-input-fld value="" placeholder="Was?" class="left-input"></app-input-fld>
     <app-input-fld value="" placeholder="Wo?" class="right-input"></app-input-fld>
