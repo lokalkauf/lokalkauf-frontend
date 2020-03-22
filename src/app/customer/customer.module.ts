@@ -11,6 +11,7 @@ import { TraderOverviewComponent } from './trader-overview/trader-overview.compo
 import { TraderItemComponent } from './trader-item/trader-item.component';
 import { TraderDetailComponent } from './trader-detail/trader-detail.component';
 import { TraderMapComponent } from './trader-map/trader-map.component';
+import { MatIconModule } from '@angular/material/icon';
 
 const routes: Routes = [
   { path: 'product-detail/:id', component: ProductDetailComponent },
@@ -36,6 +37,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     MatCardModule,
+    MatIconModule,
     RouterModule.forRoot(routes)
   ],
   exports: [

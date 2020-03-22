@@ -9,7 +9,10 @@ import { Component, OnInit, Input } from '@angular/core';
           </div>
           <mat-card-content>
             <p class="title">{{ name }}</p>
-            <p class="price">{{ price }} €</p>
+            <p class="price">
+              {{ price }} €
+              <mat-icon class="shopping-cart-icon">shopping_cart</mat-icon>
+            </p>
           </mat-card-content>
         </mat-card>
       </a>
