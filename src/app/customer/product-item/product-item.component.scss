@@ -8,10 +8,15 @@ a {
 	box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
 	height: 100%;
 	width: 100%;
+	font-size: 20px;
 
 	.image-wrapper {
 		height: 150px;
 		background-size: cover;
+	}
+
+	.price {
+		color: green;
 	}
 }
 

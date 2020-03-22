@@ -8,7 +8,8 @@ import { Component, OnInit, Input } from '@angular/core';
           <div class="image-wrapper" mat-card-image [ngStyle]="{'background-image': 'url(' + imageUrl + ')'}">
           </div>
           <mat-card-content>
-            <mat-card-title>{{ name }}</mat-card-title>
+            <p class="title">{{ name }}</p>
+            <p class="price">{{ price }} €</p>
           </mat-card-content>
         </mat-card>
       </a>
@@ -20,6 +21,7 @@ export class ProductItemComponent implements OnInit {
   @Input() id: string;
   @Input() name: string;
   @Input() imageUrl: string;
+  @Input() price: number;
 
   constructor() { }
 
