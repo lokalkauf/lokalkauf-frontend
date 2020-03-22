@@ -2,8 +2,7 @@
   <mat-icon>shopping_cart</mat-icon><br/>
   <span>Deine Auswahl</span>
 </div>
-<app-shoppingcart-item></app-shoppingcart-item>
-<app-shoppingcart-item></app-shoppingcart-item>
+<app-shoppingcart-item *ngFor="let cartEntry of cartEntries" [cartEntry]="cartEntry"></app-shoppingcart-item>
 <br/>
 <div id="fullsum">
   <div class="label">
