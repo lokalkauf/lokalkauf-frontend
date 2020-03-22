@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Link } from '../models/link';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-start',
@@ -15,7 +16,7 @@ export class StartComponent implements OnInit {
     new Link('Weiteres', '/test', true),
   ];
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -23,4 +24,8 @@ export class StartComponent implements OnInit {
   consoleLog(event: any) {
     console.log(event);
   }
+
+  action(){
+    this.router.navigate([ '/localtraders' ])
+ }
 }

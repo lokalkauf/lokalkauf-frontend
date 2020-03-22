@@ -16,6 +16,7 @@ import { CustomerModule } from './customer/customer.module';
 import { TraderModule } from './trader/trader.module';
 import { TransportModule } from './transport/transport.module';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { StartComponent } from './start/start.component';
 import { ImprintComponent } from './imprint/imprint.component';
@@ -54,6 +55,7 @@ const routes: Routes = [
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    AngularFireStorageModule,
     CustomerModule,
     TraderModule,
     TransportModule,

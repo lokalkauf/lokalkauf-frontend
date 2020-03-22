@@ -2,3 +2,28 @@
     width: 100%;
     text-align: center;
 }
+
+.home-start > img {
+    margin-bottom: 20px;
+    width: 50%;
+}
+
+.home-start > .intro-text{
+    font-size: 0.8em;
+    text-align: justify;
+    padding: 10px 20px;
+}
+
+.start-form {
+    width: 100%;
+    display: inline-grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 0px; 
+
+    margin-top: 30px;
+}
+
+// .left-input { grid-area: 1 / 1;  }
+// .right-input { grid-area: 1 / 2; }   
