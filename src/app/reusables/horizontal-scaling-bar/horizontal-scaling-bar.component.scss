@@ -4,10 +4,9 @@
   margin-right: 10px;
 
   .active {
+    margin-top: 3px;
     height: 1px;
     border-radius: 10px;
-    margin-left: 5px;
-    margin-right: 5px;
     background-color: rgb(152, 211, 90);
   }
 }
@@ -17,7 +16,7 @@
   white-space:nowrap;
   overflow-y: hide;
   -webkit-overflow-scrolling:touch;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 @media only screen and (min-width: 800px) {

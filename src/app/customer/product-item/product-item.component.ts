@@ -11,7 +11,7 @@ import { Component, OnInit, Input } from '@angular/core';
             <p class="title">{{ name }}</p>
             <p class="price">
               {{ price }} €
-              <mat-icon class="shopping-cart-icon">shopping_cart</mat-icon>
+              
             </p>
           </mat-card-content>
         </mat-card>
