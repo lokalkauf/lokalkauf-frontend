@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'app-product-item',
   template: `
-      <a [href]="'/product-detail/' + id">
+      <a [routerLink]="'/product-detail/' + id">
         <mat-card class="product-item">
           <div class="image-wrapper">
             <img class="product-item-image" [src]="imageUrl">

@@ -20,12 +20,15 @@ import { ImprintComponent } from './imprint/imprint.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
 import { ReusablesModule } from './reusables/reusables.module';
+import { TransportMainComponent } from './transport/transport-main/transport-main.compontent';
+
 
 const routes: Routes = [
   { path: '', component: StartComponent },
   { path: 'register', component: RegistrationComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'imprint', component: ImprintComponent }
+  { path: 'imprint', component: ImprintComponent },
+  {path: 'transport', component: TransportMainComponent},
 ];
 
 @NgModule({

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {MatSidenavModule} from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,6 +14,7 @@ export class AppComponent {
   }
 
   navigate(route: string) {
+    console.log(route);
     this.opened = false;
     this.router.navigate([route]);
   }

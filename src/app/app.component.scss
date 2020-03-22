@@ -22,7 +22,9 @@
   }
 
   color: rgb(152, 211, 90);
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: Helvetica,
+  Arial,
+  sans-serif;
 
   #name {
     line-height: 60px;
@@ -35,7 +37,8 @@
     }
   }
 
-  #shopping-cart, #burger-menu {
+  #shopping-cart,
+  #burger-menu {
     float: right;
     width: 30px;
     display: block;
@@ -54,17 +57,19 @@
   }
 }
 
-.mat-drawer-container{
-  height:100%;
+.mat-drawer-container {
+  height: 100%;
 }
 
-#sidenav-right, .sidenav-right-item, .sitenav-right-item-menu {
+#sidenav-right,
+.sidenav-right-item,
+.sitenav-right-item-menu {
   font-family: Helvetica, Arial, sans-serif;
 }
 
 #sidenav-right {
   width: 200px;
-  background-color:#ffffff;
+  background-color: #ffffff;
   height: 100%;
   top: 0;
   bottom: 0;
@@ -79,6 +84,7 @@
     float: right;
     width: 30px;
     height: 30px;
+
     .mat-icon {
       width: 30px;
       height: 30px;
@@ -87,19 +93,21 @@
   }
 }
 
-.sidenav-right-item, .sitenav-right-item-menu {
+.sidenav-right-item,
+.sitenav-right-item-menu {
   cursor: pointer;
   padding-top: 10px;
   padding-bottom: .6rem;
   margin-left: 1rem;
-}
+  cursor: pointer;
 
-.sitenav-right-item-menu {
-  cursor: default;
+  @media screen and (max-width:768px) {
+    margin-bottom: 1.2rem;
+  }
 }
 
 .sitenav-right-item-menu {
   border-bottom: solid .01rem rgb(152, 211, 90);
-  padding-top: 1rem;
+  padding-top: 1.6rem;
   margin-right: 1rem;
 }
