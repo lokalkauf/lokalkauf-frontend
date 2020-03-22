@@ -126,8 +126,6 @@
 }
 
 .sitenav-right-item-menu {
-  // border-bottom: solid .01rem rgb(152, 211, 90);
-  border-top: solid .01rem #aaa;
   padding-top: 1.6rem;
   margin-right: 1rem;
 }
@@ -136,8 +134,10 @@
   margin: 1.2rem;
 }
 
+.mat-drawer {
+  color: #000000;
+}
 
 .mat-drawer-container {
   background-color: #fff;
-
 }
