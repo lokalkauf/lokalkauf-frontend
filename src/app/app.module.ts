@@ -29,7 +29,7 @@ const routes: Routes = [
   { path: 'register', component: RegistrationComponent },
   { path: 'login', component: LoginComponent },
   { path: 'imprint', component: ImprintComponent },
-  {path: 'transport', component: TransportMainComponent},
+  { path: 'transport', component: TransportMainComponent},
   { path: 'verkaeufer', component: TraderMainComponent}
 ];
 
