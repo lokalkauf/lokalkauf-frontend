@@ -13,38 +13,54 @@ export class ShoppingcartService {
   constructor(private db: AngularFirestore) {
   }
 
-  get(userId: string): CartEntry[] {
-    if (this.cartItems == null && localStorage.getItem('cart')) {
-      this.cartItems = JSON.parse(localStorage.getItem('cart'));
-    } else if (this.cartItems == null) {
-      this.cartItems = new Array<CartEntry>();
-    }
+  get(): CartEntry[] {
+    this.loadIfNull();
 
     return this.cartItems;
   }
 
   add(cartEntry: CartEntry) {
-    this.cartItems.push(cartEntry);
-    this.saveInLocalstorage();
+    this.loadIfNull();
+
+    const foundItem = this.cartItems.find(x => x.productId === cartEntry.productId);
+    if (foundItem) {
+      foundItem.count += cartEntry.count;
+    } else {
+      this.cartItems.push(cartEntry);
+    }
+
+    this.saveChanges();
   }
 
   delete(cartEntry: CartEntry) {
-    const foundIndex = this.cartItems.findIndex(x => x === cartEntry);
+    this.loadIfNull();
+
+    const foundIndex = this.cartItems.findIndex(x => x.productId === cartEntry.productId);
 
     if (foundIndex >= 0) {
-      this.cartItems = this.cartItems.splice(foundIndex, 1);
+      this.cartItems.splice(foundIndex, 1);
     }
-    this.saveInLocalstorage();
+    this.saveChanges();
   }
 
   update(cartEntry: CartEntry) {
-    const foundIndex = this.cartItems.findIndex(x => x === cartEntry);
+    this.loadIfNull();
+
+    const foundIndex = this.cartItems.findIndex(x => x.productId === cartEntry.productId);
 
     this.cartItems[foundIndex] = cartEntry;
-    this.saveInLocalstorage();
+    this.saveChanges();
   }
 
-  private saveInLocalstorage() {
+  private loadIfNull() {
+    if (this.cartItems == null && localStorage.getItem('cart')) {
+      this.cartItems = JSON.parse(localStorage.getItem('cart'));
+    } else if (this.cartItems == null) {
+      this.cartItems = new Array<CartEntry>();
+    }
+  }
+
+  saveChanges() {
     localStorage.setItem('cart', JSON.stringify(this.cartItems));
   }
 }

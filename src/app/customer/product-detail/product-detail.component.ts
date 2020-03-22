@@ -4,6 +4,8 @@ import { Observable, combineLatest } from 'rxjs';
 import { map, flatMap, tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/models/product';
+import { ShoppingcartService } from 'src/app/services/shoppingcart.service';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -13,17 +15,24 @@ import { Product } from 'src/app/models/product';
 export class ProductDetailComponent implements OnInit {
 
   product$: Observable<Product>;
+  traderId: string;
 
-  constructor(db: AngularFirestore, private route: ActivatedRoute) {
-    this.product$ = this.route.params.pipe(
-      flatMap(params => db.collection(`Traders/${params.traderId}/Products`)
-          .doc<Omit<Product, 'id'>>(params.productId)
-          .valueChanges()
-          .pipe(map(x => ({ ...x, id: params.productId }))))
-    ).pipe(tap(console.log));
+  constructor(private route: ActivatedRoute, private cartService: ShoppingcartService, private productService: ProductService) {
   }
 
   ngOnInit(): void {
+    this.product$ = this.route.params.pipe(
+      tap(params => this.traderId = params.traderId),
+      flatMap(params => this.productService.getProduct(params.traderId, params.productId))
+    );
+  }
+
+  addToCart(product: Product): void {
+    this.cartService.add({
+      count: 1,
+      productId: product.id,
+      traderId: this.traderId
+    });
   }
 
 }

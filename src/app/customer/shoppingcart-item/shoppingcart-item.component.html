@@ -1,27 +1,27 @@
-<mat-card class="shoppingcart-item">
+<mat-card class="shoppingcart-item" *ngIf="productDetails$ | async as productDetails">
   <div class="image">
-    <img mat-card-avatar>
+    <img mat-card-avatar [src]="productDetails.image">
   </div>
   <div class="name-count">
     <div class="name">
-
+      {{productDetails.name}}
     </div>
     <div class="count">
       <form>
-        -
+        <span (click)="addCount(cartEntry, -1, productDetails)">-</span>
         <mat-form-field class="counterplusminus">
           <mat-label>Count</mat-label>
-          <input matInput placeholder="1" type="number" />
+          <input matInput placeholder="1" type="number" name="count" [(ngModel)]="cartEntry.count" />
         </mat-form-field>
-        +
+        <span (click)="addCount(cartEntry, 1, productDetails)">+</span>
       </form>
     </div>
   </div>
   <div class="price-delete">
     <div class="price">
-      12,99€
+      {{round(productDetails.price * cartEntry.count)}}
     </div>
-    <div class="delete">
+    <div class="delete" (click)="clickDelete()">
       <mat-icon>delete</mat-icon>
     </div>
   </div>

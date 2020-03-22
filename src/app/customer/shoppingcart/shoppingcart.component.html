@@ -2,16 +2,14 @@
   <mat-icon>shopping_cart</mat-icon><br/>
   <span>Deine Auswahl</span>
 </div>
-<app-shoppingcart-item></app-shoppingcart-item>
-<app-shoppingcart-item></app-shoppingcart-item>
+<app-shoppingcart-item *ngFor="let cartEntry of cartEntries" [cartEntry]="cartEntry" (currentPrice)="updatedPrice($event, cartEntry.productId)" (deletedClicked)="deleteItem(cartEntry)"></app-shoppingcart-item>
 <br/>
 <div id="fullsum">
   <div class="label">
     Gesamtsumme
   </div>
   <div class="sum">
-    25,00 €
+    {{getFullPrice()}}
   </div>
   <button mat-stroked-button class="order-button">bestellen</button>
 </div>
-
