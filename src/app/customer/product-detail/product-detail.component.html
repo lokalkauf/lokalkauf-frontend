@@ -3,11 +3,15 @@
     <img mat-card [src]="product.image">
   </mat-card>
   <div>
-    <div id="title">{{product.name}}</div>
+    <div id="product-detail-title">{{product.name}}</div>
     <div *ngIf="product.description" id="description">
       {{product.description}}
     </div>
-    <div id="price">
+    <div id="product-detail-price">
       {{product.price |  number:'1.2-2' }} &euro;
     </div>
+    <div id="product-detail-button">
+      <button mat-raised-button class="order-button" (click)="addToCart(product)">nehm ich</button>
+    </div>    
   </div>
+</div>
