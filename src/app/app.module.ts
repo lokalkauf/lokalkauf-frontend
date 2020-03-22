@@ -28,6 +28,7 @@ import { TransportMainComponent } from './transport/transport-main/transport-mai
 import { TraderMainComponent } from './trader/trader-main/trader-main.component';
 import { ShoppingcartService } from './services/shoppingcart.service';
 import { UserService } from './services/user.service';
+import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 
 
 const routes: Routes = [
@@ -53,6 +54,7 @@ const routes: Routes = [
     MatIconModule,
     MatSidenavModule,
     MatSnackBarModule,
+    MatFormFieldModule,
     MatCardModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),

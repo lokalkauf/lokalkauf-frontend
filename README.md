@@ -1,4 +1,9 @@
-# LokalkaufFrontend
+# Lokalkauf - Frontend
+
+[Lokalkauf](http://lokalkauf.org) is an easy to use online platform to set up local shops with an online shop, which allows them to supply their customers via a local delivery chain.
+This can keep businesses running, even in times of social distancing.
+
+Created during the [WirvsVirus Hackerthon](https://wirvsvirushackathon.org).
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.7.
 
@@ -35,3 +40,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## Deployment
 
 To deploy install firebase-tools `npm i -g firebase-tools` and login to your firebase account `firebase login`. Then you can deploy the app using `firebase deploy`.
+
