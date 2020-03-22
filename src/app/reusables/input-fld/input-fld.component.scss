@@ -1,3 +1,19 @@
 input {
-    background-color: #f00;
+    border:1px dashed rgb(152, 211, 90);
+    border-radius: 20px;
+    padding: 10px 15px;
+    color:#666;
+    font-size: 0.8rem;
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+    font-weight: 100;
+    width: auto!important;
+    user-select: none;
+    outline: none;
+    width:20px;
+}
+
+input::placeholder{
+    color:#bbb;
+    font-size: 0.8rem;
 }

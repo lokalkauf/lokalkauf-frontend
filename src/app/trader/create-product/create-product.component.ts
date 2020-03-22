@@ -3,6 +3,7 @@ import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Product } from '../../models/product';
 import { Trader } from '../../models/trader';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-create-product',
@@ -30,7 +31,7 @@ export class CreateProductComponent implements OnInit {
     ])
   });
 
-  constructor(private db: AngularFirestore) { }
+  constructor(private db: AngularFirestore, private storage: AngularFireStorage) { }
 
   ngOnInit(): void {
   }
@@ -48,7 +49,7 @@ export class CreateProductComponent implements OnInit {
       description
     });
 
-    console.log("done");
+    console.log('done');
   }
 
 }

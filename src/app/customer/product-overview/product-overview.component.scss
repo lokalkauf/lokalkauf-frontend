@@ -6,4 +6,9 @@
 	width: calc(100% - 40px);
 	max-width: 900px;
 	justify-content: space-around;
+
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
 }
