@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, combineLatest } from 'rxjs';
-import { map, flatMap, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-
-interface Trader {
-  id: string;
-  name: string;
-  products: string[];
-}
+import { Trader } from '../../models/trader';
 
 @Component({
   selector: 'app-trader-detail',

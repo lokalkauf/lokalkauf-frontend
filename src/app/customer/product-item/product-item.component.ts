@@ -1,17 +1,17 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Product } from '../../models/product';
 
 @Component({
   selector: 'app-product-item',
   template: `
-      <a [routerLink]="'/product-detail/' + id">
+      <a [routerLink]="'/product-detail/' + product.id">
         <mat-card class="product-item">
-          <div class="image-wrapper" mat-card-image [ngStyle]="{'background-image': 'url(' + imageUrl + ')'}">
+          <div class="image-wrapper" mat-card-image [ngStyle]="{'background-image': 'url(' + product.image + ')'}">
           </div>
           <mat-card-content>
-            <p class="title">{{ name }}</p>
+            <p class="title">{{ product.name }}</p>
             <p class="price">
-              {{ price }} €
-              
+              {{ product.price }} €
             </p>
           </mat-card-content>
         </mat-card>
@@ -21,10 +21,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ProductItemComponent implements OnInit {
 
-  @Input() id: string;
-  @Input() name: string;
-  @Input() imageUrl: string;
-  @Input() price: number;
+  @Input() product: Product;
 
   constructor() { }
 

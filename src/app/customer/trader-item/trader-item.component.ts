@@ -1,14 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Trader } from '../../models/trader';
 
 @Component({
   selector: 'app-trader-item',
   template: `
-      <a [routerLink]="'/trader-detail/' + id">
+      <a [routerLink]="'/trader-detail/' + trader.id">
         <mat-card class="trader-item">
-          <div class="image-wrapper" mat-card-image [ngStyle]="{'background-image': 'url(' + imageUrl + ')'}">
+          <div class="image-wrapper" mat-card-image [ngStyle]="{'background-image': 'url(' + trader.image + ')'}">
           </div>
           <mat-card-content>
-            <p class="title">{{ name }}</p>
+            <p class="title">{{ trader.name }}</p>
+            <p><span class="product-amount">{{ trader.products.length }}</span> Produkte</p>
           </mat-card-content>
         </mat-card>
       </a>
@@ -17,9 +19,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class TraderItemComponent implements OnInit {
 
-  @Input() id: string;
-  @Input() name: string;
-  @Input() imageUrl: string;
+  @Input() trader: Trader;
 
   constructor() { }
 

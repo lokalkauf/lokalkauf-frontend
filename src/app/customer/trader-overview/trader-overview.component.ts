@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Trader } from '../../models/trader';
 
 @Component({
   selector: 'app-trader-overview',
@@ -8,9 +9,9 @@ import { AngularFirestore } from '@angular/fire/firestore';
   styleUrls: ['./trader-overview.component.scss']
 })
 export class TraderOverviewComponent {
-  traders$: Observable<any[]>;
+  traders$: Observable<Trader[]>;
   constructor(db: AngularFirestore) {
-    this.traders$ = db.collection('Traders').valueChanges();
+    this.traders$ = db.collection<Trader>('Traders').valueChanges();
   }
 
 }

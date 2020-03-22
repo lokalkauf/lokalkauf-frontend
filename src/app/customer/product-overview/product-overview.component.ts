@@ -1,14 +1,8 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, combineLatest } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Product } from '../../models/product';
 
-interface Product {
-  name: string;
-  image: string;
-  id: string;
-  price: number;
-}
 
 @Component({
   selector: 'app-product-overview',

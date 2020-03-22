@@ -18,10 +18,6 @@
       <div *ngIf="router.url !== '/'" id="logo" (click)="navigate('/')">
         <img src="/assets/logo.png" />
       </div>
-      <div *ngIf="router.url !== '/'" id="name" (click)="navigate('/')">
-        <span id="name-firstword">lokal</span>
-        <span id="name-lastword">kauf</span>
-      </div>
       <div id="burger-menu">
         <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
       </div>
