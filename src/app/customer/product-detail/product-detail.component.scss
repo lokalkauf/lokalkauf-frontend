@@ -3,6 +3,10 @@
   border: dashed 1px rgb(152, 211, 90);
   box-shadow: none !important;
 
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+
   img {
     width: 100%;
     height: auto;
@@ -13,17 +17,26 @@
   padding-top: 1.6rem;
   font-size: 0.9rem;
   font-weight: 200;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #description {
   margin-top: 1.2rem;
   font-size: 0.9rem;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #product-detail-price {
   margin-top: 1.2rem;
   color: rgb(152, 211, 90);
   font-size: 0.9rem;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #product-detail-button {
