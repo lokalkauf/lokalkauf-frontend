@@ -1,14 +1,9 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, combineLatest } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Product } from '../../models/product';
+import { map } from 'rxjs/operators';
 
-interface Product {
-  name: string;
-  image: string;
-  id: string;
-  price: number;
-}
 
 @Component({
   selector: 'app-product-overview',
@@ -17,15 +12,14 @@ interface Product {
 })
 export class ProductOverviewComponent implements OnInit {
 
-  @Input() productIds: string[];
+  @Input() traderId: string;
 
   products$: Observable<Product[]>;
   constructor(private db: AngularFirestore) {
   }
 
   ngOnInit() {
-    this.products$ = combineLatest(this.productIds.map(itemId =>
-      this.db.collection('Products').doc<Product>(itemId).valueChanges()
-    ));
+    this.products$ = this.db.collection<Omit<Product, 'id'>>(`Traders/${this.traderId}/Products`)
+        .valueChanges({ idField: 'id' });
   }
 }

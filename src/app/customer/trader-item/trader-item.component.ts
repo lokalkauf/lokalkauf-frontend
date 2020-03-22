@@ -1,28 +1,24 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Trader } from '../../models/trader';
+import { Observable } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-trader-item',
-  template: `
-      <a [routerLink]="'/trader-detail/' + id">
-        <mat-card class="trader-item">
-          <div class="image-wrapper" mat-card-image [ngStyle]="{'background-image': 'url(' + imageUrl + ')'}">
-          </div>
-          <mat-card-content>
-            <p class="title">{{ name }}</p>
-          </mat-card-content>
-        </mat-card>
-      </a>
-  `,
+  templateUrl: './trader-item.component.html',
   styleUrls: ['./trader-item.component.scss']
 })
 export class TraderItemComponent implements OnInit {
 
-  @Input() id: string;
-  @Input() name: string;
-  @Input() imageUrl: string;
+  @Input() trader: Trader;
 
-  constructor() { }
+  productAmount$: Observable<number>;
 
-  ngOnInit(): void {}
+  constructor(private db: AngularFirestore) {}
+
+  ngOnInit(): void {
+    this.productAmount$ = this.db.collection<Omit<Trader, 'id'>>(`Traders/${this.trader.id}/Products`).get().pipe(map(snap => snap.size));
+  }
 
 }

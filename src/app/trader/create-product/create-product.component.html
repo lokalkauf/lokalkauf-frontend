@@ -1,1 +1,21 @@
-<p>create-product works!</p>
+<div class="create-product">
+	<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+		<mat-form-field class="product-name">
+			<mat-label>Produktname*</mat-label>
+			<input matInput formControlName="name">
+		</mat-form-field>
+		<mat-form-field class="product-category">
+			<mat-label>Kategorie*</mat-label>
+			<input matInput formControlName="category">
+		</mat-form-field>
+		<mat-form-field class="product-price">
+			<mat-label>Preis*</mat-label>
+			<input matInput formControlName="price">
+		</mat-form-field>
+		<mat-form-field class="product-description">
+			<mat-label>Beschreibung</mat-label>
+			<input matInput formControlName="description">
+		</mat-form-field>
+		<button mat-button [disabled]="!productForm.valid">Abschicken</button>
+	</form>
+</div>

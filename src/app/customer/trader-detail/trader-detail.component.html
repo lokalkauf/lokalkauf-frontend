@@ -1,5 +1,9 @@
-<div class="trader-detail" *ngIf="trader$ | async as trader">	
-	<h1>{{ trader.name }}</h1>
-	<p><span class="product-amount">{{ trader.products.length }}</span> Produkte</p>
-	<app-product-overview [productIds]="trader.products"></app-product-overview>
+<div class="trader-detail" *ngIf="trader$ | async as trader">
+  <div class="trader-headline">{{ trader.name }}</div>
+  <div class="trader-product-star"><img src="assets/star5.png" /></div>
+  <p class="trader-product-amount">
+		<span class="product-amount" *ngIf="productAmount$ | async as productAmount">{{ productAmount }}</span> 
+		Produkte
+	</p>
+  <app-product-overview [traderId]="trader.id"></app-product-overview>
 </div>

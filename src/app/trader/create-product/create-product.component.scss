@@ -1,0 +1,34 @@
+.create-product {
+  form {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-template-rows: auto;
+		column-gap: 10px;
+    grid-template-areas:
+      "name name name ."
+      "category category price price"
+			"description description description description"
+			". button button .";
+
+    .product-name {
+      grid-area: name;
+    }
+
+    .product-category {
+      grid-area: category;
+    }
+
+    .product-price {
+      grid-area: price;
+    }
+
+    .product-description {
+      grid-area: description;
+		}
+		
+		button {
+			grid-area: button
+		}
+  }
+}

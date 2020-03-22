@@ -10,6 +10,8 @@
       <div class="sidenav-right-item" (click)="navigate('/verkaeufer')">Verkäufer</div>
       <div class="sidenav-right-item" (click)="navigate('/transport')">Lieferant</div>
       <div class="sidenav-right-item">Profil</div>
+      <div class="sidenav-right-item" (click)="navigate('/register')">Registrieren</div>
+      <div class="sidenav-right-item" (click)="navigate('/login')">Anmelden</div>
       <div class="sidenav-right-item" (click)="navigate('/imprint')">Impressum</div>
     </div>
   </mat-sidenav>
@@ -17,10 +19,6 @@
     <div width="100%" id="header">
       <div *ngIf="router.url !== '/'" id="logo" (click)="navigate('/')">
         <img src="/assets/logo.png" height="30" />
-      </div>
-      <div *ngIf="router.url !== '/'" id="name" (click)="navigate('/')">
-        <span id="name-firstword">lokal</span>
-        <span id="name-lastword">kauf</span>
       </div>
       <div id="burger-menu">
         <mat-icon (click)="sidenav.toggle()">menu</mat-icon>

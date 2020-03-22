@@ -1,0 +1,15 @@
+<a [routerLink]="'/trader-detail/' + trader.id">
+  <mat-card class="trader-item">
+    <div class="image-wrapper" mat-card-image [ngStyle]="{'background-image': 'url(' + trader.image + ')'}">
+    </div>
+
+    <mat-card-content>
+      <p class="title">{{ trader.name }}</p>
+      <p><img src="assets/star5.png" /></p>
+      <div class="product-container">
+        <span class="product-amount" *ngIf="productAmount$ | async as productAmount">{{ productAmount }}</span> 
+        Produkte
+      </div>
+    </mat-card-content>
+  </mat-card>
+</a>

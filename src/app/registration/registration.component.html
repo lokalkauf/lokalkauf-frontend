@@ -1,1 +1,34 @@
-<p>registration works!</p>
+<input type="radio" name="registertype" id="customer" value="customer" [checked]="user.type === 'customer'" [(ngModel)]="user.type" /><label for="customer"> Kunde</label>
+<input type="radio" name="registertype" id="trader" value="trader" [checked]="user.type === 'trader'" [(ngModel)]="user.type" /><label for="trader"> Händler</label>
+<input type="radio" name="registertype" id="transport" value="transport" [checked]="user.type === 'transport'" [(ngModel)]="user.type" /><label for="transport"> Transporteur</label>
+<br/>
+<span class="companyname" *ngIf="user.type === 'trader'">
+  <input class="" name="name" placeholder="Firmenname*" [(ngModel)]="user.name" /><br/>
+</span>
+<span class="name" *ngIf="user.type === 'customer' || user.type === 'transport'">
+  <input class="" name="name" placeholder="Name*" [(ngModel)]="user.name" /><br/>
+</span>
+<input class="" name="zip" placeholder="Plz*" [(ngModel)]="user.zip" />
+<input class="" name="city" placeholder="Ort*" [(ngModel)]="user.city" /><br/>
+<input class="" name="street" placeholder="Straße*" [(ngModel)]="user.street" />
+<input class="" name="number" placeholder="Nr.*" [(ngModel)]="user.number" />
+<br/><br/>
+<span *ngIf="user.type === 'trader'">
+  <input class="" name="person" placeholder="Vorname/Nachname*" [(ngModel)]="user.internalName" /><br/>
+</span>
+<span *ngIf="user.type === 'transport'">
+  <input class="" name="person" placeholder="Vorname/Nachname" [(ngModel)]="user.internalName" /><br/>
+</span>
+<span *ngIf="user.type === 'trader' || user.type === 'transport'">
+  <input class="" name="taxId" placeholder="UST-ID/Steuernummer" [(ngModel)]="user.taxId" />
+  <br/><br/>
+</span>
+<input class="" name="login" placeholder="E-Mail*" [(ngModel)]="user.email" /><br/>
+<input class="" type="password" name="password" placeholder="Passwort" [(ngModel)]="password" /><br/>
+<input class="" type="password" name="repeatpassword" placeholder="Passwort wiederholen" [(ngModel)]="repeatPassword" /><br/>
+<span *ngIf="!passwordValid">
+  Die Passwörter müssen gleich sein.<br/>
+</span>
+<button [disabled]="!isValid()" (click)="register()">registrieren</button>
+<br/><br/>
+Schon ein Konto? <a href="/login">Dann gehts hier lang</a>

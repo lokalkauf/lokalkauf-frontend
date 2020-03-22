@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, combineLatest } from 'rxjs';
-import { map, flatMap, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { flatMap, map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-
-interface Trader {
-  id: string;
-  name: string;
-  products: string[];
-}
+import { Trader } from '../../models/trader';
 
 @Component({
   selector: 'app-trader-detail',
@@ -16,17 +11,29 @@ interface Trader {
   styleUrls: ['./trader-detail.component.scss']
 })
 export class TraderDetailComponent implements OnInit {
-
   trader$: Observable<Trader>;
-  constructor(private db: AngularFirestore, private route: ActivatedRoute) {
+  productAmount$: Observable<number>;
+
+  constructor(db: AngularFirestore, private route: ActivatedRoute) {
     this.trader$ = this.route.params.pipe(
       flatMap(params =>
-        this.db.collection('Traders').doc<Trader>(params.id).valueChanges()
+        db
+          .collection('Traders')
+          .doc<Omit<Trader, 'id'>>(params.id)
+          .valueChanges()
+          .pipe(map(x => ({ ...x, id: params.id })))
+      )
+    );
+
+    this.productAmount$ = this.route.params.pipe(
+      flatMap(params =>
+        db
+          .collection<Omit<Trader, 'id'>>(`Traders/${params.id}/Products`)
+          .get()
+          .pipe(map(snap => snap.size))
       )
     );
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

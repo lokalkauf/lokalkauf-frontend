@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, combineLatest } from 'rxjs';
 import { map, flatMap, tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
+import { Product } from 'src/app/models/product';
 
 @Component({
   selector: 'app-product-detail',
@@ -11,14 +12,15 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductDetailComponent implements OnInit {
 
-  product$: Observable<any>;
-  constructor(private db: AngularFirestore, private route: ActivatedRoute) {
+  product$: Observable<Product>;
+
+  constructor(db: AngularFirestore, private route: ActivatedRoute) {
     this.product$ = this.route.params.pipe(
-      flatMap(params => {
-        const id = params['id'];
-        return db.collection('Products').doc(id).get().pipe(map(x => x.data()), tap(x => console.log(x)));
-      })
-    );
+      flatMap(params => db.collection(`Traders/${params.traderId}/Products`)
+          .doc<Omit<Product, 'id'>>(params.productId)
+          .valueChanges()
+          .pipe(map(x => ({ ...x, id: params.productId }))))
+    ).pipe(tap(console.log));
   }
 
   ngOnInit(): void {

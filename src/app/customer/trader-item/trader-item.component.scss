@@ -1,27 +1,30 @@
 a {
-	color: inherit;
-	text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 .trader-item {
-	box-sizing: border-box;
-	box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
-	height: 100%;
-	width: 100%;
-	font-size: 20px;
+  box-sizing: border-box;
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.2);
+  height: 100%;
+  width: 100%;
+  border-radius: 1rem;
+  text-align: center;
 
-	.image-wrapper {
-		height: 150px;
-		background-size: cover;
-	}
+  .image-wrapper {
+    height: 150px;
+    background-size: cover;
+  }
 
-	.price {
-		color: green;
-	}
+  .title {
+    font-size: 1rem;
+  }
 
-	.shopping-cart-icon {
-		float: right;
-	}
+  .product-amount {
+    color: rgb(152, 211, 90);
+  }
+
+  .shopping-cart-icon {
+    float: right;
+  }
 }
-
-

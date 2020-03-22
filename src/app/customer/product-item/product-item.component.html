@@ -1,0 +1,10 @@
+<mat-card class="product-item">
+  <div class="image-wrapper" mat-card-image [ngStyle]="{'background-image': 'url(' + product.image + ')'}">
+  </div>
+  <mat-card-content>
+    <p class="title">{{ product.name }}</p>
+    <p class="price">
+      {{ product.price }} €
+    </p>
+  </mat-card-content>
+</mat-card>
