@@ -41,7 +41,7 @@ export class ProductDetailComponent implements OnInit {
     });
 
     this.snackBar.openFromComponent(ProductDetailFeedbackComponent, {
-      duration: 30000,
+      duration: 3000,
       panelClass: ['snackbar']
     });
   }
