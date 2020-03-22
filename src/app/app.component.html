@@ -25,15 +25,12 @@
       <div id="burger-menu">
         <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
       </div>
-      <div id="shopping-cart">
+      <div id="shopping-cart" (click)="navigate('/cart')">
         <mat-icon>shopping_cart</mat-icon>
       </div>
-
     </div>
     <div id="main_body">
       <router-outlet></router-outlet>
     </div>
-
   </mat-sidenav-content>
-
 </mat-sidenav-container>
