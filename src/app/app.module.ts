@@ -24,6 +24,8 @@ import { LoginComponent } from './login/login.component';
 import { ReusablesModule } from './reusables/reusables.module';
 import { TransportMainComponent } from './transport/transport-main/transport-main.compontent';
 import { TraderMainComponent } from './trader/trader-main/trader-main.component';
+import { ShoppingcartService } from './services/shoppingcart.service';
+import { UserService } from './services/user.service';
 
 
 const routes: Routes = [
@@ -63,7 +65,7 @@ const routes: Routes = [
   exports: [
     RouterModule
   ],
-  providers: [],
+  providers: [ShoppingcartService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
