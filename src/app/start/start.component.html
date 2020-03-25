@@ -5,32 +5,22 @@
 </div> -->
 
 <div class="home-start">
-
-  <img src="/assets/logo-big.png" />
-
+  <img src="/assets/lokalkaufTopx4.png" />
   <div class="intro-text">
-    <p>Vielen lokalen Geschäften fehlen aufgrund der Corona-Pandemie Kunden und Umsätze brechen ein.</p>
-    <p>Du kannst ihnen jetzt helfen!</p>
-    <p>
-      Finde schnell und einfach Händler in deiner Umgebung, bei denen du online bestellen kannst.
-    </p>
-    <br />
-    <br />
-    <!--
-    <img src="/assets/fake-controlls.png" width="100%" (click)='action()'/> 
--->
-  <div>
-    <div id="start-button-wo">
-      <button mat-raised-button class="start-button" (click)="action()">Was?</button>
+    <div id="backdrop-start"></div>
+    <div class="intro-text-box">Vielen lokalen Geschäften fehlen aufgrund der Corona-Pandemie Kunden und Umsätze brechen
+      ein.
+      <br />
+      <br />Du kannst ihnen jetzt helfen!
     </div>
-    <div id="start-button-wie">
-      <button mat-raised-button class="start-button" (click)="action()">Wo?</button>
+    <div class="intro-text-hint">Unsere Plattform befindet sich aktuell in der Entwicklung. Vieleicht hast Du einen
+      guten <a href="mailto:">Vorschlag</a>?
     </div>
   </div>
 
-  <!-- 
-  <div class="start-form">    
-    <app-input-fld value="" placeholder="Was?" class="left-input"></app-input-fld>
-    <app-input-fld value="" placeholder="Wo?" class="right-input"></app-input-fld>
-  </div> -->
-</div>
+  <div id="start-input-container">
+    <div id="start-input-center">
+      <input id="start-input" placeholder="PLZ">
+      <button mat-raised-button id="start-button" (click)="action()">los</button>
+    </div>
+  </div>

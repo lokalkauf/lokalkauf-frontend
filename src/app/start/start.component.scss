@@ -1,5 +1,5 @@
 .home-start {
-  width: 100%;
+  width: calc(100%);
   text-align: center;
 
   @media screen and (min-width: 768px) {
@@ -9,15 +9,39 @@
   }
 }
 
+#backdrop-start {
+  background: no-repeat url('../../assets/start-image.png');
+  background-size: cover;
+  margin-top: -22px;
+  width: 100%;
+  height: 560px;
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+}
+
 .home-start>img {
   margin-bottom: 20px;
-  width: 50%;
 }
 
 .home-start>.intro-text {
-  font-size: 0.8em;
+  font-size: 0.8rem;
   text-align: justify;
-  padding: 10px 20px;
+  padding: 1rem 2rem;
+  background-color: rgba(255, 255, 255, 0.9);
+
+  .intro-text-hint {
+    margin-top: 2rem;
+    font-size: 0.75rem;
+    text-align: justify;
+    color: #C55A11;
+
+    a {
+      color: #C55A11;
+      text-decoration: underline;
+    }
+  }
 }
 
 .start-form {
@@ -31,31 +55,69 @@
   margin-top: 30px;
 }
 
-#start-button-wo {
-  margin-top: 1.2rem;
+#start-input-center {
+  margin-top: 2rem;
   text-align: center;
-  float: right;
 }
 
-.start-button {
-  color: rgb(116, 181, 48);
+#start-input {
   box-sizing: border-box;
   border-radius: 20px;
-  font-size: 1rem;
+  font-size: .8rem;
   font-weight: 100;
-  min-width: 6rem;
+  min-width: 4rem;
   height: 2.4rem;
   letter-spacing: 1.5px;
   background-color: #ffffff;
-  border: dashed 1px;
+  padding-left: 1.0rem;
+  border: dashed 1px rgb(116, 181, 48);
+  float: left;
 }
 
+
+@media screen and (max-width: 368px) {
+  #start-input {
+    width: 5rem;
+  }
+}
+
+@media screen and (min-width: 369px) {
+  #start-input {
+    width: 8rem;
+  }
+}
+
+@media screen and (min-width: 490px) {
+  #start-input {
+    width: 15rem;
+  }
+}
+
+#start-button {
+  color: rgb(82, 145, 15);
+  box-sizing: border-box;
+  border-radius: 20px;
+  box-shadow: 6px 6px 21px 0px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  font-weight: 100;
+  min-width: 4rem;
+  height: 2.4rem;
+  letter-spacing: 1.5px;
+  float: right;
+  border: 0;
+  background-color: #ffffff;
+}
+
+/*
 #start-button-wie {
   margin-top: 1.2rem;
   text-align: center;
   float: left;
 }
 
-
-// .left-input { grid-area: 1 / 1;  }
-// .right-input { grid-area: 1 / 2; }   
+#start-button-wo {
+  margin-top: 1.2rem;
+  text-align: center;
+  float: right;
+}
+*/

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Link } from '../models/link';
 import { Router } from '@angular/router';
 
@@ -25,7 +25,7 @@ export class StartComponent implements OnInit {
     console.log(event);
   }
 
-  action(){
-    this.router.navigate([ '/localtraders' ])
+  action() {
+    this.router.navigate([ '/localtraders' ]);
  }
 }
