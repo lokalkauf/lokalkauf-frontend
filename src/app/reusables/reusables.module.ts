@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MapComponent } from './map/map.component';
 import { HorizontalScalingBarComponent } from './horizontal-scaling-bar/horizontal-scaling-bar.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { InputFldComponent } from './input-fld/input-fld.component';
+import { LkInputDirective } from './lk-input.directive';
 
 
 
@@ -11,7 +11,7 @@ import { InputFldComponent } from './input-fld/input-fld.component';
   declarations: [
     MapComponent,
     HorizontalScalingBarComponent,
-    InputFldComponent,
+    LkInputDirective
   ],
   imports: [
     CommonModule,
@@ -20,7 +20,7 @@ import { InputFldComponent } from './input-fld/input-fld.component';
   exports: [
     MapComponent,
     HorizontalScalingBarComponent,
-    InputFldComponent
+    LkInputDirective
   ]
 })
 export class ReusablesModule { }

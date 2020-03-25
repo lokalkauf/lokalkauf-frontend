@@ -19,6 +19,6 @@
 		<div class="product-description">
 			<input type="text" formControlName="description" placeholder="Beschreibung">
 		</div>
-		<button mat-stroked-button [disabled]="!productForm.valid && !uploadState">Abschicken</button>
+		<button appLkButton [disabled]="!productForm.valid && !uploadState">Abschicken</button>
 	</form>
 </div>
