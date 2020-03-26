@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AppPage } from '../app.po';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { EMail } from './mail-model';
+import { EMail } from '../models/email';
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +16,6 @@ export class EMailService {
   };
 
   constructor(private http: HttpClient) { }
-
-  getPage(slug: string) {
-    return this.http.get<AppPage>(this.ServerUrl + 'api/page/' + slug)
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
 
   contactForm(formdata: EMail) {
     // TODO contact backend for mail sending here

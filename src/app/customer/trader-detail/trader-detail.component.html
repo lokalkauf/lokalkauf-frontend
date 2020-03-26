@@ -4,5 +4,9 @@
     <span class="product-amount" *ngIf="productAmount$ | async as productAmount">{{ productAmount }}</span>
     Produkte
   </p>
-  <app-product-overview [traderId]="trader.id"></app-product-overview>
+  <!-- app-product-overview [traderId]="trader.id"></app-product-overview-->
+
+  <a [routerLink]="'/trader/' + trader.id + '/email/' ">
+    Send EMail
+  </a>
 </div>

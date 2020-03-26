@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import {MatSnackBarModule} from '@angular/material/snack-bar'; 
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Routes, RouterModule } from '@angular/router';
@@ -30,6 +30,10 @@ import { ShoppingcartService } from './services/shoppingcart.service';
 import { UserService } from './services/user.service';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 
+import { CommonModule } from '@angular/common';
+import { EMailService } from "./services/email.service";
+import { HttpClientModule } from "@angular/common/http";
+
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -50,6 +54,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     MatIconModule,
     MatSidenavModule,
@@ -66,12 +71,13 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     ReusablesModule,
     FormsModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    HttpClientModule,
   ],
   exports: [
     RouterModule
   ],
-  providers: [ShoppingcartService, UserService],
+  providers: [ShoppingcartService, UserService, EMailService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
