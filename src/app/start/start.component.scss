@@ -26,10 +26,13 @@
 }
 
 .home-start>.intro-text {
-  font-size: 0.8rem;
+  font-size: 1rem;
   text-align: justify;
   padding: 1rem 2rem;
   background-color: rgba(255, 255, 255, 0.9);
+  line-height: 1.1rem;
+  min-height: 240px;
+
 
   .intro-text-hint {
     margin-top: 2rem;
@@ -58,6 +61,12 @@
 #start-input-center {
   margin-top: 2rem;
   text-align: center;
+}
+
+
+#start-input-container {
+  margin: 1.2rem;
+
 }
 
 #start-input {
@@ -106,6 +115,13 @@
   float: right;
   border: 0;
   background-color: #ffffff;
+}
+
+#start-error {
+  margin: 1.2rem 0;
+  float: left;
+  font-size: .8rem;
+  color: #C25808;
 }
 
 /*

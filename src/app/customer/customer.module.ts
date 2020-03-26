@@ -12,8 +12,8 @@ import { TraderItemComponent } from './trader-item/trader-item.component';
 import { TraderDetailComponent } from './trader-detail/trader-detail.component';
 import { TraderMapComponent } from './trader-map/trader-map.component';
 import { MatIconModule } from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { ShoppingcartItemComponent } from './shoppingcart-item/shoppingcart-item.component';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../services/product.service';
@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'trader/:traderId/product-detail/:productId', component: ProductDetailComponent },
   { path: 'buy/confirmation', component: BuyConfirmationComponent },
   { path: 'cart', component: ShoppingcartComponent },
-  { path: 'localtraders', component: TraderOverviewComponent },
+  { path: 'localtraders/:plz', component: TraderOverviewComponent },
   { path: 'tradermap', component: TraderMapComponent },
   { path: 'trader-detail/:id', component: TraderDetailComponent },
 ];
