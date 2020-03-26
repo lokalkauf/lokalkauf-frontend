@@ -24,6 +24,8 @@
     "@angular/router": "~9.0.7",
     "@asymmetrik/ngx-leaflet": "^6.0.1",
     "firebase": "^7.12.0",
+    "geofire": "^5.0.1",
+    "geofirestore": "^3.4.1",
     "leaflet": "^1.6.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
