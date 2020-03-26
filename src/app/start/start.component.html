@@ -20,7 +20,7 @@
 
   <div id="start-input-container">
     <div id="start-input-center">
-      <input id="start-input" placeholder="PLZ">
-      <button mat-raised-button id="start-button" (click)="action()">los</button>
+      <input id="start-input" #plz placeholder="PLZ">
+      <button mat-raised-button id="start-button" (click)="action(plz.value)">los</button>
     </div>
   </div>

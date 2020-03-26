@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'trader/:traderId/product-detail/:productId', component: ProductDetailComponent },
   { path: 'buy/confirmation', component: BuyConfirmationComponent },
   { path: 'cart', component: ShoppingcartComponent },
-  { path: 'localtraders', component: TraderOverviewComponent },
+  { path: 'localtraders/:plz', component: TraderOverviewComponent },
   { path: 'tradermap', component: TraderMapComponent },
   { path: 'trader-detail/:id', component: TraderDetailComponent },
 ];

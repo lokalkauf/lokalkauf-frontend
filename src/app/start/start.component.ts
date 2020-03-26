@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Link } from '../models/link';
 import { Router } from '@angular/router';
+import { isNumber } from 'util';
 
 @Component({
   selector: 'app-start',
@@ -25,7 +26,14 @@ export class StartComponent implements OnInit {
     console.log(event);
   }
 
-  action() {
-    this.router.navigate([ '/localtraders' ]);
+  action(plz: string) {
+    if (this.isValidPlz(plz)) {
+      this.router.navigate([ '/localtraders/' + plz ]);
+    }
  }
+
+ isValidPlz(plz: string): boolean {
+  return (!isNaN(Number(plz)) && Number(plz).toString().length === 5);
+ }
+
 }
