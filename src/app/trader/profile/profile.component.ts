@@ -8,10 +8,9 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent {
-
   user$: Observable<User>;
 
   constructor(private auth: AngularFireAuth, private router: Router) {
@@ -27,5 +26,4 @@ export class ProfileComponent {
     await this.auth.auth.signOut();
     this.router.navigateByUrl('/');
   }
-
 }

@@ -8,27 +8,27 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-registration-form',
   templateUrl: './registration-form.component.html',
-  styleUrls: ['./registration-form.component.scss']
+  styleUrls: ['./registration-form.component.scss'],
 })
 export class RegistrationFormComponent {
   productForm = new FormGroup(
     {
       email: new FormControl('', [Validators.email]),
       password: new FormControl('', [Validators.required]),
-      passwordRepeat: new FormControl('', [Validators.required])
+      passwordRepeat: new FormControl('', [Validators.required]),
     },
     [
-      formGroup => {
+      (formGroup) => {
         return formGroup.get('password').value ===
           formGroup.get('passwordRepeat').value
           ? null
           : { notSame: true };
-      }
+      },
     ]
   );
 
   constructor(private auth: AngularFireAuth, router: Router) {
-    this.auth.user.subscribe(user => {
+    this.auth.user.subscribe((user) => {
       if (user != null) {
         router.navigateByUrl(`trader/profile`);
       }
@@ -59,7 +59,8 @@ export class RegistrationFormComponent {
         case 'auth/weak-password':
           // TODO
           break;
-        default: break;
+        default:
+          break;
       }
     }
   }

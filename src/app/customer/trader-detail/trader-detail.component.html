@@ -1,7 +1,11 @@
 <div class="trader-detail" *ngIf="trader$ | async as trader">
   <div class="trader-headline">{{ trader.name }}</div>
   <p class="trader-product-amount">
-    <span class="product-amount" *ngIf="productAmount$ | async as productAmount">{{ productAmount }}</span>
+    <span
+      class="product-amount"
+      *ngIf="productAmount$ | async as productAmount"
+      >{{ productAmount }}</span
+    >
     Produkte
   </p>
   <app-product-overview [traderId]="trader.id"></app-product-overview>

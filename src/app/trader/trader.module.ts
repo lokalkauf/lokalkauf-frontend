@@ -15,7 +15,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   { path: 'trader/profile', component: ProfileComponent },
-  { path: 'trader/registration', component: RegistrationFormComponent }
+  { path: 'trader/registration', component: RegistrationFormComponent },
 ];
 
 @NgModule({
@@ -24,18 +24,18 @@ const routes: Routes = [
     CreateProductComponent,
     TraderMainComponent,
     RegistrationFormComponent,
-    ProfileComponent
+    ProfileComponent,
   ],
   imports: [
-    FormsModule,
-    ReactiveFormsModule,
     CommonModule,
     MatFormFieldModule,
     RouterModule.forRoot(routes),
+    FormsModule,
+    ReactiveFormsModule,
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    ReusablesModule
-  ]
+    ReusablesModule,
+  ],
 })
-export class TraderModule { }
+export class TraderModule {}

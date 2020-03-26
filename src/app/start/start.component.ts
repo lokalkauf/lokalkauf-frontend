@@ -8,7 +8,7 @@ import { GeoService } from 'src/app/services//geo.service';
 @Component({
   selector: 'app-start',
   templateUrl: './start.component.html',
-  styleUrls: ['./start.component.scss']
+  styleUrls: ['./start.component.scss'],
 })
 export class StartComponent implements OnInit {
   links = [
@@ -19,14 +19,12 @@ export class StartComponent implements OnInit {
     new Link('Weiteres', '/test', true),
   ];
 
-  lat:number;
-  lng:number;
+  lat: number;
+  lng: number;
 
-  @Input() coovalue:string;
+  @Input() coovalue: string;
 
-  constructor(private router: Router, private geo: GeoService) { 
-
-  }
+  constructor(private router: Router, private geo: GeoService) {}
 
   showError: boolean;
 
@@ -36,36 +34,34 @@ export class StartComponent implements OnInit {
 
   consoleLog(event: any) {
     console.log(event);
-
   }
 
-  private getUserLocation(){
+  private getUserLocation() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-          this.lat = position.coords.latitude;
-          this.lng = position.coords.longitude;
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.lat = position.coords.latitude;
+        this.lng = position.coords.longitude;
 
-          this.coovalue = "hallo: " + this.lat + "-" + this.lng;
+        this.coovalue = 'hallo: ' + this.lat + '-' + this.lng;
 
-          //this.geo.setLocation("meine-position", [this.lat, this.lng]);
+        //this.geo.setLocation("meine-position", [this.lat, this.lng]);
 
-          var l = this.geo.getLocations(0.5, [this.lat, this.lng]);
+        var l = this.geo.getLocations(0.5, [this.lat, this.lng]);
 
-          this.coovalue = JSON.stringify(l);
+        this.coovalue = JSON.stringify(l);
       });
     }
   }
-  
+
   action(plz: string) {
     if (this.isValidPlz(plz)) {
       this.showError = false;
-      this.router.navigate([ '/localtraders/' + plz ]);
+      this.router.navigate(['/localtraders/' + plz]);
     }
     this.showError = true;
- }
+  }
 
- isValidPlz(plz: string): boolean {
-  return (!isNaN(Number(plz)) && Number(plz).toString().length === 5);
- }
-
+  isValidPlz(plz: string): boolean {
+    return !isNaN(Number(plz)) && Number(plz).toString().length === 5;
+  }
 }

@@ -11,7 +11,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { FormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 
 import { CustomerModule } from './customer/customer.module';
@@ -24,13 +23,13 @@ import { StartComponent } from './start/start.component';
 import { ImprintComponent } from './imprint/imprint.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
-import { ReusablesModule } from './reusables/reusables.module';
 import { TransportMainComponent } from './transport/transport-main/transport-main.compontent';
 import { TraderMainComponent } from './trader/trader-main/trader-main.component';
 import { ShoppingcartService } from './services/shoppingcart.service';
 import { UserService } from './services/user.service';
-import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReusablesModule } from './reusables/reusables.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -38,7 +37,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'imprint', component: ImprintComponent },
   { path: 'transport', component: TransportMainComponent },
-  { path: 'verkaeufer', component: TraderMainComponent}
+  { path: 'verkaeufer', component: TraderMainComponent },
 ];
 
 @NgModule({
@@ -47,7 +46,7 @@ const routes: Routes = [
     StartComponent,
     ImprintComponent,
     RegistrationComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,13 +67,11 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     ReusablesModule,
     FormsModule,
-    AngularFireAuthModule
+    ReactiveFormsModule,
+    AngularFireAuthModule,
   ],
-  exports: [
-    RouterModule
-  ],
+  exports: [RouterModule],
   providers: [ShoppingcartService, UserService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

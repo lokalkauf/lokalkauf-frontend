@@ -3,24 +3,28 @@ import { CommonModule } from '@angular/common';
 import { MapComponent } from './map/map.component';
 import { HorizontalScalingBarComponent } from './horizontal-scaling-bar/horizontal-scaling-bar.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { LkInputDirective } from './lk-input.directive';
-
-
+import { LkInputComponent } from './lk-input/lk-input.component';
+import { LkButtonComponent } from './lk-button/lk-button.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     MapComponent,
     HorizontalScalingBarComponent,
-    LkInputDirective
+    LkInputComponent,
+    LkButtonComponent,
   ],
   imports: [
     CommonModule,
-    LeafletModule.forRoot()
+    FormsModule,
+    ReactiveFormsModule,
+    LeafletModule.forRoot(),
   ],
   exports: [
     MapComponent,
     HorizontalScalingBarComponent,
-    LkInputDirective
-  ]
+    LkInputComponent,
+    LkButtonComponent,
+  ],
 })
-export class ReusablesModule { }
+export class ReusablesModule {}

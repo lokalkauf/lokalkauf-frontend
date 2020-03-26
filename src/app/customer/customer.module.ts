@@ -15,13 +15,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ShoppingcartItemComponent } from './shoppingcart-item/shoppingcart-item.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductService } from '../services/product.service';
 import { ProductDetailFeedbackComponent } from './product-detail-feedback/product-detail-feedback.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ReusablesModule } from '../reusables/reusables.module';
 
 const routes: Routes = [
-  { path: 'trader/:traderId/product-detail/:productId', component: ProductDetailComponent },
+  {
+    path: 'trader/:traderId/product-detail/:productId',
+    component: ProductDetailComponent,
+  },
   { path: 'buy/confirmation', component: BuyConfirmationComponent },
   { path: 'cart', component: ShoppingcartComponent },
   { path: 'localtraders/:plz', component: TraderOverviewComponent },
@@ -41,7 +45,7 @@ const routes: Routes = [
     TraderItemComponent,
     TraderDetailComponent,
     TraderMapComponent,
-    ShoppingcartItemComponent
+    ShoppingcartItemComponent,
   ],
   imports: [
     CommonModule,
@@ -51,14 +55,11 @@ const routes: Routes = [
     MatIconModule,
     MatInputModule,
     MatButtonModule,
-    FormsModule
+    ReusablesModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
-  exports: [
-    ProductOverviewComponent,
-    ProductItemComponent
-  ],
-  providers: [
-    ProductService
-  ]
+  exports: [ProductOverviewComponent, ProductItemComponent],
+  providers: [ProductService],
 })
-export class CustomerModule { }
+export class CustomerModule {}

@@ -1,21 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, forwardRef } from '@angular/core';
 import { ShoppingcartService } from 'src/app/services/shoppingcart.service';
 import { CartEntry } from 'src/app/models/cartEntry';
-import { ResourceLoader } from '@angular/compiler';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-shoppingcart',
   templateUrl: './shoppingcart.component.html',
-  styleUrls: ['./shoppingcart.component.scss']
+  styleUrls: ['./shoppingcart.component.scss'],
 })
 export class ShoppingcartComponent implements OnInit {
   cartEntries: Array<CartEntry>;
   fullPrice: Array<number> = [];
 
-  constructor(private cartService: ShoppingcartService) { }
+  constructor(private cartService: ShoppingcartService) {}
 
   ngOnInit(): void {
-    this.reload()
+    this.reload();
   }
 
   getFullPrice(): number {
@@ -35,11 +35,10 @@ export class ShoppingcartComponent implements OnInit {
 
   deleteItem(cartItem: CartEntry) {
     this.cartService.delete(cartItem);
-    //this.reload();
+    // this.reload();
   }
 
   private reload() {
     this.cartEntries = this.cartService.get();
   }
-
 }

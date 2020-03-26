@@ -3,24 +3,27 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore';
 //import {GeoFire, GeoFireTypes } from "geofire";
 import { BehaviorSubject } from 'rxjs';
-import { GeoCollectionReference, GeoFirestore, GeoQuery, GeoQuerySnapshot } from 'geofirestore';
+import {
+  GeoCollectionReference,
+  GeoFirestore,
+  GeoQuery,
+  GeoQuerySnapshot,
+} from 'geofirestore';
 import { firestore } from 'firebase';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GeoService {
-
   dbRef: any;
   geoFire: GeoFirestore;
   // Create a GeoCollection reference
   locations: GeoCollectionReference;
-//  types:GeoFireTypes.firebase.Reference;
+  //  types:GeoFireTypes.firebase.Reference;
 
   hits = new BehaviorSubject([]);
 
-  constructor(private db:AngularFirestore) { 
-
+  constructor(private db: AngularFirestore) {
     this.geoFire = new GeoFirestore(db.firestore);
     this.locations = this.geoFire.collection('locations');
     //var dbRef = this.db.collection('locations');
@@ -31,28 +34,26 @@ export class GeoService {
     // this.setLocation("a3", [51.531831, 7.690650]);
   }
 
-  setLocation(key:string, coords: Array<number>) {
+  setLocation(key: string, coords: Array<number>) {
     this.locations.add({
       name: 'my-location',
-      coordinates: new firestore.GeoPoint(coords[0], coords[1])
+      coordinates: new firestore.GeoPoint(coords[0], coords[1]),
     });
-
 
     // this.geoFire.set(key, coords)
     //             .then(_ => console.log('location updated'))
     //             .catch(err => console.log(err));
   }
 
-  getLocations(radius:number, coords: Array<number>){
-
-    const query: GeoQuery = this.locations.near({ 
-      center: new firestore.GeoPoint(coords[0], coords[1]), 
-      radius: radius 
+  getLocations(radius: number, coords: Array<number>) {
+    const query: GeoQuery = this.locations.near({
+      center: new firestore.GeoPoint(coords[0], coords[1]),
+      radius: radius,
     });
 
     query.get().then((value: GeoQuerySnapshot) => {
       console.log(value.docs);
-    });    
+    });
 
     // this.geoFire.query({
     //   cneter:coords,
@@ -69,5 +70,4 @@ export class GeoService {
     //     this.hits.next(currentHits);
     // })
   }
-  
 }

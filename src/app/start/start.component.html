@@ -8,20 +8,33 @@
   <img src="/assets/lokalkaufTopx4.png" />
   <div class="intro-text">
     <div id="backdrop-start"></div>
-    <div class="intro-text-box">Vielen lokalen Geschäften fehlen aufgrund der Corona-Pandemie Kunden und Umsätze brechen
-      ein.
+    <div class="intro-text-box">
+      Vielen lokalen Geschäften fehlen aufgrund der Corona-Pandemie Kunden und
+      Umsätze brechen ein.
       <br />
       <br />Du kannst ihnen jetzt helfen!
     </div>
-    <div class="intro-text-hint">Unsere Plattform befindet sich aktuell in der Entwicklung. Vieleicht hast Du einen
-      guten <a href="mailto:">Vorschlag</a>?
+    <div class="intro-text-hint">
+      Unsere Plattform befindet sich aktuell in der Entwicklung. Vieleicht hast
+      Du einen guten <a href="mailto:">Vorschlag</a>?
     </div>
   </div>
 
   <div id="start-input-container">
     <div id="start-input-center">
-      <input id="start-input" placeholder="PLZ" [value]="coovalue">
-      <button mat-raised-button id="start-button" (click)="action('44139')">los</button>
+      <app-lk-input
+        id="start-input"
+        placeholder="PLZ"
+        [value]="coovalue"
+      ></app-lk-input>
+      <app-lk-button
+        id="start-button"
+        (click)="action('44139')"
+        label="los"
+      ></app-lk-button>
     </div>
-    <div id="start-error" *ngIf="showError">Bitte geben Sie eine Postleitzahl an oder aktivieren Sie Ihr GPS</div>
+    <div id="start-error" *ngIf="showError">
+      Bitte geben Sie eine Postleitzahl an oder aktivieren Sie Ihr GPS
+    </div>
   </div>
+</div>

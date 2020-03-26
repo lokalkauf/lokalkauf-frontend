@@ -21,11 +21,11 @@
   left: 0;
 }
 
-.home-start>img {
+.home-start > img {
   margin-bottom: 20px;
 }
 
-.home-start>.intro-text {
+.home-start > .intro-text {
   font-size: 1rem;
   text-align: justify;
   padding: 1rem 2rem;
@@ -33,15 +33,14 @@
   line-height: 1.1rem;
   min-height: 240px;
 
-
   .intro-text-hint {
     margin-top: 2rem;
     font-size: 0.75rem;
     text-align: justify;
-    color: #C55A11;
+    color: #c55a11;
 
     a {
-      color: #C55A11;
+      color: #c55a11;
       text-decoration: underline;
     }
   }
@@ -63,26 +62,13 @@
   text-align: center;
 }
 
-
 #start-input-container {
   margin: 1.2rem;
-
 }
 
 #start-input {
-  box-sizing: border-box;
-  border-radius: 20px;
-  font-size: .8rem;
-  font-weight: 100;
-  min-width: 4rem;
-  height: 2.4rem;
-  letter-spacing: 1.5px;
-  background-color: #ffffff;
-  padding-left: 1.0rem;
-  border: dashed 1px rgb(116, 181, 48);
   float: left;
 }
-
 
 @media screen and (max-width: 368px) {
   #start-input {
@@ -103,25 +89,14 @@
 }
 
 #start-button {
-  color: rgb(82, 145, 15);
-  box-sizing: border-box;
-  border-radius: 20px;
-  box-shadow: 6px 6px 21px 0px rgba(0, 0, 0, 0.1);
-  font-size: 1rem;
-  font-weight: 100;
-  min-width: 4rem;
-  height: 2.4rem;
-  letter-spacing: 1.5px;
   float: right;
-  border: 0;
-  background-color: #ffffff;
 }
 
 #start-error {
   margin: 1.2rem 0;
   float: left;
-  font-size: .8rem;
-  color: #C25808;
+  font-size: 0.8rem;
+  color: #c25808;
 }
 
 /*
