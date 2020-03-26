@@ -5,12 +5,12 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: 'AIzaSyBPUxq7muZ6N09BQfoRpTpVZUceki0mmTo',
-    // authDomain: '<your-project-authdomain>',
-    databaseURL: 'https://lokalkauf-271814.firebaseio.com',
-    projectId: 'lokalkauf-271814',
-    storageBucket: 'lokalkauf-271814.appspot.com',
-    // messagingSenderId: '<your-messaging-sender-id>'
+    apiKey: 'AIzaSyDWKZmGX7RaxDfv8_s_mqA_Ct9iFSP2GiM',
+    // authDomain: 'lokalkauf-staging.firebaseapp.com',
+    databaseURL: 'https://lokalkauf-staging.firebaseio.com',
+    projectId: 'lokalkauf-staging',
+    storageBucket: 'lokalkauf-staging.appspot.com',
+    // messagingSenderId: '464711391631'
   }
 };
 
@@ -22,3 +22,4 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+
