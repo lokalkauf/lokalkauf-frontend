@@ -9,20 +9,29 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { RegistrationFormComponent } from './registration-form/registration-form.component';
+import { ProfileComponent } from './profile/profile.component';
+import { Routes, RouterModule } from '@angular/router';
 
-
+const routes: Routes = [
+  { path: 'trader/profile', component: ProfileComponent },
+  { path: 'trader/registration', component: RegistrationFormComponent }
+];
 
 @NgModule({
   declarations: [
     OrdersComponent,
     CreateProductComponent,
-    TraderMainComponent
+    TraderMainComponent,
+    RegistrationFormComponent,
+    ProfileComponent
   ],
   imports: [
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
     MatFormFieldModule,
+    RouterModule.forRoot(routes),
     MatInputModule,
     MatIconModule,
     MatButtonModule,
