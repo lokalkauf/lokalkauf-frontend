@@ -23,4 +23,5 @@
       <input id="start-input" #plz placeholder="PLZ">
       <button mat-raised-button id="start-button" (click)="action(plz.value)">los</button>
     </div>
+    <div id="start-error" *ngIf="showError">Bitte geben Sie eine Postleitzahl an oder aktivieren Sie Ihr GPS</div>
   </div>

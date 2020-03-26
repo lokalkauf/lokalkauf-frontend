@@ -19,6 +19,8 @@ export class StartComponent implements OnInit {
 
   constructor(private router: Router) { }
 
+  showError: boolean;
+
   ngOnInit(): void {
   }
 
@@ -28,8 +30,10 @@ export class StartComponent implements OnInit {
 
   action(plz: string) {
     if (this.isValidPlz(plz)) {
+      this.showError = false;
       this.router.navigate([ '/localtraders/' + plz ]);
     }
+    this.showError = true;
  }
 
  isValidPlz(plz: string): boolean {
