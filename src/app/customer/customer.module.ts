@@ -61,6 +61,7 @@ const routes: Routes = [
     ReusablesModule,
     FormsModule,
     ReactiveFormsModule,
+    ReusablesModule,
   ],
   exports: [ProductOverviewComponent, ProductItemComponent],
   providers: [ProductService],
