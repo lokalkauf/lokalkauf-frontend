@@ -1,15 +1,14 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-		// Allow anyone to read data from any trader
+    // Allow anyone to read data from any trader
     // Allow only the authenticated trader to write to his own document
     match /Traders/{uid}/{multiSegment=**} {
       allow read;
       allow write: if request.auth.uid == uid;
     }
-   match /Traders/{uid}/{multiSegment=**} {
-      allow read;
-      allow write: if request.auth.uid == uid;
+    match /{collection}/{multiSegments=**} {
+      allow read, write: if collection != "Traders";
     }
   }
 }
