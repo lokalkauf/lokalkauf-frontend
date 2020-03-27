@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  Input,
+  InjectionToken,
+} from '@angular/core';
 import { Link } from '../models/link';
 import { Router } from '@angular/router';
 import { isNumber } from 'util';
@@ -7,6 +13,7 @@ import { debounce } from 'lodash';
 import { GeoService } from 'src/app/services//geo.service';
 import { tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { ScrollStrategy } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-start',
@@ -21,6 +28,8 @@ export class StartComponent implements OnInit {
     new Link('Kiosk', '#bier', false),
     new Link('Weiteres', '/test', true),
   ];
+
+  MAT_AUTOCOMPLETE_SCROLL_STRATEGY: InjectionToken<() => ScrollStrategy>;
 
   lat: number;
   lng: number;
@@ -49,12 +58,18 @@ export class StartComponent implements OnInit {
 
   private getUserLocation() {
     this.geo.getUserPosition().subscribe((p) => {
-      if (p != null) this.currentPosition = p;
+      if (p != null) {
+        this.currentPosition = p;
+      }
     });
   }
 
   action() {
     this.router.navigate(['/localtraders/a']);
+  }
+
+  haendlerRegistrieren() {
+    this.router.navigate(['/']);
   }
 
   setposition(position: Array<number>) {

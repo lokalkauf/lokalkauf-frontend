@@ -2,67 +2,103 @@
 </app-horizontal-scaling-bar>-->
 
 <div class="home-start">
-  <img src="/assets/lokalkaufTopx4.png" />
+  <img src="/assets/lokalkaufTopx4-text-shadow.png" />
   <div class="intro-text">
     <div id="backdrop-start"></div>
+    <div class="intro-text-box-headline">Willkommen bei lokalkauf</div>
     <div class="intro-text-box">
-      Vielen lokalen Geschäften fehlen aufgrund der Corona-Pandemie Kunden und
-      Umsätze brechen ein.
-      <br />
-      <br />Du kannst ihnen jetzt helfen!
+      Wir sind die Plattform, um den stationären und lokalen Einzel-handel mit
+      dem Bürger digital zu verbinden.
     </div>
-    <div class="intro-text-hint">
-      Unsere Plattform befindet sich aktuell in der Entwicklung. Vieleicht hast
-      Du einen guten <a [routerLink]="'/feedback'">Vorschlag</a>?
+    <div class="divider"></div>
+    <div class="intro-text-box">
+      Finde hier Deinen Lieblingsladen oder Restaurant um die Ecke und kauf
+      lokal!
+    </div>
+
+    <div id="start-input-container">
+      <div id="start-input-center">
+        <input
+          type="hidden"
+          id="start-input"
+          placeholder="Coords"
+          [(ngModel)]="coords"
+          [value]="coovalue"
+        />
+        <!--<app-lk-input id="start-input" placeholder="PLZ" (keyup)="search($event.target.value)" *ngIf="!coovalue">
+        </app-lk-input>-->
+
+        <input
+          id="plz-input"
+          type="text"
+          name="coordbox"
+          placeholder="PLZ"
+          matInput
+          [matAutocomplete]="auto"
+          (keyup)="search($event.target.value)"
+          *ngIf="!coovalue"
+        />
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option
+            *ngFor="let option of suggestion"
+            [value]="option.plz + ' ' + option.note"
+            (click)="setposition(option.geo_point_2d)"
+          >
+            {{ option.plz }} {{ option.note }}
+          </mat-option>
+        </mat-autocomplete>
+        <div id="start-long-lat" *ngIf="coovalue">
+          GPS-Umkreisermittlung: 5km
+        </div>
+        <app-lk-button
+          id="start-button"
+          (click)="action()"
+          label="los"
+          [disabled]="!currentPosition"
+        ></app-lk-button>
+        <!--
+        <div *ngIf="suggestion" style="
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 250px;
+            height: 300px;
+            background-color: #fff;
+          ">
+          <div *ngFor="let s of suggestion">
+            <span (click)="setposition(s.geo_point_2d)"><b>- {{ s.note }}</b></span><br />
+            <span>- {{ s.plz }}</span><br />
+            <span>- {{ s.geo_point_2d }}</span><br />
+        </div>
+      </div>
+      --></div>
+      <div id="start-error" *ngIf="showError">
+        Bitte geben Sie eine Postleitzahl an oder aktivieren Sie Ihr GPS
+      </div>
     </div>
   </div>
 
-  <div id="start-input-container">
-    <div id="start-input-center">
-      <input
-        type="hidden"
-        id="start-input"
-        placeholder="Coords"
-        [(ngModel)]="coords"
-        [value]="coovalue"
-      />
-      <app-lk-input
-        id="start-input"
-        placeholder="PLZ"
-        (keyup)="search($event.target.value)"
-        *ngIf="!coovalue"
-      ></app-lk-input>
-      <div id="start-long-lat" *ngIf="coovalue">GPS-Umkreisermittlung: 5km</div>
-      <app-lk-button
-        id="start-button"
-        (click)="action()"
-        label="los"
-        [disabled]="!currentPosition"
-      ></app-lk-button>
-      <div
-        *ngIf="suggestion"
-        style="
-          position: absolute;
-          left: 0;
-          right: 0;
-          bottom: 250px;
-          height: 300px;
-          background-color: #fff;
-        "
-      >
-        <div *ngFor="let s of suggestion">
-          <span (click)="setposition(s.geo_point_2d)"
-            ><b>- {{ s.note }}</b></span
-          ><br />
-          <span>- {{ s.plz }}</span
-          ><br />
-          <span>- {{ s.geo_point_2d }}</span
-          ><br />
-        </div>
-      </div>
+  <div class="divider"></div>
+
+  <div class="intro-text">
+    <div class="intro-text-box">
+      Du bist Händler, Gastronom oder Ladenbesitzer dann melde Dich hier an:
     </div>
-    <div id="start-error" *ngIf="showError">
-      Bitte geben Sie eine Postleitzahl an oder aktivieren Sie Ihr GPS
+    <div>
+      <br />
+      <app-lk-button
+        id="register-button"
+        (click)="haendlerRegistrieren()"
+        label="Geschäftsprofil anlegen"
+      >
+      </app-lk-button>
+    </div>
+  </div>
+
+  <div class="intro-text">
+    <div class="intro-text-hint">
+      Unsere Plattform befindet sich aktuell in der Entwicklung. Vieleicht hast
+      Du einen guten <a [routerLink]="'/feedback'">Vorschlag</a>?
     </div>
   </div>
 </div>

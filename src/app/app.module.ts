@@ -32,6 +32,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReusablesModule } from './reusables/reusables.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FeedbackComponent } from './feedback/feedback.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { TraderMapComponent } from './customer/trader-map/trader-map.component';
 
@@ -65,6 +66,7 @@ const routes: Routes = [
     MatSidenavModule,
     MatSnackBarModule,
     MatFormFieldModule,
+    MatAutocompleteModule,
     MatCardModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
