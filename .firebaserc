@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "lokalkauf-271814"
+    "default": "lokalkauf-staging",
+    "production": "lokalkauf-271814"
   }
 }

@@ -1,0 +1,19 @@
+name: Production Build & Deploy
+
+on:
+  pull_request:
+    branches:
+    - master
+    - incubator
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/setup-node@master
+      with:
+        node-version: '12.x'
+    - run: npm ci
+    - run: npm run build -- --prod
+
