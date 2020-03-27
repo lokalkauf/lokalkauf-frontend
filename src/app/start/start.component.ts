@@ -22,7 +22,9 @@ export class StartComponent implements OnInit {
   lat: number;
   lng: number;
 
-  @Input() coovalue: string;
+  coovalue: string;
+  plz: string;
+  coords: string;
 
   constructor(private router: Router, private geo: GeoService) {}
 
@@ -44,21 +46,29 @@ export class StartComponent implements OnInit {
 
         this.coovalue = 'hallo: ' + this.lat + '-' + this.lng;
 
-        //this.geo.setLocation("meine-position", [this.lat, this.lng]);
+        // this.geo.setLocation("meine-position", [this.lat, this.lng]);
 
-        var l = this.geo.getLocations(0.5, [this.lat, this.lng]);
+        const l = this.geo.getLocations(0.5, [this.lat, this.lng]);
 
         this.coovalue = JSON.stringify(l);
       });
     }
   }
 
-  action(plz: string) {
-    if (this.isValidPlz(plz)) {
+  action() {
+    console.log(this.plz, ' ', this.coovalue);
+    if (this.isValidPlz(this.plz)) {
       this.showError = false;
-      this.router.navigate(['/localtraders/' + plz]);
+      this.router.navigate(['/localtraders/' + this.plz]);
+    }
+    if (this.isValidCoords(this.coovalue)) {
+      this.router.navigate(['/localtraders/' + this.coovalue]);
     }
     this.showError = true;
+  }
+
+  isValidCoords(coords: string) {
+    return coords;
   }
 
   isValidPlz(plz: string): boolean {
