@@ -1,40 +1,30 @@
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import {
-  Component,
-  OnInit,
-  Input,
-  forwardRef,
-  ViewChild,
-  ElementRef,
-  OnChanges,
-} from '@angular/core';
-import {
+  FormControl,
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
-  FormControl,
 } from '@angular/forms';
 import { fromEvent, Subject, merge } from 'rxjs';
 
 @Component({
-  selector: 'app-lk-input',
-  templateUrl: './lk-input.component.html',
-  styleUrls: ['./lk-input.component.scss'],
+  selector: 'app-lk-textarea',
+  templateUrl: './lk-textarea.component.html',
+  styleUrls: ['./lk-textarea.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: LkInputComponent,
+      useExisting: LkTextareaComponent,
       multi: true,
     },
   ],
 })
-export class LkInputComponent implements ControlValueAccessor {
-  @Input() type: string;
+export class LkTextareaComponent implements ControlValueAccessor {
   @Input() placeholder: string;
   @Input() value: string;
-  @Input() warn = false;
-  formControl = new FormControl('');
   disabled = false;
+  formControl = new FormControl('');
 
-  @ViewChild('input') set content(input: ElementRef<HTMLInputElement>) {
+  @ViewChild('textarea') set content(input: ElementRef<HTMLInputElement>) {
     merge(
       fromEvent(input.nativeElement, 'mousedown'),
       fromEvent(input.nativeElement, 'touchstart')

@@ -43,7 +43,7 @@ export class GeoService {
   getLocations(radius: number, coords: Array<number>) {
     const query: GeoQuery = this.locations.near({
       center: new firestore.GeoPoint(coords[0], coords[1]),
-      radius: radius,
+      radius,
     });
 
     return query.get();

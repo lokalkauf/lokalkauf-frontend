@@ -6,12 +6,13 @@ import { Trader } from '../../models/trader';
 @Component({
   selector: 'app-trader-overview',
   templateUrl: './trader-overview.component.html',
-  styleUrls: ['./trader-overview.component.scss']
+  styleUrls: ['./trader-overview.component.scss'],
 })
 export class TraderOverviewComponent {
   traders$: Observable<Trader[]>;
   constructor(db: AngularFirestore) {
-    this.traders$ = db.collection<Omit<Trader, 'id'>>('Traders').valueChanges({ idField: 'id' });
+    this.traders$ = db
+      .collection<Omit<Trader, 'id'>>('Traders')
+      .valueChanges({ idField: 'id' });
   }
-
 }

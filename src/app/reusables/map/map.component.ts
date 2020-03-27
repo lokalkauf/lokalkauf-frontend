@@ -79,13 +79,13 @@ export class MapComponent implements OnInit {
   }
 
   updateAfterZoom() {
-    var center = this.map.getCenter();
-    var eastBound = this.map.getBounds().getEast();
-    var centerEast = latLng(center.lat, eastBound);
+    const center = this.map.getCenter();
+    const eastBound = this.map.getBounds().getEast();
+    const centerEast = latLng(center.lat, eastBound);
 
-    var dist = center.distanceTo(centerEast);
-    var radius = dist * 2; //0.75
-    var radiusInKm = radius / 1000;
+    const dist = center.distanceTo(centerEast);
+    const radius = dist * 2; // 0.75
+    const radiusInKm = radius / 1000;
 
     console.log('current radius' + radiusInKm + 'km');
 
@@ -114,34 +114,38 @@ export class MapComponent implements OnInit {
 
   removeTargets(loaded: GeoQuerySnapshot) {
     this.targets.getLayers().forEach((l: Marker) => {
-      var exists = false;
+      let exists = false;
 
       loaded.forEach((lt) => {
         if (
-          lt.data().coordinates.latitude == l.getLatLng().lat &&
-          lt.data().coordinates.longitude == l.getLatLng().lng
+          lt.data().coordinates.latitude === l.getLatLng().lat &&
+          lt.data().coordinates.longitude === l.getLatLng().lng
         ) {
           exists = true;
         }
       });
 
-      if (!exists) this.targets.removeLayer(l);
+      if (!exists) {
+        this.targets.removeLayer(l);
+      }
     });
   }
 
   updateTarget(pos: LatLng) {
-    var exists = false;
+    let exists = false;
     this.targets.getLayers().forEach((l: Marker) => {
-      if (l.getLatLng().lat == pos.lat && l.getLatLng().lng == pos.lng) {
+      if (l.getLatLng().lat === pos.lat && l.getLatLng().lng === pos.lng) {
         exists = true;
       }
     });
 
-    if (!exists) marker(pos).addTo(this.targets);
+    if (!exists) {
+      marker(pos).addTo(this.targets);
+    }
   }
 
   updateCurrentPosition(pos: LatLng) {
-    var lln = latLng(pos[0], pos[1]);
+    const lln = latLng(pos[0], pos[1]);
 
     console.log('war hier: ' + pos);
 

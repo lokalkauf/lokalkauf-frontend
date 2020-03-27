@@ -8,9 +8,8 @@ describe('TraderMainComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TraderMainComponent ]
-    })
-    .compileComponents();
+      declarations: [TraderMainComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

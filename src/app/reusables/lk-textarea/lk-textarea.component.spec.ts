@@ -1,19 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { LkTextareaComponent } from './lk-textarea.component';
 
-import { TraderOverviewComponent } from './trader-overview.component';
-
-describe('TraderOverviewComponent', () => {
-  let component: TraderOverviewComponent;
-  let fixture: ComponentFixture<TraderOverviewComponent>;
+describe('LkButtonComponent', () => {
+  let component: LkTextareaComponent;
+  let fixture: ComponentFixture<LkTextareaComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TraderOverviewComponent],
+      declarations: [LkTextareaComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TraderOverviewComponent);
+    fixture = TestBed.createComponent(LkTextareaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

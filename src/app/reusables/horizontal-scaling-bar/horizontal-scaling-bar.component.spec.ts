@@ -8,9 +8,8 @@ describe('HorizontalScalingBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HorizontalScalingBarComponent ]
-    })
-    .compileComponents();
+      declarations: [HorizontalScalingBarComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

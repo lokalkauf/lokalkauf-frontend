@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
-import { tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-registration-form',
@@ -11,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./registration-form.component.scss'],
 })
 export class RegistrationFormComponent {
-  productForm = new FormGroup(
+  registrationForm = new FormGroup(
     {
       email: new FormControl('', [Validators.email]),
       password: new FormControl('', [Validators.required]),
@@ -21,43 +19,57 @@ export class RegistrationFormComponent {
       (formGroup) => {
         return formGroup.get('password').value ===
           formGroup.get('passwordRepeat').value
-          ? null
+          ? formGroup.get('email').errors
           : { notSame: true };
       },
     ]
   );
 
-  constructor(private auth: AngularFireAuth, router: Router) {
-    this.auth.user.subscribe((user) => {
-      if (user != null) {
+  get email() {
+    return this.registrationForm.get('email');
+  }
+
+  get password() {
+    return this.registrationForm.get('password');
+  }
+
+  get passwordRepeat() {
+    return this.registrationForm.get('passwordRepeat');
+  }
+
+  constructor(private userService: UserService, router: Router) {
+    this.userService.isLoggedIn$.subscribe((isLoggedIn) => {
+      if (isLoggedIn) {
         router.navigateByUrl(`trader/profile`);
       }
     });
   }
 
   async onSubmit() {
-    const email = this.productForm.get('email').value;
-    const password = this.productForm.get('password').value;
+    const email = this.registrationForm.get('email').value;
+    const password = this.registrationForm.get('password').value;
 
     try {
-      const test = await this.auth.auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
-      test.user.sendEmailVerification();
+      await this.userService.register(email, password);
     } catch (e) {
       switch (e.code) {
         case 'auth/email-already-in-use':
-          // TODO
+          this.registrationForm.setErrors({
+            emailInUse: true,
+          });
           break;
         case 'auth/invalid-email':
-          // TODO
+          this.registrationForm.setErrors({
+            invalidEmail: true,
+          });
           break;
         case 'auth/operation-not-allowed':
           // TODO
           break;
         case 'auth/weak-password':
-          // TODO
+          this.registrationForm.setErrors({
+            weakPassword: true,
+          });
           break;
         default:
           break;

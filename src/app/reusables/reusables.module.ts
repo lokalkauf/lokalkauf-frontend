@@ -6,6 +6,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LkInputComponent } from './lk-input/lk-input.component';
 import { LkButtonComponent } from './lk-button/lk-button.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LkTextareaComponent } from './lk-textarea/lk-textarea.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HorizontalScalingBarComponent,
     LkInputComponent,
     LkButtonComponent,
+    LkTextareaComponent,
   ],
   imports: [
     CommonModule,
@@ -25,6 +27,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HorizontalScalingBarComponent,
     LkInputComponent,
     LkButtonComponent,
+    LkTextareaComponent,
   ],
 })
 export class ReusablesModule {}
