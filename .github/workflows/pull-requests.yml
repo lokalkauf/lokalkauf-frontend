@@ -25,10 +25,6 @@ jobs:
     - name: Build Project 
       run: npm run build
 
-    - name: Run Tests
-      run: npm run test
-      continue-on-error: true
-
     - name: Check Code Style
       run: npm run lint
       continue-on-error: true
