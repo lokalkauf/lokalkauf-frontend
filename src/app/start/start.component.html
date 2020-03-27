@@ -29,7 +29,7 @@
       <app-lk-input
         id="start-input"
         placeholder="PLZ"
-        [(ngModel)]="plz"
+        (keyup)="search($event.target.value)"
         *ngIf="!coovalue"
       ></app-lk-input>
       <div id="start-long-lat" *ngIf="coovalue">GPS-Umkreisermittlung: 5km</div>
@@ -37,7 +37,29 @@
         id="start-button"
         (click)="action()"
         label="los"
+        [disabled]="!currentPosition"
       ></app-lk-button>
+      <div
+        *ngIf="suggestion"
+        style="
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 250px;
+          height: 300px;
+          background-color: #fff;
+        "
+      >
+        <div *ngFor="let s of suggestion">
+          <span (click)="setposition(s.geo_point_2d)"
+            ><b>- {{ s.note }}</b></span
+          ><br />
+          <span>- {{ s.plz }}</span
+          ><br />
+          <span>- {{ s.geo_point_2d }}</span
+          ><br />
+        </div>
+      </div>
     </div>
     <div id="start-error" *ngIf="showError">
       Bitte geben Sie eine Postleitzahl an oder aktivieren Sie Ihr GPS

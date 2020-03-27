@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -76,6 +77,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     AngularFireAuthModule,
+    HttpClientModule,
   ],
   exports: [RouterModule],
   providers: [ShoppingcartService, UserService],
