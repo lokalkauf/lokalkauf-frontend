@@ -1,7 +1,8 @@
 <div class="registration-form">
-  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
     <div class="registration-input">
       <app-lk-input
+        [warn]="email.invalid"
         type="email"
         formControlName="email"
         placeholder="Email"
@@ -9,6 +10,7 @@
     </div>
     <div class="registration-input">
       <app-lk-input
+        [warn]="password.invalid"
         type="password"
         formControlName="password"
         placeholder="Passwort"
@@ -16,14 +18,48 @@
     </div>
     <div class="registration-input">
       <app-lk-input
+        [warn]="
+          passwordRepeat.invalid ||
+          (registrationForm.invalid && registrationForm.errors.notSame)
+        "
         type="password"
         formControlName="passwordRepeat"
         placeholder="Passwort widerholen"
       ></app-lk-input>
     </div>
-    <app-lk-button
-      [disabled]="!productForm.valid"
-      label="Registrieren"
-    ></app-lk-button>
+    <div class="button-and-error">
+      <app-lk-button
+        [disabled]="!registrationForm.valid"
+        label="Registrieren"
+      ></app-lk-button>
+      <div
+        class="error"
+        *ngIf="registrationForm.errors && registrationForm.errors.emailInUse"
+      >
+        <span>Ein Konto mit der E-Mail Adresse existiert bereits.</span>
+      </div>
+      <div
+        class="error"
+        *ngIf="registrationForm.errors && registrationForm.errors.invalidEmail"
+      >
+        <span>Die angegebene E-Mail Adresse ist ungültig.</span>
+      </div>
+      <div
+        class="error"
+        *ngIf="
+          registrationForm.errors &&
+          (registrationForm.errors.operationNotAllowed ||
+            registrationForm.errors.undefinedError)
+        "
+      >
+        <span>Tut uns leid. Etwas ist schiefgelaufen.</span>
+      </div>
+      <div
+        class="error"
+        *ngIf="registrationForm.errors && registrationForm.errors.weakPassword"
+      >
+        <span>Das gewählte Passwort ist zu schwach.</span>
+      </div>
+    </div>
   </form>
 </div>

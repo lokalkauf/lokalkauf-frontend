@@ -10,4 +10,8 @@ input {
   padding-left: 1rem;
   border: dashed 1px rgb(116, 181, 48);
   width: 100%;
+
+  &.warn {
+    border: dashed 1px red;
+  }
 }

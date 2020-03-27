@@ -2,4 +2,21 @@
   .registration-input {
     margin-bottom: 20px;
   }
+
+  .button-and-error {
+    display: flex;
+    align-items: center;
+
+    .error {
+      font-size: 0.7rem;
+      flex-grow: 1;
+      margin-left: 20px;
+      span {
+        padding: 10px;
+        background-color: lightcoral;
+        border: 1px solid darkred;
+        border-radius: 15px;
+      }
+    }
+  }
 }
