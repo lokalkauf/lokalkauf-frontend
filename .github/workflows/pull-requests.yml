@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Build & Test
     runs-on: ubuntu-latest
     steps:
     - name: Clone Repository 
@@ -24,15 +24,6 @@ jobs:
 
     - name: Build Project 
       run: npm run build
-
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-    - name: Run Tests
-      run: npm run test
-      continue-on-error: true
 
     - name: Check Code Style
       run: npm run lint
