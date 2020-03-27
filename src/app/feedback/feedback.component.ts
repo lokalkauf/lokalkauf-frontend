@@ -1,5 +1,6 @@
-import { Location } from '@angular/common';
+import { Location, TranslationWidth } from '@angular/common';
 import { Component } from '@angular/core';
+import * as EmailValidatorTS from 'email-validator';
 
 @Component({
   selector: 'app-feedback',
@@ -20,10 +21,13 @@ export class FeedbackComponent {
   }
 
   absenden() {
-    if (this.email && this.message) {
+    if (this.message && (!this.email || this.validMail(this.email))) {
       this.location.back();
     } else {
       this.showError = true;
     }
+  }
+  validMail(mail: string): boolean {
+    return EmailValidatorTS.validate(mail);
   }
 }

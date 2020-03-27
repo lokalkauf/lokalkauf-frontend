@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~9.0.7",
     "@angular/router": "~9.0.7",
     "@asymmetrik/ngx-leaflet": "^6.0.1",
+    "email-validator": "^2.0.4",
     "firebase": "^7.12.0",
     "geofire": "^5.0.1",
     "geofirestore": "^3.4.1",
