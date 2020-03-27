@@ -30,6 +30,7 @@ import { UserService } from './services/user.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReusablesModule } from './reusables/reusables.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 import { TraderMapComponent } from './customer/trader-map/trader-map.component';
 
@@ -42,6 +43,7 @@ const routes: Routes = [
   { path: 'imprint', component: ImprintComponent },
   { path: 'transport', component: TransportMainComponent },
   { path: 'verkaeufer', component: TraderMainComponent },
+  { path: 'feedback', component: FeedbackComponent },
 ];
 
 @NgModule({
@@ -51,6 +53,7 @@ const routes: Routes = [
     ImprintComponent,
     RegistrationComponent,
     LoginComponent,
+    FeedbackComponent,
   ],
   imports: [
     BrowserModule,
