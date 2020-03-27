@@ -11,6 +11,34 @@
   }
 }
 
+.start-logo-top {
+  position: absolute;
+  z-index: +1;
+  top: 5px;
+  width: 100%;
+
+  @media screen and (max-width: 767px) {
+    left: 5px;
+  }
+
+  @media screen and (min-width: 768px) {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  img {
+    @media screen and (max-width: 767px) {
+      width: 2rem;
+    }
+
+    @media screen and (min-width: 768px) {
+      position: absolute;
+      left: calc(50% - 300px);
+      top: 20px;
+    }
+  }
+}
+
 #backdrop-start {
   background: no-repeat url('../../assets/backpane-hipster.png');
   background-size: cover;
