@@ -4,8 +4,7 @@ export class Link {
   private feedback: string;
   public activated: boolean;
 
-  constructor(name: string, urlOrFeedback: string, useUrl: boolean)
-  {
+  constructor(name: string, urlOrFeedback: string, useUrl: boolean) {
     this.name = name;
 
     if (useUrl) {

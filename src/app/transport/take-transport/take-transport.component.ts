@@ -3,13 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-take-transport',
   templateUrl: './take-transport.component.html',
-  styleUrls: ['./take-transport.component.scss']
+  styleUrls: ['./take-transport.component.scss'],
 })
 export class TakeTransportComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

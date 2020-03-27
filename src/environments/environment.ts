@@ -11,7 +11,7 @@ export const environment = {
     projectId: 'lokalkauf-271814',
     storageBucket: 'lokalkauf-271814.appspot.com',
     // messagingSenderId: '<your-messaging-sender-id>'
-  }
+  },
 };
 
 /*

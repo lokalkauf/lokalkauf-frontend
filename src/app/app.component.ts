@@ -5,14 +5,13 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   events: string[] = [];
   opened: boolean;
 
-  constructor(public router: Router) {
-  }
+  constructor(public router: Router) {}
 
   navigate(route: string) {
     console.log(route);
