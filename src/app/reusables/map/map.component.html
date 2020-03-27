@@ -1,5 +1,7 @@
-<div style="height: 300px;"
-     leaflet
-		 [leafletOptions]="options"
-		 [leafletLayers]="markers">
-</div>
+<div
+  class="app-map"
+  leaflet
+  (leafletMapReady)="onMapReady($event)"
+  [leafletOptions]="options"
+  [leafletLayers]="markers"
+></div>

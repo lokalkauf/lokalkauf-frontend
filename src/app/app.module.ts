@@ -31,6 +31,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReusablesModule } from './reusables/reusables.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { TraderMapComponent } from './customer/trader-map/trader-map.component';
+
+import { from } from 'rxjs';
+
 const routes: Routes = [
   { path: '', component: StartComponent },
   { path: 'register', component: RegistrationComponent },

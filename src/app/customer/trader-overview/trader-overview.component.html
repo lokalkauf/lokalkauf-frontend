@@ -1,5 +1,8 @@
+<app-map class="tradersmap"></app-map>
+
 <div class="trader-overview">
-  <app-trader-item *ngFor="let trader of traders$ | async" 
+  <app-trader-item
+    *ngFor="let trader of traders$ | async"
     [trader]="trader"
   ></app-trader-item>
 </div>
