@@ -36,6 +36,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
 import { TraderMapComponent } from './customer/trader-map/trader-map.component';
 
 import { from } from 'rxjs';
+import { SafePipe } from './pipes/safe.pipe';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -55,6 +56,7 @@ const routes: Routes = [
     RegistrationComponent,
     LoginComponent,
     FeedbackComponent,
+    SafePipe,
   ],
   imports: [
     BrowserModule,
