@@ -20,6 +20,7 @@ import { ProductService } from '../services/product.service';
 import { ProductDetailFeedbackComponent } from './product-detail-feedback/product-detail-feedback.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReusablesModule } from '../reusables/reusables.module';
+import { InquiryConfirmationComponent } from './inquiry-confirmation/inquiry-confirmation.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: 'localtraders/:plz', component: TraderOverviewComponent },
   { path: 'tradermap', component: TraderMapComponent },
   { path: 'trader-detail/:id', component: TraderDetailComponent },
+  { path: 'contacted', component: InquiryConfirmationComponent },
 ];
 
 @NgModule({
@@ -46,6 +48,7 @@ const routes: Routes = [
     TraderDetailComponent,
     TraderMapComponent,
     ShoppingcartItemComponent,
+    InquiryConfirmationComponent,
   ],
   imports: [
     CommonModule,
