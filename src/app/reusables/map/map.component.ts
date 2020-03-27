@@ -65,15 +65,17 @@ export class MapComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((p) => {
-        this.updateCurrentPosition(
-          latLng(p.coords.latitude, p.coords.longitude)
-        );
+  ngOnInit(): void {}
+
+  ngAfterViewInit() {
+    console.log('geo disabled, get geo...');
+
+    this.geo.getUserPosition().subscribe((p) => {
+      if (p != null) {
+        this.updateCurrentPosition(latLng(p[0], p[1]));
         this.loadTrades(0.5);
-      });
-    }
+      }
+    });
   }
 
   updateAfterZoom() {

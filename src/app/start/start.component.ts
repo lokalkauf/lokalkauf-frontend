@@ -2,8 +2,11 @@ import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { Link } from '../models/link';
 import { Router } from '@angular/router';
 import { isNumber } from 'util';
+import { debounce } from 'lodash';
 
 import { GeoService } from 'src/app/services//geo.service';
+import { tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-start',
@@ -26,7 +29,13 @@ export class StartComponent implements OnInit {
   plz: string;
   coords: string;
 
-  constructor(private router: Router, private geo: GeoService) {}
+  suggestion: any;
+
+  currentPosition: Array<number>;
+
+  constructor(private router: Router, private geo: GeoService) {
+    this.search = debounce(this.search, 2000);
+  }
 
   showError: boolean;
 
@@ -39,39 +48,28 @@ export class StartComponent implements OnInit {
   }
 
   private getUserLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.lat = position.coords.latitude;
-        this.lng = position.coords.longitude;
-
-        this.coovalue = 'hallo: ' + this.lat + '-' + this.lng;
-
-        // this.geo.setLocation("meine-position", [this.lat, this.lng]);
-
-        const l = this.geo.getLocations(0.5, [this.lat, this.lng]);
-
-        this.coovalue = JSON.stringify(l);
-      });
-    }
+    this.geo.getUserPosition().subscribe((p) => {
+      if (p != null) this.currentPosition = p;
+    });
   }
 
   action() {
-    console.log(this.plz, ' ', this.coovalue);
-    if (this.isValidPlz(this.plz)) {
-      this.showError = false;
-      this.router.navigate(['/localtraders/' + this.plz]);
-    }
-    if (this.isValidCoords(this.coovalue)) {
-      this.router.navigate(['/localtraders/' + this.coovalue]);
-    }
-    this.showError = true;
+    this.router.navigate(['/localtraders/a']);
   }
 
-  isValidCoords(coords: string) {
-    return coords;
+  setposition(position: Array<number>) {
+    this.suggestion = null;
+    console.log('pos: ' + position);
+    this.currentPosition = position;
+    this.geo.setUserPosition(this.currentPosition);
   }
 
-  isValidPlz(plz: string): boolean {
-    return !isNaN(Number(plz)) && Number(plz).toString().length === 5;
+  search(searchtext) {
+    this.geo.search(searchtext).then((d: any) => {
+      console.log(d);
+      this.suggestion = d.records.map((m) => m.fields);
+
+      console.log('result: ' + this.suggestion);
+    });
   }
 }
