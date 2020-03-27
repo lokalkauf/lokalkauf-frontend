@@ -15,3 +15,12 @@ input {
     border: dashed 1px red;
   }
 }
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

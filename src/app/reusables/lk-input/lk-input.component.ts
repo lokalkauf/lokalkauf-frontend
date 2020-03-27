@@ -35,10 +35,9 @@ export class LkInputComponent implements ControlValueAccessor {
   disabled = false;
 
   @ViewChild('input') set content(input: ElementRef<HTMLInputElement>) {
-    merge(
-      fromEvent(input.nativeElement, 'mousedown'),
-      fromEvent(input.nativeElement, 'touchstart')
-    ).subscribe(() => this.onTouch$.next());
+    merge(fromEvent(input.nativeElement, 'focusout')).subscribe(() =>
+      this.onTouch$.next()
+    );
   }
 
   onTouch$ = new Subject();
