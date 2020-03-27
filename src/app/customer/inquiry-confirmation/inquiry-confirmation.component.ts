@@ -12,6 +12,6 @@ export class InquiryConfirmationComponent implements OnInit {
   ngOnInit(): void {}
 
   redirectToStart() {
-    this.router.navigate(['/localtraders']);
+    this.router.navigate(['/']);
   }
 }
