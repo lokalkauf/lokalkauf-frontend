@@ -41,9 +41,11 @@ export class StartComponent implements OnInit {
   suggestion: any;
 
   currentPosition: Array<number>;
+  disabledLosButton: boolean;
 
   constructor(private router: Router, private geo: GeoService) {
     this.search = debounce(this.search, 2000);
+    this.disabledLosButton = true;
   }
 
   showError: boolean;
@@ -77,6 +79,7 @@ export class StartComponent implements OnInit {
     console.log('pos: ' + position);
     this.currentPosition = position;
     this.geo.setUserPosition(this.currentPosition);
+    this.disabledLosButton = false;
   }
 
   search(searchtext) {

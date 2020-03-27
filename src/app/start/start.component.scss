@@ -1,12 +1,13 @@
 .home-start {
   width: calc(100%);
   text-align: center;
-  margin-top: 9.4rem;
+  margin-top: 10.4rem;
 
   @media screen and (min-width: 768px) {
     width: 740px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 28.4rem;
   }
 }
 
@@ -19,7 +20,16 @@
   position: absolute;
   z-index: -1;
   top: 0;
-  left: 0;
+
+  @media screen and (max-width: 767px) {
+    left: 0;
+  }
+
+  @media screen and (min-width: 768px) {
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 @media screen and (min-width: 768px) {
@@ -49,6 +59,14 @@
   background-color: rgba(255, 255, 255, 0.9);
   line-height: 1.1rem;
   min-height: 240px;
+}
+
+.additional-intro-text {
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 1rem 2rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  line-height: 1.1rem;
 
   .intro-text-hint {
     margin-top: 2rem;
@@ -147,8 +165,4 @@ input {
   background-color: #ffffff;
   padding-left: 1rem;
   border: dashed 1px rgb(116, 181, 48);
-}
-
-#register-button {
-  margin: 2.2rem;
 }
