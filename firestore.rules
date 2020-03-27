@@ -4,8 +4,12 @@ service cloud.firestore {
 		// Allow anyone to read data from any trader
     // Allow only the authenticated trader to write to his own document
     match /Traders/{uid}/{multiSegment=**} {
-    	allow read;
-    	allow write: if request.auth.uid == uid;
+      allow read;
+      allow write: if request.auth.uid == uid;
+    }
+   match /Traders/{uid}/{multiSegment=**} {
+      allow read;
+      allow write: if request.auth.uid == uid;
     }
   }
 }
