@@ -5,13 +5,12 @@ import { Observable } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ShoppingcartService {
   private cartItems: Array<CartEntry> = null;
 
-  constructor(private db: AngularFirestore) {
-  }
+  constructor(private db: AngularFirestore) {}
 
   get(): CartEntry[] {
     this.loadIfNull();
@@ -22,7 +21,9 @@ export class ShoppingcartService {
   add(cartEntry: CartEntry) {
     this.loadIfNull();
 
-    const foundItem = this.cartItems.find(x => x.productId === cartEntry.productId);
+    const foundItem = this.cartItems.find(
+      (x) => x.productId === cartEntry.productId
+    );
     if (foundItem) {
       foundItem.count += cartEntry.count;
     } else {
@@ -35,7 +36,9 @@ export class ShoppingcartService {
   delete(cartEntry: CartEntry) {
     this.loadIfNull();
 
-    const foundIndex = this.cartItems.findIndex(x => x.productId === cartEntry.productId);
+    const foundIndex = this.cartItems.findIndex(
+      (x) => x.productId === cartEntry.productId
+    );
 
     if (foundIndex >= 0) {
       this.cartItems.splice(foundIndex, 1);
@@ -46,7 +49,9 @@ export class ShoppingcartService {
   update(cartEntry: CartEntry) {
     this.loadIfNull();
 
-    const foundIndex = this.cartItems.findIndex(x => x.productId === cartEntry.productId);
+    const foundIndex = this.cartItems.findIndex(
+      (x) => x.productId === cartEntry.productId
+    );
 
     this.cartItems[foundIndex] = cartEntry;
     this.saveChanges();

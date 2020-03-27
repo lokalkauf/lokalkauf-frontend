@@ -6,17 +6,14 @@ import { TransportItemComponent } from './transport-item/transport-item.componen
 import { TakeTransportComponent } from './take-transport/take-transport.component';
 import { TransportMainComponent } from './transport-main/transport-main.compontent';
 
-
 @NgModule({
   declarations: [
     TransportOffersComponent,
     TransportDetailComponent,
     TransportItemComponent,
     TakeTransportComponent,
-    TransportMainComponent
+    TransportMainComponent,
   ],
-  imports: [
-    CommonModule
-  ]
+  imports: [CommonModule],
 })
-export class TransportModule { }
+export class TransportModule {}
