@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.scss']
+  styleUrls: ['./registration.component.scss'],
 })
 export class RegistrationComponent implements OnInit {
   user: User = new User();
@@ -17,7 +17,11 @@ export class RegistrationComponent implements OnInit {
 
   passwordValid;
 
-  constructor(private auth: AngularFireAuth, private db: AngularFirestore, private router: Router) { }
+  constructor(
+    private auth: AngularFireAuth,
+    private db: AngularFirestore,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.user.type = 'customer';
@@ -31,18 +35,25 @@ export class RegistrationComponent implements OnInit {
 
   register() {
     if (this.isValid()) {
-      this.auth.auth.createUserWithEmailAndPassword(this.user.email, this.password).then(this.addUserData.bind(this));
+      this.auth.auth
+        .createUserWithEmailAndPassword(this.user.email, this.password)
+        .then(this.addUserData.bind(this));
     }
   }
 
   addUserData(addUserData: firebase.auth.UserCredential) {
-    this.db.collection<User>('Users').add({...this.user}).then(this.login.bind(this));
+    this.db
+      .collection<User>('Users')
+      .add({ ...this.user })
+      .then(this.login.bind(this));
   }
 
   login(value: any) {
-    this.auth.auth.signInWithEmailAndPassword(this.user.email, this.password).then(this.saveUserCredentialAndRedirect.bind(this));
+    this.auth.auth
+      .signInWithEmailAndPassword(this.user.email, this.password)
+      .then(this.saveUserCredentialAndRedirect.bind(this));
   }
-  saveUserCredentialAndRedirect(userCredential: any){
+  saveUserCredentialAndRedirect(userCredential: any) {
     localStorage.setItem('user-credential', JSON.stringify(userCredential));
     this.router.navigate(['/']);
   }

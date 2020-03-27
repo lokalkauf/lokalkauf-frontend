@@ -19,14 +19,23 @@
 
   <div id="start-input-container">
     <div id="start-input-center">
+      <input
+        type="hidden"
+        id="start-input"
+        placeholder="Coords"
+        [(ngModel)]="coords"
+        [value]="coovalue"
+      />
       <app-lk-input
         id="start-input"
         placeholder="PLZ"
-        [value]="coovalue"
+        [(ngModel)]="plz"
+        *ngIf="!coovalue"
       ></app-lk-input>
+      <div id="start-long-lat" *ngIf="coovalue">GPS-Umkreisermittlung: 5km</div>
       <app-lk-button
         id="start-button"
-        (click)="action('44139')"
+        (click)="action()"
         label="los"
       ></app-lk-button>
     </div>
