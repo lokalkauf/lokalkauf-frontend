@@ -29,7 +29,7 @@ const routes: Routes = [
   },
   { path: 'buy/confirmation', component: BuyConfirmationComponent },
   { path: 'cart', component: ShoppingcartComponent },
-  { path: 'localtraders/:plz', component: TraderOverviewComponent },
+  { path: 'localtraders/:long/:lat', component: TraderOverviewComponent },
   { path: 'tradermap', component: TraderMapComponent },
   { path: 'trader-detail/:id', component: TraderDetailComponent },
   { path: 'contacted', component: InquiryConfirmationComponent },

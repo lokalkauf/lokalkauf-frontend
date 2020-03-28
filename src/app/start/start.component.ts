@@ -67,7 +67,13 @@ export class StartComponent implements OnInit {
   }
 
   action() {
-    this.router.navigate(['/localtraders/a']);
+    if (this.currentPosition && this.currentPosition.length === 2) {
+      this.router.navigate([
+        '/localtraders',
+        this.currentPosition[0],
+        this.currentPosition[1],
+      ]);
+    }
   }
 
   haendlerRegistrieren() {
