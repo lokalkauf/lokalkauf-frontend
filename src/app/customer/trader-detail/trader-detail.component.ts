@@ -7,6 +7,8 @@ import { CarouselEntry } from 'src/app/models/carouselEntry';
 import { Link } from 'src/app/models/link';
 import { TraderProfile } from 'src/app/models/traderProfile';
 import { Trader } from 'src/app/models/trader';
+import { EMail } from '../../models/email';
+import { EMailService } from '../../services/email.service';
 
 @Component({
   selector: 'app-trader-detail',
@@ -20,7 +22,11 @@ export class TraderDetailComponent implements OnInit {
 
   showMoreText = false;
 
-  constructor(private db: AngularFirestore, private route: ActivatedRoute) {}
+  constructor(
+    private db: AngularFirestore,
+    private route: ActivatedRoute,
+    private mailService: EMailService
+  ) {}
 
   ngOnInit(): void {
     this.trader$ = this.route.params.pipe(
@@ -59,6 +65,57 @@ export class TraderDetailComponent implements OnInit {
       return inputText.substring(0, 200);
     } else {
       return inputText;
+    }
+  }
+
+  async onSubmit() {
+    // TODO finalize call for backend sending mail
+    console.log('form submitted');
+
+    const email: EMail = {
+      acceptedAgb: false,
+      fromEMail: '',
+      fromPhone: '',
+      fromPreferredContact: '',
+      fromName: '',
+      id: 0,
+      message: '',
+      title: '',
+      toEMail: '',
+      toName: '',
+    };
+
+    try {
+      await this.mailService.send(email);
+    } catch (e) {
+      // TODO show ERRORs
+      // switch (e.code) {
+      //   case 'auth/email-already-in-use':
+      //     this.registrationForm.setErrors({
+      //       emailInUse: true,
+      //     });
+      //     break;
+      //   case 'auth/invalid-email':
+      //     this.registrationForm.setErrors({
+      //       invalidEmail: true,
+      //     });
+      //     break;
+      //   case 'auth/operation-not-allowed':
+      //     this.registrationForm.setErrors({
+      //       undefinedError: true,
+      //     });
+      //     break;
+      //   case 'auth/weak-password':
+      //     this.registrationForm.setErrors({
+      //       weakPassword: true,
+      //     });
+      //     break;
+      //   default:
+      //     this.registrationForm.setErrors({
+      //       undefinedError: true,
+      //     });
+      //     break;
+      // }
     }
   }
 }

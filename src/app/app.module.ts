@@ -31,6 +31,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
+import { CommonModule } from '@angular/common';
+import { EMailService } from './services/email.service';
 import { SafePipe } from './pipes/safe.pipe';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SpinnerService } from './services/spinner.service';
@@ -54,6 +56,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     MatIconModule,
     MatSidenavModule,
@@ -86,7 +89,9 @@ const routes: Routes = [
       useClass: HttpCommunicationInterceptor,
       multi: true,
     },
+    EMailService,
   ],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}
