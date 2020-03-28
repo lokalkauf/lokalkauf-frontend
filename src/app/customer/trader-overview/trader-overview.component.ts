@@ -28,7 +28,7 @@ export class TraderOverviewComponent {
        console.log('lat' + params['lat'] + " lng: " + params['lng']);
 
        try {
-           const pos = [Number.parseFloat(params['lat']), Number.parseFloat(params['lng'])];
+          const pos = [Number.parseFloat(params['lat']), Number.parseFloat(params['lng'])];
           this.geo.setUserPosition(pos);
        }
        catch       

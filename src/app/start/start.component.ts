@@ -14,6 +14,7 @@ import { GeoService } from 'src/app/services//geo.service';
 import { tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ScrollStrategy } from '@angular/cdk/overlay';
+import { $ } from 'protractor';
 
 @Component({
   selector: 'app-start',
