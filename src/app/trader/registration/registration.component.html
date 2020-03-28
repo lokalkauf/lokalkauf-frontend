@@ -1,0 +1,150 @@
+<div class="registration-head">
+  <h2>
+    Anmeldung
+  </h2>
+  Melde dich kostenlos an und verkaufe Deine Produkte in Deiner Nachbarschaft.
+</div>
+
+<div class="registration-form">
+  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+    <div class="registration-input">
+      <app-lk-input
+        [warn]="businessname.touched && businessname.invalid"
+        type="text"
+        formControlName="businessname"
+        placeholder="Firmenname*"
+      ></app-lk-input>
+    </div>
+    <div class="registration-input">
+      <app-lk-input
+        [warn]="ownerFirstname.touched && ownerFirstname.invalid"
+        type="text"
+        formControlName="ownerFirstname"
+        placeholder="Vorname"
+      ></app-lk-input>
+    </div>
+    <div class="registration-input">
+      <app-lk-input
+        [warn]="ownerLastname.touched && ownerLastname.invalid"
+        type="text"
+        formControlName="ownerLastname"
+        placeholder="Nachname"
+      ></app-lk-input>
+    </div>
+    <div class="registration-input">
+      <app-lk-input
+        [warn]="phone.touched && phone.invalid"
+        type="tel"
+        formControlName="phone"
+        placeholder="Telefonnummer*"
+      ></app-lk-input>
+    </div>
+    <div class="address">
+      <div class="registration-input street">
+        <app-lk-input
+          [warn]="street.touched && street.invalid"
+          type="text"
+          formControlName="street"
+          placeholder="Straße*"
+        ></app-lk-input>
+      </div>
+      <div class="registration-input streetnumber">
+        <app-lk-input
+          [warn]="streetnumber.touched && streetnumber.invalid"
+          type="text"
+          formControlName="streetnumber"
+          placeholder="Nr.*"
+        ></app-lk-input>
+      </div>
+      <div class="registration-input postcode">
+        <app-lk-input
+          [warn]="postcode.touched && postcode.invalid"
+          type="number"
+          formControlName="postcode"
+          placeholder="Postleitzahl*"
+        ></app-lk-input>
+      </div>
+      <div class="registration-input city">
+        <app-lk-input
+          [warn]="city.touched && city.invalid"
+          type="text"
+          formControlName="city"
+          placeholder="Stadt*"
+        ></app-lk-input>
+      </div>
+    </div>
+    <br />
+    <div class="registration-input">
+      <app-lk-input
+        [warn]="email.touched && email.invalid"
+        type="email"
+        formControlName="email"
+        placeholder="Email*"
+      ></app-lk-input>
+    </div>
+    <div class="registration-input">
+      <app-lk-input
+        [warn]="password.touched && password.invalid"
+        type="password"
+        formControlName="password"
+        placeholder="Passwort*"
+      ></app-lk-input>
+    </div>
+    <div class="registration-input">
+      <app-lk-input
+        [warn]="
+          passwordRepeat.touched &&
+          (passwordRepeat.invalid ||
+            (registrationForm.errors && registrationForm.errors.notSame))
+        "
+        type="password"
+        formControlName="passwordRepeat"
+        placeholder="Passwort widerholen*"
+      ></app-lk-input>
+    </div>
+    <div class="agb">
+      <label>
+        <input type="checkbox" formControlName="agbRead" /> Mit meiner Anmeldung
+        versichere ich, dass ich die <a routerLink="#">AGB</a> und die
+        <a routerLink="#">Datenschutzrichtlinen</a> gelesen habe und damit
+        einverstanden bin.
+      </label>
+    </div>
+
+    <div class="button-and-error">
+      <app-lk-button
+        [disabled]="!registrationForm.valid"
+        type="submit"
+        label="Registrieren"
+      ></app-lk-button>
+      <div
+        class="error"
+        *ngIf="registrationForm.errors && registrationForm.errors.emailInUse"
+      >
+        <span>Ein Konto mit der E-Mail Adresse existiert bereits.</span>
+      </div>
+      <div
+        class="error"
+        *ngIf="registrationForm.errors && registrationForm.errors.invalidEmail"
+      >
+        <span>Die angegebene E-Mail Adresse ist ungültig.</span>
+      </div>
+      <div
+        class="error"
+        *ngIf="
+          registrationForm.errors &&
+          (registrationForm.errors.operationNotAllowed ||
+            registrationForm.errors.undefinedError)
+        "
+      >
+        <span>Tut uns leid. Etwas ist schiefgelaufen.</span>
+      </div>
+      <div
+        class="error"
+        *ngIf="registrationForm.errors && registrationForm.errors.weakPassword"
+      >
+        <span>Das gewählte Passwort ist zu schwach.</span>
+      </div>
+    </div>
+  </form>
+</div>

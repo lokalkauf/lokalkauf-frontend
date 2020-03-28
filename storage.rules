@@ -1,7 +1,20 @@
-service firebase.storage {
+rules_version = '2';
+  service firebase.storage {
+
+  function isImage() {
+    return request.resource.contentType.matches("image/.*");
+  }
+  function checkSize(n) {
+    return request.resource.size < n * 1024 * 1024;
+  }
+  function isCurrentUser(uid) {
+    return request.auth.uid == uid;
+  }
+  
   match /b/{bucket}/o {
-    match /{allPaths=**} {
-      allow read, write: if true;
+    match /Traders/{uid}/{multiSegment=**} {
+      allow read;
+      allow write: if isCurrentUser(uid) && checkSize(3) && isImage();
     }
   }
 }

@@ -8,9 +8,8 @@ describe('TakeTransportComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TakeTransportComponent ]
-    })
-    .compileComponents();
+      declarations: [TakeTransportComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

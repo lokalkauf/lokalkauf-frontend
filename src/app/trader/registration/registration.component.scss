@@ -1,0 +1,81 @@
+.registration-head {
+  text-align: center;
+  margin-bottom: 2em;
+  font-size: 0.8rem;
+
+  h2 {
+    color: rgb(116, 181, 48);
+  }
+}
+
+.registration-form {
+  .registration-input {
+    margin-bottom: 20px;
+  }
+
+  .address {
+    display: grid;
+    grid-template-columns: 6rem 1fr 5rem;
+    grid-template-rows: auto;
+    grid-template-areas:
+      'street street number'
+      'postcode city city';
+
+    .postcode {
+      grid-area: postcode;
+
+      input[type='number'] {
+        -moz-appearance: textfield;
+      }
+
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    }
+
+    .city {
+      grid-area: city;
+    }
+
+    .street {
+      grid-area: street;
+    }
+
+    .streetnumber {
+      grid-area: number;
+    }
+  }
+
+  .agb {
+    font-size: 0.7rem;
+    margin-bottom: 20px;
+
+    a {
+      color: black;
+      text-decoration: underline;
+    }
+  }
+
+  .button-and-error {
+    display: flex;
+    align-items: center;
+
+    @media screen and (max-width: 600px) {
+      flex-direction: column-reverse;
+
+      .error {
+        margin-bottom: 10px;
+      }
+    }
+
+    .error {
+      font-size: 0.7rem;
+      margin-left: 20px;
+      padding: 10px;
+      background-color: lightcoral;
+      border: 1px solid darkred;
+      border-radius: 15px;
+    }
+  }
+}

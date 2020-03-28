@@ -7,10 +7,9 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-trader-item',
   templateUrl: './trader-item.component.html',
-  styleUrls: ['./trader-item.component.scss']
+  styleUrls: ['./trader-item.component.scss'],
 })
 export class TraderItemComponent implements OnInit {
-
   @Input() trader: Trader;
 
   productAmount$: Observable<number>;
@@ -18,7 +17,9 @@ export class TraderItemComponent implements OnInit {
   constructor(private db: AngularFirestore) {}
 
   ngOnInit(): void {
-    this.productAmount$ = this.db.collection<Omit<Trader, 'id'>>(`Traders/${this.trader.id}/Products`).get().pipe(map(snap => snap.size));
+    this.productAmount$ = this.db
+      .collection<Omit<Trader, 'id'>>(`Traders/${this.trader.id}/Products`)
+      .get()
+      .pipe(map((snap) => snap.size));
   }
-
 }

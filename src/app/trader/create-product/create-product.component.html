@@ -1,24 +1,38 @@
 <div class="create-product">
-	<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
-		<label class="product-image">
-			<mat-icon *ngIf="!uploadedImage && !uploadState" class="add-image-icon">add_photo_alternate</mat-icon>
-			<div class="uploaded-image" *ngIf="uploadedImage" [ngStyle]="{'background-image': 'url(' + uploadedImage + ')'}"></div>
-			<div class="uploaded-image" *ngIf="uploadState | async as percent">{{ percent }} %</div>
-			<div class="label">Bild hochladen...</div>
-			<input type="file" (change)="uploadImage($event)">
-		</label>
-		<div class="product-name">
-			<input type="text" formControlName="name" placeholder="Produktname*">
-		</div>
-		<div class="product-category">
-			<input type="text" formControlName="category" placeholder="Kategorie">
-		</div>
-		<div class="product-price">
-			<input type="text" formControlName="price" placeholder="Preis">
-		</div>
-		<div class="product-description">
-			<input type="text" formControlName="description" placeholder="Beschreibung">
-		</div>
-		<button appLkButton [disabled]="!productForm.valid && !uploadState">Abschicken</button>
-	</form>
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <label class="product-image">
+      <mat-icon *ngIf="!uploadedImage && !uploadState" class="add-image-icon"
+        >add_photo_alternate</mat-icon
+      >
+      <div
+        class="uploaded-image"
+        *ngIf="uploadedImage"
+        [ngStyle]="{ 'background-image': 'url(' + uploadedImage + ')' }"
+      ></div>
+      <div class="uploaded-image" *ngIf="uploadState | async as percent">
+        {{ percent }} %
+      </div>
+      <div class="label">Bild hochladen...</div>
+      <input type="file" (change)="uploadImage($event)" />
+    </label>
+    <div class="product-name">
+      <input type="text" formControlName="name" placeholder="Produktname*" />
+    </div>
+    <div class="product-category">
+      <input type="text" formControlName="category" placeholder="Kategorie" />
+    </div>
+    <div class="product-price">
+      <input type="text" formControlName="price" placeholder="Preis" />
+    </div>
+    <div class="product-description">
+      <input
+        type="text"
+        formControlName="description"
+        placeholder="Beschreibung"
+      />
+    </div>
+    <button appLkButton [disabled]="!productForm.valid && !uploadState">
+      Abschicken
+    </button>
+  </form>
 </div>
