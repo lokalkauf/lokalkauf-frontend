@@ -63,6 +63,7 @@ export class TraderContactComponent implements OnInit {
     const docReference = this.db.collection('Traders').doc(traderId);
     docReference.get().subscribe((p) => {
       if (p.exists) {
+        console.log('Trader found!');
         const traderData = p.data();
         this.traderPhone = traderData.telephone;
         this.traderMail = traderData.email;
