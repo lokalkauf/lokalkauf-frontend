@@ -1,0 +1,129 @@
+/*spinner ... */
+#spinner {
+  position: absolute;
+  z-index: 200;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+@keyframes spinner-animation {
+  0% {
+    transform: translate(6px, 40px) scale(0);
+  }
+
+  25% {
+    transform: translate(6px, 40px) scale(0);
+  }
+
+  50% {
+    transform: translate(6px, 40px) scale(1);
+  }
+
+  75% {
+    transform: translate(40px, 40px) scale(1);
+  }
+
+  100% {
+    transform: translate(74px, 40px) scale(1);
+  }
+}
+
+@keyframes spinner-animation-r {
+  0% {
+    transform: translate(74px, 40px) scale(1);
+  }
+
+  100% {
+    transform: translate(74px, 40px) scale(0);
+  }
+}
+
+@keyframes spinner-animation-c {
+  0% {
+    background: #98e15b;
+  }
+
+  25% {
+    background: #abbd81;
+  }
+
+  50% {
+    background: #55af1c;
+  }
+
+  75% {
+    background: #91a630;
+  }
+
+  100% {
+    background: #98e15b;
+  }
+}
+
+.spinner-animation div {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate(40px, 40px) scale(1);
+  background: #98e15b;
+  animation: spinner-animation 1.8518518518518516s infinite
+    cubic-bezier(0, 0.5, 0.5, 1);
+}
+
+.spinner-animation div:nth-child(1) {
+  background: #91a630;
+  transform: translate(74px, 40px) scale(1);
+  animation: spinner-animation-r 0.4629629629629629s infinite
+      cubic-bezier(0, 0.5, 0.5, 1),
+    spinner-animation-c 1.8518518518518516s infinite step-start;
+}
+
+.spinner-animation div:nth-child(2) {
+  animation-delay: -0.4629629629629629s;
+  background: #98e15b;
+}
+
+.spinner-animation div:nth-child(3) {
+  animation-delay: -0.9259259259259258s;
+  background: #91a630;
+}
+
+.spinner-animation div:nth-child(4) {
+  animation-delay: -1.3888888888888888s;
+  background: #55af1c;
+}
+
+.spinner-animation div:nth-child(5) {
+  animation-delay: -1.8518518518518516s;
+  background: #abbd81;
+}
+
+.loadingio-spinner-ellipsis-2fhcqqmgqhx {
+  width: 98px;
+  height: 98px;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.spinner-animation {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(0.98);
+  backface-visibility: hidden;
+  transform-origin: 0 0;
+  /* see note above */
+}
+
+.spinner-animation div {
+  box-sizing: content-box;
+}

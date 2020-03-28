@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -38,6 +38,9 @@ import { TraderMapComponent } from './customer/trader-map/trader-map.component';
 
 import { from } from 'rxjs';
 import { SafePipe } from './pipes/safe.pipe';
+import { SpinnerComponent } from './spinner/spinner.component';
+import { SpinnerService } from './services/spinner.service';
+import { HttpCommunicationInterceptor } from './interceptors/http-communication.interceptor';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -57,6 +60,7 @@ const routes: Routes = [
     RegistrationComponent,
     LoginComponent,
     FeedbackComponent,
+    SpinnerComponent,
     SafePipe,
   ],
   imports: [
@@ -84,7 +88,16 @@ const routes: Routes = [
     HttpClientModule,
   ],
   exports: [RouterModule],
-  providers: [ShoppingcartService, UserService],
+  providers: [
+    ShoppingcartService,
+    UserService,
+    SpinnerService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpCommunicationInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
