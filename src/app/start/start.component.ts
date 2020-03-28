@@ -4,6 +4,8 @@ import {
   ViewEncapsulation,
   Input,
   InjectionToken,
+  ElementRef,
+  ViewChild,
 } from '@angular/core';
 import { Link } from '../models/link';
 import { Router } from '@angular/router';
@@ -37,13 +39,18 @@ export class StartComponent implements OnInit {
   coovalue: string;
   plz: string;
   coords: string;
-
   suggestion: any;
 
   currentPosition: Array<number>;
   disabledLosButton: boolean;
 
-  constructor(private router: Router, private geo: GeoService) {
+  @ViewChild('plzInput') plzInput: ElementRef;
+
+  constructor(
+    private router: Router,
+    private geo: GeoService,
+    elementRef: ElementRef
+  ) {
     this.search = debounce(this.search, 2000);
     this.disabledLosButton = true;
   }
@@ -69,6 +76,12 @@ export class StartComponent implements OnInit {
         this.disabledLosButton = true;
       }
     });
+  }
+
+  focus() {
+    console.log('f');
+    const elem = this.plzInput.nativeElement;
+    elem.scrollIntoView();
   }
 
   action() {
