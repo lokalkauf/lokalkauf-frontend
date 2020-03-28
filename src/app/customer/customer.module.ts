@@ -19,7 +19,7 @@ import { FormsModule } from '@angular/forms';
 import { ProductService } from '../services/product.service';
 import { ProductDetailFeedbackComponent } from './product-detail-feedback/product-detail-feedback.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { TraderEmailComponent } from './trader-email/trader-email.component';
+import { TraderContactComponent } from './trader-contact/trader-contact.component';
 
 const routes: Routes = [
   { path: 'trader/:traderId/product-detail/:productId', component: ProductDetailComponent },
@@ -28,7 +28,7 @@ const routes: Routes = [
   { path: 'localtraders', component: TraderOverviewComponent },
   { path: 'tradermap', component: TraderMapComponent },
   { path: 'trader-detail/:id', component: TraderDetailComponent },
-  { path: 'trader/:traderId/email', component: TraderEmailComponent },
+  { path: 'trader/:traderId/email', component: TraderContactComponent },
 ];
 
 @NgModule({
@@ -44,7 +44,7 @@ const routes: Routes = [
     TraderDetailComponent,
     TraderMapComponent,
     ShoppingcartItemComponent,
-    TraderEmailComponent
+    TraderContactComponent
   ],
   imports: [
     CommonModule,
