@@ -9,4 +9,6 @@
   [ngClass]="{
     warn: warn
   }"
+  [(ngModel)]="inputModel"
+  (ngModelChange)="inputModelChange.emit(inputModel)"
 />

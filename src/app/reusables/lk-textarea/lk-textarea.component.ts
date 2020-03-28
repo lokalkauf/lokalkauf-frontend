@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  ElementRef,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import {
   FormControl,
   NG_VALUE_ACCESSOR,
@@ -21,6 +29,12 @@ import { fromEvent, Subject, merge } from 'rxjs';
 export class LkTextareaComponent implements ControlValueAccessor {
   @Input() placeholder: string;
   @Input() value: string;
+
+  // tslint:disable-next-line: no-input-rename
+  @Input('ngModel') inputModel: string;
+  // tslint:disable-next-line: no-output-rename
+  @Output('ngModelChange') inputModelChange = new EventEmitter<string>();
+
   disabled = false;
   formControl = new FormControl('');
 

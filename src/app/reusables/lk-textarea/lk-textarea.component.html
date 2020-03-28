@@ -3,4 +3,6 @@
   [formControl]="formControl"
   [placeholder]="placeholder"
   [value]="value"
+  [(ngModel)]="inputModel"
+  (ngModelChange)="inputModelChange.emit(inputModel)"
 ></textarea>

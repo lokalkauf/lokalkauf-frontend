@@ -21,6 +21,10 @@ export class TraderDetailComponent implements OnInit {
   productAmount$: Observable<number>;
   carouselSlides: Array<CarouselEntry> = new Array<CarouselEntry>();
 
+  contactMessage: string;
+  userEmailOrPhone: string;
+  readAgbAndPrivacyPolicies: boolean;
+
   showMoreText = false;
 
   constructor(
@@ -71,21 +75,31 @@ export class TraderDetailComponent implements OnInit {
     }
   }
 
-  async onSubmit() {
+  async onSubmit(receiverEmail: string, receiverName: string) {
+    if (!this.readAgbAndPrivacyPolicies) {
+      this.errorService.publishByText(
+        'AGB und Datenschutzerklärung wurden nicht gelesen',
+        'Bitte vergewissere dich, dass du die AGB und die Datenschutzerklärungen ' +
+          'gelesen hast, bevor du eine Nachricht an den Händler abschickst.'
+      );
+
+      return;
+    }
+
     // TODO finalize call for backend sending mail
     console.log('trader contact submitted');
 
     const email: EMail = {
-      acceptedAgb: false,
-      fromEMail: '',
-      fromPhone: '',
+      acceptedAgb: this.readAgbAndPrivacyPolicies,
+      fromEMail: this.userEmailOrPhone,
+      fromPhone: this.userEmailOrPhone,
       fromPreferredContact: '',
-      fromName: '',
+      fromName: this.userEmailOrPhone,
       id: 0,
-      message: '',
-      title: '',
-      toEMail: '',
-      toName: '',
+      message: this.contactMessage,
+      title: 'Jemand hat eine Anfrage an Sie gestellt',
+      toEMail: receiverEmail,
+      toName: receiverName,
     };
 
     try {
