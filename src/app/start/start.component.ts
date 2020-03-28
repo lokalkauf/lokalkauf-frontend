@@ -62,6 +62,11 @@ export class StartComponent implements OnInit {
     this.geo.getUserPosition().subscribe((p) => {
       if (p != null) {
         this.currentPosition = p;
+        this.disabledLosButton = false;
+      } 
+      else 
+      {
+        this.disabledLosButton = true;
       }
     });
   }
@@ -84,7 +89,7 @@ export class StartComponent implements OnInit {
     this.suggestion = null;
     console.log('pos: ' + position);
     this.currentPosition = position;
-    this.geo.setUserPosition(this.currentPosition);
+    //this.geo.setUserPosition(this.currentPosition);
     this.disabledLosButton = false;
   }
 
