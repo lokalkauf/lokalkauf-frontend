@@ -50,3 +50,4 @@ Thumbs.db
 
 # Firebase
 /functions/lib
+.firebase/**/*

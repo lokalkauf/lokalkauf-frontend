@@ -6,6 +6,7 @@ import {
 } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { EMail } from '../models/email';
+import { functions } from 'firebase';
 
 @Injectable({
   providedIn: 'root',
@@ -21,13 +22,13 @@ export class EMailService {
   constructor(private http: HttpClient) {}
 
   send(formdata: EMail) {
-
-
-
-    // TODO contact backend for mail sending here
-    // return this.http.post<EMail>(this.ServerUrl + 'api/contact', formdata, this.httpOptions).pipe(
-    //   catchError(this.handleError)
-    // );
+    // TODO update if firebase function changes
+    try {
+      const sendMailFunction = functions().httpsCallable(`sendMail`);
+      sendMailFunction.arguments(formdata.toEMail, formdata.message);
+    } catch (e) {
+      console.error('Mail could not be send: ' + e);
+    }
   }
 
   private handleError(error: HttpErrorResponse) {
