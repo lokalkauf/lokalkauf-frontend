@@ -58,7 +58,10 @@
         <mat-icon>shopping_cart</mat-icon>
       </div>
     </div>
-    <div id="main_body" [ngClass]="router.url === '/' ? 'start-page' : ''">
+    <div
+      id="main_body"
+      [ngClass]="router.url === '/' ? 'start-page' : 'app-content'"
+    >
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>

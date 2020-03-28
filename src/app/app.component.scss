@@ -142,3 +142,11 @@
 .mat-drawer-container {
   background-color: #fff;
 }
+
+.app-content {
+  @media screen and (min-width: 768px) {
+    width: 740px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
