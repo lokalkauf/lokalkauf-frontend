@@ -12,11 +12,13 @@ import { RegistrationComponent } from './registration/registration.component';
 import { ProfileComponent } from './profile/profile.component';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
 
 const routes: Routes = [
   { path: 'trader/profile', component: ProfileComponent },
   { path: 'trader/register', component: RegistrationComponent },
   { path: 'trader/login', component: LoginComponent },
+  { path: 'trader/password-reset', component: PasswordResetComponent },
 ];
 
 @NgModule({
@@ -26,6 +28,7 @@ const routes: Routes = [
     RegistrationComponent,
     ProfileComponent,
     LoginComponent,
+    PasswordResetComponent,
   ],
   imports: [
     CommonModule,

@@ -71,7 +71,7 @@ export class StartComponent implements OnInit {
   }
 
   haendlerRegistrieren() {
-    this.router.navigate(['/']);
+    this.router.navigateByUrl('/trader/register');
   }
 
   setposition(position: Array<number>) {
