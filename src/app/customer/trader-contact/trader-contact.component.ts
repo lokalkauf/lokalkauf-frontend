@@ -55,8 +55,11 @@ export class TraderContactComponent implements OnInit {
     let traderId;
     this.route.params.subscribe((p) => {
       traderId = p.traderId;
+      this.fillTraderPhoneAndMail(traderId);
     });
+  }
 
+  fillTraderPhoneAndMail(traderId: string): void {
     const docReference = this.db.collection('Traders').doc(traderId);
     docReference.get().subscribe((p) => {
       if (p.exists) {
