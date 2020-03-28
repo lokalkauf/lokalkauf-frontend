@@ -1,0 +1,75 @@
+<section class="customer-trader-contact">
+  <div class="just-text">
+    <label>
+      So sind wir erreichbar
+    </label>
+  </div>
+  <div class="trader-phone-number">
+    <label>
+      {{ traderPhone }}
+    </label>
+  </div>
+  <div class="trader-email">
+    <label>
+      {{ traderMail }}
+    </label>
+  </div>
+  <div class="just-text">
+    <label>
+      Oder über das Kontaktformular
+    </label>
+  </div>
+  <div class="container">
+    <div class="page-desc" [hidden]="submitted">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+            <div class="contact-input">
+              <app-lk-textarea
+                type="mail_message"
+                formControlName="mail_message"
+                [placeholder]="'Ihre Nachricht an uns'"
+              ></app-lk-textarea>
+            </div>
+
+            <div class="just-text">Wie dürfen wir dich kontaktieren?</div>
+            <div class="contact-input">
+              <app-lk-input
+                [warn]="mail_contact.touched && mail_contact.invalid"
+                type="mail_contact"
+                formControlName="mail_contact"
+                placeholder="Email*"
+              ></app-lk-input>
+            </div>
+
+            <div class="form-group">
+              <div class="agb">
+                <label>
+                  <input type="checkbox" formControlName="agbRead" /> Ich
+                  versichere ich, dass ich die <a routerLink="#">AGB</a> und die
+                  <a routerLink="#">Datenschutzrichtlinen</a> gelesen habe und
+                  damit einverstanden bin.
+                </label>
+              </div>
+            </div>
+            <app-lk-button
+              [disabled]="!contactForm.valid"
+              type="submit"
+              label="Anfrage senden"
+              (click)="onSubmit()"
+            ></app-lk-button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div [hidden]="!submitted" class="contact-message">
+      <div *ngIf="mailModel.id" class="contact-success">
+        <h2 class="success">Success!</h2>
+        <h4>Contact form has been successfully submitted.</h4>
+        <br />
+        <button (click)="gotoHome()" class="btn btn-info">Go to Home</button>
+      </div>
+    </div>
+  </div>
+</section>

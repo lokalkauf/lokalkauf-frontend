@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TraderEmailComponent } from './trader-email.component';
+import { TraderContactComponent } from './trader-contact.component';
 
 describe('TraderEmailComponent', () => {
-  let component: TraderEmailComponent;
-  let fixture: ComponentFixture<TraderEmailComponent>;
+  let component: TraderContactComponent;
+  let fixture: ComponentFixture<TraderContactComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TraderEmailComponent ]
+      declarations: [ TraderContactComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TraderEmailComponent);
+    fixture = TestBed.createComponent(TraderContactComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

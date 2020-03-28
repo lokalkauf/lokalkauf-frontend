@@ -19,10 +19,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductService } from '../services/product.service';
 import { ProductDetailFeedbackComponent } from './product-detail-feedback/product-detail-feedback.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { TraderEmailComponent } from './trader-email/trader-email.component';
+import { TraderContactComponent } from './trader-contact/trader-contact.component';
 import { ReusablesModule } from '../reusables/reusables.module';
 import { InquiryConfirmationComponent } from './inquiry-confirmation/inquiry-confirmation.component';
-
 
 const routes: Routes = [
   {
@@ -34,7 +33,7 @@ const routes: Routes = [
   { path: 'localtraders/:lat/:lng', component: TraderOverviewComponent },
   { path: 'tradermap', component: TraderMapComponent },
   { path: 'trader-detail/:id', component: TraderDetailComponent },
-  { path: 'trader/:traderId/email', component: TraderEmailComponent },
+  { path: 'trader/:traderId/contact', component: TraderContactComponent },
   { path: 'contacted', component: InquiryConfirmationComponent },
 ];
 
@@ -51,7 +50,7 @@ const routes: Routes = [
     TraderDetailComponent,
     TraderMapComponent,
     ShoppingcartItemComponent,
-    TraderEmailComponent,
+    TraderContactComponent,
     InquiryConfirmationComponent,
   ],
   imports: [
@@ -65,7 +64,6 @@ const routes: Routes = [
     ReusablesModule,
     FormsModule,
     ReactiveFormsModule,
-    ReusablesModule,
   ],
   exports: [ProductOverviewComponent, ProductItemComponent],
   providers: [ProductService],

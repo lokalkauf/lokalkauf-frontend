@@ -1,6 +1,12 @@
 export class EMail {
   id: number;
-  from_name: string;
-  from_emailOrPhone: string;
+  fromName: string;
+  fromEMail: string;
+  fromPhone: string;
+  fromPreferredContact: string;
+  toName: string;
+  toEMail: string;
+  title: string;
   message: string;
+  acceptedAgb: boolean;
 }
