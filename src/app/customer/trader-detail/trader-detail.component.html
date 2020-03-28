@@ -86,7 +86,7 @@
     </label>
   </div>
   <div class="contactButton">
-    <app-lk-button label="Anfrage senden"> </app-lk-button>
+    <app-lk-button label="Anfrage senden" (click)="onSubmit()"> </app-lk-button>
   </div>
   <p class="trader-product-amount" *ngIf="(productAmount$ | async) > 0">
     <span
@@ -96,9 +96,9 @@
     >
     Produkte
   </p>
-  <!-- app-product-overview [traderId]="trader.id"></app-product-overview-->
+  <!-- app-product-overview [traderId]="trader.id"></app-product-overview>
 
   <a [routerLink]="'/trader/' + trader.id + '/contact/'">
     So sind wir erreichbar
-  </a>
+  </a-->
 </div>
