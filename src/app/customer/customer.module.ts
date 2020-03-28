@@ -23,7 +23,6 @@ import { TraderContactComponent } from './trader-contact/trader-contact.componen
 import { ReusablesModule } from '../reusables/reusables.module';
 import { InquiryConfirmationComponent } from './inquiry-confirmation/inquiry-confirmation.component';
 
-
 const routes: Routes = [
   {
     path: 'trader/:traderId/product-detail/:productId',
@@ -34,7 +33,7 @@ const routes: Routes = [
   { path: 'localtraders/:long/:lat', component: TraderOverviewComponent },
   { path: 'tradermap', component: TraderMapComponent },
   { path: 'trader-detail/:id', component: TraderDetailComponent },
-  { path: 'trader/:traderId/email', component: TraderContactComponent },
+  { path: 'trader/:traderId/contact', component: TraderContactComponent },
   { path: 'contacted', component: InquiryConfirmationComponent },
 ];
 

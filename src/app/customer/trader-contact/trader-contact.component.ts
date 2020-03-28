@@ -1,24 +1,22 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Trader } from '../../models/trader';
 import { EMail } from '../../models/email';
-import {EMailService} from '../../services/email.service';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {TraderProfile} from '../../models/traderProfile';
-import {Observable} from 'rxjs';
-import {flatMap, map} from 'rxjs/operators';
-import {AngularFirestore} from '@angular/fire/firestore';
-
+import { EMailService } from '../../services/email.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TraderProfile } from '../../models/traderProfile';
+import { Observable } from 'rxjs';
+import { flatMap, map } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
-  selector: 'app-trader-email',
+  selector: 'app-trader-contact',
   templateUrl: './trader-contact.component.html',
   styleUrls: ['./trader-contact.component.scss'],
-  providers:  [ EMailService ]
+  providers: [EMailService],
 })
 export class TraderContactComponent implements OnInit {
-
   @Input() trader: Trader;
 
   mailModel = new EMail();
@@ -28,14 +26,11 @@ export class TraderContactComponent implements OnInit {
   traderPhone: string;
   traderMail: string;
 
-
-  contactForm = new FormGroup(
-    {
-      mail_message: new FormControl('', [Validators.required]),
-      mail_contact: new FormControl('', [Validators.required]),
-      agbRead: new FormControl('', [Validators.requiredTrue]),
-    },
-  );
+  contactForm = new FormGroup({
+    mail_message: new FormControl('', [Validators.required]),
+    mail_contact: new FormControl('', [Validators.required]),
+    agbRead: new FormControl('', [Validators.requiredTrue]),
+  });
 
   get mail_contact() {
     return this.contactForm.get('mail_contact');
@@ -49,30 +44,30 @@ export class TraderContactComponent implements OnInit {
     return this.contactForm.get('agbRead');
   }
 
-  constructor(private router: Router,
-              private mailService: EMailService,
-              private db: AngularFirestore,
-              private route: ActivatedRoute) { }
-
+  constructor(
+    private router: Router,
+    private mailService: EMailService,
+    private db: AngularFirestore,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     let traderId;
-    this.route.params.subscribe(p => {
+    this.route.params.subscribe((p) => {
       traderId = p.traderId;
     });
 
     const docReference = this.db.collection('Traders').doc(traderId);
-    docReference.get().subscribe(p => {
+    docReference.get().subscribe((p) => {
       if (p.exists) {
         const traderData = p.data();
-        this.traderPhone =  traderData.telephone;
+        this.traderPhone = traderData.telephone;
         this.traderMail = traderData.email;
       } else {
         // doc.data() will be undefined in this case
         console.log('No such trader!');
       }
     });
-
   }
 
   async onSubmit() {
@@ -87,7 +82,7 @@ export class TraderContactComponent implements OnInit {
       message: '',
       title: '',
       toEMail: '',
-      toName: ''
+      toName: '',
     };
 
     try {
@@ -127,5 +122,4 @@ export class TraderContactComponent implements OnInit {
   gotoHome() {
     this.router.navigate(['/']);
   }
-
 }
