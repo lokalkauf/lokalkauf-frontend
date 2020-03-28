@@ -5,11 +5,11 @@ import { UserService } from 'src/app/services/user.service';
 import { TraderProfile } from 'src/app/models/traderProfile';
 
 @Component({
-  selector: 'app-registration-form',
-  templateUrl: './registration-form.component.html',
-  styleUrls: ['./registration-form.component.scss'],
+  selector: 'app-registration',
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.scss'],
 })
-export class RegistrationFormComponent {
+export class RegistrationComponent {
   registrationForm = new FormGroup(
     {
       businessname: new FormControl('', [Validators.required]),
@@ -124,7 +124,9 @@ export class RegistrationFormComponent {
           });
           break;
         case 'auth/operation-not-allowed':
-          // TODO
+          this.registrationForm.setErrors({
+            undefinedError: true,
+          });
           break;
         case 'auth/weak-password':
           this.registrationForm.setErrors({
@@ -132,6 +134,9 @@ export class RegistrationFormComponent {
           });
           break;
         default:
+          this.registrationForm.setErrors({
+            undefinedError: true,
+          });
           break;
       }
     }

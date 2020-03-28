@@ -31,6 +31,7 @@ export class LkInputComponent implements ControlValueAccessor {
   @Input() placeholder: string;
   @Input() value: string;
   @Input() warn = false;
+  @Input() name: string;
   formControl = new FormControl('');
   disabled = false;
 
