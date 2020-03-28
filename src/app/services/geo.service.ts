@@ -74,6 +74,25 @@ export class GeoService {
         observer.next(currentPos);
         observer.complete();
       }
+
+      // if (navigator && navigator.geolocation) {
+      //   navigator.geolocation.getCurrentPosition(
+      //     (position) => {
+      //       observer.next([
+      //         position.coords.latitude,
+      //         position.coords.longitude,
+      //       ]);
+      //       observer.complete();
+      //     },
+      //     (error) => {
+      //       observer.next(this.manuelUserPosition);
+      //       observer.complete();
+      //     }
+      //   );
+      // } else {
+      //   observer.next(this.manuelUserPosition);
+      //   observer.complete();
+      // }
     });
   }
 
