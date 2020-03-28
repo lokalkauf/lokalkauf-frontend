@@ -21,6 +21,7 @@ import { GeoService } from 'src/app/services/geo.service';
 import { mixinColor } from '@angular/material/core';
 import { NONE_TYPE } from '@angular/compiler';
 import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
+import { IconOptions } from '@angular/material/icon';
 
 @Component({
   selector: 'app-map',
@@ -43,6 +44,11 @@ export class MapComponent implements OnInit, AfterViewInit {
     ],
     zoom: 15,
     center: latLng(52.518623, 13.376198),
+  };
+
+  lkIcon = {
+    iconUrl: '/assets/pin.png',
+    iconSize: [60, 68],
   };
 
   targets = layerGroup();
@@ -183,7 +189,9 @@ export class MapComponent implements OnInit, AfterViewInit {
     });
 
     if (!exists) {
-      marker(pos).addTo(this.targets);
+      marker(pos)
+        .setIcon(icon({ iconUrl: '/assets/pin.png' }))
+        .addTo(this.targets);
     }
   }
 

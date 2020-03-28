@@ -8,9 +8,8 @@ describe('TraderEmailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TraderContactComponent ]
-    })
-    .compileComponents();
+      declarations: [TraderContactComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

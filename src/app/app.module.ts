@@ -32,7 +32,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { CommonModule } from '@angular/common';
-import { EMailService } from "./services/email.service";
+import { EMailService } from './services/email.service';
 import { SafePipe } from './pipes/safe.pipe';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SpinnerService } from './services/spinner.service';
@@ -93,6 +93,5 @@ const routes: Routes = [
   ],
 
   bootstrap: [AppComponent],
-
 })
 export class AppModule {}
