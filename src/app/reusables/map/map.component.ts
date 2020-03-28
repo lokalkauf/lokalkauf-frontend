@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import {
   Map,
   tileLayer,
@@ -27,7 +27,7 @@ import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, AfterViewInit {
   map: Map;
   radius: 0.5;
 
@@ -66,6 +66,15 @@ export class MapComponent implements OnInit {
   );
 
   constructor(private geo: GeoService) {}
+
+  ngAfterViewInit(): void {
+    this.geo.getUserPosition().subscribe((p) => {
+      if (p != null) {
+        this.updateCurrentPosition(latLng(p[0], p[1]));
+        this.loadTraders(0.5);
+      }
+    });
+  }
 
   onMapReady(map: Map) {
     this.map = map;
@@ -111,15 +120,6 @@ export class MapComponent implements OnInit {
   }
 
   ngOnInit(): void {}
-
-  AfterViewInit() {
-    this.geo.getUserPosition().subscribe((p) => {
-      if (p != null) {
-        this.updateCurrentPosition(latLng(p[0], p[1]));
-        this.loadTraders(0.5);
-      }
-    });
-  }
 
   updateAfterZoom() {
     const center = this.map.getCenter();
