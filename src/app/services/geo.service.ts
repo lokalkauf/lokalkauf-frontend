@@ -47,24 +47,48 @@ export class GeoService {
 
   getUserPosition(): Observable<any> {
     return Observable.create((observer) => {
-      if (navigator && navigator.geolocation) {
+      let currentPos = this.manuelUserPosition;
+
+      if (!currentPos && navigator && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
-            observer.next([
+            currentPos = [
               position.coords.latitude,
               position.coords.longitude,
-            ]);
+            ];
+            observer.next(currentPos);
             observer.complete();
           },
           (error) => {
-            observer.next(this.manuelUserPosition);
+            observer.next(currentPos);
             observer.complete();
           }
         );
-      } else {
-        observer.next(this.manuelUserPosition);
+      }
+      else
+      {
+        observer.next(currentPos);
         observer.complete();
       }
+
+      // if (navigator && navigator.geolocation) {
+      //   navigator.geolocation.getCurrentPosition(
+      //     (position) => {
+      //       observer.next([
+      //         position.coords.latitude,
+      //         position.coords.longitude,
+      //       ]);
+      //       observer.complete();
+      //     },
+      //     (error) => {
+      //       observer.next(this.manuelUserPosition);
+      //       observer.complete();
+      //     }
+      //   );
+      // } else {
+      //   observer.next(this.manuelUserPosition);
+      //   observer.complete();
+      // }
     });
   }
 
