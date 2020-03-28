@@ -114,6 +114,7 @@
     <div class="button-and-error">
       <app-lk-button
         [disabled]="!registrationForm.valid"
+        type="submit"
         label="Registrieren"
       ></app-lk-button>
       <div
@@ -145,6 +146,5 @@
         <span>Das gewählte Passwort ist zu schwach.</span>
       </div>
     </div>
-    <div>{{ registrationForm.errors }}</div>
   </form>
 </div>

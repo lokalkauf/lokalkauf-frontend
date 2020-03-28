@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class LkButtonComponent implements OnInit {
   @Input() label: string;
   @Input() disabled = false;
+  @Input() type: string;
 
   constructor() {}
 

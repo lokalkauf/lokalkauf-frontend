@@ -22,10 +22,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { StartComponent } from './start/start.component';
 import { ImprintComponent } from './imprint/imprint.component';
-import { RegistrationComponent } from './registration/registration.component';
-import { LoginComponent } from './login/login.component';
 import { TransportMainComponent } from './transport/transport-main/transport-main.compontent';
-import { TraderMainComponent } from './trader/trader-main/trader-main.component';
 import { ShoppingcartService } from './services/shoppingcart.service';
 import { UserService } from './services/user.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -34,9 +31,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
-import { TraderMapComponent } from './customer/trader-map/trader-map.component';
-
-import { from } from 'rxjs';
 import { SafePipe } from './pipes/safe.pipe';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SpinnerService } from './services/spinner.service';
@@ -44,11 +38,8 @@ import { HttpCommunicationInterceptor } from './interceptors/http-communication.
 
 const routes: Routes = [
   { path: '', component: StartComponent },
-  { path: 'register', component: RegistrationComponent },
-  { path: 'login', component: LoginComponent },
   { path: 'imprint', component: ImprintComponent },
   { path: 'transport', component: TransportMainComponent },
-  { path: 'verkaeufer', component: TraderMainComponent },
   { path: 'feedback', component: FeedbackComponent },
 ];
 
@@ -57,8 +48,6 @@ const routes: Routes = [
     AppComponent,
     StartComponent,
     ImprintComponent,
-    RegistrationComponent,
-    LoginComponent,
     FeedbackComponent,
     SpinnerComponent,
     SafePipe,

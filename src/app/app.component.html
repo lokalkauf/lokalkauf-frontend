@@ -15,8 +15,19 @@
       <div class="sidenav-right-item" (click)="navigate('/localtraders/44139')">
         Käufer
       </div>
-      <div class="sidenav-right-item" (click)="navigate('/verkaeufer')">
-        Verkäufer
+      <div
+        *ngIf="userService.isLoggedIn$ | async"
+        class="sidenav-right-item"
+        (click)="navigate('/trader/profile')"
+      >
+        Mein Händlerprofil
+      </div>
+      <div
+        *ngIf="(userService.isLoggedIn$ | async) === false"
+        class="sidenav-right-item"
+        (click)="navigate('/trader/login')"
+      >
+        Händler Login
       </div>
       <!--<div class="sidenav-right-item" (click)="navigate('/transport')">Lieferant</div>
       <div class="sidenav-right-item">Profil</div>

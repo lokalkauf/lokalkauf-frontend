@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ export class AppComponent {
   events: string[] = [];
   opened: boolean;
 
-  constructor(public router: Router) {}
+  constructor(public router: Router, public userService: UserService) {}
 
   navigate(route: string) {
     console.log(route);

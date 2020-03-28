@@ -1,0 +1,51 @@
+<div class="login-head">
+  <h2>
+    Händler Login
+  </h2>
+</div>
+
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <app-lk-input
+    formControlName="email"
+    name="login"
+    placeholder="Email"
+  ></app-lk-input>
+  <app-lk-input
+    formControlName="password"
+    type="password"
+    name="password"
+    placeholder="Passwort"
+  ></app-lk-input>
+  <div class="button-and-error">
+    <app-lk-button type="submit" label="Login"></app-lk-button>
+    <div
+      class="error"
+      *ngIf="loginForm.errors && loginForm.errors.userDisabled"
+    >
+      <span>Dieser Benutzer ist deaktiviert.</span>
+    </div>
+    <div class="error" *ngIf="loginForm.errors && loginForm.errors.invalidMail">
+      <span>Die angegebene E-Mail Adresse ist ungültig.</span>
+    </div>
+    <div
+      class="error"
+      *ngIf="loginForm.errors && loginForm.errors.userNotFound"
+    >
+      <span>Der Benutzer konnte nicht gefunden werden.</span>
+    </div>
+    <div
+      class="error"
+      *ngIf="loginForm.errors && loginForm.errors.wrongPassword"
+    >
+      <span>Das angegebene Passwort ist falsch.</span>
+    </div>
+    <div
+      class="error"
+      *ngIf="loginForm.errors && loginForm.errors.undefinedError"
+    >
+      <span>Tut uns leid, da ist entwas schiefgelaufen.</span>
+    </div>
+  </div>
+  <br />
+  Noch kein Konto? <a routerLink="/trader/register">Dann gehts hier lang</a>
+</form>
