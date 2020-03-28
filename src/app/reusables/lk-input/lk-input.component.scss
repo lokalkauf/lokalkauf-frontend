@@ -1,0 +1,26 @@
+input {
+  box-sizing: border-box;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 100;
+  min-width: 4rem;
+  height: 2.4rem;
+  letter-spacing: 1.5px;
+  background-color: #ffffff;
+  padding-left: 1rem;
+  border: dashed 1px rgb(116, 181, 48);
+  width: 100%;
+
+  &.warn {
+    border: dashed 1px red;
+  }
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

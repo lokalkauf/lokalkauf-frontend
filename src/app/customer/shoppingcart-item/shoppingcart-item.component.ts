@@ -9,7 +9,7 @@ import { ShoppingcartService } from 'src/app/services/shoppingcart.service';
 @Component({
   selector: 'app-shoppingcart-item',
   templateUrl: './shoppingcart-item.component.html',
-  styleUrls: ['./shoppingcart-item.component.scss']
+  styleUrls: ['./shoppingcart-item.component.scss'],
 })
 export class ShoppingcartItemComponent implements OnInit {
   @Input() cartEntry: CartEntry;
@@ -17,12 +17,15 @@ export class ShoppingcartItemComponent implements OnInit {
   @Output() deletedClicked: EventEmitter<void> = new EventEmitter<void>();
   productDetails$: Observable<Product>;
 
-  constructor(private productService: ProductService, private cartService: ShoppingcartService) { }
+  constructor(
+    private productService: ProductService,
+    private cartService: ShoppingcartService
+  ) {}
 
   ngOnInit(): void {
     this.productDetails$ = this.productService
-                                .getProduct(this.cartEntry.traderId, this.cartEntry.productId)
-                                .pipe(tap(x => this.currentPrice.emit(x.price * this.cartEntry.count)));
+      .getProduct(this.cartEntry.traderId, this.cartEntry.productId)
+      .pipe(tap((x) => this.currentPrice.emit(x.price * this.cartEntry.count)));
   }
 
   addCount(cartItem: CartEntry, count: number, product: Product) {

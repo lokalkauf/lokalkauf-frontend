@@ -1,0 +1,36 @@
+<div id="feedback-overlay">
+  <div id="feedback-inset">
+    <h1>Ihre Ideen sind uns wichtig</h1>
+
+    <app-lk-textarea
+      [(ngModel)]="message"
+      [placeholder]="'Ihre Nachricht an uns'"
+    ></app-lk-textarea>
+
+    <div class="content">
+      Möchten Sie Feedback von uns? <br />Dann hinterlassen Sie Ihre
+      E-Mailadresse.
+    </div>
+
+    <app-lk-input
+      [type]="email"
+      [(ngModel)]="email"
+      [placeholder]="'E-Mail Adresse'"
+    ></app-lk-input>
+    <div id="feedback-controls">
+      <app-lk-button
+        id="feedback-verwerfen"
+        (click)="verwerfen()"
+        label="verwerfen"
+      ></app-lk-button>
+      <app-lk-button
+        id="feedback-absenden"
+        (click)="absenden()"
+        label="absenden"
+      ></app-lk-button>
+    </div>
+  </div>
+  <div class="feedback-error" *ngIf="showError">
+    Bitte geben Sie einen Nachrichtentext ein und ggf. gültige E-Mail-Adresse
+  </div>
+</div>
