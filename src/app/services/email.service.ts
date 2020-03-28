@@ -25,7 +25,7 @@ export class EMailService {
     // TODO update if firebase function changes
     try {
       const sendMailFunction = functions().httpsCallable(`sendMail`);
-      sendMailFunction.arguments(formdata.toEMail, formdata.message);
+      sendMailFunction.call(formdata.toEMail, formdata.message);
     } catch (e) {
       console.error('Mail could not be send: ' + e);
     }

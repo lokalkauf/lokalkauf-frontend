@@ -7,8 +7,8 @@ import { CarouselEntry } from 'src/app/models/carouselEntry';
 import { Link } from 'src/app/models/link';
 import { TraderProfile } from 'src/app/models/traderProfile';
 import { Trader } from 'src/app/models/trader';
-import {EMail} from '../../models/email';
-import {EMailService} from '../../services/email.service';
+import { EMail } from '../../models/email';
+import { EMailService } from '../../services/email.service';
 
 @Component({
   selector: 'app-trader-detail',
@@ -22,7 +22,11 @@ export class TraderDetailComponent implements OnInit {
 
   showMoreText = false;
 
-  constructor(private db: AngularFirestore, private route: ActivatedRoute, private mailService: EMailService) {}
+  constructor(
+    private db: AngularFirestore,
+    private route: ActivatedRoute,
+    private mailService: EMailService
+  ) {}
 
   ngOnInit(): void {
     this.trader$ = this.route.params.pipe(
@@ -66,7 +70,7 @@ export class TraderDetailComponent implements OnInit {
 
   async onSubmit() {
     // TODO finalize call for backend sending mail
-    console.log('form submitted');
+    console.log('trader contact submitted');
 
     const email: EMail = {
       acceptedAgb: false,
