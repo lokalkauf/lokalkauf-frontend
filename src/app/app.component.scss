@@ -1,3 +1,5 @@
+@import '../variables.scss';
+
 #header {
   height: 50px;
   margin-bottom: 30px;
@@ -21,7 +23,7 @@
     margin-right: 10px;
   }
 
-  color: rgb(152, 211, 90);
+  color: $lightestgreen;
   font-family: Helvetica, Arial, sans-serif;
 
   #name {
@@ -44,7 +46,7 @@
       height: 30px;
       font-size: 30px;
       font-weight: 100;
-      color: #ccc;
+      color: $lightestgrey;
     }
   }
 
@@ -72,7 +74,7 @@
 
 #sidenav-right {
   width: 200px;
-  background-color: #ffffff;
+  background-color: white;
   height: 100%;
   top: 0;
   bottom: 0;
@@ -97,7 +99,7 @@
       width: 30px;
       height: 30px;
       font-size: 30px;
-      color: #ccc;
+      color: $lightestgrey;
     }
   }
 }
@@ -115,7 +117,7 @@
 }
 
 .sitenav-right-item:hover {
-  color: rgb(152, 211, 90) !important;
+  color: $lightestgreen !important;
 }
 
 .sitenav-right-item-menu {
@@ -136,11 +138,11 @@
 }
 
 .mat-drawer {
-  color: #000000;
+  color: black;
 }
 
 .mat-drawer-container {
-  background-color: #fff;
+  background-color: white;
 }
 
 .app-content {

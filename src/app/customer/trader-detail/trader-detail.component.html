@@ -1,7 +1,94 @@
 <div class="trader-detail" *ngIf="trader$ | async as trader">
-  <div class="trader-headline">{{ trader.name }}</div>
-  <app-image-carousel [carouselSlides]="carouselSlides"></app-image-carousel>
-  <p class="trader-product-amount">
+  <div class="trader-headline">{{ trader.businessname }}</div>
+  <div
+    class="trader-description text"
+    *ngIf="trader.description && !showMoreText"
+  >
+    {{ shortenText(trader.description) }}
+    <span
+      *ngIf="trader.description.length > 200"
+      (click)="showMoreText = true"
+      class="toggleDetails"
+      >... Mehr lesen</span
+    >
+  </div>
+  <div
+    class="trader-description text"
+    *ngIf="trader.description && showMoreText"
+  >
+    {{ trader.description }}
+    <span
+      *ngIf="trader.description.length > 200"
+      (click)="showMoreText = false"
+      class="toggleDetails"
+    >
+      Weniger</span
+    >
+  </div>
+  <div class="text lightergreen">
+    Wir bieten:
+  </div>
+  <div class="text">
+    <mat-icon
+      class="inlinesymbol vertical-align-middle lightergreen"
+      *ngIf="trader.delivery"
+      >done</mat-icon
+    >
+    <mat-icon
+      class="inlinesymbol vertical-align-middle lightergreen"
+      *ngIf="!trader.delivery"
+      >close</mat-icon
+    >
+    <span class="symboltext"> Lieferung</span><br />
+    <mat-icon
+      class="inlinesymbol vertical-align-middle lightergreen"
+      *ngIf="trader.pickup"
+      >done</mat-icon
+    >
+    <mat-icon
+      class="inlinesymbol vertical-align-middle lightergreen"
+      *ngIf="!trader.pickup"
+      >close</mat-icon
+    >
+    <span> Abholung</span>
+  </div>
+  <div class="carousel-container">
+    <app-image-carousel [carouselSlides]="carouselSlides"></app-image-carousel>
+  </div>
+  <div class="text lightergreen">
+    So sind wir erreichbar:
+  </div>
+  <div class="contactButtons">
+    <div class="contactButton">
+      <a [href]="'tel:' + trader.telephone">
+        <app-lk-button [label]="trader.telephone" [minSizePercent]="70">
+        </app-lk-button> </a
+      ><br />
+    </div>
+    <div class="contactButton">
+      <a [href]="'mailto:' + trader.email">
+        <app-lk-button [label]="trader.email" [minSizePercent]="70">
+        </app-lk-button>
+      </a>
+    </div>
+  </div>
+  <div class="text contactformdescription">
+    Oder über das Kontaktformular:<br />
+    <app-lk-textarea placeholder="Text"></app-lk-textarea><br /><br />
+    Wie dürfen wir Sie kontaktieren?<br />
+    <app-lk-input placeholder="E-Mail oder Telefonnummer"></app-lk-input
+    ><br /><br />
+    <label for="agbread">
+      <input type="checkbox" id="agbread" />
+      Ich bestätige die <a href="#">AGB</a> und
+      <a href="#">Datenschutzbestimmungen</a> gelesen zu haben und bin
+      einverstanden
+    </label>
+  </div>
+  <div class="contactButton">
+    <app-lk-button label="Anfrage senden"> </app-lk-button>
+  </div>
+  <p class="trader-product-amount" *ngIf="(productAmount$ | async) > 0">
     <span
       class="product-amount"
       *ngIf="productAmount$ | async as productAmount"

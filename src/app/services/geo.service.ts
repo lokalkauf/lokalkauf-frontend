@@ -30,10 +30,13 @@ export class GeoService {
   }
 
   setLocation(traderId: string, coords: Array<number>) {
-    this.locations.add({
-      traderId:traderId,
-      coordinates: new firestore.GeoPoint(coords[0], coords[1]),
-    }, traderId);
+    this.locations.add(
+      {
+        traderId,
+        coordinates: new firestore.GeoPoint(coords[0], coords[1]),
+      },
+      traderId
+    );
   }
 
   getLocations(radius: number, coords: Array<number>) {
@@ -46,23 +49,27 @@ export class GeoService {
   }
 
   getUserPosition(): Observable<any> {
-    return Observable.create((observer) => {
-      if (navigator && navigator.geolocation) {
+    return new Observable((observer) => {
+      let currentPos = this.manuelUserPosition;
+
+      if (currentPos && currentPos[0] === 0 && currentPos[1] === 0) {
+        currentPos = null;
+      }
+
+      if (!currentPos && navigator && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
-            observer.next([
-              position.coords.latitude,
-              position.coords.longitude,
-            ]);
+            currentPos = [position.coords.latitude, position.coords.longitude];
+            observer.next(currentPos);
             observer.complete();
           },
           (error) => {
-            observer.next(this.manuelUserPosition);
+            observer.next(currentPos);
             observer.complete();
           }
         );
       } else {
-        observer.next(this.manuelUserPosition);
+        observer.next(currentPos);
         observer.complete();
       }
     });
@@ -84,10 +91,15 @@ export class GeoService {
           '&facet=note&facet=plz'
       )
       .toPromise();
-    // .pipe(tap(
-    //   data => console.log("d" + data),
-    //   error => console.log("e" + error)
+  }
 
-    // ));
+  getPostalAndCityByLocation(location: Array<number>) {
+    const loc = encodeURIComponent(location[0] + ',' + location[1]);
+    const url =
+      'https://api.opencagedata.com/geocode/v1/json?key=8cf06bcf900d48fdb16f767a6a0e5cd8&q=' +
+      loc +
+      '&pretty=1&no_annotations=1';
+
+    return this.http.get(url);
   }
 }

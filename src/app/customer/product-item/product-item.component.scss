@@ -1,8 +1,9 @@
+@import '../../../variables.scss';
+
 .product-item {
   box-sizing: border-box;
 
-  box-shadow: 6px 6px 21px 0px rgba(0,0,0,0.2)!important;
-
+  box-shadow: 6px 6px 21px 0px rgba(0, 0, 0, 0.2) !important;
 
   height: 100%;
   width: 100%;
@@ -16,8 +17,8 @@
   }
 
   .price {
-	color: rgb(93, 159, 22);
-	font-size: 1rem;
+    color: $normalgreen;
+    font-size: 1rem;
   }
 
   .shopping-cart-icon {
@@ -25,6 +26,6 @@
   }
 
   .title {
-	  font-size: 1rem;
+    font-size: 1rem;
   }
 }

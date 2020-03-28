@@ -9,6 +9,7 @@ export class LkButtonComponent implements OnInit {
   @Input() label: string;
   @Input() disabled = false;
   @Input() type: string;
+  @Input() minSizePercent: number;
 
   constructor() {}
 

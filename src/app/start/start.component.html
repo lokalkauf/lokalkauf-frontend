@@ -30,12 +30,14 @@
         />
         <input
           id="plz-input"
+          #plzInput
           type="text"
           name="coordbox"
           placeholder="PLZ"
           matInput
           [matAutocomplete]="auto"
           (keyup)="search($event.target.value)"
+          (focus)="focus()"
           *ngIf="!coovalue"
         />
         <mat-autocomplete #auto="matAutocomplete">

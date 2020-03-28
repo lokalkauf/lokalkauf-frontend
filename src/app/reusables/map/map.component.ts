@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import {
   Map,
   tileLayer,
@@ -12,7 +12,9 @@ import {
   layerGroup,
   LayerGroup,
   icon,
-  LeafletEvent,popup,DomEvent
+  LeafletEvent,
+  popup,
+  DomEvent,
 } from 'leaflet';
 
 import { GeoService } from 'src/app/services/geo.service';
@@ -25,9 +27,9 @@ import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, AfterViewInit {
   map: Map;
-  radius:0.5;
+  radius: 0.5;
 
   mct = 'https://maps.omniscale.net/v2/{id}/style.grayscale/{z}/{x}/{y}.png';
   tdefault = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -56,13 +58,23 @@ export class MapComponent implements OnInit {
     }),
   ];
 
-  rid:string;
+  rid: string;
 
   popup = popup().setContent(
-    '<p>add retail location:<br /><input id="rid" style="border:1px solid #000"/><br/><button id="btnCrlc" style="background-color:#aaa; margin-top:10px;">create</button></p>'
-  ); 
+    '<p>add retail location:<br /><input id="rid" style="border:1px solid #000"/>' +
+      '<br/><button id="btnCrlc" style="background-color:#aaa; margin-top:10px;">create</button></p>'
+  );
 
   constructor(private geo: GeoService) {}
+
+  ngAfterViewInit(): void {
+    this.geo.getUserPosition().subscribe((p) => {
+      if (p != null) {
+        this.updateCurrentPosition(latLng(p[0], p[1]));
+        this.loadTraders(0.5);
+      }
+    });
+  }
 
   onMapReady(map: Map) {
     this.map = map;
@@ -75,47 +87,39 @@ export class MapComponent implements OnInit {
     const self = this;
     let trCreated = false;
 
-    //debug stuff, 
-    this.map.on('click', (e:any) => {
-      console.log("open popup..");
+    // debug stuff,
+    this.map.on('click', (e: any) => {
+      console.log('open popup..');
 
       const ma = marker(e.latlng);
-      ma.bindPopup(this.popup).addTo(this.targets)
-      .on('popupopen',  (ev:any) => {
-        trCreated = false;
+      ma.bindPopup(this.popup)
+        .addTo(this.targets)
+        .on('popupopen', (ev: any) => {
+          trCreated = false;
 
-        ev.popup._container.querySelector('#btnCrlc')
-          .addEventListener('click', (ev2:any) => {    
-            const pos:LatLng = e.latlng;
-            
-            const tid = ev.popup._container.querySelector('#rid');    
-            self.createLocation(tid.value, pos);
-            trCreated = true;
-            ma.closePopup();
-          });
-      })
-      .on('popupclose',  (e:any) => {
-          console.log("close win!!!");
-          console.log(e);
+          ev.popup._container
+            .querySelector('#btnCrlc')
+            .addEventListener('click', (ev2: any) => {
+              const pos: LatLng = e.latlng;
+
+              const tid = ev.popup._container.querySelector('#rid');
+              self.createLocation(tid.value, pos);
+              trCreated = true;
+              ma.closePopup();
+            });
+        })
+        .on('popupclose', (evs: any) => {
+          console.log('close win!!!');
+          console.log(evs);
 
           this.loadTraders(this.radius);
-      });
+        });
 
       ma.openPopup();
     });
-
   }
 
   ngOnInit(): void {}
-
-  ngAfterViewInit() {
-    this.geo.getUserPosition().subscribe((p) => {
-      if (p != null) {
-        this.updateCurrentPosition(latLng(p[0], p[1]));
-        this.loadTraders(0.5);
-      }
-    });
-  }
 
   updateAfterZoom() {
     const center = this.map.getCenter();
@@ -201,9 +205,8 @@ export class MapComponent implements OnInit {
   }
 
   /* debug stuff */
-  createLocation(traderID:string, position:LatLng) {
-    console.log("create location: " + traderID + " at position: " + position);
+  createLocation(traderID: string, position: LatLng) {
+    console.log('create location: ' + traderID + ' at position: ' + position);
     this.geo.setLocation(traderID, [position.lat, position.lng]);
   }
-
 }

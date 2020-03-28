@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import './variables.scss';
 
 body,
 html {
@@ -11,7 +12,7 @@ html {
   overflow-y: hidden;
   letter-spacing: 1px;
   margin: 0;
-  color: #444;
+  color: $appgrey;
 }
 
 textarea {

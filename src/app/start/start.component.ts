@@ -1,9 +1,9 @@
 import {
   Component,
   OnInit,
-  ViewEncapsulation,
-  Input,
   InjectionToken,
+  ElementRef,
+  ViewChild
 } from '@angular/core';
 import { Link } from '../models/link';
 import { Router } from '@angular/router';
@@ -14,6 +14,7 @@ import { GeoService } from 'src/app/services//geo.service';
 import { tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ScrollStrategy } from '@angular/cdk/overlay';
+import { $ } from 'protractor';
 
 @Component({
   selector: 'app-start',
@@ -37,13 +38,17 @@ export class StartComponent implements OnInit {
   coovalue: string;
   plz: string;
   coords: string;
-
   suggestion: any;
 
   currentPosition: Array<number>;
   disabledLosButton: boolean;
 
-  constructor(private router: Router, private geo: GeoService) {
+
+  @ViewChild('plzInput') plzInput: ElementRef;
+  constructor(
+    private router: Router,
+    private geo: GeoService
+  ) {
     this.search = debounce(this.search, 2000);
     this.disabledLosButton = true;
   }
@@ -59,11 +64,32 @@ export class StartComponent implements OnInit {
   }
 
   private getUserLocation() {
-    this.geo.getUserPosition().subscribe((p) => {
-      if (p != null) {
-        this.currentPosition = p;
+    this.geo.getUserPosition().subscribe((ps) => {
+      if (ps != null) {
+        this.currentPosition = ps;
+        this.disabledLosButton = false;
+
+        this.geo.getPostalAndCityByLocation(this.currentPosition).subscribe((p: any) => {
+          console.log('receive location ');
+          console.log(p);
+
+          this.plz = p.results[0].components.postcode + ' ' + p.results[0].components.city;
+          console.log('receive location ' + this.plz);
+
+          this.plzInput.nativeElement.value = this.plz;
+          // this.elRef.nativeElement.querySelector('#plz-input').value = this.plz;
+
+
+        });
+      } else {
+        this.disabledLosButton = true;
       }
     });
+  }
+
+  focus() {
+    const elem = this.plzInput.nativeElement;
+    elem.scrollIntoView();
   }
 
   action() {
@@ -84,7 +110,6 @@ export class StartComponent implements OnInit {
     this.suggestion = null;
     console.log('pos: ' + position);
     this.currentPosition = position;
-    this.geo.setUserPosition(this.currentPosition);
     this.disabledLosButton = false;
   }
 
