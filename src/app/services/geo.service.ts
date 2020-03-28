@@ -33,13 +33,10 @@ export class GeoService {
     console.log('set locaiton: ' + traderId + 'crds ' + coords);
 
     this.locations
-      .add(
-        {
-          traderId,
-          coordinates: new firestore.GeoPoint(coords[0], coords[1]),
-        },
-        traderId
-      )
+      .doc(traderId)
+      .set({
+        coordinates: new firestore.GeoPoint(coords[0], coords[1]),
+      })
       .catch((e) => {
         console.log(e);
       });
