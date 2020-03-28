@@ -1,48 +1,67 @@
-
 <section class="customer-trader-email">
   <div class="just-text">
-    So sind wir erreichbar
+    <label>
+      So sind wir erreichbar
+    </label>
   </div>
   <div class="trader-phone-number">
-    {{trader.name}} => TODO show trader phone
+    <label>
+      {{ traderPhone }}
+    </label>
   </div>
   <div class="trader-email">
-    {{trader.name}} => TODO show trader mail
+    <label>
+      {{ traderMail }}
+    </label>
   </div>
   <div class="just-text">
-    Oder über das Kontaktformular
+    <label>
+      Oder über das Kontaktformular
+    </label>
   </div>
   <div class="container">
     <div class="page-desc" [hidden]="submitted">
       <div class="row justify-content-center">
         <div class="col-md-8">
-          <h1>Anfrage</h1>
-          <form (ngSubmit)="onSubmit()" #contactForm="ngForm">
+          <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+            <div class="contact-input">
+              <app-lk-textarea
+                type="mail_message"
+                formControlName="mail_message"
+                [placeholder]="'Ihre Nachricht an uns'"
+              ></app-lk-textarea>
+            </div>
+
+            <div class="just-text">Wie dürfen wir dich kontaktieren?</div>
+            <div class="contact-input">
+              <app-lk-input
+                [warn]="mail_contact.touched && mail_contact.invalid"
+                type="mail_contact"
+                formControlName="mail_contact"
+                placeholder="Email*"
+              ></app-lk-input>
+            </div>
+
             <div class="form-group">
-              <textarea name="message" id="message" [(ngModel)]="mailModel.message" rows="5" class="form-control" placeholder="Message" required #message="ngModel"></textarea>
-              <div *ngIf="message.invalid && (message.dirty || message.touched)" class="error">
-                <div *ngIf="message.errors.required">Message is required.</div>
+              <div class="agb">
+                <label>
+                  <input type="checkbox" formControlName="agbRead" /> Ich
+                  versichere ich, dass ich die <a routerLink="#">AGB</a> und die
+                  <a routerLink="#">Datenschutzrichtlinen</a> gelesen habe und
+                  damit einverstanden bin.
+                </label>
               </div>
             </div>
-            <div class="form-group">
-              <input type="text" name="emailOrPhone" id="emailOrPhone" [(ngModel)]="mailModel.from_emailOrPhone" class="form-control" placeholder="E-Mail" required email #email="ngModel">
-              <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
-                <div *ngIf="email.errors.required">Email is required.</div>
-                <div *ngIf="email.errors.email">Email must be a valid email address.</div>
-              </div>
-            </div>
-            <div class="form-group">
-              <button [disabled]="!contactForm.form.valid" class="btn btn-success">anfragen</button>
-            </div>
+            <app-lk-button
+              [disabled]="!contactForm.valid"
+              type="submit"
+              label="Anfrage senden"
+            ></app-lk-button>
           </form>
         </div>
       </div>
     </div>
-    <div class="service-error" *ngIf="error">
-      <h1>Something Bad Happened! - TODO Define Error View</h1>
-      <!--h1>{{error.errorTitle}}</h1>
-      <h3>{{error.errorDesc}}</h3-->
-    </div>
+
     <div [hidden]="!submitted" class="contact-message">
       <div *ngIf="mailModel.id" class="contact-success">
         <h2 class="success">Success!</h2>
