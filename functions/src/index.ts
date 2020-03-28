@@ -10,11 +10,10 @@ admin.initializeApp();
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: '*****@gmail.com',
-    pass: '****',
+    user: '****@gmail.com',
+    pass: '******',
   },
 });
-
 export const sendMail = functions.https.onCall((target, text) => {
   const mailOptions = {
     from: 'LokalKauf',
@@ -32,4 +31,5 @@ export const sendMail = functions.https.onCall((target, text) => {
     }
     return 'Sended';
   });
+  return;
 });
