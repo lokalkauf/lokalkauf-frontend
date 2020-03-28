@@ -1,28 +1,64 @@
-.trader-detail {
+@import './../../../variables.scss';
 
+.trader-detail {
   text-align: center;
 
   .trader-headline {
-    color: rgb(152, 211, 90);
+    color: $lightestgreen;
     font-size: 1.6rem;
   }
 
   .trader-product-amount {
-    font-size: .9rem;
+    font-size: 0.9rem;
+  }
+
+  .trader-description {
+    margin-bottom: 10px;
   }
 
   .product-amount {
-    color: rgb(95, 152, 34);
+    color: $darkgreen;
   }
 
   .trader-product-star {
-
     margin-top: 1.2rem;
     display: inline-block;
     box-sizing: border-box;
     border-radius: 25px;
-    padding:8px 25px 10px 25px;
+    padding: 8px 25px 10px 25px;
 
-    box-shadow:6px 6px 21px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 6px 6px 21px 0px rgba(0, 0, 0, 0.1);
   }
+
+  .symboltext {
+    line-height: 30px;
+    vertical-align: middle;
+  }
+
+  .vertical-align-middle {
+    vertical-align: middle;
+  }
+
+  .toggleDetails {
+    color: $darkgreen;
+  }
+}
+
+.carousel-container {
+  margin-top: 20px;
+}
+
+.contactButtons {
+  .contactButton {
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    button {
+      width: 80%;
+    }
+  }
+}
+
+.contactformdescription {
+  margin-top: 40px;
 }

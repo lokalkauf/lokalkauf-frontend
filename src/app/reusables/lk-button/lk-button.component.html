@@ -1,1 +1,7 @@
-<button [disabled]="disabled" [type]="type">{{ label }}</button>
+<button
+  [disabled]="disabled"
+  [type]="type"
+  [style]="'min-width: ' + minSizePercent + '%;'"
+>
+  {{ label }}
+</button>

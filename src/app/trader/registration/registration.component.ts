@@ -107,6 +107,11 @@ export class RegistrationComponent {
       city: this.city.value,
       street: this.street.value,
       number: this.streetnumber.value,
+      description: '',
+      delivery: false,
+      pickup: false,
+      telephone: '',
+      email: '',
     };
 
     try {

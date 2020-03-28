@@ -1,5 +1,7 @@
+@import '../../../variables.scss';
+
 button {
-  color: rgb(82, 145, 15);
+  color: $darkgreen;
   box-sizing: border-box;
   border-radius: 20px;
   box-shadow: 6px 6px 21px 0px rgba(0, 0, 0, 0.1);
@@ -9,7 +11,9 @@ button {
   height: 2.4rem;
   letter-spacing: 1.5px;
   border: 0;
-  background-color: #ffffff;
+  background-color: white;
+  padding-left: 15px;
+  padding-right: 15px;
 
   &:disabled,
   &:hover:disabled {
