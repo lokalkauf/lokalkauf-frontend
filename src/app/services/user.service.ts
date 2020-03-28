@@ -79,4 +79,18 @@ export class UserService {
   async resendEmailVerification() {
     await this.auth.auth.currentUser.sendEmailVerification();
   }
+
+  async revokeEmailChange(actionCode: string) {
+    await this.auth.auth.checkActionCode(actionCode)
+      .then(info =>
+        this.auth.auth.applyActionCode(actionCode))
+      .catch(error =>
+        console.log('Error occured : ' + error.message));
+  }
+
+  async verifyEmail(actionCode: string) {
+    await this.auth.auth.applyActionCode(actionCode)
+      .catch(error =>
+        console.log('Error occured : ' + error.message));
+  }
 }

@@ -29,6 +29,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReusablesModule } from './reusables/reusables.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FeedbackComponent } from './feedback/feedback.component';
+import { VerifyComponent } from './verify/verify.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { CommonModule } from '@angular/common';
@@ -43,6 +44,7 @@ const routes: Routes = [
   { path: 'imprint', component: ImprintComponent },
   { path: 'transport', component: TransportMainComponent },
   { path: 'feedback', component: FeedbackComponent },
+  { path: 'verify', component: VerifyComponent },
 ];
 
 @NgModule({
@@ -51,6 +53,7 @@ const routes: Routes = [
     StartComponent,
     ImprintComponent,
     FeedbackComponent,
+    VerifyComponent,
     SpinnerComponent,
     SafePipe,
   ],
