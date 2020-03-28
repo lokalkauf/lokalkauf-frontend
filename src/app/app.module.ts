@@ -38,6 +38,7 @@ import { SafePipe } from './pipes/safe.pipe';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SpinnerService } from './services/spinner.service';
 import { HttpCommunicationInterceptor } from './interceptors/http-communication.interceptor';
+import { ErrorDisplayComponent } from './error-display/error-display.component';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -56,6 +57,7 @@ const routes: Routes = [
     VerifyComponent,
     SpinnerComponent,
     SafePipe,
+    ErrorDisplayComponent,
   ],
   imports: [
     BrowserModule,

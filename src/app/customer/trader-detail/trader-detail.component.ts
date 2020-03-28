@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { flatMap, map, tap } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CarouselEntry } from 'src/app/models/carouselEntry';
 import { Link } from 'src/app/models/link';
 import { TraderProfile } from 'src/app/models/traderProfile';
 import { Trader } from 'src/app/models/trader';
 import { EMail } from '../../models/email';
 import { EMailService } from '../../services/email.service';
+import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   selector: 'app-trader-detail',
@@ -25,7 +26,9 @@ export class TraderDetailComponent implements OnInit {
   constructor(
     private db: AngularFirestore,
     private route: ActivatedRoute,
-    private mailService: EMailService
+    private mailService: EMailService,
+    private router: Router,
+    private errorService: ErrorService
   ) {}
 
   ngOnInit(): void {
@@ -87,35 +90,13 @@ export class TraderDetailComponent implements OnInit {
 
     try {
       await this.mailService.send(email);
+      this.router.navigate(['/contacted']);
     } catch (e) {
-      // TODO show ERRORs
-      // switch (e.code) {
-      //   case 'auth/email-already-in-use':
-      //     this.registrationForm.setErrors({
-      //       emailInUse: true,
-      //     });
-      //     break;
-      //   case 'auth/invalid-email':
-      //     this.registrationForm.setErrors({
-      //       invalidEmail: true,
-      //     });
-      //     break;
-      //   case 'auth/operation-not-allowed':
-      //     this.registrationForm.setErrors({
-      //       undefinedError: true,
-      //     });
-      //     break;
-      //   case 'auth/weak-password':
-      //     this.registrationForm.setErrors({
-      //       weakPassword: true,
-      //     });
-      //     break;
-      //   default:
-      //     this.registrationForm.setErrors({
-      //       undefinedError: true,
-      //     });
-      //     break;
-      // }
+      this.errorService.publishByText(
+        'Nachricht konnte nicht verschickt werden',
+        'Aufgrund eines Systemfehlers konnte die Nachricht an ' +
+          'den Händler nicht verschickt werden. Bitte versuche es erneut oder kontaktiere den Support.'
+      );
     }
   }
 }

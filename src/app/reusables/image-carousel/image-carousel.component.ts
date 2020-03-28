@@ -19,24 +19,22 @@ export class ImageCarouselComponent implements OnInit {
 
   constructor(private router: Router) {}
 
-  ngOnInit(): void {
-    // For demo purposes only. This shows how to use the slider
-    // const carouselEntry = new CarouselEntry('/assets/start-image.png');
-    // carouselEntry.setLink(new Link('go to start page', '/', true));
-    // this.carouselSlides.push(carouselEntry);
-    // this.carouselSlides.push(new CarouselEntry('/assets/start-image.png', 'Test description'));
-  }
+  ngOnInit(): void {}
 
   redirect(url: string): void {
     this.router.navigate([url]);
   }
 
   getWidth() {
-    return this.widthPercentage + 'vw';
+    return this.widthPercentage + '%';
   }
 
   getHeight() {
     return this.widthPercentage / this.aspectRatioWidthToHeight + 'vw';
+  }
+
+  getMaxWidth() {
+    return 740 / this.aspectRatioWidthToHeight + 'px';
   }
 
   randomId() {
