@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { Trader } from '../../models/trader';
 import { EMail } from '../../models/email';
-import {EMailService} from "../../services/email.service";
+import {EMailService} from '../../services/email.service';
 
 
 @Component({
@@ -19,7 +19,7 @@ export class TraderEmailComponent implements OnInit {
   mailModel = new EMail();
   submitted = false;
   error: {};
-
+  diesIstEinString = 'HALLO !';
   constructor(private router: Router,
               private mailService: EMailService) { }
 
