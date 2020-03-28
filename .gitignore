@@ -51,3 +51,4 @@ Thumbs.db
 # Firebase
 /functions/lib
 .firebase/**/*
+.firebase/hosting.ZGlzdC9sb2thbGthdWYtZnJvbnRlbmQ.cache
