@@ -1,10 +1,12 @@
+@import '../../../variables.scss';
+
 .app-map {
   height: 100%;
   width: 100%;
 }
 
 .my-pos-icon {
-  background-color: #f00;
+  background-color: $intensivered;
 }
 
 .leaflet-tile-pane {

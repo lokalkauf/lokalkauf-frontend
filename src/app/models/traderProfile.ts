@@ -6,4 +6,9 @@ export interface TraderProfile {
   city: string;
   street: string;
   number: number;
+  description: string;
+  pickup: boolean;
+  delivery: boolean;
+  email: string;
+  telephone: string;
 }

@@ -33,6 +33,8 @@
               }
             ],
             "styles": [
+              "src/variables.scss",
+              "src/base.scss",
               "src/styles.scss",
               "./node_modules/leaflet/dist/leaflet.css"
             ],

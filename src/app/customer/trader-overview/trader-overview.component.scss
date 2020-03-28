@@ -1,3 +1,5 @@
+@import '../../../variables.scss';
+
 #traders-view-container {
   height: 100%;
   width: 100%;
@@ -36,13 +38,13 @@
 
 #traders-overview-headline {
   text-align: center;
-  color: rgb(82, 145, 15);
+  color: $darkgreen;
   position: absolute;
   width: 100%;
 
   height: 2rem;
   z-index: 1;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: $slighttranslucentwhite;
 
   @media screen and (max-width: 767px) {
     left: 0;
@@ -61,5 +63,5 @@
   grid-gap: 1.5rem;
   width: calc(100% - 40px);
   justify-content: space-around;
-  background-color: #fff;
+  background-color: white;
 }
