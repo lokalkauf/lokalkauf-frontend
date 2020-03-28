@@ -14,7 +14,7 @@ import {
   icon,
   LeafletEvent,
   popup,
-  DomEvent
+  DomEvent,
 } from 'leaflet';
 
 import { GeoService } from 'src/app/services/geo.service';
@@ -29,7 +29,7 @@ import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
 })
 export class MapComponent implements OnInit, AfterViewInit {
   map: Map;
-  radius:0.5;
+  radius: 0.5;
 
   mct = 'https://maps.omniscale.net/v2/{id}/style.grayscale/{z}/{x}/{y}.png';
   tdefault = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -209,6 +209,4 @@ export class MapComponent implements OnInit, AfterViewInit {
     console.log('create location: ' + traderID + ' at position: ' + position);
     this.geo.setLocation(traderID, [position.lat, position.lng]);
   }
-
-  
 }
