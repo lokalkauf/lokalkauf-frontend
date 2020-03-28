@@ -21,6 +21,9 @@ export class EMailService {
   constructor(private http: HttpClient) {}
 
   send(formdata: EMail) {
+
+
+
     // TODO contact backend for mail sending here
     // return this.http.post<EMail>(this.ServerUrl + 'api/contact', formdata, this.httpOptions).pipe(
     //   catchError(this.handleError)
