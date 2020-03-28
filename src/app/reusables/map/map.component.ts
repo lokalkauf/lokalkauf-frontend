@@ -12,6 +12,7 @@ import {
   layerGroup,
   LayerGroup,
   icon,
+  LeafletEvent,popup,DomEvent
 } from 'leaflet';
 
 import { GeoService } from 'src/app/services/geo.service';
@@ -26,6 +27,7 @@ import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
 })
 export class MapComponent implements OnInit {
   map: Map;
+  radius:0.5;
 
   mct = 'https://maps.omniscale.net/v2/{id}/style.grayscale/{z}/{x}/{y}.png';
   tdefault = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -54,26 +56,63 @@ export class MapComponent implements OnInit {
     }),
   ];
 
+  rid:string;
+
+  popup = popup().setContent(
+    '<p>add retail location:<br /><input id="rid" style="border:1px solid #000"/><br/><button id="btnCrlc" style="background-color:#aaa; margin-top:10px;">create</button></p>'
+  ); 
+
   constructor(private geo: GeoService) {}
 
   onMapReady(map: Map) {
     this.map = map;
     this.targets.addTo(this.map);
 
-    map.on('zoomend', () => {
+    this.map.on('zoomend', () => {
       this.updateAfterZoom();
     });
+
+    const self = this;
+    let trCreated = false;
+
+    //debug stuff, 
+    this.map.on('click', (e:any) => {
+      console.log("open popup..");
+
+      const ma = marker(e.latlng);
+      ma.bindPopup(this.popup).addTo(this.targets)
+      .on('popupopen',  (ev:any) => {
+        trCreated = false;
+
+        ev.popup._container.querySelector('#btnCrlc')
+          .addEventListener('click', (ev2:any) => {    
+            const pos:LatLng = e.latlng;
+            
+            const tid = ev.popup._container.querySelector('#rid');    
+            self.createLocation(tid.value, pos);
+            trCreated = true;
+            ma.closePopup();
+          });
+      })
+      .on('popupclose',  (e:any) => {
+          console.log("close win!!!");
+          console.log(e);
+
+          this.loadTraders(this.radius);
+      });
+
+      ma.openPopup();
+    });
+
   }
 
   ngOnInit(): void {}
 
   ngAfterViewInit() {
-    console.log('geo disabled, get geo...');
-
     this.geo.getUserPosition().subscribe((p) => {
       if (p != null) {
         this.updateCurrentPosition(latLng(p[0], p[1]));
-        this.loadTrades(0.5);
+        this.loadTraders(0.5);
       }
     });
   }
@@ -89,10 +128,10 @@ export class MapComponent implements OnInit {
 
     console.log('current radius' + radiusInKm + 'km');
 
-    this.loadTrades(radiusInKm);
+    this.loadTraders(radiusInKm);
   }
 
-  loadTrades(radius: number) {
+  loadTraders(radius: number) {
     console.log('start loading docs...');
 
     this.geo
@@ -160,4 +199,11 @@ export class MapComponent implements OnInit {
   getCurrentPositionAsArray() {
     return [this.getCurrentPosition().lat, this.getCurrentPosition().lng];
   }
+
+  /* debug stuff */
+  createLocation(traderID:string, position:LatLng) {
+    console.log("create location: " + traderID + " at position: " + position);
+    this.geo.setLocation(traderID, [position.lat, position.lng]);
+  }
+
 }

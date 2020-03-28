@@ -19,13 +19,9 @@ import { firestore } from 'firebase';
 export class GeoService {
   dbRef: any;
   geoFire: GeoFirestore;
-
   locations: GeoCollectionReference;
-
   hits = new BehaviorSubject([]);
-
   urlEncoder = new HttpUrlEncodingCodec();
-
   manuelUserPosition: Array<number>;
 
   constructor(private db: AngularFirestore, private http: HttpClient) {
@@ -33,11 +29,11 @@ export class GeoService {
     this.locations = this.geoFire.collection('locations');
   }
 
-  setLocation(key: string, coords: Array<number>) {
+  setLocation(traderId: string, coords: Array<number>) {
     this.locations.add({
-      name: 'my-location',
+      traderId:traderId,
       coordinates: new firestore.GeoPoint(coords[0], coords[1]),
-    });
+    }, traderId);
   }
 
   getLocations(radius: number, coords: Array<number>) {
