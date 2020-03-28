@@ -1,8 +1,6 @@
 import {
   Component,
   OnInit,
-  ViewEncapsulation,
-  Input,
   InjectionToken,
   ElementRef,
   ViewChild,
@@ -70,16 +68,13 @@ export class StartComponent implements OnInit {
       if (p != null) {
         this.currentPosition = p;
         this.disabledLosButton = false;
-      } 
-      else 
-      {
+      } else {
         this.disabledLosButton = true;
       }
     });
   }
 
   focus() {
-    console.log('f');
     const elem = this.plzInput.nativeElement;
     elem.scrollIntoView();
   }
@@ -102,7 +97,6 @@ export class StartComponent implements OnInit {
     this.suggestion = null;
     console.log('pos: ' + position);
     this.currentPosition = position;
-    //this.geo.setUserPosition(this.currentPosition);
     this.disabledLosButton = false;
   }
 
