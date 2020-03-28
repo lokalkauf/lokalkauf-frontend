@@ -1,13 +1,13 @@
-<div *ngIf="user$ | async as user">
-  <div *ngIf="!user.emailVerified" class="verify-mail-alert">
+<div *ngIf="loggedInUserState$ | async as loggedInUserState">
+  <div *ngIf="!loggedInUserState.emailVerified" class="verify-mail-alert">
     Bitte bestätige deine Email-Addresse!
-    <a [routerLink]="" (click)="resendEmailVerification(user)"
+    <a [routerLink]="" (click)="resendEmailVerification()"
       >Bestätigungsmail erneut senden.</a
     >
   </div>
 
   <div>
-    Hallo {{ user.displayName }}
-    <a routerLink="#" (click)="logout()">Ausloggen</a>
+    Hallo {{ loggedInUserState.traderProfile.businessname }}
+    <a routerLink="" (click)="logout()">Ausloggen</a>
   </div>
 </div>

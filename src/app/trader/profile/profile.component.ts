@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 import { User } from 'firebase';
-import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { UserService, LoggedInUserState } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,19 +10,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent {
-  user$: Observable<User>;
+  loggedInUserState$: Observable<LoggedInUserState>;
 
-  constructor(private auth: AngularFireAuth, private router: Router) {
-    this.user$ = auth.user;
+  constructor(private user: UserService, private router: Router) {
+    this.loggedInUserState$ = user.loggedInUserState$;
+    user.isLoggedIn$.subscribe((isLoggedIn) => {
+      if (!isLoggedIn) {
+        router.navigateByUrl('/trader/login');
+      }
+    });
   }
 
-  async resendEmailVerification(user: User) {
-    await user.sendEmailVerification();
+  async resendEmailVerification() {
+    await this.user.resendEmailVerification();
     // TODO: Inform user
   }
 
   async logout() {
-    await this.auth.auth.signOut();
-    this.router.navigateByUrl('/');
+    await this.user.logout();
   }
 }
