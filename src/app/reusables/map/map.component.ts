@@ -12,9 +12,13 @@ import {
   layerGroup,
   LayerGroup,
   icon,
+<<<<<<< HEAD
   LeafletEvent,
   popup,
   DomEvent,
+=======
+  LeafletEvent,popup,DomEvent
+>>>>>>> debug locations
 } from 'leaflet';
 
 import { GeoService } from 'src/app/services/geo.service';
@@ -29,7 +33,7 @@ import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
 })
 export class MapComponent implements OnInit, AfterViewInit {
   map: Map;
-  radius: 0.5;
+  radius:0.5;
 
   mct = 'https://maps.omniscale.net/v2/{id}/style.grayscale/{z}/{x}/{y}.png';
   tdefault = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -58,12 +62,20 @@ export class MapComponent implements OnInit, AfterViewInit {
     }),
   ];
 
+<<<<<<< HEAD
   rid: string;
 
   popup = popup().setContent(
     '<p>add retail location:<br /><input id="rid" style="border:1px solid #000"/>' +
       '<br/><button id="btnCrlc" style="background-color:#aaa; margin-top:10px;">create</button></p>'
   );
+=======
+  rid:string;
+
+  popup = popup().setContent(
+    '<p>add retail location:<br /><input id="rid" style="border:1px solid #000"/><br/><button id="btnCrlc" style="background-color:#aaa; margin-top:10px;">create</button></p>'
+  ); 
+>>>>>>> debug locations
 
   constructor(private geo: GeoService) {}
 
@@ -83,6 +95,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.map.on('zoomend', () => {
       this.updateAfterZoom();
     });
+<<<<<<< HEAD
 
     const self = this;
     let trCreated = false;
@@ -116,6 +129,51 @@ export class MapComponent implements OnInit, AfterViewInit {
         });
 
       ma.openPopup();
+=======
+
+    const self = this;
+    let trCreated = false;
+
+    //debug stuff, 
+    this.map.on('click', (e:any) => {
+      console.log("open popup..");
+
+      const ma = marker(e.latlng);
+      ma.bindPopup(this.popup).addTo(this.targets)
+      .on('popupopen',  (ev:any) => {
+        trCreated = false;
+
+        ev.popup._container.querySelector('#btnCrlc')
+          .addEventListener('click', (ev2:any) => {    
+            const pos:LatLng = e.latlng;
+            
+            const tid = ev.popup._container.querySelector('#rid');    
+            self.createLocation(tid.value, pos);
+            trCreated = true;
+            ma.closePopup();
+          });
+      })
+      .on('popupclose',  (e:any) => {
+          console.log("close win!!!");
+          console.log(e);
+
+          this.loadTraders(this.radius);
+      });
+
+      ma.openPopup();
+    });
+
+  }
+
+  ngOnInit(): void {}
+
+  ngAfterViewInit() {
+    this.geo.getUserPosition().subscribe((p) => {
+      if (p != null) {
+        this.updateCurrentPosition(latLng(p[0], p[1]));
+        this.loadTraders(0.5);
+      }
+>>>>>>> debug locations
     });
   }
 
@@ -205,8 +263,16 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   /* debug stuff */
+<<<<<<< HEAD
   createLocation(traderID: string, position: LatLng) {
     console.log('create location: ' + traderID + ' at position: ' + position);
     this.geo.setLocation(traderID, [position.lat, position.lng]);
   }
+=======
+  createLocation(traderID:string, position:LatLng) {
+    console.log("create location: " + traderID + " at position: " + position);
+    this.geo.setLocation(traderID, [position.lat, position.lng]);
+  }
+
+>>>>>>> debug locations
 }
