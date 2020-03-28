@@ -1,6 +1,8 @@
+@import './../../../variables.scss';
+
 .mat-card {
   border-radius: 10px;
-  border: dashed 1px rgb(152, 211, 90);
+  border: dashed 1px $lightestgreen;
   box-shadow: none !important;
 
   max-width: 680px;
@@ -32,7 +34,7 @@
 
 #product-detail-price {
   margin-top: 1.2rem;
-  color: rgb(152, 211, 90);
+  color: $lightestgreen;
   font-size: 0.9rem;
   max-width: 680px;
   margin-left: auto;
@@ -44,7 +46,7 @@
   text-align: center;
 
   .order-button {
-    color: rgb(82, 145, 15);
+    color: $darkgreen;
     box-sizing: border-box;
     border-radius: 20px;
     box-shadow: 6px 6px 21px 0px rgba(0, 0, 0, 0.1);

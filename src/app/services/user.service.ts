@@ -69,7 +69,7 @@ export class UserService {
   }
 
   async logout() {
-    await this.auth.auth.signOut;
+    await this.auth.auth.signOut();
   }
 
   async sendPasswordResetEmail(email: string) {

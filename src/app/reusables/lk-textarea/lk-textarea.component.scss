@@ -1,3 +1,5 @@
+@import '../../../variables.scss';
+
 textarea {
   box-sizing: border-box;
   border-radius: 20px;
@@ -6,8 +8,8 @@ textarea {
   min-width: 4rem;
   min-height: 8rem;
   letter-spacing: 1.5px;
-  background-color: #ffffff;
+  background-color: white;
   padding: 1rem;
-  border: dashed 1px rgb(116, 181, 48);
+  border: dashed 1px $lightergreen;
   width: 100%;
 }

@@ -1,3 +1,5 @@
+@import '../../../variables.scss';
+
 div {
   font-size: 0.9rem;
 }
@@ -10,7 +12,7 @@ div {
   font-size: 1rem;
   font-weight: 200;
   text-align: center;
-  color: #52910f;
+  color: $darkgreen;
   margin-top: 20px;
 }
 
