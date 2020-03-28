@@ -16,7 +16,7 @@
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
-    <div width="100%" id="header">
+    <div width="100%" id="header" [ngClass]="(router.url === '/') ? 'start-header' : ''">
       <div *ngIf="router.url !== '/'" id="logo" (click)="navigate('/')">
         <img src="/assets/logo.png" height="30" />
       </div>
@@ -27,7 +27,7 @@
         <mat-icon>shopping_cart</mat-icon>
       </div>
     </div>
-    <div id="main_body">
+    <div id="main_body" [ngClass]="(router.url === '/') ? 'start-page' : ''">
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
