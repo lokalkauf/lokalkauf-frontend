@@ -77,10 +77,13 @@ export class TraderContactComponent implements OnInit {
   async onSubmit() {
     this.submitted = true;
     // TODO finalize call for backend sending mail
+    console.log('form submitted');
 
     const email: EMail = {
       acceptedAgb: false,
-      fromEMailOrPhone: '',
+      fromEMail: '',
+      fromPhone: '',
+      fromPreferredContact: '',
       fromName: '',
       id: 0,
       message: '',

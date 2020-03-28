@@ -1,7 +1,9 @@
 export class EMail {
   id: number;
   fromName: string;
-  fromEMailOrPhone: string;
+  fromEMail: string;
+  fromPhone: string;
+  fromPreferredContact: string;
   toName: string;
   toEMail: string;
   title: string;
