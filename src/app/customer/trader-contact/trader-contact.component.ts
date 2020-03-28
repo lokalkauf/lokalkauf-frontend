@@ -17,14 +17,14 @@ import { AngularFirestore } from '@angular/fire/firestore';
   providers: [EMailService],
 })
 export class TraderContactComponent implements OnInit {
-  @Input() trader: Trader;
+  @Input() trader: Observable<Trader>;
 
   mailModel = new EMail();
   submitted = false;
   error: {};
 
-  traderPhone: string;
-  traderMail: string;
+  traderPhone: Observable<string>;
+  traderMail: Observable<string>;
 
   contactForm = new FormGroup({
     mail_message: new FormControl('', [Validators.required]),
