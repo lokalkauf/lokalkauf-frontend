@@ -110,8 +110,8 @@ export class RegistrationComponent {
       description: '',
       delivery: false,
       pickup: false,
-      telephone: '',
-      email: '',
+      telephone: this.phone.value,
+      email: this.email.value,
     };
 
     try {
