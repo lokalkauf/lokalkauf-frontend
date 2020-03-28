@@ -24,7 +24,7 @@ export class TraderOverviewComponent {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-       params['lat'];
+       //params['lat'];
        console.log('lat' + params['lat'] + " lng: " + params['lng']);
 
        try {
