@@ -7,8 +7,13 @@ service cloud.firestore {
       allow read;
       allow write: if request.auth.uid == uid;
     }
+    match /locations/{uid}/{multiSegment=**} {
+      allow read;
+      allow write: if request.auth.uid == uid;
+    }
     match /{collection}/{multiSegments=**} {
-      allow read, write: if collection != "Traders";
+      allow read, write: if collection != "Traders" &&
+      	    	  	    collection != "locations";
     }
   }
 }
