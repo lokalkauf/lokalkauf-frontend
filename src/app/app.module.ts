@@ -35,6 +35,7 @@ import { SafePipe } from './pipes/safe.pipe';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SpinnerService } from './services/spinner.service';
 import { HttpCommunicationInterceptor } from './interceptors/http-communication.interceptor';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -75,6 +76,9 @@ const routes: Routes = [
     ReactiveFormsModule,
     AngularFireAuthModule,
     HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+    }),
   ],
   exports: [RouterModule],
   providers: [
