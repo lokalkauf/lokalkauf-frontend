@@ -1,8 +1,9 @@
 <input
   type="checkbox"
-  (click)="onClick$.next()"
+  (change)="onInputChange($event)"
+  (click)="onInputClick($event)"
   (focusout)="onTouch$.next()"
-  [checked]="checked$ | async"
+  [checked]="checked"
   [name]="name"
   [ngClass]="{
     warn: warn

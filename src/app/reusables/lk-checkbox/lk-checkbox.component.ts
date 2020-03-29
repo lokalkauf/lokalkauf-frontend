@@ -21,27 +21,36 @@ export class LkCheckboxComponent implements ControlValueAccessor {
   disabled = false;
 
   onTouch$ = new Subject();
-  onClick$: Subject<boolean>;
+  onChange$ = new Subject();
 
-  checked$ = new BehaviorSubject(false);
+  checked = false;
 
-  constructor() {
-    this.onClick$ = new Subject();
-    this.onClick$.subscribe(() => {
-      this.checked$.next(!this.checked$.value);
-    });
-  }
+  constructor() {}
 
   writeValue(value: boolean): void {
-    this.checked$.next(value);
+    this.checked = value;
   }
+
   registerOnChange(fn: (value: boolean) => void): void {
-    this.checked$.subscribe(fn);
+    this.onChange$.subscribe(fn);
   }
   registerOnTouched(fn: any): void {
     this.onTouch$.subscribe(fn);
   }
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
+  }
+
+  onInputChange(event: Event) {
+    event.stopPropagation();
+  }
+
+  onInputClick(event: Event) {
+    event.stopPropagation();
+
+    if (!this.disabled) {
+      this.checked = !this.checked;
+      this.onChange$.next(this.checked);
+    }
   }
 }
