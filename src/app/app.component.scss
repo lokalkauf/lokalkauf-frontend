@@ -129,7 +129,10 @@
 
 #main_body {
   margin: 0 1.2rem;
-  height: calc(100% - 80px);
+
+  @media screen and (min-width: 768px) {
+    height: calc(100% - 80px);
+  }
 }
 
 .start-page {
