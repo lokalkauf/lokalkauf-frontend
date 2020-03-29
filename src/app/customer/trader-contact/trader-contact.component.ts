@@ -75,7 +75,7 @@ export class TraderContactComponent implements OnInit {
 
     try {
       await this.mailService.send(email);
-      // this.router.navigate(['/contacted']);
+      this.router.navigate(['/contacted']);
     } catch (e) {
       this.errorService.publishByText(
         'Nachricht konnte nicht verschickt werden',

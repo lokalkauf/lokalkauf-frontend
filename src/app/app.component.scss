@@ -116,6 +116,11 @@
   @media screen and (max-width: 768px) {
     margin-bottom: 1.2rem;
   }
+
+  a {
+    text-decoration: none;
+    color: $appblack;
+  }
 }
 
 .sitenav-right-item:hover {

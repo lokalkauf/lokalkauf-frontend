@@ -11,36 +11,45 @@
   </div>
 
   <div>
+    Wähle aus was auf Deinen Betrieb zutrifft:
+  </div>
+  <div class="dense">
     <label>
       <app-lk-checkbox [formControl]="delivery"></app-lk-checkbox>
       Wir liefern
     </label>
   </div>
 
-  <div>
+  <div class="dense">
     <label>
       <app-lk-checkbox [formControl]="pickup"></app-lk-checkbox>
       Abholung möglich
     </label>
   </div>
 
-  Beschreibe dein Geschäft, erzähl was über dich, dein Sortiment und was du
-  anbietest.
-
-  <app-lk-textarea
-    placeholder="Beschreibungstext"
-    [formControl]="description"
-  ></app-lk-textarea>
-  <app-lk-button
-    [disabled]="!description.dirty"
-    label="Ändern"
-    (click)="updateDescription()"
-  ></app-lk-button>
-
-  <app-image-chooser [formControl]="businessImage"></app-image-chooser>
-  <app-lk-button
-    label="upload"
-    [disabled]="businessImage.value == null"
-    (click)="uploadImage()"
-  ></app-lk-button>
+  <div>
+    Beschreibe Deinen Betrieb, erzähl etwas über Dich, Deine Öffnungs-, Liefer-
+    und Abholzeiten und was Du anbietest:
+  </div>
+  <div>
+    <app-lk-textarea
+      placeholder="Beschreibungstext"
+      [formControl]="description"
+    ></app-lk-textarea>
+    <app-lk-button
+      [disabled]="!description.dirty"
+      label="Beschreibung speichern"
+      (click)="updateDescription()"
+    >
+    </app-lk-button>
+  </div>
+  <div>
+    <app-image-chooser [formControl]="businessImage"></app-image-chooser>
+    <app-lk-button
+      label="Bild hochladen"
+      [disabled]="businessImage.value == null"
+      (click)="uploadImage()"
+    >
+    </app-lk-button>
+  </div>
 </div>

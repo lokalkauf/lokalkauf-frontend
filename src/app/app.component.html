@@ -30,9 +30,6 @@
       >
         Händler Login
       </div>
-      <div class="sidenav-right-item" (click)="navigate('/aboutus')">
-        Das sind wir
-      </div>
       <div
         *ngIf="userService.isLoggedIn$ | async"
         class="sidenav-right-item"
@@ -44,14 +41,19 @@
       <div class="sidenav-right-item">Profil</div>
       <div class="sidenav-right-item" (click)="navigate('/register')">Registrieren</div>
       <div class="sidenav-right-item" (click)="navigate('/login')">Anmelden</div>-->
+      <div class="sidenav-right-item" (click)="navigate('/aboutus')">
+        Das sind wir
+      </div>
       <div class="sidenav-right-item" (click)="navigate('/imprint')">
         Impressum
       </div>
       <div class="sidenav-right-item" (click)="navigate('/agb')">
         AGBs
       </div>
-      <div class="sidenav-right-item" (click)="navigate('/datenschutz')">
-        Datenschutz-erklärung
+      <div class="sidenav-right-item">
+        <a href="https://www.lokalkauf.org/datenschutz" target="_blank"
+          >Datenschutz-erklärung</a
+        >
       </div>
     </div>
   </mat-sidenav>
