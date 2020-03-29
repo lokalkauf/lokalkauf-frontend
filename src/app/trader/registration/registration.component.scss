@@ -53,9 +53,21 @@
     font-size: 0.7rem;
     margin-bottom: 20px;
 
-    a {
-      color: black;
-      text-decoration: underline;
+    label {
+      display: flex;
+      align-items: center;
+
+      p {
+        display: block;
+        flex: 1;
+        margin-bottom: 0;
+        margin-left: 5px;
+
+        a {
+          color: black;
+          text-decoration: underline;
+        }
+      }
     }
   }
 

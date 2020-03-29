@@ -59,6 +59,7 @@ export class UserService {
   }
 
   async updateTraderProfile(partialTraderProfile: Partial<TraderProfile>) {
+    console.log(partialTraderProfile);
     await this.db
       .doc<TraderProfile>(`Traders/${this.auth.auth.currentUser.uid}`)
       .update(partialTraderProfile);

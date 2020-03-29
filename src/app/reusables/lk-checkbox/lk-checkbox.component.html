@@ -1,0 +1,12 @@
+<input
+  type="checkbox"
+  (click)="onClick$.next()"
+  (focusout)="onTouch$.next()"
+  [checked]="checked$ | async"
+  [name]="name"
+  [ngClass]="{
+    warn: warn
+  }"
+  [disabled]="disabled"
+/>
+<span class="checkbox"></span>
