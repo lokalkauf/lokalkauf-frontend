@@ -42,6 +42,7 @@ import { SpinnerService } from './services/spinner.service';
 import { HttpCommunicationInterceptor } from './interceptors/http-communication.interceptor';
 import { ErrorDisplayComponent } from './error-display/error-display.component';
 import { AboutUsComponent } from './about-us/about-us.compontent';
+import { AgbComponent } from './agb/agb.component';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -50,11 +51,13 @@ const routes: Routes = [
   { path: 'feedback', component: FeedbackComponent },
   { path: 'verify', component: VerifyComponent },
   { path: 'aboutus', component: AboutUsComponent },
+  { path: 'agb', component: AgbComponent },
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
+    AgbComponent,
     AboutUsComponent,
     ErrorDisplayComponent,
     ImprintComponent,
