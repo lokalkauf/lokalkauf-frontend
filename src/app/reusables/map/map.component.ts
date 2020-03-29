@@ -168,6 +168,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       .getLocations(radius, this.getPositionOfUserCircleMarkerAsArray())
       .then((value: GeoQuerySnapshot) => {
         this.removeTraderMarker(value);
+        this.locations = new Array<Location>();
 
         value.forEach((loc: GeoFirestoreTypes.QueryDocumentSnapshot) => {
           this.locations.push({

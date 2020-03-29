@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest, forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Trader } from '../../models/trader';
 import { Location } from 'src/app/models/location';
@@ -15,19 +16,15 @@ import { TraderProfile } from 'src/app/models/traderProfile';
   styleUrls: ['./trader-overview.component.scss'],
 })
 export class TraderOverviewComponent implements OnInit {
-  traders$: Observable<TraderProfile[]>;
+  traders$: Array<TraderProfile> = new Array<TraderProfile>();
+  // traders$: Observable<TraderProfile[]>;
 
   constructor(
     db: AngularFirestore,
     private route: ActivatedRoute,
     private geo: GeoService,
     private traderService: TraderService
-  ) {
-    // this.traders$ = this.traderService.getTraderProfiles([
-    //   '14zQgp6I6afO54FkUUY54CtNYd92',
-    //   'l1ByOLFIvaPlm8JsqLetNWHlCcA2',
-    // ]);
-  }
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -46,16 +43,55 @@ export class TraderOverviewComponent implements OnInit {
   }
 
   updateLocations(trlocaitons: Array<Location>) {
-    console.log('UÖDATESASDFADF');
+    console.log('UÖDATESASDFADF: ' + trlocaitons.length);
 
-    let ids = trlocaitons.map((l) => l.traderId);
+    // a lot of magic, couse of firebase limitation loading 10 ids in query at once
+    const ids = trlocaitons.map((l) => l.traderId);
+    const chunked = this.getChunks(ids, 10);
+    console.log(chunked);
 
-    if (ids.length > 10) {
-      ids = ids.slice(0, 10);
+    this.traders$.forEach((t) => {
+      this.traders$.pop();
+    });
+
+    this.traders$ = new Array<TraderProfile>();
+
+    console.log('traders removed: ' + this.traders$.length);
+
+    for (const chunk of chunked) {
+      this.traderService
+        .getTraderProfiles(chunk)
+        .subscribe((t: TraderProfile[]) => {
+          console.log('loading of trader done.');
+          if (t && t.length > 0) {
+            console.log('trader loaded: ' + t.length);
+
+            t.forEach((trader) => {
+              this.traders$.push(trader);
+            });
+          }
+        });
     }
 
-    console.log(ids);
+    // const arr = [];
 
-    this.traders$ = this.traderService.getTraderProfiles(ids);
+    // for (const chunk of chunked) {
+    //   arr.push(this.traderService.getTraderProfiles(chunk));
+    // }
+
+    // forkJoin(arr).subscribe(data => {
+    //   console.log('chunks loaded...');
+    //   console.log(s);
+    // });
+  }
+
+  getChunks(arr, size) {
+    return arr.reduce((acc, _, i) => {
+      if (i % size === 0) {
+        acc.push(arr.slice(i, i + size));
+      }
+
+      return acc;
+    }, []);
   }
 }
