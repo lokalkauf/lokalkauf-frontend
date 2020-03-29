@@ -10,6 +10,8 @@ import { LkTextareaComponent } from './lk-textarea/lk-textarea.component';
 import { ImageCarouselComponent } from './image-carousel/image-carousel.component';
 import { Routes, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { LkPageTitleComponent } from './lk-page-title/lk-page-title.component';
+import { LkCheckboxComponent } from './lk-checkbox/lk-checkbox.component';
 
 const routes: Routes = [];
 
@@ -21,6 +23,8 @@ const routes: Routes = [];
     LkButtonComponent,
     LkTextareaComponent,
     ImageCarouselComponent,
+    LkPageTitleComponent,
+    LkCheckboxComponent,
   ],
   imports: [
     CommonModule,
@@ -36,6 +40,8 @@ const routes: Routes = [];
     LkInputComponent,
     LkButtonComponent,
     LkTextareaComponent,
+    LkPageTitleComponent,
+    LkCheckboxComponent,
     ImageCarouselComponent,
   ],
 })

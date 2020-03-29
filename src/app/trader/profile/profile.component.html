@@ -1,13 +1,29 @@
 <div *ngIf="loggedInUserState$ | async as loggedInUserState">
+  <app-lk-page-title
+    [title]="loggedInUserState.traderProfile.businessname"
+  ></app-lk-page-title>
+
   <div *ngIf="!loggedInUserState.emailVerified" class="verify-mail-alert">
     Bitte bestätige deine Email-Addresse!
-    <a [routerLink]="" (click)="resendEmailVerification()"
-      >Bestätigungsmail erneut senden.</a
-    >
+    <a [routerLink]="" (click)="resendEmailVerification()">
+      Bestätigungsmail erneut senden.
+    </a>
   </div>
 
   <div>
-    Hallo {{ loggedInUserState.traderProfile.businessname }}
-    <a routerLink="" (click)="logout()">Ausloggen</a>
+    <label>
+      <app-lk-checkbox [formControl]="delivery"></app-lk-checkbox>
+      Wir liefern
+    </label>
   </div>
+
+  <div>
+    <label>
+      <app-lk-checkbox [formControl]="pickup"></app-lk-checkbox>
+      Abholung möglich
+    </label>
+  </div>
+
+  Beschreibe dein Geschäft, erzähl was über dich, dein Sortiment und was du
+  anbietest.
 </div>

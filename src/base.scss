@@ -16,3 +16,8 @@ h1 {
 .lightergreen {
   color: $lightergreen;
 }
+
+.leaflet-tile.leaflet-tile-loaded {
+  filter: gray !important;
+  -webkit-filter: grayscale(1) !important;
+}

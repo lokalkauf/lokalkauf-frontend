@@ -1,0 +1,5 @@
+<div *ngIf="currentError" class="error-container">
+  <mat-icon (click)="currentError = null">close</mat-icon>
+  <h1>{{ currentError.headline }}</h1>
+  <div class="text">{{ currentError.text }}</div>
+</div>

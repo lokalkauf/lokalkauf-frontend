@@ -74,19 +74,34 @@
   </div>
   <div class="text contactformdescription">
     Oder über das Kontaktformular:<br />
-    <app-lk-textarea placeholder="Text"></app-lk-textarea><br /><br />
+    <app-lk-textarea
+      placeholder="Text"
+      [(ngModel)]="contactMessage"
+    ></app-lk-textarea
+    ><br /><br />
     Wie dürfen wir Sie kontaktieren?<br />
-    <app-lk-input placeholder="E-Mail oder Telefonnummer"></app-lk-input
+    <app-lk-input
+      placeholder="E-Mail oder Telefonnummer"
+      [(ngModel)]="userEmailOrPhone"
+    ></app-lk-input
     ><br /><br />
     <label for="agbread">
-      <input type="checkbox" id="agbread" />
+      <input
+        type="checkbox"
+        id="agbread"
+        [(ngModel)]="readAgbAndPrivacyPolicies"
+      />
       Ich bestätige die <a href="#">AGB</a> und
       <a href="#">Datenschutzbestimmungen</a> gelesen zu haben und bin
       einverstanden
     </label>
   </div>
   <div class="contactButton">
-    <app-lk-button label="Anfrage senden"> </app-lk-button>
+    <app-lk-button
+      label="Anfrage senden"
+      (click)="onSubmit(trader.email, trader.businessname)"
+    >
+    </app-lk-button>
   </div>
   <p class="trader-product-amount" *ngIf="(productAmount$ | async) > 0">
     <span
@@ -96,5 +111,9 @@
     >
     Produkte
   </p>
-  <app-product-overview [traderId]="trader.id"></app-product-overview>
+  <!-- app-product-overview [traderId]="trader.id"></app-product-overview>
+
+  <a [routerLink]="'/trader/' + trader.id + '/contact/'">
+    So sind wir erreichbar
+  </a-->
 </div>

@@ -1,0 +1,26 @@
+@import '../../variables.scss';
+
+.error-container {
+  position: fixed;
+  width: 80%;
+  min-height: 30px;
+  bottom: 0px;
+  .text,
+  h1 {
+    color: $errorcolor;
+  }
+  margin-left: 10%;
+  margin-right: 10%;
+  padding: 10px;
+  border-radius: 10px 10px 0px 0px;
+  z-index: 1;
+  background-color: white;
+  box-shadow: 2px 2px 5px black;
+  text-align: center;
+
+  mat-icon {
+    position: absolute;
+    right: 10px;
+    float: right;
+  }
+}

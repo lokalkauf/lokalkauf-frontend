@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { flatMap, map, tap } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CarouselEntry } from 'src/app/models/carouselEntry';
 import { Link } from 'src/app/models/link';
 import { TraderProfile } from 'src/app/models/traderProfile';
 import { Trader } from 'src/app/models/trader';
+import { EMail } from '../../models/email';
+import { EMailService } from '../../services/email.service';
+import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   selector: 'app-trader-detail',
@@ -18,9 +21,19 @@ export class TraderDetailComponent implements OnInit {
   productAmount$: Observable<number>;
   carouselSlides: Array<CarouselEntry> = new Array<CarouselEntry>();
 
+  contactMessage: string;
+  userEmailOrPhone: string;
+  readAgbAndPrivacyPolicies: boolean;
+
   showMoreText = false;
 
-  constructor(private db: AngularFirestore, private route: ActivatedRoute) {}
+  constructor(
+    private db: AngularFirestore,
+    private route: ActivatedRoute,
+    private mailService: EMailService,
+    private router: Router,
+    private errorService: ErrorService
+  ) {}
 
   ngOnInit(): void {
     this.trader$ = this.route.params.pipe(
@@ -59,6 +72,45 @@ export class TraderDetailComponent implements OnInit {
       return inputText.substring(0, 200);
     } else {
       return inputText;
+    }
+  }
+
+  async onSubmit(receiverEmail: string, receiverName: string) {
+    if (!this.readAgbAndPrivacyPolicies) {
+      this.errorService.publishByText(
+        'AGB und Datenschutzerklärung wurden nicht gelesen',
+        'Bitte vergewissere dich, dass du die AGB und die Datenschutzerklärungen ' +
+          'gelesen hast, bevor du eine Nachricht an den Händler abschickst.'
+      );
+
+      return;
+    }
+
+    // TODO finalize call for backend sending mail
+    console.log('trader contact submitted');
+
+    const email: EMail = {
+      acceptedAgb: this.readAgbAndPrivacyPolicies,
+      fromEMail: this.userEmailOrPhone,
+      fromPhone: this.userEmailOrPhone,
+      fromPreferredContact: '',
+      fromName: this.userEmailOrPhone,
+      id: 0,
+      message: this.contactMessage,
+      title: 'Jemand hat eine Anfrage an Sie gestellt',
+      toEMail: receiverEmail,
+      toName: receiverName,
+    };
+
+    try {
+      await this.mailService.send(email);
+      this.router.navigate(['/contacted']);
+    } catch (e) {
+      this.errorService.publishByText(
+        'Nachricht konnte nicht verschickt werden',
+        'Aufgrund eines Systemfehlers konnte die Nachricht an ' +
+          'den Händler nicht verschickt werden. Bitte versuche es erneut oder kontaktiere den Support.'
+      );
     }
   }
 }

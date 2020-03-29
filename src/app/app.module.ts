@@ -9,6 +9,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Routes, RouterModule } from '@angular/router';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
@@ -29,32 +30,43 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReusablesModule } from './reusables/reusables.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FeedbackComponent } from './feedback/feedback.component';
+import { VerifyComponent } from './verify/verify.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
+import { CommonModule } from '@angular/common';
+import { EMailService } from './services/email.service';
 import { SafePipe } from './pipes/safe.pipe';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SpinnerService } from './services/spinner.service';
 import { HttpCommunicationInterceptor } from './interceptors/http-communication.interceptor';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import { ErrorDisplayComponent } from './error-display/error-display.component';
+import { AboutUsComponent } from './about-us/about-us.compontent';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
   { path: 'imprint', component: ImprintComponent },
   { path: 'transport', component: TransportMainComponent },
   { path: 'feedback', component: FeedbackComponent },
+  { path: 'verify', component: VerifyComponent },
+  { path: 'aboutus', component: AboutUsComponent },
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    StartComponent,
+    AboutUsComponent,
+    ErrorDisplayComponent,
     ImprintComponent,
     FeedbackComponent,
+    VerifyComponent,
     SpinnerComponent,
     SafePipe,
+    SpinnerComponent,
+    StartComponent,
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     MatIconModule,
     MatSidenavModule,
@@ -90,7 +102,9 @@ const routes: Routes = [
       useClass: HttpCommunicationInterceptor,
       multi: true,
     },
+    EMailService,
   ],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}
