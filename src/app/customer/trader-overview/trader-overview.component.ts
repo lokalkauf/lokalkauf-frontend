@@ -17,6 +17,7 @@ import { TraderProfile } from 'src/app/models/traderProfile';
 })
 export class TraderOverviewComponent implements OnInit {
   traders$: Array<TraderProfile> = new Array<TraderProfile>();
+  // traders$: Observable<TraderProfile[]>;
 
   constructor(
     db: AngularFirestore,
@@ -42,14 +43,20 @@ export class TraderOverviewComponent implements OnInit {
   }
 
   updateLocations(trlocaitons: Array<Location>) {
-    console.log('UÖDATESASDFADF');
-
+    console.log('UÖDATESASDFADF: ' + trlocaitons.length);
 
     // a lot of magic, couse of firebase limitation loading 10 ids in query at once
     const ids = trlocaitons.map((l) => l.traderId);
     const chunked = this.getChunks(ids, 10);
     console.log(chunked);
 
+    this.traders$.forEach((t) => {
+      this.traders$.pop();
+    });
+
+    this.traders$ = new Array<TraderProfile>();
+
+    console.log('traders removed: ' + this.traders$.length);
 
     for (const chunk of chunked) {
       this.traderService
@@ -66,20 +73,16 @@ export class TraderOverviewComponent implements OnInit {
         });
     }
 
-    // forkJoin(() => {
-    //   const arr: Array<Observable<TraderProfile[]>> = new Array();
+    // const arr = [];
 
-    //   for (let x = 0; x < chunked; x++) {
-    //     arr.push(this.traderService.getTraderProfiles(chunked[x]));
-    //   }
+    // for (const chunk of chunked) {
+    //   arr.push(this.traderService.getTraderProfiles(chunk));
+    // }
 
-    //   return arr;
-    // }).subscribe((s) => {
+    // forkJoin(arr).subscribe(data => {
     //   console.log('chunks loaded...');
     //   console.log(s);
     // });
-
-    // this.traders$ = this.traderService.getTraderProfiles(ids);
   }
 
   getChunks(arr, size) {
