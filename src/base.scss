@@ -21,3 +21,7 @@ h1 {
   filter: gray !important;
   -webkit-filter: grayscale(1) !important;
 }
+
+input:focus {
+  background-color: #eee !important;
+}

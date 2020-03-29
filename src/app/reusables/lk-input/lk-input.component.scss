@@ -10,12 +10,17 @@ input {
   letter-spacing: 1.5px;
   background-color: white;
   padding-left: 1rem;
-  border: dashed 1px $lightergreen;
+  border: dotted 1px $lightergreen;
   width: 100%;
+  outline: none;
 
   &.warn {
-    border: dashed 1px red;
+    border: dotted 1px red;
   }
+}
+
+input:focus {
+  background-color: #eee !important;
 }
 
 input[type='number'] {

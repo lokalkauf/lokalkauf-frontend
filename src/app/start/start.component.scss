@@ -199,5 +199,6 @@ input {
   letter-spacing: 1.5px;
   background-color: white;
   padding-left: 1rem;
-  border: dashed 1px $lightergreen;
+  border: dotted 1px $lightergreen;
+  outline: none;
 }
