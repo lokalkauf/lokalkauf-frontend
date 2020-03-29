@@ -19,6 +19,7 @@
     display: grid;
     grid-template-columns: 6rem 1fr 5rem;
     grid-template-rows: auto;
+    grid-column-gap: 12px;
     grid-template-areas:
       'street street number'
       'postcode city city';
@@ -69,6 +70,13 @@
         }
       }
     }
+  }
+
+  .subheadline {
+    font-size: 0.8rem;
+    margin-left: 0.2rem;
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
   }
 
   .button-and-error {
