@@ -77,7 +77,7 @@ export class StartComponent implements OnInit {
               p.results[0].components.city;
             console.log('receive location ' + this.plz);
 
-            this.plzInput.nativeElement.value = this.plz;
+            // this.plzInput.nativeElement.value = this.plz;
             // this.elRef.nativeElement.querySelector('#plz-input').value = this.plz;
           });
       } else {
