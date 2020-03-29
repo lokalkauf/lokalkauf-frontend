@@ -5,28 +5,52 @@ a {
   text-decoration: none;
 }
 
-.trader-item {
-  box-sizing: border-box;
-  box-shadow: 6px 6px 21px 0px rgba(0, 0, 0, 0.2) !important;
-  height: 100%;
+.trader-item-container {
+  box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.2) !important;
+  height: 100px;
   width: 100%;
   border-radius: 10px;
-  text-align: center;
 
-  .image-wrapper {
-    height: 150px;
-    background-size: cover;
+  .image-left {
+    height: 100px;
+    width: 100px;
+    float: left;
+    border: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-top-left-radius: 10px 10px;
+      border-bottom-left-radius: 10px 10px;
+    }
   }
 
-  .title {
-    font-size: 1rem;
-  }
+  .content {
+    float: left;
+    margin: 0.4rem;
+    width: calc(100% - 120px);
 
-  .product-amount {
-    color: $normalgreen;
-  }
+    .headline {
+      font-size: 0.9rem;
+      margin: 0.2rem 0;
+      padding-left: 0.4rem;
+    }
 
-  .shopping-cart-icon {
-    float: right;
+    .address {
+      float: left;
+      width: 100%;
+      font-size: 0.7rem;
+      padding-left: 0.4rem;
+    }
+
+    .distance {
+      float: right;
+      text-align: center;
+    }
+
+    .highlight {
+      color: $normalgreen;
+    }
   }
 }

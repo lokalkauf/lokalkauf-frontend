@@ -3,7 +3,6 @@
 #header {
   height: 50px;
   margin-bottom: 30px;
-  margin-left: 20px;
   padding-top: 20px;
 
   div {
@@ -52,6 +51,9 @@
 
   #burger-menu {
     cursor: pointer;
+    position: absolute;
+    left: calc(100% - 30px) !important;
+    z-index: 2;
   }
 }
 

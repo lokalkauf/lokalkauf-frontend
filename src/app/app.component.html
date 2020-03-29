@@ -60,13 +60,9 @@
       <div id="burger-menu">
         <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
       </div>
-      <div
-        *ngIf="router.url !== '/'"
-        id="shopping-cart"
-        (click)="navigate('/cart')"
-      >
+      <!--<div *ngIf="router.url !== '/'" id="shopping-cart" (click)="navigate('/cart')">
         <mat-icon>shopping_cart</mat-icon>
-      </div>
+      </div>-->
     </div>
     <div
       id="main_body"
