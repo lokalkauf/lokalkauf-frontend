@@ -172,7 +172,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
         value.forEach((loc: GeoFirestoreTypes.QueryDocumentSnapshot) => {
           console.log(loc);
-          this.updateTraderMarker(
+          this.createTraderMarkerIfNotExists(
             latLng(
               loc.data().coordinates.latitude,
               loc.data().coordinates.longitude
@@ -202,7 +202,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     });
   }
 
-  updateTraderMarker(pos: LatLng, traderID: string) {
+  createTraderMarkerIfNotExists(pos: LatLng, traderID: string) {
     let exists = false;
     this.targets.getLayers().forEach((l: Marker) => {
       if (l.getLatLng().lat === pos.lat && l.getLatLng().lng === pos.lng) {
@@ -212,7 +212,17 @@ export class MapComponent implements OnInit, AfterViewInit {
 
     if (!exists) {
       marker(pos, { alt: traderID, attribution: '20' })
-        .setIcon(icon({ iconUrl: '/assets/pin.png' }))
+        .setIcon(
+          icon({
+            iconUrl: '/assets/pin.png',
+            shadowUrl: '/assets/pin-shadow.png',
+
+            iconSize: [25, 29],
+            shadowSize: [25, 29],
+            iconAnchor: [16, 25],
+            shadowAnchor: [6, 26],
+          })
+        )
         .addTo(this.targets)
         .on('click', this.onClickTraderMarker);
     }
@@ -248,11 +258,6 @@ export class MapComponent implements OnInit, AfterViewInit {
       this.getPositionOfUserCircleMarker().lat,
       this.getPositionOfUserCircleMarker().lng,
     ];
-  }
-
-  scrollToView(elem: string) {
-    window.location.hash = '';
-    window.location.hash = elem;
   }
 
   /* debug stuff */
