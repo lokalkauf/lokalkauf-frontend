@@ -38,10 +38,7 @@ export class TraderDetailComponent implements OnInit {
           .collection('Traders')
           .doc<Omit<TraderProfile, 'id'>>(params.id)
           .valueChanges()
-          .pipe(
-            tap(console.log),
-            map((x) => ({ ...x, id: params.id }))
-          )
+          .pipe(map((x) => ({ ...x, id: params.id })))
       )
     );
 
