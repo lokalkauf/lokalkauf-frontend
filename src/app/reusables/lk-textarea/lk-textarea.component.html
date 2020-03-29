@@ -1,6 +1,5 @@
 <textarea
-  #textarea
-  [formControl]="formControl"
   [placeholder]="placeholder"
-  [value]="value"
+  [(ngModel)]="value"
+  (blur)="onBlur()"
 ></textarea>

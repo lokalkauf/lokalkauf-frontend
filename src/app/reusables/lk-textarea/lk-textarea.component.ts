@@ -28,32 +28,49 @@ import { fromEvent, Subject, merge } from 'rxjs';
 })
 export class LkTextareaComponent implements ControlValueAccessor {
   @Input() placeholder: string;
-  @Input() value: string;
-
-  disabled = false;
-  formControl = new FormControl('');
-
-  @ViewChild('textarea') set content(input: ElementRef<HTMLInputElement>) {
-    merge(
-      fromEvent(input.nativeElement, 'mousedown'),
-      fromEvent(input.nativeElement, 'touchstart')
-    ).subscribe(() => this.onTouch$.next());
-  }
-
-  onTouch$ = new Subject();
 
   constructor() {}
 
-  writeValue(value: string): void {
-    this.formControl.setValue(value);
+  // The internal data model
+  private innerValue: any = '';
+
+  // Placeholders for the callbacks which are later provided
+  // by the Control Value Accessor
+  private onTouchedCallback: () => void = () => {};
+  private onChangeCallback: (_: any) => void = () => {};
+
+  // get accessor
+  get value(): any {
+    return this.innerValue;
   }
-  registerOnChange(fn: (value: string) => void): void {
-    this.formControl.valueChanges.subscribe(fn);
+
+  // set accessor including call the onchange callback
+  set value(v: any) {
+    if (v !== this.innerValue) {
+      this.innerValue = v;
+      this.onChangeCallback(v);
+    }
   }
-  registerOnTouched(fn: any): void {
-    this.onTouch$.subscribe(fn);
+
+  // Set touched on blur
+  onBlur() {
+    this.onTouchedCallback();
   }
-  setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+
+  // From ControlValueAccessor interface
+  writeValue(value: any) {
+    if (value !== this.innerValue) {
+      this.innerValue = value;
+    }
+  }
+
+  // From ControlValueAccessor interface
+  registerOnChange(fn: any) {
+    this.onChangeCallback = fn;
+  }
+
+  // From ControlValueAccessor interface
+  registerOnTouched(fn: any) {
+    this.onTouchedCallback = fn;
   }
 }
