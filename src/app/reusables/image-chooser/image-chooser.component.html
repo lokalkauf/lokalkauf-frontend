@@ -1,0 +1,13 @@
+<label class="image-chooser">
+  <mat-icon *ngIf="!selectedFileDataUrl" class="add-image-icon"
+    >add_photo_alternate</mat-icon
+  >
+  <div
+    class="selected-image"
+    *ngIf="selectedFileDataUrl"
+    [ngStyle]="{ 'background-image': 'url(' + selectedFileDataUrl + ')' }"
+  ></div>
+  <div *ngIf="uploadState | async as percent">{{ percent }} %</div>
+  <div class="label">Bild auswählen...</div>
+  <input type="file" (change)="onInputChang($event)" (blur)="onInputBlur()" />
+</label>

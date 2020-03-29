@@ -22,6 +22,10 @@ export class ProfileComponent implements AfterViewInit {
 
   description = new FormControl('');
 
+  businessImage = new FormControl();
+
+  imageUploadState?: Observable<number>;
+
   constructor(
     private user: UserService,
     private router: Router,
@@ -75,5 +79,13 @@ export class ProfileComponent implements AfterViewInit {
       description: this.description.value,
     });
     this.description.markAsPristine();
+  }
+
+  async uploadImage() {
+    const file = this.businessImage.value;
+    const task = this.user.uploadBusinessImage(file);
+    this.imageUploadState = task.percentageChanges();
+    await task.then(async () => (this.imageUploadState = null));
+    this.businessImage.setValue(undefined);
   }
 }

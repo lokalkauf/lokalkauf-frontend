@@ -12,6 +12,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { LkPageTitleComponent } from './lk-page-title/lk-page-title.component';
 import { LkCheckboxComponent } from './lk-checkbox/lk-checkbox.component';
+import { ImageChooserComponent } from './image-chooser/image-chooser.component';
 
 const routes: Routes = [];
 
@@ -25,6 +26,7 @@ const routes: Routes = [];
     ImageCarouselComponent,
     LkPageTitleComponent,
     LkCheckboxComponent,
+    ImageChooserComponent,
   ],
   imports: [
     CommonModule,
@@ -42,6 +44,7 @@ const routes: Routes = [];
     LkTextareaComponent,
     LkPageTitleComponent,
     LkCheckboxComponent,
+    ImageChooserComponent,
     ImageCarouselComponent,
   ],
 })
