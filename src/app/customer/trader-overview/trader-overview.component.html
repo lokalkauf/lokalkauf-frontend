@@ -1,10 +1,11 @@
 <div id="traders-view-container">
-  <div class="traders-map-row">
+  <div id="traders-map-row">
     <app-map
       id="tradersmap"
       (locationsOnMap)="updateLocations($event)"
     ></app-map>
   </div>
+
   <div id="traders-overview-row">
     <div id="traders-overview-headline">Alles aus Deiner Nähe</div>
     <div id="traders-overview-content">
