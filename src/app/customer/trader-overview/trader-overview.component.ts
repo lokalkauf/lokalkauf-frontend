@@ -19,7 +19,7 @@ import { TraderProfile } from 'src/app/models/traderProfile';
 export class TraderOverviewComponent implements OnInit {
   traders$: Array<TraderProfile> = new Array<TraderProfile>();
 
-  STATIC_LOCATION: number[] = [51.5414834, 7.687158800000001];
+  STATIC_LOCATION: number[] = [50.083352, 8.241451];
   STATIC_RADIUS = 10;
 
   locations: Array<Location>;
