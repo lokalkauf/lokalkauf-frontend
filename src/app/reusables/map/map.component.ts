@@ -81,8 +81,6 @@ export class MapComponent implements OnInit, AfterViewInit {
       '<br/><button id="btnCrlc" style="background-color:#aaa; margin-top:10px;">create</button></p>'
   );
 
-  @ViewChildren('rrr') traderItems: QueryList<TraderItemComponent>;
-
   constructor(private geo: GeoService) {}
 
   ngAfterViewInit(): void {
@@ -104,12 +102,8 @@ export class MapComponent implements OnInit, AfterViewInit {
 
     const self = this;
 
-    this.map.on('click', (e: any) => {
-      console.log(e);
-    });
-
     // debug stuff,
-    /*
+
     let trCreated = false;
 
     this.map.on('click', (e: any) => {
@@ -141,7 +135,6 @@ export class MapComponent implements OnInit, AfterViewInit {
 
       ma.openPopup();
     });
-    */
   }
 
   ngOnInit(): void {}
@@ -172,7 +165,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
         value.forEach((loc: GeoFirestoreTypes.QueryDocumentSnapshot) => {
           console.log(loc);
-          this.updateTraderMarker(
+          this.createTraderMarkerIfNotExists(
             latLng(
               loc.data().coordinates.latitude,
               loc.data().coordinates.longitude
@@ -202,7 +195,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     });
   }
 
-  updateTraderMarker(pos: LatLng, traderID: string) {
+  createTraderMarkerIfNotExists(pos: LatLng, traderID: string) {
     let exists = false;
     this.targets.getLayers().forEach((l: Marker) => {
       if (l.getLatLng().lat === pos.lat && l.getLatLng().lng === pos.lng) {
@@ -210,24 +203,36 @@ export class MapComponent implements OnInit, AfterViewInit {
       }
     });
 
+    const self = this;
+
     if (!exists) {
       marker(pos, { alt: traderID, attribution: '20' })
-        .setIcon(icon({ iconUrl: '/assets/pin.png' }))
+        .setIcon(
+          icon({
+            iconUrl: '/assets/pin.png',
+            shadowUrl: '/assets/pin-shadow.png',
+
+            iconSize: [25, 29],
+            shadowSize: [25, 29],
+            iconAnchor: [16, 25],
+            shadowAnchor: [6, 26],
+          })
+        )
         .addTo(this.targets)
-        .on('click', this.onClickTraderMarker);
+        .on('click', (e: any) => {
+          const tradersLocation = {
+            id: e.target.options.alt,
+            coordinates: e.latlng,
+            distance: Number.parseFloat(e.target.options.attribution),
+          };
+
+          console.log('marker selected: ' + tradersLocation);
+          console.log(e);
+          console.log(tradersLocation);
+
+          self.scrollToView2(tradersLocation.id);
+        });
     }
-  }
-
-  onClickTraderMarker(e: any) {
-    const tradersLocation = {
-      id: e.target.options.alt,
-      coordinates: e.latlng,
-      distance: Number.parseFloat(e.target.options.attribution),
-    };
-
-    console.log('marker selected: ' + tradersLocation);
-    console.log(e);
-    console.log(tradersLocation);
   }
 
   updateUserCircleMarker(pos: LatLng) {
@@ -250,9 +255,9 @@ export class MapComponent implements OnInit, AfterViewInit {
     ];
   }
 
-  scrollToView(elem: string) {
+  scrollToView2(elem: string) {
     window.location.hash = '';
-    window.location.hash = elem;
+    window.location.hash = '#scroller.' + elem;
   }
 
   /* debug stuff */
