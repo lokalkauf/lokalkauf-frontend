@@ -1,10 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import {
-  NG_VALUE_ACCESSOR,
-  ControlValueAccessor,
-  FormControl,
-} from '@angular/forms';
-import { Subject } from 'rxjs';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 @Component({
   selector: 'app-lk-input',
@@ -21,26 +16,49 @@ import { Subject } from 'rxjs';
 export class LkInputComponent implements ControlValueAccessor {
   @Input() type: string;
   @Input() placeholder: string;
-  @Input() value: string;
   @Input() warn = false;
   @Input() name: string;
 
-  formControl = new FormControl('');
+  // The internal data model
+  private innerValue: any = '';
 
-  onTouch$ = new Subject();
+  // Placeholders for the callbacks which are later provided
+  // by the Control Value Accessor
+  private onTouchedCallback: () => void = () => {};
+  private onChangeCallback: (_: any) => void = () => {};
 
-  constructor() {}
+  // get accessor
+  get value(): any {
+    return this.innerValue;
+  }
 
-  writeValue(value: string): void {
-    this.formControl.setValue(value);
+  // set accessor including call the onchange callback
+  set value(v: any) {
+    if (v !== this.innerValue) {
+      this.innerValue = v;
+      this.onChangeCallback(v);
+    }
   }
-  registerOnChange(fn: (value: string) => void): void {
-    this.formControl.valueChanges.subscribe(fn);
+
+  // Set touched on blur
+  onBlur() {
+    this.onTouchedCallback();
   }
-  registerOnTouched(fn: any): void {
-    this.onTouch$.subscribe(fn);
+
+  // From ControlValueAccessor interface
+  writeValue(value: any) {
+    if (value !== this.innerValue) {
+      this.innerValue = value;
+    }
   }
-  setDisabledState(isDisabled: boolean): void {
-    isDisabled ? this.formControl.disable() : this.formControl.enable();
+
+  // From ControlValueAccessor interface
+  registerOnChange(fn: any) {
+    this.onChangeCallback = fn;
+  }
+
+  // From ControlValueAccessor interface
+  registerOnTouched(fn: any) {
+    this.onTouchedCallback = fn;
   }
 }

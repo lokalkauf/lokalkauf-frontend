@@ -10,18 +10,25 @@ admin.initializeApp();
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: '****@gmail.com',
-    pass: '******',
+    user: functions.config().sendmail.user,
+    pass: functions.config().sendmail.password,
   },
 });
-export const sendMail = functions.https.onCall((target, text) => {
+
+export const sendMail = functions.https.onCall((data, context) => {
+  console.log(data);
+  const output = `<img src="https://lokalkauf-staging.web.app/assets/lokalkaufTopx2.png" />
+  <h3>Neue Kundenanfrage</h3>
+  <h4>Du hast eine neue Anfrage</h4>
+  <p>${data.message}</p>
+  <h4>Folgende Kontaktinformationen wurden hinterlassen:</h4>
+  <p>${data.fromEmail}</p>`;
+
   const mailOptions = {
-    from: 'LokalKauf',
-    to: target,
+    from: 'LokalKauf <musterfrauhans1234@gmail.com>',
+    to: data.toEmail,
     subject: 'Anfrage von LokalKauf',
-    html: `<p style="font-size: 16px;">Pickle Riiiiiiiiiiiiiiiick!!</p><br />
-                    <img src="https://images.prod.meredith.com/product/fc8754735c8a9b4aebb786278e7265a5/1538025388228/l/rick-and-morty-pickle-rick-sticker" />
-                `, // email content in HTML
+    html: output,
   };
 
   // returning result
