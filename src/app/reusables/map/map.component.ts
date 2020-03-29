@@ -238,7 +238,6 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
 
-
   updateUserCircleMarker(pos: LatLng) {
     const lln = latLng(pos[0], pos[1]);
 
@@ -263,7 +262,6 @@ export class MapComponent implements OnInit, AfterViewInit {
     window.location.hash = '';
     window.location.hash = '#scroller.' + elem;
   }
-
 
   /* debug stuff */
   createTraderLocationForDebug(traderID: string, position: LatLng) {
