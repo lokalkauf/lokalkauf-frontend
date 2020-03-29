@@ -3,7 +3,7 @@ import {
   OnInit,
   InjectionToken,
   ElementRef,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { Link } from '../models/link';
 import { Router } from '@angular/router';
@@ -43,12 +43,8 @@ export class StartComponent implements OnInit {
   currentPosition: Array<number>;
   disabledLosButton: boolean;
 
-
   @ViewChild('plzInput') plzInput: ElementRef;
-  constructor(
-    private router: Router,
-    private geo: GeoService
-  ) {
+  constructor(private router: Router, private geo: GeoService) {
     this.search = debounce(this.search, 2000);
     this.disabledLosButton = true;
   }
@@ -69,18 +65,21 @@ export class StartComponent implements OnInit {
         this.currentPosition = ps;
         this.disabledLosButton = false;
 
-        this.geo.getPostalAndCityByLocation(this.currentPosition).subscribe((p: any) => {
-          console.log('receive location ');
-          console.log(p);
+        this.geo
+          .getPostalAndCityByLocation(this.currentPosition)
+          .subscribe((p: any) => {
+            console.log('receive location ');
+            console.log(p);
 
-          this.plz = p.results[0].components.postcode + ' ' + p.results[0].components.city;
-          console.log('receive location ' + this.plz);
+            this.plz =
+              p.results[0].components.postcode +
+              ' ' +
+              p.results[0].components.city;
+            console.log('receive location ' + this.plz);
 
-          this.plzInput.nativeElement.value = this.plz;
-          // this.elRef.nativeElement.querySelector('#plz-input').value = this.plz;
-
-
-        });
+            this.plzInput.nativeElement.value = this.plz;
+            // this.elRef.nativeElement.querySelector('#plz-input').value = this.plz;
+          });
       } else {
         this.disabledLosButton = true;
       }
@@ -100,6 +99,10 @@ export class StartComponent implements OnInit {
         this.currentPosition[1],
       ]);
     }
+  }
+
+  reducedAction() {
+    this.router.navigate(['/localtraders', 0, 0]);
   }
 
   haendlerRegistrieren() {

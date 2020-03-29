@@ -24,48 +24,31 @@
 
     <div id="start-input-container">
       <div id="start-input-center">
-        <input
-          type="hidden"
-          id="start-input"
-          placeholder="Coords"
-          [(ngModel)]="coords"
-          [value]="coovalue"
-        />
-        <input
-          id="plz-input"
-          #plzInput
-          type="text"
-          name="coordbox"
-          placeholder="PLZ"
-          matInput
-          [matAutocomplete]="auto"
-          (keyup)="search($event.target.value)"
-          (focus)="focus()"
-          *ngIf="!coovalue"
-        />
+        <!--
+        <input type="hidden" id="start-input" placeholder="Coords" [(ngModel)]="coords" [value]="coovalue" />
+        <input id="plz-input" #plzInput type="text" name="coordbox" placeholder="PLZ" matInput [matAutocomplete]="auto"
+          (keyup)="search($event.target.value)" (focus)="focus()" *ngIf="!coovalue" />
         <mat-autocomplete #auto="matAutocomplete">
-          <mat-option
-            *ngFor="let option of suggestion"
-            [value]="option.plz + ' ' + option.note"
-            (click)="setposition(option.geo_point_2d)"
-          >
+          <mat-option *ngFor="let option of suggestion" [value]="option.plz + ' ' + option.note"
+            (click)="setposition(option.geo_point_2d)">
             {{ option.plz }} {{ option.note }}
           </mat-option>
         </mat-autocomplete>
         <div id="start-long-lat" *ngIf="coovalue">
           GPS-Umkreisermittlung: 5km
-        </div>
-        <app-lk-button
-          id="start-button"
-          (click)="action()"
-          label="los"
-          [disabled]="disabledLosButton"
-        >
+        </div>      
+        <app-lk-button id="start-button" (click)="action()" label="los" [disabled]="disabledLosButton">
         </app-lk-button>
+        -->
+        <app-lk-button
+          id="start-button-wiesbaden"
+          (click)="reducedAction()"
+          label="Händer finden"
+        ></app-lk-button>
       </div>
-      <div id="start-error" *ngIf="showError">
+      <!--<div id="start-error" *ngIf="showError">
         Bitte geben Sie eine Postleitzahl an oder aktivieren Sie Ihr GPS
-      </div>
+      </div>-->
     </div>
   </div>
 

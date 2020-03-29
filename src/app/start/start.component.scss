@@ -74,7 +74,7 @@
 }
 
 .home-start > .intro-text {
-  margin-bottom: 1.4rem;
+  //margin-bottom: 1.4rem;
 }
 
 .home-start > .intro-text > .intro-text-box-headline {
@@ -174,6 +174,10 @@
 
 #start-button {
   float: right;
+}
+
+#start-button-wiesbaden {
+  padding-bottom: -1rem;
 }
 
 #start-error {
