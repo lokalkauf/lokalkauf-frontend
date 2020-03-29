@@ -1,14 +1,11 @@
 <input
-  #input
-  appLkInput
   [type]="type"
   [formControl]="formControl"
   [placeholder]="placeholder"
   [value]="value"
   [name]="name"
+  (focusout)="onTouch$.next()"
   [ngClass]="{
     warn: warn
   }"
-  [(ngModel)]="inputModel"
-  (ngModelChange)="inputModelChange.emit(inputModel)"
 />

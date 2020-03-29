@@ -9,6 +9,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Routes, RouterModule } from '@angular/router';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
@@ -30,6 +31,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReusablesModule } from './reusables/reusables.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FeedbackComponent } from './feedback/feedback.component';
+import { VerifyComponent } from './verify/verify.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { CommonModule } from '@angular/common';
@@ -46,6 +48,7 @@ const routes: Routes = [
   { path: 'imprint', component: ImprintComponent },
   { path: 'transport', component: TransportMainComponent },
   { path: 'feedback', component: FeedbackComponent },
+  { path: 'verify', component: VerifyComponent },
   { path: 'aboutus', component: AboutUsComponent },
 ];
 
@@ -56,6 +59,8 @@ const routes: Routes = [
     ErrorDisplayComponent,
     ImprintComponent,
     FeedbackComponent,
+    VerifyComponent,
+    SpinnerComponent,
     SafePipe,
     SpinnerComponent,
     StartComponent,
@@ -84,6 +89,9 @@ const routes: Routes = [
     ReactiveFormsModule,
     AngularFireAuthModule,
     HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+    }),
   ],
   exports: [RouterModule],
   providers: [

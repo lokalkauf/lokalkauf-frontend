@@ -1,0 +1,26 @@
+<div class="verify">
+  <div *ngIf="mode === 'resetPassword'">
+    <h2>
+      Ihr Passwort wurde erfolgreich zurücksetzt.
+    </h2>
+  </div>
+  <div *ngIf="mode === 'recoverEmail'">
+    <h2>
+      Ihre vorherige E-Mail-Adresse wurde wiederhergestellt.
+    </h2>
+  </div>
+  <div *ngIf="mode === 'verifyEmail'">
+    <h2>
+      Ihre E-Mail-Adresse wurde erfolgreich bestätigt.
+    </h2>
+  </div>
+  <div *ngIf="mode === 'invalid'">
+    <h2>
+      Ihre Anfrage war ungültig.
+    </h2>
+  </div>
+  <br />
+  <div>
+    <app-lk-button routerLink="/" label="Zur Startseite"> </app-lk-button>
+  </div>
+</div>

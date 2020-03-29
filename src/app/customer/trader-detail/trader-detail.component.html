@@ -55,54 +55,7 @@
   <div class="carousel-container">
     <app-image-carousel [carouselSlides]="carouselSlides"></app-image-carousel>
   </div>
-  <div class="text lightergreen">
-    So sind wir erreichbar:
-  </div>
-  <div class="contactButtons">
-    <div class="contactButton">
-      <a [href]="'tel:' + trader.telephone">
-        <app-lk-button [label]="trader.telephone" [minSizePercent]="70">
-        </app-lk-button> </a
-      ><br />
-    </div>
-    <div class="contactButton">
-      <a [href]="'mailto:' + trader.email">
-        <app-lk-button [label]="trader.email" [minSizePercent]="70">
-        </app-lk-button>
-      </a>
-    </div>
-  </div>
-  <div class="text contactformdescription">
-    Oder über das Kontaktformular:<br />
-    <app-lk-textarea
-      placeholder="Text"
-      [(ngModel)]="contactMessage"
-    ></app-lk-textarea
-    ><br /><br />
-    Wie dürfen wir Sie kontaktieren?<br />
-    <app-lk-input
-      placeholder="E-Mail oder Telefonnummer"
-      [(ngModel)]="userEmailOrPhone"
-    ></app-lk-input
-    ><br /><br />
-    <label for="agbread">
-      <input
-        type="checkbox"
-        id="agbread"
-        [(ngModel)]="readAgbAndPrivacyPolicies"
-      />
-      Ich bestätige die <a href="#">AGB</a> und
-      <a href="#">Datenschutzbestimmungen</a> gelesen zu haben und bin
-      einverstanden
-    </label>
-  </div>
-  <div class="contactButton">
-    <app-lk-button
-      label="Anfrage senden"
-      (click)="onSubmit(trader.email, trader.businessname)"
-    >
-    </app-lk-button>
-  </div>
+  <app-trader-contact [trader]="trader"></app-trader-contact>
   <p class="trader-product-amount" *ngIf="(productAmount$ | async) > 0">
     <span
       class="product-amount"

@@ -9,6 +9,7 @@ import { TraderProfile } from '../../models/traderProfile';
 import { Observable } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   selector: 'app-trader-contact',
@@ -17,14 +18,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
   providers: [EMailService],
 })
 export class TraderContactComponent implements OnInit {
-  @Input() trader: Observable<Trader>;
-
-  mailModel = new EMail();
-  submitted = false;
-  error: {};
-
-  traderPhone: Observable<string>;
-  traderMail: Observable<string>;
+  @Input() trader: TraderProfile;
 
   contactForm = new FormGroup({
     mail_message: new FormControl('', [Validators.required]),
@@ -47,86 +41,47 @@ export class TraderContactComponent implements OnInit {
   constructor(
     private router: Router,
     private mailService: EMailService,
-    private db: AngularFirestore,
-    private route: ActivatedRoute
+    private errorService: ErrorService
   ) {}
 
-  ngOnInit(): void {
-    let traderId;
-    this.route.params.subscribe((p) => {
-      traderId = p.traderId;
-      this.fillTraderPhoneAndMail(traderId);
-    });
-  }
+  ngOnInit(): void {}
 
-  fillTraderPhoneAndMail(traderId: string): void {
-    const docReference = this.db.collection('Traders').doc(traderId);
-    docReference.get().subscribe((p) => {
-      if (p.exists) {
-        console.log('Trader found!');
-        const traderData = p.data();
-        this.traderPhone = traderData.telephone;
-        this.traderMail = traderData.email;
-      } else {
-        // doc.data() will be undefined in this case
-        console.log('No such trader!');
-      }
-    });
-  }
+  async onSubmit(receiverEmail: string, receiverName: string) {
+    if (!this.agbRead) {
+      this.errorService.publishByText(
+        'AGB und Datenschutzerklärung wurden nicht gelesen',
+        'Bitte vergewissere dich, dass du die AGB und die Datenschutzerklärungen ' +
+          'gelesen hast, bevor du eine Nachricht an den Händler abschickst.'
+      );
 
-  async onSubmit() {
-    this.submitted = true;
-    // TODO finalize call for backend sending mail
-    console.log('form submitted');
+      return;
+    }
 
     const email: EMail = {
-      acceptedAgb: false,
-      fromEMail: '',
-      fromPhone: '',
+      acceptedAgb: this.agbRead.value,
+      fromEMail: this.mail_contact.value,
+      fromPhone: this.mail_contact.value,
       fromPreferredContact: '',
-      fromName: '',
+      fromName: this.mail_contact.value,
       id: 0,
-      message: '',
-      title: '',
-      toEMail: '',
-      toName: '',
+      message: this.mail_message.value,
+      title: 'Jemand hat eine Anfrage an Sie gestellt',
+      toEMail: receiverEmail,
+      toName: receiverName,
     };
+
+    // TODO finalize call for backend sending mail
+    console.log(email);
 
     try {
       await this.mailService.send(email);
+      // this.router.navigate(['/contacted']);
     } catch (e) {
-      // TODO show ERRORs
-      // switch (e.code) {
-      //   case 'auth/email-already-in-use':
-      //     this.registrationForm.setErrors({
-      //       emailInUse: true,
-      //     });
-      //     break;
-      //   case 'auth/invalid-email':
-      //     this.registrationForm.setErrors({
-      //       invalidEmail: true,
-      //     });
-      //     break;
-      //   case 'auth/operation-not-allowed':
-      //     this.registrationForm.setErrors({
-      //       undefinedError: true,
-      //     });
-      //     break;
-      //   case 'auth/weak-password':
-      //     this.registrationForm.setErrors({
-      //       weakPassword: true,
-      //     });
-      //     break;
-      //   default:
-      //     this.registrationForm.setErrors({
-      //       undefinedError: true,
-      //     });
-      //     break;
-      // }
+      this.errorService.publishByText(
+        'Nachricht konnte nicht verschickt werden',
+        'Aufgrund eines Systemfehlers konnte die Nachricht an ' +
+          'den Händler nicht verschickt werden. Bitte versuche es erneut oder kontaktiere den Support.'
+      );
     }
-  }
-
-  gotoHome() {
-    this.router.navigate(['/']);
   }
 }

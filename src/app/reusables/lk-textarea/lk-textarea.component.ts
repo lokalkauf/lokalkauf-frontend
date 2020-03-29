@@ -30,11 +30,6 @@ export class LkTextareaComponent implements ControlValueAccessor {
   @Input() placeholder: string;
   @Input() value: string;
 
-  // tslint:disable-next-line: no-input-rename
-  @Input('ngModel') inputModel: string;
-  // tslint:disable-next-line: no-output-rename
-  @Output('ngModelChange') inputModelChange = new EventEmitter<string>();
-
   disabled = false;
   formControl = new FormControl('');
 

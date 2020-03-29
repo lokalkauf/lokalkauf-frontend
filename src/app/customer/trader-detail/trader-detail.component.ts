@@ -21,10 +21,6 @@ export class TraderDetailComponent implements OnInit {
   productAmount$: Observable<number>;
   carouselSlides: Array<CarouselEntry> = new Array<CarouselEntry>();
 
-  contactMessage: string;
-  userEmailOrPhone: string;
-  readAgbAndPrivacyPolicies: boolean;
-
   showMoreText = false;
 
   constructor(
@@ -42,10 +38,7 @@ export class TraderDetailComponent implements OnInit {
           .collection('Traders')
           .doc<Omit<TraderProfile, 'id'>>(params.id)
           .valueChanges()
-          .pipe(
-            tap(console.log),
-            map((x) => ({ ...x, id: params.id }))
-          )
+          .pipe(map((x) => ({ ...x, id: params.id })))
       )
     );
 
@@ -72,45 +65,6 @@ export class TraderDetailComponent implements OnInit {
       return inputText.substring(0, 200);
     } else {
       return inputText;
-    }
-  }
-
-  async onSubmit(receiverEmail: string, receiverName: string) {
-    if (!this.readAgbAndPrivacyPolicies) {
-      this.errorService.publishByText(
-        'AGB und Datenschutzerklärung wurden nicht gelesen',
-        'Bitte vergewissere dich, dass du die AGB und die Datenschutzerklärungen ' +
-          'gelesen hast, bevor du eine Nachricht an den Händler abschickst.'
-      );
-
-      return;
-    }
-
-    // TODO finalize call for backend sending mail
-    console.log('trader contact submitted');
-
-    const email: EMail = {
-      acceptedAgb: this.readAgbAndPrivacyPolicies,
-      fromEMail: this.userEmailOrPhone,
-      fromPhone: this.userEmailOrPhone,
-      fromPreferredContact: '',
-      fromName: this.userEmailOrPhone,
-      id: 0,
-      message: this.contactMessage,
-      title: 'Jemand hat eine Anfrage an Sie gestellt',
-      toEMail: receiverEmail,
-      toName: receiverName,
-    };
-
-    try {
-      await this.mailService.send(email);
-      this.router.navigate(['/contacted']);
-    } catch (e) {
-      this.errorService.publishByText(
-        'Nachricht konnte nicht verschickt werden',
-        'Aufgrund eines Systemfehlers konnte die Nachricht an ' +
-          'den Händler nicht verschickt werden. Bitte versuche es erneut oder kontaktiere den Support.'
-      );
     }
   }
 }
