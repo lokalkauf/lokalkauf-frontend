@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   selector: 'app-verify',
@@ -13,7 +14,8 @@ export class VerifyComponent implements OnInit {
   constructor(
     private user: UserService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private errorService: ErrorService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -27,12 +29,11 @@ export class VerifyComponent implements OnInit {
           break;
         case 'recoverEmail':
           // Display email recovery handler and UI.
-          this.handleRecoverEmail(params.actionCode, params.lang);
+          this.handleRecoverEmail(params.oobCode, params.lang);
           break;
         case 'verifyEmail':
           // Display email verification handler and UI.
-          console.log('here');
-          this.handleVerifyEmail(params.actionCode, params.lang);
+          this.handleVerifyEmail(params.oobCode, params.lang);
           break;
         default:
           // Error: invalid mode.
@@ -56,7 +57,10 @@ export class VerifyComponent implements OnInit {
       await this.user.revokeEmailChange(actionCode);
     } catch (error) {
       console.error(error);
-      // TODO: Show user instruction on UI
+      this.errorService.publishByText(
+        'E-Mail konnte nicht wiederhergestellt werden',
+        'Bitte prüfe Dein Profil oder kontaktiere uns.'
+      );
     }
   }
 
@@ -65,7 +69,11 @@ export class VerifyComponent implements OnInit {
       await this.user.verifyEmail(actionCode);
     } catch (error) {
       console.error(error);
-      // TODO: Show user instruction on UI
+      this.errorService.publishByText(
+        'E-Mail konnte nicht verifiziert werden',
+        'Der Verifizierungslink wurde entweder bereits genutzt oder ist ungültig.' +
+          'Bitte versuche Deine E-Mail erneut zu verifizeren oder kontaktiere uns.'
+      );
     }
   }
 }

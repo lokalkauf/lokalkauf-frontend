@@ -12,6 +12,7 @@
         <mat-icon (click)="opened = false">close</mat-icon>
       </div>
       <div class="sidenav-right-item sitenav-right-item">&nbsp;</div>
+      <div class="sidenav-right-item" (click)="navigate('/')">Suche</div>
       <div class="sidenav-right-item" (click)="navigate('/localtraders/0/0')">
         Käufer
       </div>
@@ -60,13 +61,9 @@
       <div id="burger-menu">
         <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
       </div>
-      <!-- <div
-        *ngIf="router.url !== '/'"
-        id="shopping-cart"
-        (click)="navigate('/cart')"
-      >
+      <!--<div *ngIf="router.url !== '/'" id="shopping-cart" (click)="navigate('/cart')">
         <mat-icon>shopping_cart</mat-icon>
-      </div> -->
+      </div>-->
     </div>
     <div
       id="main_body"

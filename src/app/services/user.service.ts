@@ -97,13 +97,10 @@ export class UserService {
   async revokeEmailChange(actionCode: string) {
     await this.auth.auth
       .checkActionCode(actionCode)
-      .then((info) => this.auth.auth.applyActionCode(actionCode))
-      .catch((error) => console.log('Error occured : ' + error.message));
+      .then((info) => this.auth.auth.applyActionCode(actionCode));
   }
 
   async verifyEmail(actionCode: string) {
-    await this.auth.auth
-      .applyActionCode(actionCode)
-      .catch((error) => console.log('Error occured : ' + error.message));
+    await this.auth.auth.applyActionCode(actionCode);
   }
 }

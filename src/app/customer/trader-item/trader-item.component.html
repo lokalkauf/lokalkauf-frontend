@@ -1,21 +1,18 @@
 <a [routerLink]="'/trader-detail/' + trader.id" name="scroller.{{ trader.id }}">
-  <mat-card class="trader-item">
-    <div
-      class="image-wrapper"
-      mat-card-image
-      [ngStyle]="{ 'background-image': 'url(' + trader.image + ')' }"
-    ></div>
-
-    <mat-card-content>
-      <p class="title">{{ trader.name }}</p>
-      <div class="product-container">
-        <span
-          class="product-amount"
-          *ngIf="productAmount$ | async as productAmount"
-          >{{ productAmount }}</span
-        >
-        Produkte
+  <div class="trader-item-container">
+    <div class="image-left">
+      <img src="{{ trader.image }}" *ngIf="trader.image" />
+      <img src="./assets/lokalkauf-pin.png" *ngIf="!trader.image" />
+    </div>
+    <div class="content">
+      <div class="headline">{{ (trader$ | async)?.businessname }}</div>
+      <div class="address">
+        <div class="distance"><span class="highlight">1,8</span><br />km</div>
+        {{ (trader$ | async)?.street }}
+        {{ (trader$ | async)?.number }}
+        <br />{{ (trader$ | async)?.postcode }}
+        {{ (trader$ | async)?.city }}
       </div>
-    </mat-card-content>
-  </mat-card>
+    </div>
+  </div>
 </a>

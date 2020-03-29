@@ -6,7 +6,7 @@
   display: grid;
 }
 
-#traders-map-row {
+.traders-map-row {
   height: 21rem;
   display: table-row;
 }
@@ -17,11 +17,11 @@
 }
 
 #tradersmap {
-  top: 6rem;
+  top: 0rem;
   z-index: 0;
   height: 50%;
-  max-height: 20rem;
-  position: absolute;
+  max-height: 26rem;
+  position: fixed;
 
   @media screen and (max-width: 767px) {
     width: 100%;
@@ -39,7 +39,7 @@
 #traders-overview-headline {
   text-align: center;
   color: $darkgreen;
-  position: absolute;
+  position: fixed;
   width: 100%;
 
   height: 2rem;
@@ -59,9 +59,13 @@
   padding-top: 2rem;
   margin: 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   grid-gap: 1.5rem;
   width: calc(100% - 40px);
-  justify-content: space-around;
   background-color: white;
+
+  @media screen and (max-width: 767px) {
+    margin: 0px;
+    width: 100%;
+    margin-top: 20px;
+  }
 }
