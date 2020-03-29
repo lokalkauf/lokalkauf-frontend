@@ -5,6 +5,7 @@ import { Trader } from '../../models/trader';
 import { ActivatedRoute } from '@angular/router';
 
 import { GeoService } from 'src/app/services/geo.service';
+import { TraderService } from 'src/app/services/trader.service';
 
 @Component({
   selector: 'app-trader-overview',
@@ -17,11 +18,17 @@ export class TraderOverviewComponent implements OnInit {
   constructor(
     db: AngularFirestore,
     private route: ActivatedRoute,
-    private geo: GeoService
+    private geo: GeoService,
+    private traderService: TraderService
   ) {
     this.traders$ = db
       .collection<Omit<Trader, 'id'>>('Traders')
       .valueChanges({ idField: 'id' });
+
+    // this.traderService.getTraderProfiles(['',''])
+    // .subscribe(t => {
+    //   console.log(t);
+    // });
   }
 
   ngOnInit() {

@@ -163,6 +163,8 @@ export class MapComponent implements OnInit, AfterViewInit {
       .then((value: GeoQuerySnapshot) => {
         this.removeTraderMarker(value);
 
+        // call trader observable ([{traderID:xxx, distance:0}])
+
         value.forEach((loc: GeoFirestoreTypes.QueryDocumentSnapshot) => {
           console.log(loc);
           this.createTraderMarkerIfNotExists(

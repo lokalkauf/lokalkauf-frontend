@@ -25,6 +25,7 @@ import { ImprintComponent } from './imprint/imprint.component';
 import { TransportMainComponent } from './transport/transport-main/transport-main.compontent';
 import { ShoppingcartService } from './services/shoppingcart.service';
 import { UserService } from './services/user.service';
+import { TraderService } from './services/trader.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReusablesModule } from './reusables/reusables.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -88,6 +89,7 @@ const routes: Routes = [
   providers: [
     ShoppingcartService,
     UserService,
+    TraderService,
     SpinnerService,
     {
       provide: HTTP_INTERCEPTORS,
