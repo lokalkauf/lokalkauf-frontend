@@ -4,6 +4,8 @@ import { Observable, combineLatest, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { TraderProfile } from '../models/traderProfile';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { v4 as uuid } from 'uuid';
 
 export interface LoggedInUserState {
   uid: string;
@@ -18,7 +20,11 @@ export class UserService {
   isLoggedIn$: Observable<boolean>;
   loggedInUserState$: Observable<LoggedInUserState | null>;
 
-  constructor(private auth: AngularFireAuth, private db: AngularFirestore) {
+  constructor(
+    private auth: AngularFireAuth,
+    private db: AngularFirestore,
+    private storage: AngularFireStorage
+  ) {
     this.isLoggedIn$ = this.auth.user.pipe(map((user) => user != null));
     this.loggedInUserState$ = this.auth.user.pipe(
       map((user) => ({
@@ -63,6 +69,13 @@ export class UserService {
     await this.db
       .doc<TraderProfile>(`Traders/${this.auth.auth.currentUser.uid}`)
       .update(partialTraderProfile);
+  }
+
+  uploadBusinessImage(file: File) {
+    const filePath = `Traders/${
+      this.auth.auth.currentUser.uid
+    }/BusinessImages/${uuid()}-${file.name}`;
+    return this.storage.upload(filePath, file);
   }
 
   async login(email: string, password: string) {
