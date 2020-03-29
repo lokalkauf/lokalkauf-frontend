@@ -30,9 +30,6 @@
       >
         Händler Login
       </div>
-      <div class="sidenav-right-item" (click)="navigate('/aboutus')">
-        Das sind wir
-      </div>
       <div
         *ngIf="userService.isLoggedIn$ | async"
         class="sidenav-right-item"
@@ -44,6 +41,9 @@
       <div class="sidenav-right-item">Profil</div>
       <div class="sidenav-right-item" (click)="navigate('/register')">Registrieren</div>
       <div class="sidenav-right-item" (click)="navigate('/login')">Anmelden</div>-->
+      <div class="sidenav-right-item" (click)="navigate('/aboutus')">
+        Das sind wir
+      </div>
       <div class="sidenav-right-item" (click)="navigate('/imprint')">
         Impressum
       </div>
