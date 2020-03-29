@@ -127,7 +127,6 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {}
 
-
   // logic..
 
   refreshMap() {
@@ -154,7 +153,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
         value.forEach((loc: GeoFirestoreTypes.QueryDocumentSnapshot) => {
           console.log(loc);
-          this.updateTraderMarker(
+          this.createTraderMarkerIfNotExists(
             latLng(
               loc.data().coordinates.latitude,
               loc.data().coordinates.longitude
@@ -184,7 +183,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     });
   }
 
-  updateTraderMarker(pos: LatLng, traderID: string) {
+  createTraderMarkerIfNotExists(pos: LatLng, traderID: string) {
     let exists = false;
     this.targets.getLayers().forEach((l: Marker) => {
       if (l.getLatLng().lat === pos.lat && l.getLatLng().lng === pos.lng) {
@@ -193,29 +192,34 @@ export class MapComponent implements OnInit, AfterViewInit {
     });
 
     if (!exists) {
-      marker(pos, { alt: traderID, attribution: '20'})
-        .setIcon(icon({ iconUrl: '/assets/pin.png' }))
+      marker(pos, { alt: traderID, attribution: '20' })
+        .setIcon(
+          icon({
+            iconUrl: '/assets/pin.png',
+            shadowUrl: '/assets/pin-shadow.png',
+
+            iconSize: [25, 29],
+            shadowSize: [25, 29],
+            iconAnchor: [16, 25],
+            shadowAnchor: [6, 26],
+          })
+        )
         .addTo(this.targets)
         .on('click', this.onClickTraderMarker);
     }
   }
 
-
-
   onClickTraderMarker(e: any) {
-
     const tradersLocation = {
-      id : e.target.options.alt,
-      coordinates : e.latlng,
-      distance : Number.parseFloat(e.target.options.attribution)
+      id: e.target.options.alt,
+      coordinates: e.latlng,
+      distance: Number.parseFloat(e.target.options.attribution),
     };
 
     console.log('marker selected: ' + tradersLocation);
     console.log(e);
     console.log(tradersLocation);
   }
-
-
 
   updateUserCircleMarker(pos: LatLng) {
     const lln = latLng(pos[0], pos[1]);
@@ -231,16 +235,15 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   getPositionOfUserCircleMarkerAsArray() {
-    return [this.getPositionOfUserCircleMarker().lat, this.getPositionOfUserCircleMarker().lng];
+    return [
+      this.getPositionOfUserCircleMarker().lat,
+      this.getPositionOfUserCircleMarker().lng,
+    ];
   }
-
 
   /* debug stuff */
   createTraderLocationForDebug(traderID: string, position: LatLng) {
     console.log('create location: ' + traderID + ' at position: ' + position);
     this.geo.setLocation(traderID, [position.lat, position.lng]);
   }
-
-
-
 }
