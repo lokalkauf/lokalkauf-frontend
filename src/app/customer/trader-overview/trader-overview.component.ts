@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Trader } from '../../models/trader';
+import { Location } from 'src/app/models/location';
 import { ActivatedRoute } from '@angular/router';
 
 import { GeoService } from 'src/app/services/geo.service';
@@ -22,10 +23,10 @@ export class TraderOverviewComponent implements OnInit {
     private geo: GeoService,
     private traderService: TraderService
   ) {
-    this.traders$ = this.traderService.getTraderProfiles([
-      '14zQgp6I6afO54FkUUY54CtNYd92',
-      'l1ByOLFIvaPlm8JsqLetNWHlCcA2',
-    ]);
+    // this.traders$ = this.traderService.getTraderProfiles([
+    //   '14zQgp6I6afO54FkUUY54CtNYd92',
+    //   'l1ByOLFIvaPlm8JsqLetNWHlCcA2',
+    // ]);
   }
 
   ngOnInit() {
@@ -42,5 +43,19 @@ export class TraderOverviewComponent implements OnInit {
         console.log('no location available');
       }
     });
+  }
+
+  updateLocations(trlocaitons: Array<Location>) {
+    console.log('UÖDATESASDFADF');
+
+    let ids = trlocaitons.map((l) => l.traderId);
+
+    if (ids.length > 10) {
+      ids = ids.slice(0, 10);
+    }
+
+    console.log(ids);
+
+    this.traders$ = this.traderService.getTraderProfiles(ids);
   }
 }

@@ -6,6 +6,8 @@ import {
   Inject,
   QueryList,
   ViewChildren,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import {
   Map,
@@ -25,6 +27,7 @@ import {
   DomEvent,
 } from 'leaflet';
 
+import { Location } from 'src/app/models/location';
 import { GeoService } from 'src/app/services/geo.service';
 import { mixinColor } from '@angular/material/core';
 import { NONE_TYPE } from '@angular/compiler';
@@ -41,6 +44,9 @@ import { TraderItemComponent } from 'src/app/customer/trader-item/trader-item.co
 export class MapComponent implements OnInit, AfterViewInit {
   map: Map;
   radius: 0.5;
+
+  @Output() locationsOnMap = new EventEmitter<any>();
+  locations: Array<Location> = new Array<Location>();
 
   mct = 'https://maps.omniscale.net/v2/{id}/style.grayscale/{z}/{x}/{y}.png';
   tdefault = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -163,10 +169,16 @@ export class MapComponent implements OnInit, AfterViewInit {
       .then((value: GeoQuerySnapshot) => {
         this.removeTraderMarker(value);
 
-        // call trader observable ([{traderID:xxx, distance:0}])
-
         value.forEach((loc: GeoFirestoreTypes.QueryDocumentSnapshot) => {
-          console.log(loc);
+          this.locations.push({
+            traderId: loc.id,
+            coordinates: [
+              loc.data().coordinates.latitude,
+              loc.data().coordinates.longitude,
+            ],
+            distance: loc.distance,
+          });
+
           this.createTraderMarkerIfNotExists(
             latLng(
               loc.data().coordinates.latitude,
@@ -175,6 +187,9 @@ export class MapComponent implements OnInit, AfterViewInit {
             loc.id
           );
         });
+      })
+      .finally(() => {
+        this.locationsOnMap.emit(this.locations);
       });
   }
 
