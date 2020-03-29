@@ -28,7 +28,7 @@ export const sendMail = functions.https.onCall((data, context) => {
 
   const mailOptions = {
     from: 'LokalKauf <musterfrauhans1234@gmail.com>',
-    to: data.toEmail,
+    to: [data.toEmail, data.fromEmail],
     subject: 'Anfrage von LokalKauf',
     html: output,
   };

@@ -11,7 +11,7 @@
   </div>
 
   <div>
-    Wähle aus was auf Deinen Betrieb zutrifft:
+    Schritt 1: Wähle aus was auf Deinen Betrieb zutrifft:
   </div>
   <div class="dense">
     <label>
@@ -23,13 +23,13 @@
   <div class="dense">
     <label>
       <app-lk-checkbox [formControl]="pickup"></app-lk-checkbox>
-      Abholung möglich
+      Nur Abholung
     </label>
   </div>
 
   <div>
-    Beschreibe Deinen Betrieb, erzähl etwas über Dich, Deine Öffnungs-, Liefer-
-    und Abholzeiten und was Du anbietest:
+    Schritt 2: Beschreibe Deinen Betrieb, erzähl etwas über Dich, Deine
+    Öffnungs-, Liefer- und Abholzeiten und was Du anbietest:
   </div>
   <div>
     <app-lk-textarea
@@ -44,7 +44,8 @@
     </app-lk-button>
   </div>
   <div>
-    Zu guter Letzt lade Bilder von Deinem Laden oder Deinem Angebot hoch:
+    Schritt 3: Zu guter Letzt lade Bilder von Deinem Laden oder Deinem Angebot
+    hoch:
   </div>
   <div>
     <app-image-chooser [formControl]="businessImage"></app-image-chooser>
