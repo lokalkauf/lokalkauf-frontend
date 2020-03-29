@@ -32,6 +32,13 @@
       <div class="sidenav-right-item" (click)="navigate('/aboutus')">
         Das sind wir
       </div>
+      <div
+        *ngIf="userService.isLoggedIn$ | async"
+        class="sidenav-right-item"
+        (click)="userService.logout()"
+      >
+        Ausloggen
+      </div>
       <!--<div class="sidenav-right-item" (click)="navigate('/transport')">Lieferant</div>
       <div class="sidenav-right-item">Profil</div>
       <div class="sidenav-right-item" (click)="navigate('/register')">Registrieren</div>

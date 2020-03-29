@@ -1,9 +1,7 @@
-<div class="registration-head">
-  <h2>
-    Anmeldung
-  </h2>
-  Melde dich kostenlos an und verkaufe Deine Produkte in Deiner Nachbarschaft.
-</div>
+<app-lk-page-title
+  title="Anmeldung"
+  subtitle="Melde dich kostenlos an und verkaufe Deine Produkte in Deiner Nachbarschaft."
+></app-lk-page-title>
 
 <div class="registration-form">
   <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
@@ -104,10 +102,13 @@
     </div>
     <div class="agb">
       <label>
-        <input type="checkbox" formControlName="agbRead" /> Mit meiner Anmeldung
-        versichere ich, dass ich die <a routerLink="#">AGB</a> und die
-        <a routerLink="#">Datenschutzrichtlinen</a> gelesen habe und damit
-        einverstanden bin.
+        <app-lk-checkbox formControlName="agbRead"></app-lk-checkbox>
+        <p>
+          Mit meiner Anmeldung versichere ich, dass ich die
+          <a routerLink="#">AGB</a> und die
+          <a routerLink="#">Datenschutzrichtlinen</a> gelesen habe und damit
+          einverstanden bin.
+        </p>
       </label>
     </div>
 

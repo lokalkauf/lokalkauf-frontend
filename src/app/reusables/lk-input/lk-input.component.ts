@@ -1,20 +1,10 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  forwardRef,
-  ViewChild,
-  ElementRef,
-  OnChanges,
-  Output,
-  EventEmitter,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
   FormControl,
 } from '@angular/forms';
-import { fromEvent, Subject, merge } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-lk-input',
@@ -36,13 +26,6 @@ export class LkInputComponent implements ControlValueAccessor {
   @Input() name: string;
 
   formControl = new FormControl('');
-  disabled = false;
-
-  @ViewChild('input') set content(input: ElementRef<HTMLInputElement>) {
-    merge(fromEvent(input.nativeElement, 'focusout')).subscribe(() =>
-      this.onTouch$.next()
-    );
-  }
 
   onTouch$ = new Subject();
 
@@ -58,6 +41,6 @@ export class LkInputComponent implements ControlValueAccessor {
     this.onTouch$.subscribe(fn);
   }
   setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+    isDisabled ? this.formControl.disable() : this.formControl.enable();
   }
 }
