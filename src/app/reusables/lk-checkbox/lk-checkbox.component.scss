@@ -1,0 +1,24 @@
+@import '../../../variables.scss';
+
+input[type='checkbox'] {
+  display: none;
+}
+input[type='checkbox'] + .checkbox {
+  display: inline-block;
+  height: 1.2rem;
+}
+input[type='checkbox'] + .checkbox::before {
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 10px;
+  border: 1px solid $lightergreen;
+  background-color: #fff;
+  display: block;
+  content: '';
+  float: left;
+  margin-right: 5px;
+}
+input[type='checkbox']:checked + .checkbox::before {
+  box-shadow: inset 0px 0px 0px 0.2rem #fff;
+  background-color: $lightergreen;
+}
