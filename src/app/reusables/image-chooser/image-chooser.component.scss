@@ -1,0 +1,36 @@
+.image-chooser {
+  grid-area: image;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid grey;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  text-align: center;
+  line-height: 100%;
+
+  input {
+    display: none;
+  }
+
+  .label {
+    margin-left: 20px;
+    height: 100%;
+    line-height: 100%;
+    text-align: center;
+  }
+
+  .add-image-icon {
+    position: block;
+    width: 100px;
+    height: 100px;
+    font-size: 100px;
+  }
+
+  .selected-image {
+    background-size: cover;
+    width: 100px;
+    height: 100px;
+  }
+}

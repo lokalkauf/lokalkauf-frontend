@@ -36,4 +36,11 @@
     label="Ändern"
     (click)="updateDescription()"
   ></app-lk-button>
+
+  <app-image-chooser [formControl]="businessImage"></app-image-chooser>
+  <app-lk-button
+    label="upload"
+    [disabled]="businessImage.value == null"
+    (click)="uploadImage()"
+  ></app-lk-button>
 </div>
