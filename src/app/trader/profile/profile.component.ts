@@ -20,6 +20,8 @@ export class ProfileComponent implements AfterViewInit {
   delivery = new FormControl(false);
   pickup = new FormControl(false);
 
+  description = new FormControl('');
+
   constructor(
     private user: UserService,
     private router: Router,
@@ -49,6 +51,13 @@ export class ProfileComponent implements AfterViewInit {
       if (loggedInUser.traderProfile.pickup !== this.pickup.value) {
         this.pickup.setValue(loggedInUser.traderProfile.pickup);
       }
+      if (
+        !this.description.dirty &&
+        loggedInUser.traderProfile.description !== this.description.value
+      ) {
+        this.description.setValue(loggedInUser.traderProfile.description);
+        this.description.markAsPristine();
+      }
     });
   }
 
@@ -59,5 +68,12 @@ export class ProfileComponent implements AfterViewInit {
 
   async logout() {
     await this.user.logout();
+  }
+
+  async updateDescription() {
+    await this.user.updateTraderProfile({
+      description: this.description.value,
+    });
+    this.description.markAsPristine();
   }
 }

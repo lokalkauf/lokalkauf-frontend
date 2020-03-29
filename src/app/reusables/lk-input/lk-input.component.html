@@ -1,10 +1,9 @@
 <input
   [type]="type"
-  [formControl]="formControl"
   [placeholder]="placeholder"
-  [value]="value"
   [name]="name"
-  (focusout)="onTouch$.next()"
+  [(ngModel)]="value"
+  (blur)="onBlur()"
   [ngClass]="{
     warn: warn
   }"

@@ -26,4 +26,14 @@
 
   Beschreibe dein Geschäft, erzähl was über dich, dein Sortiment und was du
   anbietest.
+
+  <app-lk-textarea
+    placeholder="Beschreibungstext"
+    [formControl]="description"
+  ></app-lk-textarea>
+  <app-lk-button
+    [disabled]="!description.dirty"
+    label="Ändern"
+    (click)="updateDescription()"
+  ></app-lk-button>
 </div>
