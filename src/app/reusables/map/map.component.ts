@@ -1,4 +1,12 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  Injector,
+  Inject,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import {
   Map,
   tileLayer,
@@ -22,6 +30,8 @@ import { mixinColor } from '@angular/material/core';
 import { NONE_TYPE } from '@angular/compiler';
 import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
 import { IconOptions } from '@angular/material/icon';
+import { DOCUMENT } from '@angular/common';
+import { TraderItemComponent } from 'src/app/customer/trader-item/trader-item.component';
 
 @Component({
   selector: 'app-map',
@@ -71,6 +81,8 @@ export class MapComponent implements OnInit, AfterViewInit {
       '<br/><button id="btnCrlc" style="background-color:#aaa; margin-top:10px;">create</button></p>'
   );
 
+  @ViewChildren('rrr') traderItems: QueryList<TraderItemComponent>;
+
   constructor(private geo: GeoService) {}
 
   ngAfterViewInit(): void {
@@ -91,9 +103,15 @@ export class MapComponent implements OnInit, AfterViewInit {
     });
 
     const self = this;
-    let trCreated = false;
+
+    this.map.on('click', (e: any) => {
+      console.log(e);
+    });
 
     // debug stuff,
+    /*
+    let trCreated = false;
+
     this.map.on('click', (e: any) => {
       console.log('open popup..');
 
@@ -123,6 +141,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
       ma.openPopup();
     });
+    */
   }
 
   ngOnInit(): void {}
@@ -229,6 +248,11 @@ export class MapComponent implements OnInit, AfterViewInit {
       this.getPositionOfUserCircleMarker().lat,
       this.getPositionOfUserCircleMarker().lng,
     ];
+  }
+
+  scrollToView(elem: string) {
+    window.location.hash = '';
+    window.location.hash = elem;
   }
 
   /* debug stuff */
