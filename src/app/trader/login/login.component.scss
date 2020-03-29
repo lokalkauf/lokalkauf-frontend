@@ -26,14 +26,8 @@ form {
     margin: 0 10px;
   }
 
-  app-lk-button {
-    display: block;
-    margin: 20px;
-    background-color: transparent;
-  }
-
-  app-lk-button > button {
-    padding: 0 50px !important;
+  #app-lk-button-container {
+    margin-top: 20px;
   }
 
   .button-and-error {
