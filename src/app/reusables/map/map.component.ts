@@ -81,7 +81,6 @@ export class MapComponent implements OnInit, AfterViewInit {
       '<br/><button id="btnCrlc" style="background-color:#aaa; margin-top:10px;">create</button></p>'
   );
 
-  @ViewChildren('rrr') traderItems: QueryList<TraderItemComponent>;
 
   constructor(private geo: GeoService) {}
 
@@ -104,12 +103,8 @@ export class MapComponent implements OnInit, AfterViewInit {
 
     const self = this;
 
-    this.map.on('click', (e: any) => {
-      console.log(e);
-    });
-
     // debug stuff,
-    /*
+
     let trCreated = false;
 
     this.map.on('click', (e: any) => {
@@ -141,7 +136,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
       ma.openPopup();
     });
-    */
+
   }
 
   ngOnInit(): void {}
@@ -210,6 +205,8 @@ export class MapComponent implements OnInit, AfterViewInit {
       }
     });
 
+    const self = this;
+
     if (!exists) {
       marker(pos, { alt: traderID, attribution: '20' })
         .setIcon(
@@ -220,25 +217,27 @@ export class MapComponent implements OnInit, AfterViewInit {
             iconSize: [25, 29],
             shadowSize: [25, 29],
             iconAnchor: [16, 25],
-            shadowAnchor: [6, 26],
+            shadowAnchor: [6, 26]
           })
         )
         .addTo(this.targets)
-        .on('click', this.onClickTraderMarker);
+        .on('click', (e: any) => {
+          const tradersLocation = {
+            id: e.target.options.alt,
+            coordinates: e.latlng,
+            distance: Number.parseFloat(e.target.options.attribution),
+          };
+
+          console.log('marker selected: ' + tradersLocation);
+          console.log(e);
+          console.log(tradersLocation);
+
+          self.scrollToView2(tradersLocation.id);
+        });
     }
   }
 
-  onClickTraderMarker(e: any) {
-    const tradersLocation = {
-      id: e.target.options.alt,
-      coordinates: e.latlng,
-      distance: Number.parseFloat(e.target.options.attribution),
-    };
 
-    console.log('marker selected: ' + tradersLocation);
-    console.log(e);
-    console.log(tradersLocation);
-  }
 
   updateUserCircleMarker(pos: LatLng) {
     const lln = latLng(pos[0], pos[1]);
@@ -259,6 +258,12 @@ export class MapComponent implements OnInit, AfterViewInit {
       this.getPositionOfUserCircleMarker().lng,
     ];
   }
+
+  scrollToView2(elem: string) {
+    window.location.hash = '';
+    window.location.hash = '#scroller.' + elem;
+  }
+
 
   /* debug stuff */
   createTraderLocationForDebug(traderID: string, position: LatLng) {
