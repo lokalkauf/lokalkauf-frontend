@@ -35,11 +35,6 @@ export class LkInputComponent implements ControlValueAccessor {
   @Input() warn = false;
   @Input() name: string;
 
-  // tslint:disable-next-line: no-input-rename
-  @Input('ngModel') inputModel: string;
-  // tslint:disable-next-line: no-output-rename
-  @Output('ngModelChange') inputModelChange = new EventEmitter<string>();
-
   formControl = new FormControl('');
   disabled = false;
 
