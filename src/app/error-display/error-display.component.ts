@@ -15,11 +15,6 @@ export class ErrorDisplayComponent implements OnInit {
 
   ngOnInit(): void {
     this.errorService.subscribe(this.setError.bind(this));
-
-    this.setError({
-      headline: 'Test',
-      text: 'Hello this is a test',
-    });
   }
 
   private setError(e: Error) {

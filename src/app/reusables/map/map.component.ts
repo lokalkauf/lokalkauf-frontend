@@ -1,4 +1,12 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  Injector,
+  Inject,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import {
   Map,
   tileLayer,
@@ -22,6 +30,8 @@ import { mixinColor } from '@angular/material/core';
 import { NONE_TYPE } from '@angular/compiler';
 import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
 import { IconOptions } from '@angular/material/icon';
+import { DOCUMENT } from '@angular/common';
+import { TraderItemComponent } from 'src/app/customer/trader-item/trader-item.component';
 
 @Component({
   selector: 'app-map',
@@ -76,7 +86,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.geo.getUserPosition().subscribe((p) => {
       if (p != null) {
-        this.updateCurrentPosition(latLng(p[0], p[1]));
+        this.updateUserCircleMarker(latLng(p[0], p[1]));
         this.loadTraders(0.5);
       }
     });
@@ -87,13 +97,15 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.targets.addTo(this.map);
 
     this.map.on('zoomend', () => {
-      this.updateAfterZoom();
+      this.refreshMap();
     });
 
     const self = this;
-    let trCreated = false;
 
     // debug stuff,
+
+    let trCreated = false;
+
     this.map.on('click', (e: any) => {
       console.log('open popup..');
 
@@ -109,7 +121,7 @@ export class MapComponent implements OnInit, AfterViewInit {
               const pos: LatLng = e.latlng;
 
               const tid = ev.popup._container.querySelector('#rid');
-              self.createLocation(tid.value, pos);
+              self.createTraderLocationForDebug(tid.value, pos);
               trCreated = true;
               ma.closePopup();
             });
@@ -127,7 +139,9 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {}
 
-  updateAfterZoom() {
+  // logic..
+
+  refreshMap() {
     const center = this.map.getCenter();
     const eastBound = this.map.getBounds().getEast();
     const centerEast = latLng(center.lat, eastBound);
@@ -142,26 +156,27 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   loadTraders(radius: number) {
-    console.log('start loading docs...');
+    // console.log('start loading docs...');
 
     this.geo
-      .getLocations(radius, this.getCurrentPositionAsArray())
+      .getLocations(radius, this.getPositionOfUserCircleMarkerAsArray())
       .then((value: GeoQuerySnapshot) => {
-        this.removeTargets(value);
+        this.removeTraderMarker(value);
 
         value.forEach((loc: GeoFirestoreTypes.QueryDocumentSnapshot) => {
-          console.log(loc.data());
-          this.updateTarget(
+          console.log(loc);
+          this.createTraderMarkerIfNotExists(
             latLng(
               loc.data().coordinates.latitude,
               loc.data().coordinates.longitude
-            )
+            ),
+            loc.id
           );
         });
       });
   }
 
-  removeTargets(loaded: GeoQuerySnapshot) {
+  removeTraderMarker(loaded: GeoQuerySnapshot) {
     this.targets.getLayers().forEach((l: Marker) => {
       let exists = false;
 
@@ -180,7 +195,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     });
   }
 
-  updateTarget(pos: LatLng) {
+  createTraderMarkerIfNotExists(pos: LatLng, traderID: string) {
     let exists = false;
     this.targets.getLayers().forEach((l: Marker) => {
       if (l.getLatLng().lat === pos.lat && l.getLatLng().lng === pos.lng) {
@@ -188,14 +203,39 @@ export class MapComponent implements OnInit, AfterViewInit {
       }
     });
 
+    const self = this;
+
     if (!exists) {
-      marker(pos)
-        .setIcon(icon({ iconUrl: '/assets/pin.png' }))
-        .addTo(this.targets);
+      marker(pos, { alt: traderID, attribution: '20' })
+        .setIcon(
+          icon({
+            iconUrl: '/assets/pin.png',
+            shadowUrl: '/assets/pin-shadow.png',
+
+            iconSize: [25, 29],
+            shadowSize: [25, 29],
+            iconAnchor: [16, 25],
+            shadowAnchor: [6, 26],
+          })
+        )
+        .addTo(this.targets)
+        .on('click', (e: any) => {
+          const tradersLocation = {
+            id: e.target.options.alt,
+            coordinates: e.latlng,
+            distance: Number.parseFloat(e.target.options.attribution),
+          };
+
+          console.log('marker selected: ' + tradersLocation);
+          console.log(e);
+          console.log(tradersLocation);
+
+          self.scrollToView2(tradersLocation.id);
+        });
     }
   }
 
-  updateCurrentPosition(pos: LatLng) {
+  updateUserCircleMarker(pos: LatLng) {
     const lln = latLng(pos[0], pos[1]);
 
     console.log('war hier: ' + pos);
@@ -204,16 +244,24 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.map.setView(pos, this.options.zoom);
   }
 
-  getCurrentPosition() {
+  getPositionOfUserCircleMarker() {
     return (this.markers[0] as CircleMarker).getLatLng();
   }
 
-  getCurrentPositionAsArray() {
-    return [this.getCurrentPosition().lat, this.getCurrentPosition().lng];
+  getPositionOfUserCircleMarkerAsArray() {
+    return [
+      this.getPositionOfUserCircleMarker().lat,
+      this.getPositionOfUserCircleMarker().lng,
+    ];
+  }
+
+  scrollToView2(elem: string) {
+    window.location.hash = '';
+    window.location.hash = '#scroller.' + elem;
   }
 
   /* debug stuff */
-  createLocation(traderID: string, position: LatLng) {
+  createTraderLocationForDebug(traderID: string, position: LatLng) {
     console.log('create location: ' + traderID + ' at position: ' + position);
     this.geo.setLocation(traderID, [position.lat, position.lng]);
   }
