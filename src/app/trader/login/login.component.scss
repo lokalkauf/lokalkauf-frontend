@@ -2,7 +2,7 @@
 
 .login-head {
   text-align: center;
-  margin-bottom: 2em;
+  margin-bottom: 40px;
   font-size: 0.8rem;
 
   h2 {
@@ -11,18 +11,35 @@
 }
 
 .info {
+  text-align: center;
   font-size: 0.8rem;
 }
 
 form {
+  margin-top: 50px;
+  text-align: center;
+
   app-lk-input {
-    display: block;
+    display: inline-block;
     margin-bottom: 20px;
+    max-width: 500px;
+    margin: 0 10px;
+  }
+
+  app-lk-button {
+    display: block;
+    margin: 20px;
+  }
+
+  app-lk-button > button {
+    padding: 0 50px !important;
   }
 
   .button-and-error {
-    display: flex;
+    display: block;
     align-items: center;
+    max-width: 500px;
+    text-align: center;
 
     @media screen and (max-width: 600px) {
       flex-direction: column-reverse;
