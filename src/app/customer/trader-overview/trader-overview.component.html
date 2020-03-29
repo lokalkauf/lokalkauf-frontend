@@ -9,7 +9,7 @@
     <div id="traders-overview-headline">Händler</div>
     <div id="traders-overview-content">
       <app-trader-item
-        *ngFor="let trader of traders$ | async"
+        *ngFor="let trader of traders$"
         [trader]="trader"
       ></app-trader-item>
     </div>
