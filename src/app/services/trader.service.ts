@@ -14,9 +14,9 @@ export class TraderService {
 
   getTraderProfiles(
     traderIds: Array<string>
-  ): Observable<Array<TraderProfile & { id: string }>> {
+  ): Observable<Array<TraderProfile>> {
     return this.db
-      .collection<TraderProfile>('books', (ref) =>
+      .collection<TraderProfile>('Traders', (ref) =>
         ref.where(firestore.FieldPath.documentId(), 'in', traderIds)
       )
       .snapshotChanges()
