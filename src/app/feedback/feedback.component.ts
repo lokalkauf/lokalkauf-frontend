@@ -1,6 +1,9 @@
 import { Location, TranslationWidth } from '@angular/common';
 import { Component } from '@angular/core';
 import * as EmailValidatorTS from 'email-validator';
+import { EMailService } from '../services/email.service';
+import { EMail } from '../models/email';
+import { ErrorService } from '../services/error.service';
 
 @Component({
   selector: 'app-feedback',
@@ -12,7 +15,13 @@ export class FeedbackComponent {
   email: string;
   showError: boolean;
 
-  constructor(private location: Location) {
+  mailSent = false;
+
+  constructor(
+    private location: Location,
+    private mailService: EMailService,
+    private errorService: ErrorService
+  ) {
     this.showError = false;
   }
 
@@ -22,12 +31,29 @@ export class FeedbackComponent {
 
   absenden() {
     if (this.message && (!this.email || this.validMail(this.email))) {
-      this.location.back();
+      try {
+        this.mailService.send({
+          fromEMail: this.email,
+          toEMail: 'info@lokalkauf.org',
+          message: this.message,
+        } as EMail);
+        this.mailSent = true;
+      } catch (e) {
+        this.errorService.publishByText(
+          'Nachricht konnte nicht verschickt werden',
+          'Aufgrund eines Systemfehlers konnte die Nachricht an ' +
+            'den Händler nicht verschickt werden. Bitte versuche es erneut oder kontaktiere den Support.'
+        );
+      }
     } else {
       this.showError = true;
     }
   }
   validMail(mail: string): boolean {
     return EmailValidatorTS.validate(mail);
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

@@ -6,18 +6,23 @@ import { Trader } from '../../models/trader';
 import { Location } from 'src/app/models/location';
 import { ActivatedRoute } from '@angular/router';
 
+import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
 import { GeoService } from 'src/app/services/geo.service';
 import { TraderService } from 'src/app/services/trader.service';
 import { TraderProfile } from 'src/app/models/traderProfile';
 
 @Component({
   selector: 'app-trader-overview',
-  templateUrl: './trader-overview.component.html',
+  templateUrl: './trader-overview.component2.html',
   styleUrls: ['./trader-overview.component.scss'],
 })
 export class TraderOverviewComponent implements OnInit {
   traders$: Array<TraderProfile> = new Array<TraderProfile>();
-  // traders$: Observable<TraderProfile[]>;
+
+  STATIC_LOCATION: number[] = [51.5414834, 7.687158800000001];
+  STATIC_RADIUS = 10;
+
+  locations: Array<Location>;
 
   constructor(
     db: AngularFirestore,
@@ -27,6 +32,10 @@ export class TraderOverviewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.loadTmpLocations();
+
+    return;
+
     this.route.params.subscribe((params) => {
       console.log('lat' + params.lat + ' lng: ' + params.lng);
 
@@ -42,7 +51,35 @@ export class TraderOverviewComponent implements OnInit {
     });
   }
 
+  loadTmpLocations() {
+    this.geo
+      .getLocations(this.STATIC_RADIUS, this.STATIC_LOCATION)
+      .then((value: GeoQuerySnapshot) => {
+        this.locations = new Array<Location>();
+
+        value.forEach((loc: GeoFirestoreTypes.QueryDocumentSnapshot) => {
+          this.locations.push({
+            traderId: loc.id,
+            coordinates: [
+              loc.data().coordinates.latitude,
+              loc.data().coordinates.longitude,
+            ],
+            distance: loc.distance,
+          });
+        });
+      })
+      .finally(() => {
+        console.log('loaded locations..');
+        console.log(this.locations);
+        this.updateLocations(this.locations);
+      });
+  }
+
   updateLocations(trlocaitons: Array<Location>) {
+    if (!trlocaitons || trlocaitons.length < 1) {
+      return;
+    }
+
     console.log('UÖDATESASDFADF: ' + trlocaitons.length);
 
     // a lot of magic, couse of firebase limitation loading 10 ids in query at once
@@ -72,17 +109,6 @@ export class TraderOverviewComponent implements OnInit {
           }
         });
     }
-
-    // const arr = [];
-
-    // for (const chunk of chunked) {
-    //   arr.push(this.traderService.getTraderProfiles(chunk));
-    // }
-
-    // forkJoin(arr).subscribe(data => {
-    //   console.log('chunks loaded...');
-    //   console.log(s);
-    // });
   }
 
   getChunks(arr, size) {

@@ -1,5 +1,5 @@
 <div id="feedback-overlay">
-  <div id="feedback-inset">
+  <div id="feedback-inset" *ngIf="!mailSent">
     <h1>Ihre Ideen sind uns wichtig</h1>
 
     <app-lk-textarea
@@ -32,5 +32,25 @@
   </div>
   <div class="feedback-error" *ngIf="showError">
     Bitte geben Sie einen Nachrichtentext ein und ggf. gültige E-Mail-Adresse
+  </div>
+
+  <div id="thankyou" *ngIf="mailSent">
+    <div id="thanks-headline">Vielen Dank für Deine Feedback</div>
+    <div id="thanks-subheading">
+      Wir freuen uns über Deine Kommentare, Deine Anregungen, Dein Feedback,
+      Deine Ideen und sogar Deine Kritik.
+      <br />
+      <br />Wir versuchen so schnell wie Möglich Deine Anliegen zu beantworten.
+      <br />
+      <br />Dein lokalkauf-Team
+      <br />
+      <br />
+      <br />
+      <app-lk-button
+        (click)="goBack()"
+        label="Schliessen und weiter"
+      ></app-lk-button>
+      <br />
+    </div>
   </div>
 </div>

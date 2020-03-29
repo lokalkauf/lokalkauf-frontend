@@ -59,7 +59,7 @@
           [warn]="postcode.touched && postcode.invalid"
           type="number"
           formControlName="postcode"
-          placeholder="Postleitzahl*"
+          placeholder="Plz*"
         ></app-lk-input>
       </div>
       <div class="registration-input city">
@@ -68,7 +68,8 @@
           type="text"
           formControlName="city"
           placeholder="Stadt*"
-        ></app-lk-input>
+        >
+        </app-lk-input>
       </div>
     </div>
     <br />
@@ -78,7 +79,8 @@
         type="email"
         formControlName="email"
         placeholder="Email*"
-      ></app-lk-input>
+      >
+      </app-lk-input>
     </div>
     <div class="registration-input">
       <app-lk-input
@@ -105,9 +107,11 @@
         <app-lk-checkbox formControlName="agbRead"></app-lk-checkbox>
         <p>
           Mit meiner Anmeldung versichere ich, dass ich die
-          <a href="/agb" target="blank">AGB</a> und die
-          <a href="/agb" target="blank">Datenschutzrichtlinen</a> gelesen habe
-          und damit einverstanden bin.
+          <a [routerLink]="'/agb'">AGB</a> und die
+          <a href="https://www.lokalkauf.org/datenschutz" target="_blank"
+            >Datenschutzrichtlinen</a
+          >
+          gelesen habe und damit einverstanden bin.
         </p>
       </label>
     </div>

@@ -24,3 +24,12 @@ h1 {
   font-size: 1.2rem;
   font-weight: 300;
 }
+
+a {
+  text-decoration: underline;
+  color: $appgrey;
+}
+
+a:hover {
+  color: $appgrey;
+}
