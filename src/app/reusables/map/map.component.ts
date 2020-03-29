@@ -81,7 +81,6 @@ export class MapComponent implements OnInit, AfterViewInit {
       '<br/><button id="btnCrlc" style="background-color:#aaa; margin-top:10px;">create</button></p>'
   );
 
-
   constructor(private geo: GeoService) {}
 
   ngAfterViewInit(): void {
@@ -136,7 +135,6 @@ export class MapComponent implements OnInit, AfterViewInit {
 
       ma.openPopup();
     });
-
   }
 
   ngOnInit(): void {}
@@ -217,7 +215,7 @@ export class MapComponent implements OnInit, AfterViewInit {
             iconSize: [25, 29],
             shadowSize: [25, 29],
             iconAnchor: [16, 25],
-            shadowAnchor: [6, 26]
+            shadowAnchor: [6, 26],
           })
         )
         .addTo(this.targets)
@@ -236,8 +234,6 @@ export class MapComponent implements OnInit, AfterViewInit {
         });
     }
   }
-
-
 
   updateUserCircleMarker(pos: LatLng) {
     const lln = latLng(pos[0], pos[1]);
@@ -263,7 +259,6 @@ export class MapComponent implements OnInit, AfterViewInit {
     window.location.hash = '';
     window.location.hash = '#scroller.' + elem;
   }
-
 
   /* debug stuff */
   createTraderLocationForDebug(traderID: string, position: LatLng) {
