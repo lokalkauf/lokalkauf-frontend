@@ -12,9 +12,16 @@
         <mat-icon (click)="opened = false">close</mat-icon>
       </div>
       <div class="sidenav-right-item sitenav-right-item">&nbsp;</div>
-      <div class="sidenav-right-item" (click)="navigate('/')">Suche</div>
+      <!-- <div class="sidenav-right-item" (click)="navigate('/')">Startseite</div> -->
+      <div
+        *ngIf="userService.isLoggedIn$ | async"
+        class="sidenav-right-item"
+        (click)="userService.logout()"
+      >
+        Ausloggen
+      </div>
       <div class="sidenav-right-item" (click)="navigate('/localtraders/0/0')">
-        Käufer
+        H&auml;ndlersuche
       </div>
       <div
         *ngIf="userService.isLoggedIn$ | async"
@@ -30,19 +37,15 @@
       >
         Händler Login
       </div>
-      <div
-        *ngIf="userService.isLoggedIn$ | async"
-        class="sidenav-right-item"
-        (click)="userService.logout()"
-      >
-        Ausloggen
-      </div>
       <!--<div class="sidenav-right-item" (click)="navigate('/transport')">Lieferant</div>
       <div class="sidenav-right-item">Profil</div>
       <div class="sidenav-right-item" (click)="navigate('/register')">Registrieren</div>
       <div class="sidenav-right-item" (click)="navigate('/login')">Anmelden</div>-->
       <div class="sidenav-right-item" (click)="navigate('/aboutus')">
         Das sind wir
+      </div>
+      <div class="sidenav-right-item separator">
+        &nbsp;
       </div>
       <div class="sidenav-right-item">
         <a href="https://www.lokalkauf.org/impressum" target="_blank">

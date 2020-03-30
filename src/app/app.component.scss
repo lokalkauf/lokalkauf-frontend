@@ -76,6 +76,11 @@
   overflow-x: visible !important;
 }
 
+.sidenav-right-item.separator {
+  border-bottom: 0.05rem solid #52910f;
+  width: 80%;
+}
+
 #sidenav-right {
   width: 200px;
   background-color: white;

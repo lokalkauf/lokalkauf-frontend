@@ -1,7 +1,7 @@
 @import '../../variables.scss';
 
 #feedback-overlay {
-  position: absolute;
+  position: relative;
   z-index: 100;
   top: 0;
   left: 0;
@@ -11,8 +11,11 @@
 }
 
 #feedback-inset {
-  padding: 1.2rem;
-  padding-top: 2.4rem;
+  padding: 0.4rem 0px;
+
+  h1 {
+    margin-bottom: 40px;
+  }
 
   @media screen and (min-width: 768px) {
     width: 740px;
