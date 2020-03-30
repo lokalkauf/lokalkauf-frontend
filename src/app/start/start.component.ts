@@ -105,10 +105,6 @@ export class StartComponent implements OnInit {
     this.router.navigate(['/localtraders', 0, 0]);
   }
 
-  haendlerRegistrieren() {
-    this.router.navigateByUrl('/trader/register');
-  }
-
   setposition(position: Array<number>) {
     this.suggestion = null;
     console.log('pos: ' + position);

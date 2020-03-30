@@ -36,7 +36,7 @@
         </mat-autocomplete>
         <div id="start-long-lat" *ngIf="coovalue">
           GPS-Umkreisermittlung: 5km
-        </div>      
+        </div>
         <app-lk-button id="start-button" (click)="action()" label="los" [disabled]="disabledLosButton">
         </app-lk-button>
         -->
@@ -60,12 +60,11 @@
       Du bist Händler, Gastronom oder Ladenbesitzer dann melde Dich hier an:
     </div>
     <div>
-      <app-lk-button
-        id="register-button"
-        (click)="haendlerRegistrieren()"
-        label="Geschäftsprofil anlegen"
-      >
-      </app-lk-button>
+      <!-- TODO - Björn M. this a href is just a quick fix, so that the page is scrolling to the top. The previous solution was better, but started in the middle of the registration page (because it remained the scrolling position) -->
+      <a href="/trader/register"
+        ><app-lk-button id="register-button" label="Geschäftsprofil anlegen">
+        </app-lk-button
+      ></a>
     </div>
   </div>
 
