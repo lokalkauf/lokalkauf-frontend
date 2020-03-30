@@ -33,7 +33,13 @@ export class ImageChooserComponent implements OnInit, ControlValueAccessor {
     this.fileChanged(file);
   }
 
-  async fileChanged(file: File) {
+  async fileChanged(file?: File) {
+    if (!file) {
+      this.selectedFile = undefined;
+      this.selectedFileDataUrl = undefined;
+      return;
+    }
+
     this.selectedFile = file;
     this.selectedFileDataUrl = await new Promise((resolve) => {
       const reader = new FileReader();

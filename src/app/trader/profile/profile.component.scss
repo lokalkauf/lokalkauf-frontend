@@ -1,3 +1,5 @@
+@import '../../../variables.scss';
+
 .verify-mail-alert {
   background-color: lightgoldenrodyellow;
   border: 1px solid lightsalmon;
@@ -18,4 +20,39 @@ div {
 
 input {
   min-width: 10px;
+}
+
+.image-list {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-gap: 1.5rem;
+  margin-bottom: 20px;
+
+  .image-item {
+    margin: 0px;
+    background-size: cover;
+    border: dotted 1px $lightergreen;
+    border-radius: 10px;
+    position: relative;
+
+    &::before {
+      content: '';
+      padding-bottom: 100%;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .delete-button {
+      bottom: 10px;
+      position: absolute;
+      width: 100%;
+
+      app-lk-button {
+        display: block;
+        margin: 0 auto;
+        width: max-content;
+      }
+    }
+  }
 }

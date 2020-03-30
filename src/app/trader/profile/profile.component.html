@@ -43,26 +43,33 @@
     >
     </app-lk-button>
   </div>
-  <div>
-    Schritt 3: Zu guter Letzt lade Bilder von Deinem Laden oder Deinem Angebot
-    hoch:
-  </div>
-  <div>
-    <app-image-chooser [formControl]="businessImage"></app-image-chooser>
-    <app-lk-button
-      label="Bild hochladen"
-      [disabled]="businessImage.value == null"
-      (click)="uploadImage()"
-    >
-    </app-lk-button>
-  </div>
-  <ng-container *ngIf="images$ | async as images">
-    <div *ngFor="let image of images">
-      <img [src]="image[0]" />
-      <app-lk-button
-        (click)="deleteImage(image[1])"
-        label="Bild löschen"
-      ></app-lk-button>
+  <div *ngIf="images$ | async as images">
+    <div>
+      Schritt 3: Zu guter Letzt lade Bilder von Deinem Laden oder Deinem Angebot
+      hoch (du kannst maximal 3 Bilder hochladen):
     </div>
-  </ng-container>
+    <div *ngIf="images.length < 3">
+      <app-image-chooser [formControl]="businessImage"></app-image-chooser>
+      <app-lk-button
+        label="Bild hochladen"
+        [disabled]="businessImage.value == null"
+        (click)="uploadImage()"
+      >
+      </app-lk-button>
+    </div>
+    <div class="image-list">
+      <div
+        class="image-item"
+        *ngFor="let image of images"
+        [ngStyle]="{ 'background-image': 'url(' + image[0] + ')' }"
+      >
+        <div class="delete-button">
+          <app-lk-button
+            (click)="deleteImage(image[1])"
+            label="Bild löschen"
+          ></app-lk-button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

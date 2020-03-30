@@ -10,6 +10,7 @@ import { UserService, LoggedInUserState } from 'src/app/services/user.service';
 import { FormControl } from '@angular/forms';
 import { Reference } from '@angular/fire/storage/interfaces';
 import { map, flatMap } from 'rxjs/operators';
+import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   selector: 'app-profile',
@@ -33,7 +34,7 @@ export class ProfileComponent implements AfterViewInit {
   constructor(
     private user: UserService,
     router: Router,
-    private cdRef: ChangeDetectorRef
+    private errorService: ErrorService
   ) {
     this.loggedInUserState$ = user.loggedInUserState$;
     user.isLoggedIn$.subscribe((isLoggedIn) => {
@@ -103,12 +104,19 @@ export class ProfileComponent implements AfterViewInit {
   }
 
   async uploadImage() {
-    const file = this.businessImage.value;
-    const task = this.user.uploadBusinessImage(file);
-    this.imageUploadState = task.percentageChanges();
-    await task.then(async () => (this.imageUploadState = null));
-    this.businessImage.setValue(undefined);
-    this.loadImages();
+    try {
+      const file = this.businessImage.value;
+      const task = this.user.uploadBusinessImage(file);
+      this.imageUploadState = task.percentageChanges();
+      await task.then(async () => (this.imageUploadState = null));
+      this.businessImage.setValue(undefined);
+      this.loadImages();
+    } catch (e) {
+      this.errorService.publishByText(
+        'Upload fehlgeschlagen',
+        'Beim Upload des Bildes ist ein Fehler aufgetreten. Womöglich unterstützen wir das Format nicht oder das Bild ist zu groß'
+      );
+    }
   }
 
   async deleteImage(image: Reference) {
