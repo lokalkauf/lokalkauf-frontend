@@ -26,17 +26,41 @@ export const sendMail = functions.https.onCall((data, context) => {
   <h4>Folgende Kontaktinformationen wurden hinterlassen:</h4>
   <p>${data.fromEmail}</p>`;
 
+  const copyOutput = `<img src="https://lokalkauf-staging.web.app/assets/lokalkaufTopx2.png" />
+  <h3>Bestätigung deiner Anfrage</h3>
+  <h4>Du hast eine Anfrage versendet:</h4>
+  <p>${data.message}</p>
+  <h4>Folgende Kontaktinformationen wurden hinterlassen:</h4>
+  <p>${data.fromEmail}</p>`;
+
   const mailOptions = {
     from: 'LokalKauf <musterfrauhans1234@gmail.com>',
-    to: [data.toEmail, data.fromEmail],
-    subject: 'Anfrage von LokalKauf',
+    to: data.toEmail,
+    subject: 'Anfrage von lokalkauf',
     html: output,
   };
 
+  const cpMailOptions = {
+    from: 'LokalKauf <musterfrauhans1234@gmail.com>',
+    to: data.fromEmail,
+    subject: 'Kopie deiner Händleranfrage auf lokalkauf',
+    html: copyOutput,
+  };
+
+  let returnValue: object;
   // returning result
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      return error.toString();
+      returnValue = error;
+    } else {
+      transporter.sendMail(cpMailOptions, (cpError, cpInfo) => {
+        if (cpError) {
+          returnValue = cpError;
+        }
+      });
+    }
+    if (returnValue) {
+      return returnValue;
     }
     return 'Sended';
   });
