@@ -10,17 +10,15 @@
       >Bestätigungsmail erneut senden</a
     >.
   </div>
-
   <div>
     Schritt 1: Wähle aus was auf Deinen Betrieb zutrifft:
   </div>
   <div class="dense">
     <label>
-      <app-lk-checkbox [formControl]="delivery"></app-lk-checkbox>
+      <app-lk-checkbox [formControl]="delivery"> </app-lk-checkbox>
       Wir liefern
     </label>
   </div>
-
   <div class="dense">
     <label>
       <app-lk-checkbox [formControl]="pickup"></app-lk-checkbox>
@@ -49,7 +47,7 @@
       Schritt 3: Zu guter Letzt lade Bilder von Deinem Laden oder Deinem Angebot
       hoch (du kannst maximal 4 Bilder hochladen):
     </div>
-    <div *ngIf="images.length <= 4">
+    <div *ngIf="images.length < 3">
       <app-image-chooser [formControl]="businessImage"></app-image-chooser>
       <app-lk-button
         label="Bild hochladen"
