@@ -7,15 +7,36 @@ on:
 
 jobs:
   build-and-deploy:
+    name: Build & Deploy
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - uses: actions/setup-node@master
+    - name: Clone Repository
+      uses: actions/checkout@master
+
+    - name: Setup Node.js
+      uses: actions/setup-node@master
       with:
         node-version: '12.x'
-    - run: npm ci
-    - run: npm run build
-    - uses: w9jds/firebase-action@master
+
+    - name: npm install (Angular App)
+      run: npm ci
+
+    - name: npm install (Functions)
+      run: npm ci
+      working-directory: ./functions
+
+    - name: npm install
+      run: npm ci
+
+    - name: Build Angular App
+      run: npm run build
+
+    - name: Build Functions
+      run: npm run build
+      working-directory: ./functions
+
+    - name: Deploy
+      uses: w9jds/firebase-action@master
       with:
         args: deploy -P default --only hosting,functions
       env:
