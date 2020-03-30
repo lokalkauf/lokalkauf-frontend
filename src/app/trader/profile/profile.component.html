@@ -23,7 +23,7 @@
   <div class="dense">
     <label>
       <app-lk-checkbox [formControl]="pickup"></app-lk-checkbox>
-      Nur Abholung
+      Abholung möglich
     </label>
   </div>
 
@@ -46,6 +46,15 @@
   <div>
     Schritt 3: Zu guter Letzt lade Bilder von Deinem Laden oder Deinem Angebot
     hoch:
+  </div>
+  <div>
+    <app-image-chooser [formControl]="businessImage"></app-image-chooser>
+    <app-lk-button
+      label="Bild hochladen"
+      [disabled]="businessImage.value == null"
+      (click)="uploadImage()"
+    >
+    </app-lk-button>
   </div>
   <ng-container *ngIf="images$ | async as images">
     <div *ngFor="let image of images">
