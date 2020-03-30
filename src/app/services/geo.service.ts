@@ -42,10 +42,16 @@ export class GeoService {
       });
   }
 
-  createLocationByAddress(traderId: string, address: string) {
-    return this.findCoordinatesByAddress(address).pipe(
-      map((r) => r.records.map((m) => m.fields))
-    );
+  async createLocationByAddress(traderId: string, address: string) {
+    const ll = await this.findCoordinatesByAddress(address).pipe(
+      map((r) =>
+        r.records.map((m) => m.fields)
+      )
+    ).toPromise();
+
+    if (ll && ll.length > 0) {
+      return this.createLocation(traderId, ll[0].geo_point_2d);
+    }
   }
 
   getLocations(radius: number, coords: Array<number>) {

@@ -63,15 +63,16 @@ export class UserService {
       password
     );
 
+    // this.db.doc(`Traders/${credential.user.uid}`).set(traderProfile);
     await this.traderService.createTraderProfile(
       credential.user.uid,
       traderProfile
     );
-    // this.db.doc(`Traders/${credential.user.uid}`).set(traderProfile);
 
-    await this.geo
-      .createLocationByAddress(credential.user.uid, traderProfile.postcode)
-      .toPromise();
+    await this.geo.createLocationByAddress(
+      credential.user.uid,
+      traderProfile.postcode
+    );
 
     await credential.user.sendEmailVerification();
   }
