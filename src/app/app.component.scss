@@ -20,6 +20,7 @@
     width: 33px;
     float: left;
     margin-right: 10px;
+    padding-left: 10px;
   }
 
   color: $lightestgreen;
@@ -52,8 +53,9 @@
   #burger-menu {
     cursor: pointer;
     position: absolute;
-    left: calc(100% - 30px) !important;
+    left: calc(100% - 40px) !important;
     z-index: 2;
+    top: 10px;
   }
 }
 

@@ -21,9 +21,10 @@ form {
 
   app-lk-input {
     display: inline-block;
-    margin-bottom: 20px;
+    margin-bottom: 20px !important;
     max-width: 500px;
     margin: 0 10px;
+    width: 70%;
   }
 
   #app-lk-button-container {
