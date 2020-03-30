@@ -13,6 +13,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 
 const routes: Routes = [
   { path: 'trader/profile', component: ProfileComponent },
@@ -40,6 +41,7 @@ const routes: Routes = [
     MatIconModule,
     MatButtonModule,
     ReusablesModule,
+    MatPasswordStrengthModule,
   ],
 })
 export class TraderModule {}
