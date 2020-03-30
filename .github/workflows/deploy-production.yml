@@ -25,14 +25,11 @@ jobs:
       run: npm ci
       working-directory: ./functions
 
-    - name: npm install
-      run: npm ci
-
     - name: Build Angular App
-      run: npm run build
+      run: npm run build -- --prod
 
     - name: Build Functions
-    - run: npm run build -- --prod
+      run: npm run build
       working-directory: ./functions
 
     - name: Deploy
