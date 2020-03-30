@@ -25,8 +25,10 @@ export class EMailService {
     // TODO update if firebase function changes
 
     const data = {
+      fromName: formdata.fromName,
       fromEmail: formdata.fromEMail,
       toEmail: formdata.toEMail,
+      title: formdata.title,
       message: formdata.message,
     };
     try {
