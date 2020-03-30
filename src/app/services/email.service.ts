@@ -12,7 +12,6 @@ import { functions } from 'firebase';
   providedIn: 'root',
 })
 export class EMailService {
-  ServerUrl = 'http://localhost/dev/blogger/'; // TODO define backend url
   errorData: {};
 
   httpOptions = {
@@ -25,8 +24,10 @@ export class EMailService {
     // TODO update if firebase function changes
 
     const data = {
+      fromName: formdata.fromName,
       fromEmail: formdata.fromEMail,
       toEmail: formdata.toEMail,
+      title: formdata.title,
       message: formdata.message,
     };
     try {

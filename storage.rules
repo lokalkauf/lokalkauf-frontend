@@ -15,6 +15,7 @@ rules_version = '2';
     match /Traders/{uid}/{multiSegment=**} {
       allow read;
       allow write: if isCurrentUser(uid) && checkSize(3) && isImage();
+      allow delete: if isCurrentUser(uid);
     }
   }
 }

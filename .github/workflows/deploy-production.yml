@@ -7,17 +7,35 @@ on:
 
 jobs:
   build-and-deploy:
+    name: Build & Deploy
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - uses: actions/setup-node@master
+    - name: Clone Repository
+      uses: actions/checkout@master
+
+    - name: Setup Node.js
+      uses: actions/setup-node@master
       with:
         node-version: '12.x'
-    - run: npm ci
-    - run: npm run build -- --prod
-    - uses: w9jds/firebase-action@master
+
+    - name: npm install (Angular App)
+      run: npm ci
+
+    - name: npm install (Functions)
+      run: npm ci
+      working-directory: ./functions
+
+    - name: Build Angular App
+      run: npm run build -- --prod
+
+    - name: Build Functions
+      run: npm run build
+      working-directory: ./functions
+
+    - name: Deploy
+      uses: w9jds/firebase-action@master
       with:
-        args: deploy -P production --only hosting,storage,firestore:rules
+        args: deploy -P production --only hosting,storage,firestore:rules,functions
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 

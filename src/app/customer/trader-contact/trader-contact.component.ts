@@ -57,6 +57,13 @@ export class TraderContactComponent implements OnInit {
       return;
     }
 
+    const htmlMessage = `<img src="https://lokalkauf-staging.web.app/assets/lokalkaufTopx2.png" />
+      <h3>Neue Kundenanfrage</h3>
+      <h4>Du hast eine neue Anfrage</h4>
+      <p>${this.mail_message.value}</p>
+      <h4>Folgende Kontaktinformationen wurden hinterlassen:</h4>
+      <p>${this.mail_contact.value}</p>`;
+
     const email: EMail = {
       acceptedAgb: this.agbRead.value,
       fromEMail: this.mail_contact.value,
@@ -64,7 +71,7 @@ export class TraderContactComponent implements OnInit {
       fromPreferredContact: '',
       fromName: this.mail_contact.value,
       id: 0,
-      message: this.mail_message.value,
+      message: htmlMessage,
       title: 'Jemand hat eine Anfrage an Sie gestellt',
       toEMail: receiverEmail,
       toName: receiverName,

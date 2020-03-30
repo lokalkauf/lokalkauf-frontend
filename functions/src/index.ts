@@ -19,32 +19,34 @@ const transporter = nodemailer.createTransport({
 
 export const sendMail = functions.https.onCall((data, context) => {
   console.log(data);
-  const output = `<img src="https://lokalkauf-staging.web.app/assets/lokalkaufTopx2.png" />
-  <h3>Neue Kundenanfrage</h3>
-  <h4>Du hast eine neue Anfrage</h4>
-  <p>${data.message}</p>
-  <h4>Folgende Kontaktinformationen wurden hinterlassen:</h4>
-  <p>${data.fromEmail}</p>`;
+  //  const output = `<img src="https://lokalkauf-staging.web.app/assets/lokalkaufTopx2.png" />
+  //  <h3>Neue Kundenanfrage</h3>
+  //  <h4>Du hast eine neue Anfrage</h4>
+  //  <p>${data.message}</p>
+  //  <h4>Folgende Kontaktinformationen wurden hinterlassen:</h4>
+  //  <p>${data.fromEmail}</p>`;
 
-  const copyOutput = `<img src="https://lokalkauf-staging.web.app/assets/lokalkaufTopx2.png" />
-  <h3>Bestätigung deiner Anfrage</h3>
-  <h4>Du hast eine Anfrage versendet:</h4>
-  <p>${data.message}</p>
-  <h4>Folgende Kontaktinformationen wurden hinterlassen:</h4>
-  <p>${data.fromEmail}</p>`;
+  //  const copyOutput = `<img src="https://lokalkauf-staging.web.app/assets/lokalkaufTopx2.png" />
+  //  <h3>Bestätigung deiner Anfrage</h3>
+  //  <h4>Du hast eine Anfrage versendet:</h4>
+  //  <p>${data.message}</p>
+  //  <h4>Folgende Kontaktinformationen wurden hinterlassen:</h4>
+  //  <p>${data.fromEmail}</p>`;
+
+  const output = data.message;
 
   const mailOptions = {
-    from: 'LokalKauf <musterfrauhans1234@gmail.com>',
+    from: data.fromName,
     to: data.toEmail,
-    subject: 'Anfrage von lokalkauf',
+    subject: data.title,
     html: output,
   };
 
   const cpMailOptions = {
-    from: 'LokalKauf <musterfrauhans1234@gmail.com>',
+    from: data.fromName,
     to: data.fromEmail,
-    subject: 'Kopie deiner Händleranfrage auf lokalkauf',
-    html: copyOutput,
+    subject: data.title,
+    html: output,
   };
 
   let returnValue: object;

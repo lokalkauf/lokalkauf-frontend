@@ -1,6 +1,12 @@
-import { Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatPasswordStrengthComponent } from '@angular-material-extensions/password-strength';
 import { UserService } from 'src/app/services/user.service';
 import { TraderProfile } from 'src/app/models/traderProfile';
 
@@ -8,6 +14,8 @@ import { TraderProfile } from 'src/app/models/traderProfile';
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegistrationComponent {
   registrationForm = new FormGroup(
@@ -156,5 +164,12 @@ export class RegistrationComponent {
 
   private firstOrSecondPasswordChanged() {
     return this.password.touched || this.passwordRepeat.touched;
+  }
+
+  checkPasswordEquality() {
+    return (
+      this.registrationForm.get('password').value ===
+      this.registrationForm.get('passwordRepeat').value
+    );
   }
 }

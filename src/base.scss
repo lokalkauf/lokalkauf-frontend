@@ -25,3 +25,14 @@ h1 {
 input:focus {
   background-color: #eee !important;
 }
+
+html body .alert-warning {
+  background-color: rgb(255, 236, 236);
+  padding: 20px;
+  font-size: 0.6rem;
+  margin-bottom: 20px;
+  color: $errorcolor;
+  text-align: justify;
+  height: unset;
+  min-height: unset;
+}

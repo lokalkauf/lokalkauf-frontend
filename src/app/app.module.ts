@@ -41,6 +41,7 @@ import { SpinnerService } from './services/spinner.service';
 import { HttpCommunicationInterceptor } from './interceptors/http-communication.interceptor';
 import { ErrorDisplayComponent } from './error-display/error-display.component';
 import { AboutUsComponent } from './about-us/about-us.compontent';
+import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -86,6 +87,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     AngularFireAuthModule,
     HttpClientModule,
+    MatPasswordStrengthModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
     }),

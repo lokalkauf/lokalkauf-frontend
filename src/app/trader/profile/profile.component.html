@@ -47,16 +47,24 @@
   <div *ngIf="images$ | async as images">
     <div>
       Schritt 3: Zu guter Letzt lade Bilder von Deinem Laden oder Deinem Angebot
-      hoch (du kannst maximal 3 Bilder hochladen):
+      hoch (du kannst maximal 4 Bilder hochladen):
     </div>
-    <div *ngIf="images.length < 3">
+    <div *ngIf="images.length <= 4">
       <app-image-chooser [formControl]="businessImage"></app-image-chooser>
       <app-lk-button
         label="Bild hochladen"
         [disabled]="businessImage.value == null"
         (click)="uploadImage()"
       >
-      </app-lk-button>
+      </app-lk-button
+      ><span class="move-right" *ngIf="this.imageUploadState | async">
+        Übertragung:
+        {{ this.imageUploadState | async | number: '1.2-2' }}
+        %</span
+      >
+    </div>
+    <div>
+      Folgende Bilder wurden deinem Profil zugeordnet:
     </div>
     <div class="image-list">
       <div
@@ -73,4 +81,6 @@
       </div>
     </div>
   </div>
+  <br />
+  <br />
 </div>
