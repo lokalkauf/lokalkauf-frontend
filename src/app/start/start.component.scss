@@ -17,10 +17,11 @@
   position: absolute;
   z-index: +1;
   top: 5px;
+  left: 30px;
   width: 100%;
 
   @media screen and (max-width: 767px) {
-    left: 5px;
+    left: 30px;
     width: calc(100% - 100px);
   }
 
@@ -81,12 +82,13 @@
   font-size: 1rem;
   text-align: center;
   margin-bottom: 1.4rem;
+  display: none;
 }
 
 .home-start > .intro-text {
   font-size: 0.8rem;
-  text-align: center;
-  padding: 1rem 2rem;
+  text-align: justify;
+  padding: 1rem 30px;
   background-color: $slightesttranslucentwhite;
   line-height: 1.1rem;
   min-height: 240px;
