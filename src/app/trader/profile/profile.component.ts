@@ -11,6 +11,7 @@ import { FormControl } from '@angular/forms';
 import { Reference } from '@angular/fire/storage/interfaces';
 import { map, flatMap } from 'rxjs/operators';
 import { ErrorService } from 'src/app/services/error.service';
+import { TraderService } from 'src/app/services/trader.service';
 
 @Component({
   selector: 'app-profile',
@@ -24,17 +25,18 @@ export class ProfileComponent implements AfterViewInit {
   pickup = new FormControl(false);
 
   description = new FormControl('');
-
   businessImage = new FormControl();
-
   imageUploadState?: Observable<number>;
 
   images$: Observable<Array<[string, Reference]>>;
+  hasThumbnail: boolean;
+  traderId: string;
 
   constructor(
     private user: UserService,
     router: Router,
-    private errorService: ErrorService
+    private errorService: ErrorService,
+    private traderService: TraderService
   ) {
     this.loggedInUserState$ = user.loggedInUserState$;
     user.isLoggedIn$.subscribe((isLoggedIn) => {
@@ -74,6 +76,9 @@ export class ProfileComponent implements AfterViewInit {
         });
         this.description.markAsPristine();
       }
+
+      this.hasThumbnail = loggedInUser.traderProfile.thumbnailUrl != null;
+      this.traderId = loggedInUser.uid;
     });
   }
 
@@ -116,7 +121,17 @@ export class ProfileComponent implements AfterViewInit {
       this.imageUploadState = task.percentageChanges();
       await task.then(async () => (this.imageUploadState = null));
       this.businessImage.setValue(undefined);
-      this.loadImages();
+
+      if (!this.hasThumbnail) {
+        this.user.getTraderBusinessImageThumbnails().subscribe((images) => {
+          if (images && images.length > 0) {
+            this.traderService.updateTraderThumbnail(
+              this.traderId,
+              images[0].fullPath
+            );
+          }
+        });
+      }
     } catch (e) {
       this.errorService.publishByText(
         'Upload fehlgeschlagen',

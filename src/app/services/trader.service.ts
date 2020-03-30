@@ -99,4 +99,10 @@ export class TraderService {
 
     return returnObservable$;
   }
+
+  updateTraderThumbnail(traderId: string, url: string) {
+    this.db.collection('Traders').doc(traderId).update({
+      thumbnailUrl: url,
+    });
+  }
 }

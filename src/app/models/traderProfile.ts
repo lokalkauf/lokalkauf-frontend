@@ -11,4 +11,5 @@ export interface TraderProfile {
   delivery: boolean;
   email: string;
   telephone: string;
+  thumbnailUrl?: string;
 }
