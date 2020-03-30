@@ -10,6 +10,12 @@ textarea {
   letter-spacing: 1.5px;
   background-color: white;
   padding: 1rem;
-  border: dashed 1px $lightergreen;
+  border: dotted 1px $lightergreen;
   width: 100%;
+  outline: none;
+}
+
+textarea:focus {
+  border-style: dashed;
+  background-color: #f8f8f8;
 }
