@@ -83,4 +83,20 @@ export class TraderService {
 
     return returnObservable$;
   }
+
+  getTraderBusinessImageThumbnailsUrls(
+    traderId: string
+  ): Observable<Array<string>> {
+    const startObservable$ = from(
+      this.getTraderBusinessImageThumbnails(traderId)
+    );
+
+    const returnObservable$ = startObservable$.pipe(
+      flatMap((images) =>
+        from(Promise.all<string>(images.map((image) => image.getDownloadURL())))
+      )
+    );
+
+    return returnObservable$;
+  }
 }

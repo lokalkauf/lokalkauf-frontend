@@ -4,10 +4,11 @@
   ></app-lk-page-title>
 
   <div *ngIf="!loggedInUserState.emailVerified" class="verify-mail-alert">
-    Bitte bestätige deine Email-Addresse!
-    <a [routerLink]="" (click)="resendEmailVerification()">
-      Bestätigungsmail erneut senden.
-    </a>
+    Bitte bestätige deine Email-Adresse!<br />
+    Du hast noch keine Email von uns erhalten?
+    <a [routerLink]="" (click)="resendEmailVerification()"
+      >Bestätigungsmail erneut senden</a
+    >.
   </div>
 
   <div>
