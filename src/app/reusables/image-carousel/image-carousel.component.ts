@@ -17,6 +17,9 @@ export class ImageCarouselComponent implements OnInit {
     Math.random().toString(36).substring(2, 15) +
     Math.random().toString(36).substring(2, 15);
 
+  selectedImageUrl: string;
+  showModal = false;
+
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
@@ -39,5 +42,12 @@ export class ImageCarouselComponent implements OnInit {
 
   randomId() {
     return this.randomIdNumber;
+  }
+
+  showImageInModal(imageUrl: string) {
+    this.selectedImageUrl = imageUrl;
+    this.showModal = true;
+
+    console.log(this.showModal);
   }
 }

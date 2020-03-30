@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { LkPageTitleComponent } from './lk-page-title/lk-page-title.component';
 import { LkCheckboxComponent } from './lk-checkbox/lk-checkbox.component';
 import { ImageChooserComponent } from './image-chooser/image-chooser.component';
+import { FullscreenModalComponent } from './fullscreen-modal/fullscreen-modal.component';
 
 const routes: Routes = [];
 
@@ -27,6 +28,7 @@ const routes: Routes = [];
     LkPageTitleComponent,
     LkCheckboxComponent,
     ImageChooserComponent,
+    FullscreenModalComponent,
   ],
   imports: [
     CommonModule,
@@ -46,6 +48,7 @@ const routes: Routes = [];
     LkCheckboxComponent,
     ImageChooserComponent,
     ImageCarouselComponent,
+    FullscreenModalComponent,
   ],
 })
 export class ReusablesModule {}

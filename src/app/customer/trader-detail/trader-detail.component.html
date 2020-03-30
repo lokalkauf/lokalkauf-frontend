@@ -52,8 +52,8 @@
     >
     <span> Abholung</span>
   </div>
-  <div class="carousel-container">
-    <app-image-carousel [carouselSlides]="carouselSlides"></app-image-carousel>
+  <div class="carousel-container" *ngIf="traderImages$ | async as images">
+    <app-image-carousel [carouselSlides]="images"></app-image-carousel>
   </div>
   <app-trader-contact [trader]="trader"></app-trader-contact>
   <p class="trader-product-amount" *ngIf="(productAmount$ | async) > 0">

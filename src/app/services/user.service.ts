@@ -126,7 +126,7 @@ export class UserService {
     );
   }
 
-  getTraderBusinessImages() {
+  getTraderBusinessImages(): Observable<firebase.storage.Reference[]> {
     return this.auth.user.pipe(
       map((user) => user.uid),
       flatMap((traderId) =>

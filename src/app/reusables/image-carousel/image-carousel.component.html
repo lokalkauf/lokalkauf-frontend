@@ -1,5 +1,5 @@
 <div
-  [id]="randomId() + 'Controls'"
+  id="imageCarousel"
   class="carousel slide"
   data-ride="carousel"
   data-interval="false"
@@ -24,6 +24,7 @@
           getMaxWidth() +
           ';'
         "
+        (click)="showImageInModal(carouselSlide.getImageUrl())"
       ></div>
       <div class="carousel-heading">
         {{ carouselSlide.getHeading() }}
@@ -38,7 +39,7 @@
   </div>
   <a
     class="carousel-control-prev"
-    [href]="'#' + randomId() + 'Controls'"
+    href="#imageCarousel"
     role="button"
     data-slide="prev"
     *ngIf="carouselSlides.length > 1"
@@ -54,7 +55,7 @@
   </a>
   <a
     class="carousel-control-next"
-    [href]="'#' + randomId() + 'Controls'"
+    href="#imageCarousel"
     role="button"
     data-slide="next"
     *ngIf="carouselSlides.length > 1"
@@ -69,3 +70,8 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
+
+<app-fullscreen-modal
+  [(showModal)]="showModal"
+  [imageUrl]="selectedImageUrl"
+></app-fullscreen-modal>

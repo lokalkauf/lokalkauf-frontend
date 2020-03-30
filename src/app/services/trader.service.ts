@@ -2,10 +2,11 @@ import { Injectable, Query } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, FieldPath } from '@angular/fire/firestore';
 import { firestore } from 'firebase';
-import { Observable, combineLatest, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { Observable, combineLatest, of, from } from 'rxjs';
+import { map, switchMap, flatMap } from 'rxjs/operators';
 import { TraderProfile } from '../models/traderProfile';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { Reference } from '@angular/fire/storage/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -54,7 +55,9 @@ export class TraderService {
     return images.filter((item) => item != null);
   }
 
-  async getTraderBusinessImages(traderId: string) {
+  async getTraderBusinessImages(
+    traderId: string
+  ): Promise<firebase.storage.Reference[]> {
     const imageList = await this.storage.storage
       .ref(`Traders/${traderId}/BusinessImages`)
       .list();
@@ -67,5 +70,17 @@ export class TraderService {
       })
     );
     return images.filter((item) => item != null);
+  }
+
+  getTraderBusinessImageUrls(traderId: string): Observable<Array<string>> {
+    const startObservable$ = from(this.getTraderBusinessImages(traderId));
+
+    const returnObservable$ = startObservable$.pipe(
+      flatMap((images) =>
+        from(Promise.all<string>(images.map((image) => image.getDownloadURL())))
+      )
+    );
+
+    return returnObservable$;
   }
 }

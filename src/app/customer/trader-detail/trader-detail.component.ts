@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, from, Subscription } from 'rxjs';
+import { AngularFirestore, Reference } from '@angular/fire/firestore';
+import { Observable, from, Subscription, defer } from 'rxjs';
 import { flatMap, map, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CarouselEntry } from 'src/app/models/carouselEntry';
@@ -11,20 +11,19 @@ import { EMail } from '../../models/email';
 import { EMailService } from '../../services/email.service';
 import { ErrorService } from 'src/app/services/error.service';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { TraderService } from 'src/app/services/trader.service';
 
 @Component({
   selector: 'app-trader-detail',
   templateUrl: './trader-detail.component.html',
   styleUrls: ['./trader-detail.component.scss'],
 })
-export class TraderDetailComponent implements OnInit, OnDestroy {
+export class TraderDetailComponent implements OnInit {
   trader$: Observable<Omit<TraderProfile, 'id'>>;
-  traderImages$: any;
   productAmount$: Observable<number>;
-  carouselSlides: Array<CarouselEntry> = new Array<CarouselEntry>();
+  traderImages$: Observable<Array<CarouselEntry>>;
 
   showMoreText = false;
-  urlChangeSubscriptionForImages: Subscription = null;
 
   constructor(
     private db: AngularFirestore,
@@ -32,15 +31,9 @@ export class TraderDetailComponent implements OnInit, OnDestroy {
     private mailService: EMailService,
     private router: Router,
     private errorService: ErrorService,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private traderService: TraderService
   ) {}
-
-  ngOnDestroy(): void {
-    if (this.urlChangeSubscriptionForImages) {
-      this.urlChangeSubscriptionForImages.unsubscribe();
-      this.urlChangeSubscriptionForImages = null;
-    }
-  }
 
   ngOnInit(): void {
     this.trader$ = this.route.params.pipe(
@@ -53,23 +46,11 @@ export class TraderDetailComponent implements OnInit, OnDestroy {
       )
     );
 
-    // TODO - darkblackside - 29.03.2020 21:47 - make this better, now it is combining observables with promises. Not the optimal way
-    this.urlChangeSubscriptionForImages = this.route.params.subscribe(
-      (params) => {
-        this.storage.storage
-          .ref()
-          .child('Traders/' + params.id + '/BusinessImages')
-          .list()
-          .then((files) => {
-            this.carouselSlides = new Array<CarouselEntry>();
-            files.items.forEach((oneFile) => {
-              oneFile.getDownloadURL().then((imageUrl) => {
-                const carouselSlide = new CarouselEntry(imageUrl);
-                this.carouselSlides.push(carouselSlide);
-              });
-            });
-          });
-      }
+    this.traderImages$ = this.route.params.pipe(
+      flatMap((params) =>
+        this.traderService.getTraderBusinessImageUrls(params.id)
+      ),
+      map((x) => x.map((y) => new CarouselEntry(y)))
     );
 
     this.productAmount$ = this.route.params.pipe(
