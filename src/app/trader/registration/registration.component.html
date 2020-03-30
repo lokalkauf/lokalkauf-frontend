@@ -13,6 +13,9 @@
         formControlName="businessname"
         placeholder="Firmenname*"
       ></app-lk-input>
+      <div class="warning" *ngIf="businessname.touched && businessname.invalid">
+        Bitte gib Deinen Firmennamen ein
+      </div>
     </div>
     <div class="registration-input">
       <app-lk-input
@@ -37,6 +40,9 @@
         formControlName="phone"
         placeholder="Telefonnummer*"
       ></app-lk-input>
+      <div class="warning" *ngIf="phone.touched && phone.invalid">
+        Bitte gib eine gültige Telefonnummer ein
+      </div>
     </div>
     <div class="address">
       <div class="registration-input street">
@@ -46,6 +52,9 @@
           formControlName="street"
           placeholder="Straße*"
         ></app-lk-input>
+        <div class="warning" *ngIf="street.touched && street.invalid">
+          Bitte gib eine Straße ein
+        </div>
       </div>
       <div class="registration-input streetnumber">
         <app-lk-input
@@ -62,6 +71,9 @@
           formControlName="postcode"
           placeholder="Plz*"
         ></app-lk-input>
+        <div class="warning" *ngIf="postcode.touched && postcode.invalid">
+          Format: 44135
+        </div>
       </div>
       <div class="registration-input city">
         <app-lk-input
@@ -71,6 +83,9 @@
           placeholder="Stadt*"
         >
         </app-lk-input>
+        <div class="warning" *ngIf="city.touched && city.invalid">
+          Bitte gib eine Stadt ein
+        </div>
       </div>
     </div>
     <div class="subheadline">Deine Zugangsdaten</div>
@@ -82,10 +97,13 @@
         placeholder="Email*"
       >
       </app-lk-input>
+      <div class="warning" *ngIf="email.touched && email.invalid">
+        Bitte überprüfe die eingegebene Email-Adresse.
+      </div>
     </div>
     <div class="registration-input">
       <app-lk-input
-        [warn]="password.touched && password.invalid"
+        [warn]="firstPasswordError()"
         type="password"
         formControlName="password"
         placeholder="Passwort*"
@@ -102,6 +120,21 @@
         formControlName="passwordRepeat"
         placeholder="Passwort wiederholen*"
       ></app-lk-input>
+      <div
+        class="warning"
+        *ngIf="registrationForm.errors && registrationForm.errors.notSame"
+      >
+        Die eingegebenen Passwörter stimmen nicht überein.
+      </div>
+      <div
+        class="warning"
+        *ngIf="
+          (passwordRepeat.touched && passwordRepeat.invalid) ||
+          (password.touched && password.invalid)
+        "
+      >
+        Bitte gib ein komplexes Passwort ein.
+      </div>
     </div>
     <div class="agb">
       <label>

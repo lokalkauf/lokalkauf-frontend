@@ -146,4 +146,15 @@ export class RegistrationComponent {
       }
     }
   }
+
+  firstPasswordError() {
+    return (
+      (this.firstOrSecondPasswordChanged() && this.password.invalid) ||
+      (this.registrationForm.errors && this.registrationForm.errors.notSame)
+    );
+  }
+
+  private firstOrSecondPasswordChanged() {
+    return this.password.touched || this.passwordRepeat.touched;
+  }
 }
