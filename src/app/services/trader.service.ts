@@ -5,12 +5,17 @@ import { firestore } from 'firebase';
 import { Observable, combineLatest, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { TraderProfile } from '../models/traderProfile';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TraderService {
-  constructor(private auth: AngularFireAuth, private db: AngularFirestore) {}
+  constructor(
+    private auth: AngularFireAuth,
+    private db: AngularFirestore,
+    private storage: AngularFireStorage
+  ) {}
 
   getTraderProfiles(
     traderIds: Array<string>
@@ -28,5 +33,35 @@ export class TraderService {
           });
         })
       );
+  }
+
+  async getTraderBusinessImageThumbnails(traderId: string) {
+    const imageList = await this.storage.storage
+      .ref(`Traders/${traderId}/BusinessImages/thumbs`)
+      .list();
+    const images = await Promise.all(
+      imageList.items.map(async (item) => {
+        const metadata = await item.getMetadata();
+        if (metadata.contentType.startsWith('image/')) {
+          return item;
+        }
+      })
+    );
+    return images.filter((item) => item != null);
+  }
+
+  async getTraderBusinessImages(traderId: string) {
+    const imageList = await this.storage.storage
+      .ref(`Traders/${traderId}/BusinessImages`)
+      .list();
+    const images = await Promise.all(
+      imageList.items.map(async (item) => {
+        const metadata = await item.getMetadata();
+        if (metadata.contentType.startsWith('image/')) {
+          return item;
+        }
+      })
+    );
+    return images.filter((item) => item != null);
   }
 }

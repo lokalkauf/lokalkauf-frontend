@@ -4,10 +4,12 @@ import {
   ChangeDetectorRef,
   AfterViewInit,
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserService, LoggedInUserState } from 'src/app/services/user.service';
 import { FormControl } from '@angular/forms';
+import { Reference } from '@angular/fire/storage/interfaces';
+import { map, flatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -26,9 +28,11 @@ export class ProfileComponent implements AfterViewInit {
 
   imageUploadState?: Observable<number>;
 
+  images$: Observable<Array<[string, Reference]>>;
+
   constructor(
     private user: UserService,
-    private router: Router,
+    router: Router,
     private cdRef: ChangeDetectorRef
   ) {
     this.loggedInUserState$ = user.loggedInUserState$;
@@ -37,6 +41,7 @@ export class ProfileComponent implements AfterViewInit {
         router.navigateByUrl('/trader/login');
       }
     });
+    this.loadImages();
   }
 
   ngAfterViewInit() {
@@ -81,11 +86,33 @@ export class ProfileComponent implements AfterViewInit {
     this.description.markAsPristine();
   }
 
+  async loadImages() {
+    this.images$ = this.user
+      .getTraderBusinessImages()
+      .pipe(
+        flatMap((images) =>
+          from(
+            Promise.all(
+              images.map((image) =>
+                Promise.all([image.getDownloadURL(), image])
+              )
+            )
+          )
+        )
+      );
+  }
+
   async uploadImage() {
     const file = this.businessImage.value;
     const task = this.user.uploadBusinessImage(file);
     this.imageUploadState = task.percentageChanges();
     await task.then(async () => (this.imageUploadState = null));
     this.businessImage.setValue(undefined);
+    this.loadImages();
+  }
+
+  async deleteImage(image: Reference) {
+    await image.delete();
+    this.loadImages();
   }
 }
