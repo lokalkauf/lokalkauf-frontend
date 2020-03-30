@@ -27,11 +27,11 @@
   }
 
   #about-us-content {
-    text-align: center;
+    text-align: justify;
     font-size: 0.8rem;
 
     @media screen and (max-width: 767px) {
-      padding: 0 2rem;
+      padding: 0 30px;
     }
 
     #about-us-header {
@@ -50,7 +50,7 @@
       width: 50%;
       text-align: left;
       float: left;
-
+      font-size: 0.7rem;
       padding-bottom: 2rem;
     }
   }

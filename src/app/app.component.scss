@@ -20,7 +20,7 @@
     width: 33px;
     float: left;
     margin-right: 10px;
-    padding-left: 10px;
+    padding-left: 20px;
   }
 
   color: $lightestgreen;
@@ -53,7 +53,7 @@
   #burger-menu {
     cursor: pointer;
     position: absolute;
-    left: calc(100% - 40px) !important;
+    left: calc(100% - 50px) !important;
     z-index: 2;
     top: 10px;
   }
