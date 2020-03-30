@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as nodemailer from 'nodemailer';
+import { google } from 'googleapis';
 admin.initializeApp();
 
 const MAX_NUMBER_OF_IMAGES = 6;
@@ -9,29 +10,37 @@ const MAX_NUMBER_OF_IMAGES = 6;
  * Here we're using Gmail to send
  */
 
+const OAuth2 = google.auth.OAuth2;
+const clientID = functions.config().mail.oauth.client_id;
+const clientSecret = functions.config().mail.oauth.client_secret;
+
+const oauth2Client = new OAuth2(
+  clientID, //client Id
+  clientSecret, // Client Secret
+  'https://developers.google.com/oauthplayground' // Redirect URL
+);
+
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: functions.config().sendmail.user,
-    pass: functions.config().sendmail.password,
+    type: 'OAuth2',
+    user: 'info@lokalkauf.org',
+    clientId: clientID,
+    clientSecret: clientSecret,
   },
 });
 
-export const sendMail = functions.https.onCall((data, context) => {
+export const sendMail = functions.https.onCall(async (data, context) => {
   console.log(data);
-  //  const output = `<img src="https://lokalkauf-staging.web.app/assets/lokalkaufTopx2.png" />
-  //  <h3>Neue Kundenanfrage</h3>
-  //  <h4>Du hast eine neue Anfrage</h4>
-  //  <p>${data.message}</p>
-  //  <h4>Folgende Kontaktinformationen wurden hinterlassen:</h4>
-  //  <p>${data.fromEmail}</p>`;
 
-  //  const copyOutput = `<img src="https://lokalkauf-staging.web.app/assets/lokalkaufTopx2.png" />
-  //  <h3>Bestätigung deiner Anfrage</h3>
-  //  <h4>Du hast eine Anfrage versendet:</h4>
-  //  <p>${data.message}</p>
-  //  <h4>Folgende Kontaktinformationen wurden hinterlassen:</h4>
-  //  <p>${data.fromEmail}</p>`;
+  const refreshToken = functions.config().mail.oauth.refresh_token;
+
+  oauth2Client.setCredentials({
+    refresh_token: refreshToken,
+  });
+
+  const tokens = await oauth2Client.refreshAccessToken();
+  const accessToken = tokens.credentials.access_token;
 
   const output = data.message;
 
@@ -40,6 +49,9 @@ export const sendMail = functions.https.onCall((data, context) => {
     to: data.toEmail,
     subject: data.title,
     html: output,
+    auth: {
+      accessToken: accessToken,
+    },
   };
 
   const cpMailOptions = {
@@ -47,6 +59,9 @@ export const sendMail = functions.https.onCall((data, context) => {
     to: data.fromEmail,
     subject: data.title,
     html: output,
+    auth: {
+      accessToken: accessToken,
+    },
   };
 
   let returnValue: object;
