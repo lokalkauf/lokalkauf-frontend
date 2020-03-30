@@ -281,6 +281,6 @@ export class MapComponent implements OnInit, AfterViewInit {
   /* debug stuff */
   createTraderLocationForDebug(traderID: string, position: LatLng) {
     console.log('create location: ' + traderID + ' at position: ' + position);
-    this.geo.setLocation(traderID, [position.lat, position.lng]);
+    this.geo.createLocation(traderID, [position.lat, position.lng]);
   }
 }

@@ -7,6 +7,7 @@ import { TraderProfile } from '../models/traderProfile';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { v4 as uuid } from 'uuid';
 import { TraderService } from './trader.service';
+import { GeoService } from './geo.service';
 
 export interface LoggedInUserState {
   uid: string;
@@ -25,7 +26,8 @@ export class UserService {
     private auth: AngularFireAuth,
     private db: AngularFirestore,
     private storage: AngularFireStorage,
-    private traderService: TraderService
+    private traderService: TraderService,
+    private geo: GeoService
   ) {
     this.isLoggedIn$ = this.auth.user.pipe(map((user) => user != null));
     this.loggedInUserState$ = this.auth.user.pipe(
@@ -61,7 +63,15 @@ export class UserService {
       password
     );
 
-    await this.db.doc(`Traders/${credential.user.uid}`).set(traderProfile);
+    await this.traderService.createTraderProfile(
+      credential.user.uid,
+      traderProfile
+    );
+    // this.db.doc(`Traders/${credential.user.uid}`).set(traderProfile);
+
+    await this.geo
+      .createLocationByAddress(credential.user.uid, traderProfile.postcode)
+      .toPromise();
 
     await credential.user.sendEmailVerification();
   }

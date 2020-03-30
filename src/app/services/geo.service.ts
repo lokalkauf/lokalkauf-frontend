@@ -29,10 +29,10 @@ export class GeoService {
     this.locations = this.geoFire.collection('locations');
   }
 
-  setLocation(traderId: string, coords: Array<number>) {
+  createLocation(traderId: string, coords: Array<number>) {
     console.log('set locaiton: ' + traderId + 'crds ' + coords);
 
-    this.locations
+    return this.locations
       .doc(traderId)
       .set({
         coordinates: new firestore.GeoPoint(coords[0], coords[1]),
@@ -40,6 +40,12 @@ export class GeoService {
       .catch((e) => {
         console.log(e);
       });
+  }
+
+  createLocationByAddress(traderId: string, address: string) {
+    return this.findCoordinatesByAddress(address).pipe(
+      map((r) => r.records.map((m) => m.fields))
+    );
   }
 
   getLocations(radius: number, coords: Array<number>) {
@@ -86,14 +92,40 @@ export class GeoService {
     this.manuelUserPosition = pos;
   }
 
-  search(searchString: string) {
-    return this.http
-      .get(
-        'https://public.opendatasoft.com/api/records/1.0/search/?dataset=postleitzahlen-deutschland&q=' +
-          encodeURIComponent(searchString) +
-          '&facet=note&facet=plz'
-      )
-      .toPromise();
+  findCoordinatesByAddress(searchString: string): Observable<any> {
+    return this.http.get(
+      'https://public.opendatasoft.com/api/records/1.0/search/?dataset=postleitzahlen-deutschland&q=' +
+        encodeURIComponent(searchString) +
+        '&facet=note&facet=plz'
+    );
+
+    // "records":[
+    //   {
+    //     "datasetid":"postleitzahlen-deutschland",
+    //     "recordid":"16a2fa27f5f8ac99ea043808ec16591ef21c6ee4",
+    //     "fields": {
+    //       "note":"Dortmund",
+    //       "geo_shape": {
+    //         "type":"Polygon",
+    //         "coordinates":[
+    //           [(too many elements to preview)]
+    //         ]
+    //       },
+    //       "geo_point_2d":[
+    //         51.51248317666277,
+    //         7.374578158476884
+    //       ],
+    //       "plz":"44379"
+    //     },
+    //     "geometry": {
+    //       "type":"Point",
+    //       "coordinates":[
+    //         7.374578158476884,
+    //         51.51248317666277
+    //       ]
+    //     },
+    //     "record_timestamp":"2017-03-25T06:26:36.889000+00:00"
+    //   }]
   }
 
   getPostalAndCityByLocation(location: Array<number>) {

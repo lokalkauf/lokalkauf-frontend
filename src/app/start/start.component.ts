@@ -117,7 +117,7 @@ export class StartComponent implements OnInit {
   }
 
   search(searchtext) {
-    this.geo.search(searchtext).then((d: any) => {
+    this.geo.findCoordinatesByAddress(searchtext).subscribe((d: any) => {
       console.log(d);
       this.suggestion = d.records.map((m) => m.fields);
 

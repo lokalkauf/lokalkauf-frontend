@@ -17,6 +17,10 @@ export class TraderService {
     private storage: AngularFireStorage
   ) {}
 
+  async createTraderProfile(id: string, trader: TraderProfile) {
+    await this.db.collection('Traders').doc(id).set(trader);
+  }
+
   getTraderProfiles(
     traderIds: Array<string>
   ): Observable<Array<TraderProfile>> {
