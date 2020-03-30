@@ -3,7 +3,7 @@ import * as admin from 'firebase-admin';
 import * as nodemailer from 'nodemailer';
 admin.initializeApp();
 
-const MAX_NUMBER_OF_IMAGES = 5;
+const MAX_NUMBER_OF_IMAGES = 6;
 
 /**
  * Here we're using Gmail to send
