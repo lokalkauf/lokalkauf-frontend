@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "lokalkauf-security-testing",
+    "default": "lokalkauf-staging",
     "production": "lokalkauf-271814"
   }
 }

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Observable, combineLatest, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { Observable, combineLatest, of, from } from 'rxjs';
+import { map, switchMap, flatMap } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { TraderProfile } from '../models/traderProfile';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { v4 as uuid } from 'uuid';
+import { TraderService } from './trader.service';
 
 export interface LoggedInUserState {
   uid: string;
@@ -23,7 +24,8 @@ export class UserService {
   constructor(
     private auth: AngularFireAuth,
     private db: AngularFirestore,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private traderService: TraderService
   ) {
     this.isLoggedIn$ = this.auth.user.pipe(map((user) => user != null));
     this.loggedInUserState$ = this.auth.user.pipe(
@@ -102,5 +104,23 @@ export class UserService {
 
   async verifyEmail(actionCode: string) {
     await this.auth.auth.applyActionCode(actionCode);
+  }
+
+  getTraderBusinessImageThumbnails() {
+    return this.auth.user.pipe(
+      map((user) => user.uid),
+      flatMap((traderId) =>
+        from(this.traderService.getTraderBusinessImageThumbnails(traderId))
+      )
+    );
+  }
+
+  getTraderBusinessImages() {
+    return this.auth.user.pipe(
+      map((user) => user.uid),
+      flatMap((traderId) =>
+        from(this.traderService.getTraderBusinessImages(traderId))
+      )
+    );
   }
 }
