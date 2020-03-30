@@ -56,16 +56,22 @@ export class ProfileComponent implements AfterViewInit {
 
     this.loggedInUserState$.subscribe((loggedInUser) => {
       if (loggedInUser.traderProfile.delivery !== this.delivery.value) {
-        this.delivery.setValue(loggedInUser.traderProfile.delivery);
+        this.delivery.setValue(loggedInUser.traderProfile.delivery, {
+          emitEvent: false,
+        });
       }
       if (loggedInUser.traderProfile.pickup !== this.pickup.value) {
-        this.pickup.setValue(loggedInUser.traderProfile.pickup);
+        this.pickup.setValue(loggedInUser.traderProfile.pickup, {
+          emitEvent: false,
+        });
       }
       if (
         !this.description.dirty &&
         loggedInUser.traderProfile.description !== this.description.value
       ) {
-        this.description.setValue(loggedInUser.traderProfile.description);
+        this.description.setValue(loggedInUser.traderProfile.description, {
+          emitEvent: false,
+        });
         this.description.markAsPristine();
       }
     });
