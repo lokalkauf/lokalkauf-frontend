@@ -100,4 +100,11 @@
       border-radius: 15px;
     }
   }
+
+  .warning {
+    color: $errorcolor;
+    font-size: 0.7rem;
+    margin-top: 1px;
+    text-align: center;
+  }
 }
