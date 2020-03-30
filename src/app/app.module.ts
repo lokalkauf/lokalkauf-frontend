@@ -22,7 +22,6 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { StartComponent } from './start/start.component';
-import { ImprintComponent } from './imprint/imprint.component';
 import { TransportMainComponent } from './transport/transport-main/transport-main.compontent';
 import { ShoppingcartService } from './services/shoppingcart.service';
 import { UserService } from './services/user.service';
@@ -42,25 +41,20 @@ import { SpinnerService } from './services/spinner.service';
 import { HttpCommunicationInterceptor } from './interceptors/http-communication.interceptor';
 import { ErrorDisplayComponent } from './error-display/error-display.component';
 import { AboutUsComponent } from './about-us/about-us.compontent';
-import { AgbComponent } from './agb/agb.component';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
-  { path: 'imprint', component: ImprintComponent },
   { path: 'transport', component: TransportMainComponent },
   { path: 'feedback', component: FeedbackComponent },
   { path: 'verify', component: VerifyComponent },
   { path: 'aboutus', component: AboutUsComponent },
-  { path: 'agb', component: AgbComponent },
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    AgbComponent,
     AboutUsComponent,
     ErrorDisplayComponent,
-    ImprintComponent,
     FeedbackComponent,
     VerifyComponent,
     SpinnerComponent,
