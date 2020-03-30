@@ -107,6 +107,16 @@ export class UserService {
     await this.auth.auth.currentUser.sendEmailVerification();
   }
 
+  async verifyPasswordReset(actionCode: string) {
+    await this.auth.auth
+    .checkActionCode(actionCode);
+  }
+
+  async confirmPasswordReset(actionCode: string, newPassword: string) {
+    await this.auth.auth
+      .confirmPasswordReset(actionCode, newPassword);
+  }
+
   async revokeEmailChange(actionCode: string) {
     await this.auth.auth
       .checkActionCode(actionCode)

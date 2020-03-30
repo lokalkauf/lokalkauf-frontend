@@ -1,26 +1,72 @@
 <div class="verify">
   <div *ngIf="mode === 'resetPassword'">
     <h2>
-      Deine Passwort wurde erfolgreich zurücksetzt.
+      Bitte geben Sie Ihr neues Passwort ein:
     </h2>
+    <form [formGroup]="passwordForm" (ngSubmit)="confirmPasswordReset()">
+      <div>
+        <app-lk-input #passwordWithValidation type="password" formControlName="password"
+          [placeholder]="'Neues Passwort eingeben'">
+        </app-lk-input>
+      </div>
+      <br />
+      <div>
+        <app-lk-input type="password" formControlName="confirmPassword" [placeholder]="'Neues Passwort wiederholen'">
+        </app-lk-input>
+      </div>
+      <br />
+      <mat-password-strength #passwordComponentWithValidation [password]="passwordWithValidation.value">
+      </mat-password-strength>
+      <mat-password-strength-info [passwordComponent]="passwordComponentWithValidation"
+        lowerCaseCriteriaMsg="Kleinschreibung" upperCaseCriteriaMsg="Großschreibung" digitsCriteriaMsg="Zahlen"
+        specialCharsCriteriaMsg="Sonderzeichen" minCharsCriteriaMsg="Länge {{ passwordWithValidation.value.length }} / {{
+        8
+      }}">
+      </mat-password-strength-info>
+      <br />
+      <div>
+        <app-lk-button [disabled]="!passwordForm.valid" type="submit" label="Passwort ändern"></app-lk-button>
+      </div>
+      <br />
+      <div>
+        <app-lk-button routerLink="/" label="Zur Startseite"> </app-lk-button>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="mode === 'passwordChangeCompleted'">
+    <h2>
+      Dein Password wurde erfolgreich geändert.
+    </h2>
+    <br />
+    <div>
+      <app-lk-button routerLink="/trader/login" label="Zurück zum Login"> </app-lk-button>
+    </div>
   </div>
   <div *ngIf="mode === 'recoverEmail'">
     <h2>
       Deine vorherige E-Mail-Adresse wurde wiederhergestellt.
     </h2>
+    <br />
+    <div>
+      <app-lk-button routerLink="/" label="Zur Startseite"> </app-lk-button>
+    </div>
   </div>
   <div *ngIf="mode === 'verifyEmail'">
     <h2>
       Deine E-Mail-Adresse wurde erfolgreich bestätigt.
     </h2>
+    <br />
+    <div>
+      <app-lk-button routerLink="/" label="Zur Startseite"> </app-lk-button>
+    </div>
   </div>
   <div *ngIf="mode === 'invalid'">
     <h2>
       Deine Anfrage war ungültig.
     </h2>
-  </div>
-  <br />
-  <div>
-    <app-lk-button routerLink="/" label="Zur Startseite"> </app-lk-button>
+    <br />
+    <div>
+      <app-lk-button routerLink="/" label="Zur Startseite"> </app-lk-button>
+    </div>
   </div>
 </div>
