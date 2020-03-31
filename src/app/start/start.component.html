@@ -60,11 +60,12 @@
       Du bist Händler, Gastronom oder Ladenbesitzer dann melde Dich hier an:
     </div>
     <div>
-      <!-- TODO - Björn M. this a href is just a quick fix, so that the page is scrolling to the top. The previous solution was better, but started in the middle of the registration page (because it remained the scrolling position) -->
-      <a href="/trader/register"
-        ><app-lk-button id="register-button" label="Geschäftsprofil anlegen">
-        </app-lk-button
-      ></a>
+      <app-lk-button
+        id="register-button"
+        (click)="registerTrader()"
+        label="Geschäftsprofil anlegen"
+      >
+      </app-lk-button>
     </div>
   </div>
 
