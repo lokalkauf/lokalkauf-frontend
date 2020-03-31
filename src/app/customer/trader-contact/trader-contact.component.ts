@@ -62,7 +62,7 @@ export class TraderContactComponent implements OnInit {
           <h2>Neue Kundenanfrage</h2>
           <h4>Du hast eine neue Anfrage</h4>
           <p>${this.mail_message.value}</p>
-          <h4>Folgende Kontaktinformationen wurden hinterlassen:</h4>
+          <b>Folgende Kontaktinformationen wurden hinterlassen:</b>
           <p>${this.mail_contact.value}</p>
           <br>
           <b> Dein LokalKauf Team </b>
