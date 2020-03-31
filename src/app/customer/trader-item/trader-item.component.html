@@ -1,7 +1,10 @@
 <a [routerLink]="'/trader-detail/' + trader.id" name="scroller.{{ trader.id }}">
   <div class="trader-item-container">
-    <div class="image-left">
-      <img [src]="getThumbnail(trader$ | async)" />
+    <div
+      class="image-left"
+      [style.backgroundImage]="getThumbnail(trader$ | async)"
+    >
+      <!-- <img [src]="getThumbnail(trader$ | async)"  /> -->
     </div>
     <div class="content">
       <div class="headline">{{ (trader$ | async)?.businessname }}</div>

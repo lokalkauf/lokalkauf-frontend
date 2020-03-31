@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostBinding } from '@angular/core';
 import { Trader } from '../../models/trader';
 import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -32,9 +32,13 @@ export class TraderItemComponent implements OnInit {
       .pipe(map((snap) => snap.size));*/
   }
 
+  @HostBinding('style.backgroundImage')
   getThumbnail(trader: TraderProfile) {
-    return trader && trader.thumbnailUrl
-      ? trader.thumbnailUrl
-      : './assets/lokalkauf-pin.png';
+    const url =
+      trader && trader.thumbnailUrl
+        ? trader.thumbnailUrl
+        : './assets/lokalkauf-pin.png';
+
+    return `url(${url})`;
   }
 }
