@@ -7,7 +7,7 @@ import {
 import { Observable, from } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserService, LoggedInUserState } from 'src/app/services/user.service';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Reference } from '@angular/fire/storage/interfaces';
 import { map, flatMap } from 'rxjs/operators';
 import { ErrorService } from 'src/app/services/error.service';
@@ -21,16 +21,39 @@ import { TraderService } from 'src/app/services/trader.service';
 export class ProfileComponent implements AfterViewInit {
   loggedInUserState$: Observable<LoggedInUserState>;
 
-  delivery = new FormControl(false);
-  pickup = new FormControl(false);
+  dataFormGroup = new FormGroup(
+    {
+      delivery: new FormControl(false),
+      pickup: new FormControl(false),
+      description: new FormControl(''),
+    },
+    (form) => {
+      const pickup = form.get('pickup').value;
+      const delivery = form.get('delivery').value;
+      return !pickup && !delivery ? { notDeliveryAndPickup: true } : null;
+    }
+  );
 
-  description = new FormControl('');
+  get description() {
+    return this.dataFormGroup.get('description');
+  }
+
+  get pickup() {
+    return this.dataFormGroup.get('pickup');
+  }
+
+  get delivery() {
+    return this.dataFormGroup.get('delivery');
+  }
+
   businessImage = new FormControl();
   imageUploadState?: Observable<number>;
 
   images$: Observable<Array<[string, Reference]>>;
   hasThumbnail: boolean;
   traderId: string;
+
+  saveSuccessful = false;
 
   constructor(
     private user: UserService,
@@ -54,33 +77,18 @@ export class ProfileComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.delivery.valueChanges.subscribe(async (delivery) => {
-      await this.user.updateTraderProfile({ delivery });
-    });
-
-    this.pickup.valueChanges.subscribe(async (pickup) => {
-      await this.user.updateTraderProfile({ pickup });
-    });
-
     this.loggedInUserState$.subscribe((loggedInUser) => {
-      if (loggedInUser.traderProfile.delivery !== this.delivery.value) {
+      if (!this.dataFormGroup.dirty) {
         this.delivery.setValue(loggedInUser.traderProfile.delivery, {
           emitEvent: false,
         });
-      }
-      if (loggedInUser.traderProfile.pickup !== this.pickup.value) {
         this.pickup.setValue(loggedInUser.traderProfile.pickup, {
           emitEvent: false,
         });
-      }
-      if (
-        !this.description.dirty &&
-        loggedInUser.traderProfile.description !== this.description.value
-      ) {
         this.description.setValue(loggedInUser.traderProfile.description, {
           emitEvent: false,
         });
-        this.description.markAsPristine();
+        this.dataFormGroup.markAsPristine();
       }
     });
   }
@@ -94,11 +102,17 @@ export class ProfileComponent implements AfterViewInit {
     await this.user.logout();
   }
 
-  async updateDescription() {
+  async updateProfile() {
     await this.user.updateTraderProfile({
       description: this.description.value,
+      delivery: this.delivery.value,
+      pickup: this.pickup.value,
     });
-    this.description.markAsPristine();
+    this.dataFormGroup.markAsPristine();
+    this.saveSuccessful = true;
+    setTimeout(() => {
+      this.saveSuccessful = false;
+    }, 5000);
   }
 
   async loadImages() {
@@ -135,6 +149,7 @@ export class ProfileComponent implements AfterViewInit {
             }
           });
       }
+      await this.loadImages();
     } catch (e) {
       this.errorService.publishByText(
         'Upload fehlgeschlagen',

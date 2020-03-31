@@ -27,6 +27,13 @@ input {
   min-width: 10px;
 }
 
+.warning {
+  color: $errorcolor;
+  font-size: 0.7rem;
+  margin-top: 1px;
+  text-align: center;
+}
+
 .image-list {
   width: 100%;
   display: grid;
@@ -61,4 +68,10 @@ input {
       }
     }
   }
+}
+
+.button-and-success {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
 }

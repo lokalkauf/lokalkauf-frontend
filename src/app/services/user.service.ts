@@ -78,6 +78,13 @@ export class UserService {
     await credential.user.sendEmailVerification();
   }
 
+  async getLoggedInUserStateOnce() {
+    const ref = await this.db
+      .doc(`Traders/${this.auth.auth.currentUser.uid}`)
+      .ref.get();
+    return ref.data();
+  }
+
   async updateTraderProfile(partialTraderProfile: Partial<TraderProfile>) {
     console.log(partialTraderProfile);
     await this.db
