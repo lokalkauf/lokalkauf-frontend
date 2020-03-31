@@ -2,6 +2,7 @@
   <app-lk-page-title
     [title]="loggedInUserState.traderProfile.businessname"
   ></app-lk-page-title>
+  <a [routerLink]="['/trader/register/edit']">Bearbeiten</a>
   <form [formGroup]="dataFormGroup" (ngSubmit)="updateProfile()">
     <div *ngIf="!loggedInUserState.emailVerified" class="verify-mail-alert">
       Bitte bestätige deine Email-Adresse!<br />

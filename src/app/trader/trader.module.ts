@@ -17,7 +17,8 @@ import { MatPasswordStrengthModule } from '@angular-material-extensions/password
 
 const routes: Routes = [
   { path: 'trader/profile', component: ProfileComponent },
-  { path: 'trader/register', component: RegistrationComponent },
+  { path: 'trader/register/new', component: RegistrationComponent },
+  { path: 'trader/register/edit', component: RegistrationComponent },
   { path: 'trader/login', component: LoginComponent },
   { path: 'trader/password-reset', component: PasswordResetComponent },
 ];
