@@ -4,7 +4,7 @@ import { AngularFirestore, FieldPath } from '@angular/fire/firestore';
 import { firestore } from 'firebase';
 import { Observable, combineLatest, of, from } from 'rxjs';
 import { map, switchMap, flatMap } from 'rxjs/operators';
-import { TraderProfile } from '../models/traderProfile';
+import { TraderProfile, TraderProfileStatus } from '../models/traderProfile';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Reference } from '@angular/fire/storage/interfaces';
 
@@ -27,11 +27,12 @@ export class TraderService {
   }
 
   getTraderProfiles(
-    traderIds: Array<string>
+    traderIds: Array<string>,
+    status: TraderProfileStatus,
   ): Observable<Array<TraderProfile>> {
     return this.db
       .collection<TraderProfile>('Traders', (ref) =>
-        ref.where(firestore.FieldPath.documentId(), 'in', traderIds)
+        ref.where(firestore.FieldPath.documentId(), 'in', traderIds).where('status', '==', status)
       )
       .snapshotChanges()
       .pipe(
@@ -107,6 +108,12 @@ export class TraderService {
   updateTraderThumbnail(traderId: string, url: string) {
     this.db.collection('Traders').doc(traderId).update({
       thumbnailUrl: url,
+    });
+  }
+
+  updateTraderProfileStatus(traderId: string, status: TraderProfileStatus) {
+    this.db.collection('Traders').doc(traderId).update({
+      status: TraderProfileStatus,
     });
   }
 }

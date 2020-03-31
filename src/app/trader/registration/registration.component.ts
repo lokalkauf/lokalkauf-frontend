@@ -8,14 +8,11 @@ import {
   Validators,
   FormControl,
   FormGroup,
-  RequiredValidator,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatPasswordStrengthComponent } from '@angular-material-extensions/password-strength';
 import { UserService } from 'src/app/services/user.service';
-import { TraderProfile } from 'src/app/models/traderProfile';
+import { TraderProfile, TraderProfileStatus } from 'src/app/models/traderProfile';
 import { TraderService } from 'src/app/services/trader.service';
-import { map } from 'rxjs/operators';
 
 export enum RegistrationState {
   new = 'new',
@@ -184,6 +181,7 @@ export class RegistrationComponent implements OnInit {
       pickup: false,
       telephone: this.phone.value,
       email: this.email.value,
+      status: TraderProfileStatus.CREATED
     };
 
     const traderProfileUpdate: Partial<TraderProfile> = {

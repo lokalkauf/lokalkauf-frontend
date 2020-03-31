@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, combineLatest, of, from } from 'rxjs';
 import { map, switchMap, flatMap } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { TraderProfile } from '../models/traderProfile';
+import { TraderProfile, TraderProfileStatus } from '../models/traderProfile';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { v4 as uuid } from 'uuid';
 import { TraderService } from './trader.service';
@@ -88,6 +88,9 @@ export class UserService {
 
   async updateTraderProfile(partialTraderProfile: Partial<TraderProfile>) {
     console.log(partialTraderProfile);
+    if (partialTraderProfile.status === TraderProfileStatus.VERIFIED) {
+      partialTraderProfile.status = TraderProfileStatus.PUBLIC;
+    }
     await this.db
       .doc<TraderProfile>(`Traders/${this.auth.auth.currentUser.uid}`)
       .update(partialTraderProfile);
@@ -131,11 +134,15 @@ export class UserService {
   async revokeEmailChange(actionCode: string) {
     await this.auth.auth
       .checkActionCode(actionCode)
-      .then((info) => this.auth.auth.applyActionCode(actionCode));
+      .then(async (info) => await this.auth.auth.applyActionCode(actionCode));
   }
 
   async verifyEmail(actionCode: string) {
-    await this.auth.auth.applyActionCode(actionCode);
+    await this.auth.auth.applyActionCode(actionCode)
+    .then(async (info) => {
+      this.traderService.updateTraderProfileStatus(this.auth.auth.currentUser.uid, TraderProfileStatus.VERIFIED);
+    })
+    ;
   }
 
   getTraderBusinessImageThumbnails() {

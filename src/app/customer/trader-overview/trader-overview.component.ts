@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
 import { GeoService } from 'src/app/services/geo.service';
 import { TraderService } from 'src/app/services/trader.service';
-import { TraderProfile } from 'src/app/models/traderProfile';
+import { TraderProfile, TraderProfileStatus } from 'src/app/models/traderProfile';
 
 @Component({
   selector: 'app-trader-overview',
@@ -97,7 +97,7 @@ export class TraderOverviewComponent implements OnInit {
 
     for (const chunk of chunked) {
       this.traderService
-        .getTraderProfiles(chunk)
+        .getTraderProfiles(chunk, TraderProfileStatus.PUBLIC)
         .subscribe((t: TraderProfile[]) => {
           console.log('loading of trader done.');
           if (t && t.length > 0) {
