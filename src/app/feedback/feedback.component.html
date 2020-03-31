@@ -1,11 +1,11 @@
 <div id="feedback-overlay">
   <div id="feedback-inset" *ngIf="!mailSent">
     <h1>Ihre Ideen sind uns wichtig</h1>
-
     <app-lk-textarea
       [(ngModel)]="message"
       [placeholder]="'Ihre Nachricht an uns'"
-    ></app-lk-textarea>
+    >
+    </app-lk-textarea>
 
     <div class="content">
       Möchten Sie Feedback von uns? <br />Dann hinterlassen Sie Ihre
@@ -17,6 +17,20 @@
       [(ngModel)]="email"
       [placeholder]="'E-Mail Adresse'"
     ></app-lk-input>
+
+    <div class="content">
+      <label for="agbread">
+        <input type="checkbox" id="agbread" [(ngModel)]="agb" />
+        Ich bestätige die
+        <a href="https://www.lokalkauf.org/agb" target="_blank">AGB</a>
+        und
+        <a href="https://www.lokalkauf.org/datenschutz" target="_blank"
+          >Datenschutzbestimmungen</a
+        >
+        gelesen zu haben und bin einverstanden
+      </label>
+    </div>
+
     <div id="feedback-controls">
       <app-lk-button
         id="feedback-verwerfen"
@@ -27,11 +41,13 @@
         id="feedback-absenden"
         (click)="absenden()"
         label="absenden"
-      ></app-lk-button>
+      >
+      </app-lk-button>
     </div>
   </div>
   <div class="feedback-error" *ngIf="showError">
-    Bitte geben Sie einen Nachrichtentext ein und ggf. gültige E-Mail-Adresse
+    Bitte geben Sie einen Nachrichtentext ein und ggf. gültige E-Mail-Adresse.
+    <br />Bitte bestätigen Sie zudem die AGBs und Datenschutzbestimmungen.
   </div>
 
   <div id="thankyou" *ngIf="mailSent">

@@ -13,8 +13,8 @@ import { ErrorService } from '../services/error.service';
 export class FeedbackComponent {
   message: string;
   email: string;
+  agb: boolean;
   showError: boolean;
-
   mailSent = false;
 
   constructor(
@@ -30,7 +30,9 @@ export class FeedbackComponent {
   }
 
   absenden() {
-    if (this.message && (!this.email || this.validMail(this.email))) {
+    if (
+      this.message && this.agb && (!this.email || this.validMail(this.email))
+    ) {
       const htmlMessage = `<div style="text-align:center;">
       <img src="https://lokalkauf-staging.web.app/assets/logo.png" style="width:800px;height:300px;"/>
             <h2>Bestätigung deiner Anfrage</h2>
@@ -51,6 +53,7 @@ export class FeedbackComponent {
           message: htmlMessage,
         } as EMail);
         this.mailSent = true;
+        this.showError = false;
       } catch (e) {
         this.errorService.publishByText(
           'Nachricht konnte nicht verschickt werden',
