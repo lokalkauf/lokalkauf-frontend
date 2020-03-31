@@ -45,7 +45,7 @@ export const sendMail = functions.https.onCall(async (data, context) => {
   const output = data.message;
 
   const mailOptions = {
-    from: data.fromName,
+    from: 'LokalKauf < info@lokalkauf.org >',
     to: data.toEmail,
     subject: data.title,
     html: output,
@@ -55,9 +55,9 @@ export const sendMail = functions.https.onCall(async (data, context) => {
   };
 
   const cpMailOptions = {
-    from: data.fromName,
+    from: 'LokalKauf < info@lokalkauf.org >',
     to: data.fromEmail,
-    subject: data.title,
+    subject: 'Kopie Deiner Nachricht: ' + data.title,
     html: output,
     auth: {
       accessToken: accessToken,

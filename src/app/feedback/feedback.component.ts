@@ -31,12 +31,16 @@ export class FeedbackComponent {
 
   absenden() {
     if (this.message && (!this.email || this.validMail(this.email))) {
-      const htmlMessage = `<img src="https://lokalkauf-staging.web.app/assets/lokalkaufTopx2.png" />
-      <h3>Bestätigung deiner Anfrage</h3>
-      <h4>Du hast eine Anfrage versendet:</h4>
-      <p>${this.message}</p>
-      <h4>Folgende Kontaktinformationen wurden hinterlassen:</h4>
-      <p>${this.email}</p>`;
+      const htmlMessage = `<div style="text-align:center;">
+      <img src="https://lokalkauf-staging.web.app/assets/logo.png" style="width:800px;height:300px;"/>
+            <h2>Bestätigung deiner Anfrage</h2>
+            <h4>Du hast eine Anfrage versendet:</h4>
+            <p>${this.message}</p>
+            <h4>Folgende Kontaktinformationen wurden hinterlassen:</h4>
+            <p>${this.email}</p>
+            <br>
+            <b> Dein LokalKauf Team </b>
+      </div>`;
 
       try {
         this.mailService.send({
