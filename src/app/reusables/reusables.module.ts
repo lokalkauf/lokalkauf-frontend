@@ -14,7 +14,6 @@ import { LkPageTitleComponent } from './lk-page-title/lk-page-title.component';
 import { LkCheckboxComponent } from './lk-checkbox/lk-checkbox.component';
 import { ImageChooserComponent } from './image-chooser/image-chooser.component';
 import { FullscreenModalComponent } from './fullscreen-modal/fullscreen-modal.component';
-import { RatingStarComponent } from './rating-star/rating-star.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -33,7 +32,6 @@ const routes: Routes = [];
     LkCheckboxComponent,
     ImageChooserComponent,
     FullscreenModalComponent,
-    RatingStarComponent,
   ],
   imports: [
     CommonModule,
