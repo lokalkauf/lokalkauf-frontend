@@ -17,7 +17,7 @@ import { TraderProfile } from 'src/app/models/traderProfile';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegistrationComponent {
+export class RegistrationComponent implements OnInit {
   registrationForm = new FormGroup(
     {
       businessname: new FormControl('', [Validators.required]),
@@ -46,6 +46,10 @@ export class RegistrationComponent {
       },
     ]
   );
+
+  ngOnInit(): void {
+    window.scrollBy(0, 0);
+  }
 
   get email() {
     return this.registrationForm.get('email');

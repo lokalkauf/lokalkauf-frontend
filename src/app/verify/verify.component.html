@@ -5,31 +5,52 @@
     </h2>
     <form [formGroup]="passwordForm" (ngSubmit)="confirmPasswordReset()">
       <div>
-        <app-lk-input #passwordWithValidation type="password" formControlName="password"
-          [placeholder]="'Neues Passwort eingeben'">
+        <app-lk-input
+          #passwordWithValidation
+          type="password"
+          formControlName="password"
+          [placeholder]="'Neues Passwort eingeben'"
+        >
         </app-lk-input>
       </div>
       <br />
       <div>
-        <app-lk-input type="password" formControlName="confirmPassword" [placeholder]="'Neues Passwort wiederholen'">
+        <app-lk-input
+          type="password"
+          formControlName="confirmPassword"
+          [placeholder]="'Neues Passwort wiederholen'"
+        >
         </app-lk-input>
       </div>
       <br />
-      <mat-password-strength #passwordComponentWithValidation [password]="passwordWithValidation.value">
+      <mat-password-strength
+        #passwordComponentWithValidation
+        [password]="passwordWithValidation.value"
+      >
       </mat-password-strength>
-      <mat-password-strength-info [passwordComponent]="passwordComponentWithValidation"
-        lowerCaseCriteriaMsg="Kleinschreibung" upperCaseCriteriaMsg="Großschreibung" digitsCriteriaMsg="Zahlen"
-        specialCharsCriteriaMsg="Sonderzeichen" minCharsCriteriaMsg="Länge {{ passwordWithValidation.value.length }} / {{
-        8
-      }}">
+      <mat-password-strength-info
+        [passwordComponent]="passwordComponentWithValidation"
+        lowerCaseCriteriaMsg="Kleinschreibung"
+        upperCaseCriteriaMsg="Großschreibung"
+        digitsCriteriaMsg="Zahlen"
+        specialCharsCriteriaMsg="Sonderzeichen"
+        minCharsCriteriaMsg="Länge {{
+          passwordWithValidation.value.length
+        }} / {{ 8 }}"
+      >
       </mat-password-strength-info>
       <br />
       <div>
-        <app-lk-button [disabled]="!passwordForm.valid" type="submit" label="Passwort ändern"></app-lk-button>
+        <app-lk-button
+          [disabled]="!passwordForm.valid"
+          type="submit"
+          label="Passwort ändern"
+        ></app-lk-button>
       </div>
       <br />
       <div>
-        <app-lk-button routerLink="/" label="Zur Startseite"> </app-lk-button>
+        <app-lk-button routerLink="/trader/profile" label="Zurück zum Profil">
+        </app-lk-button>
       </div>
     </form>
   </div>
@@ -39,7 +60,8 @@
     </h2>
     <br />
     <div>
-      <app-lk-button routerLink="/trader/login" label="Zurück zum Login"> </app-lk-button>
+      <app-lk-button routerLink="/trader/login" label="Zurück zum Login">
+      </app-lk-button>
     </div>
   </div>
   <div *ngIf="mode === 'recoverEmail'">
@@ -48,7 +70,8 @@
     </h2>
     <br />
     <div>
-      <app-lk-button routerLink="/" label="Zur Startseite"> </app-lk-button>
+      <app-lk-button routerLink="/trader/profile" label="Zurück zum Profil">
+      </app-lk-button>
     </div>
   </div>
   <div *ngIf="mode === 'verifyEmail'">
@@ -57,7 +80,8 @@
     </h2>
     <br />
     <div>
-      <app-lk-button routerLink="/" label="Zur Startseite"> </app-lk-button>
+      <app-lk-button routerLink="/trader/profile" label="Zurück zum Profil">
+      </app-lk-button>
     </div>
   </div>
   <div *ngIf="mode === 'invalid'">
@@ -66,7 +90,8 @@
     </h2>
     <br />
     <div>
-      <app-lk-button routerLink="/" label="Zur Startseite"> </app-lk-button>
+      <app-lk-button routerLink="/trader/profile" label="Zurück zum Profil">
+      </app-lk-button>
     </div>
   </div>
 </div>

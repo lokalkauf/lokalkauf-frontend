@@ -100,12 +100,9 @@ export const checkFileNumberLimit = functions.storage
             bucket
               .file(filePath)
               .delete()
-              .catch(
-                () =>
-                  function () {
-                    console.log('File delete faild');
-                  }
-              );
+              .catch(() => {
+                console.log('File delete faild');
+              });
           }
         })
         .catch(() => console.log('Check faild'));

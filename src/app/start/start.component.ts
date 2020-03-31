@@ -59,6 +59,10 @@ export class StartComponent implements OnInit {
     console.log(event);
   }
 
+  registerTrader() {
+    this.router.navigateByUrl('/trader/register');
+  }
+
   private getUserLocation() {
     this.geo.getUserPosition().subscribe((ps) => {
       if (ps != null) {
