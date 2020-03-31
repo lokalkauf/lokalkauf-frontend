@@ -8,6 +8,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { v4 as uuid } from 'uuid';
 import { TraderService } from './trader.service';
 import { GeoService } from './geo.service';
+import { User } from 'firebase';
 
 export interface LoggedInUserState {
   uid: string;
@@ -108,13 +109,11 @@ export class UserService {
   }
 
   async verifyPasswordReset(actionCode: string) {
-    await this.auth.auth
-    .checkActionCode(actionCode);
+    await this.auth.auth.checkActionCode(actionCode);
   }
 
   async confirmPasswordReset(actionCode: string, newPassword: string) {
-    await this.auth.auth
-      .confirmPasswordReset(actionCode, newPassword);
+    await this.auth.auth.confirmPasswordReset(actionCode, newPassword);
   }
 
   async revokeEmailChange(actionCode: string) {
@@ -143,5 +142,23 @@ export class UserService {
         from(this.traderService.getTraderBusinessImages(traderId))
       )
     );
+  }
+
+  getAuthenticatedUser(): User {
+    if (this.auth != null && this.auth.auth != null) {
+      return this.auth.auth.currentUser;
+    }
+
+    return null;
+  }
+
+  getAuthenticatedTraderProfile(): Observable<TraderProfile> {
+    const user = this.getAuthenticatedUser();
+
+    if (user) {
+      return this.traderService.getTraderProfile(user.uid);
+    }
+
+    return new Observable<TraderProfile>();
   }
 }

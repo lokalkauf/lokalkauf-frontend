@@ -22,6 +22,10 @@ export class TraderService {
     await this.db.collection('Traders').doc(id).set(trader);
   }
 
+  getTraderProfile(id: string) {
+    return this.db.collection('Traders').doc<TraderProfile>(id).valueChanges();
+  }
+
   getTraderProfiles(
     traderIds: Array<string>
   ): Observable<Array<TraderProfile>> {

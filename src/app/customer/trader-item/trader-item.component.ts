@@ -31,4 +31,10 @@ export class TraderItemComponent implements OnInit {
       .get()
       .pipe(map((snap) => snap.size));*/
   }
+
+  getThumbnail(trader: TraderProfile) {
+    return trader && trader.thumbnailUrl
+      ? trader.thumbnailUrl
+      : './assets/lokalkauf-pin.png';
+  }
 }

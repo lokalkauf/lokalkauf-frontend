@@ -1,8 +1,7 @@
 <a [routerLink]="'/trader-detail/' + trader.id" name="scroller.{{ trader.id }}">
   <div class="trader-item-container">
     <div class="image-left">
-      <img src="{{ trader.image }}" *ngIf="trader.image" />
-      <img src="./assets/lokalkauf-pin.png" *ngIf="!trader.image" />
+      <img [src]="getThumbnail(trader$ | async)" />
     </div>
     <div class="content">
       <div class="headline">{{ (trader$ | async)?.businessname }}</div>

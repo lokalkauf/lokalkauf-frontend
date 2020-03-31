@@ -44,6 +44,12 @@ export class ProfileComponent implements AfterViewInit {
         router.navigateByUrl('/trader/login');
       }
     });
+
+    this.user.getAuthenticatedTraderProfile().subscribe((tp) => {
+      this.hasThumbnail = tp.thumbnailUrl != null;
+      this.traderId = this.user.getAuthenticatedUser().uid;
+    });
+
     this.loadImages();
   }
 
@@ -76,9 +82,6 @@ export class ProfileComponent implements AfterViewInit {
         });
         this.description.markAsPristine();
       }
-
-      this.hasThumbnail = loggedInUser.traderProfile.thumbnailUrl != null;
-      this.traderId = loggedInUser.uid;
     });
   }
 
@@ -123,14 +126,14 @@ export class ProfileComponent implements AfterViewInit {
       this.businessImage.setValue(undefined);
 
       if (!this.hasThumbnail) {
-        this.user.getTraderBusinessImageThumbnails().subscribe((images) => {
-          if (images && images.length > 0) {
-            this.traderService.updateTraderThumbnail(
-              this.traderId,
-              images[0].fullPath
-            );
-          }
-        });
+        this.user
+          .getTraderBusinessImageThumbnails()
+          .subscribe(async (images) => {
+            if (images && images.length > 0) {
+              const url = await images[0].getDownloadURL();
+              this.traderService.updateTraderThumbnail(this.traderId, url);
+            }
+          });
       }
     } catch (e) {
       this.errorService.publishByText(
