@@ -57,12 +57,18 @@ export class TraderContactComponent implements OnInit {
       return;
     }
 
-    const htmlMessage = `<img src="https://lokalkauf-staging.web.app/assets/lokalkaufTopx2.png" />
-      <h3>Neue Kundenanfrage</h3>
-      <h4>Du hast eine neue Anfrage</h4>
-      <p>${this.mail_message.value}</p>
-      <h4>Folgende Kontaktinformationen wurden hinterlassen:</h4>
-      <p>${this.mail_contact.value}</p>`;
+    const htmlMessage = `<div style="text-align:center;">
+    <img src="https://lokalkauf-staging.web.app/assets/logo.png" style="width:800px;height:300px;"/>
+          <h2>Neue Kundenanfrage</h2>
+          <h4>Du hast eine neue Anfrage</h4>
+          <p>${this.mail_message.value}</p>
+          <h4>Folgende Kontaktinformationen wurden hinterlassen:</h4>
+          <p>${this.mail_contact.value}</p>
+          <br>
+          <b> Dein LokalKauf Team </b>
+          <br>
+          <img src="https://lokalkauf-staging.web.app/assets/thankyou-image.png"/>
+    </div>`;
 
     const email: EMail = {
       acceptedAgb: this.agbRead.value,
