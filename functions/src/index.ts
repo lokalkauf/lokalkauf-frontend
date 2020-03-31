@@ -115,13 +115,14 @@ exports.deleteThumbnailsTriggeredByImageDeletion = functions.storage
     if (snapshot.name && snapshot.name.indexOf('/BusinessImage/') > -1) {
       const a = snapshot.name.indexOf('/BusinessImage/');
 
+      let thumbnail = null;
       try {
         let name = snapshot.name.substring(a + '/BusinessImage/'.length);
         name =
           name.substring(0, name.lastIndexOf('.')) +
           '_200x200' +
           name.substring(name.lastIndexOf('.'));
-        const thumbnail =
+        thumbnail =
           snapshot.name.substring(0, a) + '/BusinessImage/thumbs/' + name;
       } catch (e) {
         console.log(e);
