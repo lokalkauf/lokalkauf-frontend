@@ -9,6 +9,7 @@ import { v4 as uuid } from 'uuid';
 import { TraderService } from './trader.service';
 import { GeoService } from './geo.service';
 import { User } from 'firebase';
+import { removeWhitespaces } from '@angular/compiler/src/ml_parser/html_whitespaces';
 
 export interface LoggedInUserState {
   uid: string;
@@ -100,7 +101,11 @@ export class UserService {
   }
 
   async login(email: string, password: string) {
-    await this.auth.auth.signInWithEmailAndPassword(email, password);
+    const rmWhiteSpacesMail = email.replace(/\s/g, '');
+    await this.auth.auth.signInWithEmailAndPassword(
+      rmWhiteSpacesMail,
+      password
+    );
   }
 
   async logout() {
