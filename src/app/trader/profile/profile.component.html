@@ -2,83 +2,96 @@
   <app-lk-page-title
     [title]="loggedInUserState.traderProfile.businessname"
   ></app-lk-page-title>
-
-  <div *ngIf="!loggedInUserState.emailVerified" class="verify-mail-alert">
-    Bitte bestätige deine Email-Adresse!<br />
-    Du hast noch keine Email von uns erhalten?
-    <a [routerLink]="" (click)="resendEmailVerification()"
-      >Bestätigungsmail erneut senden</a
-    >.
-  </div>
-  <div>
-    Schritt 1: Wähle aus was auf Deinen Betrieb zutrifft:
-  </div>
-  <div class="dense">
-    <label>
-      <app-lk-checkbox [formControl]="delivery"> </app-lk-checkbox>
-      Wir liefern
-    </label>
-  </div>
-  <div class="dense">
-    <label>
-      <app-lk-checkbox [formControl]="pickup"></app-lk-checkbox>
-      Abholung möglich
-    </label>
-  </div>
-
-  <div>
-    Schritt 2: Beschreibe Deinen Betrieb, erzähl etwas über Dich, Deine
-    Öffnungs-, Liefer- und Abholzeiten und was Du anbietest:
-  </div>
-  <div>
-    <app-lk-textarea
-      placeholder="Beschreibungstext"
-      [formControl]="description"
-    ></app-lk-textarea>
-    <app-lk-button
-      [disabled]="!description.dirty"
-      label="Beschreibung speichern"
-      (click)="updateDescription()"
+  <form [formGroup]="dataFormGroup" (ngSubmit)="updateProfile()">
+    <div *ngIf="!loggedInUserState.emailVerified" class="verify-mail-alert">
+      Bitte bestätige deine Email-Adresse!<br />
+      Du hast noch keine Email von uns erhalten?
+      <a [routerLink]="" (click)="resendEmailVerification()"
+        >Bestätigungsmail erneut senden</a
+      >.
+    </div>
+    <div>
+      Schritt 1: Wähle aus was auf Deinen Betrieb zutrifft:
+    </div>
+    <div class="dense">
+      <label>
+        <app-lk-checkbox formControlName="delivery"> </app-lk-checkbox>
+        Wir liefern
+      </label>
+    </div>
+    <div class="dense">
+      <label>
+        <app-lk-checkbox formControlName="pickup"></app-lk-checkbox>
+        Abholung möglich
+      </label>
+    </div>
+    <div
+      class="warning"
+      *ngIf="dataFormGroup.errors && dataFormGroup.errors.notDeliveryAndPickup"
     >
-    </app-lk-button>
-  </div>
-  <div *ngIf="images$ | async as images">
-    <div>
-      Schritt 3: Zu guter Letzt lade Bilder von Deinem Laden oder Deinem Angebot
-      hoch (du kannst maximal 4 Bilder hochladen):
-    </div>
-    <div *ngIf="images.length < 3">
-      <app-image-chooser [formControl]="businessImage"></app-image-chooser>
-      <app-lk-button
-        label="Bild hochladen"
-        [disabled]="businessImage.value == null"
-        (click)="uploadImage()"
-      >
-      </app-lk-button
-      ><span class="move-right" *ngIf="this.imageUploadState | async">
-        Übertragung:
-        {{ this.imageUploadState | async | number: '1.2-2' }}
-        %</span
-      >
+      Bitte Wähle mindestens eine Option aus.
     </div>
     <div>
-      Folgende Bilder wurden deinem Profil zugeordnet:
+      Schritt 2: Beschreibe Deinen Betrieb, erzähl etwas über Dich, Deine
+      Öffnungs-, Liefer- und Abholzeiten und was Du anbietest:
     </div>
-    <div class="image-list">
-      <div
-        class="image-item"
-        *ngFor="let image of images"
-        [ngStyle]="{ 'background-image': 'url(' + image[0] + ')' }"
-      >
-        <div class="delete-button">
-          <app-lk-button
-            (click)="deleteImage(image[1])"
-            label="Bild löschen"
-          ></app-lk-button>
+    <div>
+      <app-lk-textarea
+        placeholder="Beschreibungstext"
+        formControlName="description"
+      ></app-lk-textarea>
+    </div>
+    <div *ngIf="images$ | async as images">
+      <div>
+        Schritt 3: Zu guter Letzt lade Bilder von Deinem Laden oder Deinem
+        Angebot hoch (du kannst maximal 4 Bilder hochladen):
+      </div>
+      <div *ngIf="images.length < 3">
+        <app-image-chooser [formControl]="businessImage"></app-image-chooser>
+        <app-lk-button
+          type="button"
+          label="Bild hochladen"
+          [disabled]="businessImage.value == null"
+          (click)="uploadImage()"
+        >
+        </app-lk-button
+        ><span class="move-right" *ngIf="this.imageUploadState | async">
+          Übertragung:
+          {{ this.imageUploadState | async | number: '1.2-2' }}
+          %</span
+        >
+      </div>
+      <div *ngIf="images.length > 0">
+        Folgende Bilder wurden deinem Profil zugeordnet:
+      </div>
+      <div class="image-list">
+        <div
+          class="image-item"
+          *ngFor="let image of images"
+          [ngStyle]="{ 'background-image': 'url(' + image[0] + ')' }"
+        >
+          <div class="delete-button">
+            <app-lk-button
+              type="button"
+              (click)="deleteImage(image[1])"
+              label="Bild löschen"
+            ></app-lk-button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+    <div class="buton-and-success">
+      <app-lk-button
+        [disabled]="dataFormGroup.errors != null"
+        label="Profil speichern"
+        type="submit"
+      >
+      </app-lk-button>
+      <div class="success" *ngIf="saveSuccessful">
+        Speichern erfolgreich
+      </div>
+    </div>
+  </form>
   <br />
   <br />
 </div>

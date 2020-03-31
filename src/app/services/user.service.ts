@@ -77,6 +77,13 @@ export class UserService {
     await credential.user.sendEmailVerification();
   }
 
+  async getLoggedInUserStateOnce() {
+    const ref = await this.db
+      .doc(`Traders/${this.auth.auth.currentUser.uid}`)
+      .ref.get();
+    return ref.data();
+  }
+
   async updateTraderProfile(partialTraderProfile: Partial<TraderProfile>) {
     console.log(partialTraderProfile);
     await this.db
@@ -108,13 +115,11 @@ export class UserService {
   }
 
   async verifyPasswordReset(actionCode: string) {
-    await this.auth.auth
-    .checkActionCode(actionCode);
+    await this.auth.auth.checkActionCode(actionCode);
   }
 
   async confirmPasswordReset(actionCode: string, newPassword: string) {
-    await this.auth.auth
-      .confirmPasswordReset(actionCode, newPassword);
+    await this.auth.auth.confirmPasswordReset(actionCode, newPassword);
   }
 
   async revokeEmailChange(actionCode: string) {
