@@ -60,7 +60,7 @@ export class StartComponent implements OnInit {
   }
 
   registerTrader() {
-    this.router.navigateByUrl('/trader/register');
+    this.router.navigateByUrl('/trader/register/new');
   }
 
   private getUserLocation() {
