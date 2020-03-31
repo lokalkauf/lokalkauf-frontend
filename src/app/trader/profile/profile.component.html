@@ -10,6 +10,7 @@
     >
   </div>
   <form *ngIf="loggedInUserState.emailVerified" [formGroup]="dataFormGroup" (ngSubmit)="updateProfile()">
+    <a [routerLink]="['/trader/register/edit']">Bearbeiten</a>
     <div>
       Schritt 1: Wähle aus was auf Deinen Betrieb zutrifft:
     </div>
