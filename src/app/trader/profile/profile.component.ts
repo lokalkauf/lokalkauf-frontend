@@ -68,9 +68,10 @@ export class ProfileComponent implements AfterViewInit {
       }
     });
 
-    this.user.getAuthenticatedTraderProfile().subscribe((tp) => {
+    this.user.getAuthenticatedTraderProfile().subscribe(async (tp) => {
       this.hasThumbnail = tp.thumbnailUrl != null;
       this.traderId = this.user.getAuthenticatedUser().uid;
+      await this.updateTraderThumbnail();
     });
 
     this.loadImages();
@@ -108,6 +109,8 @@ export class ProfileComponent implements AfterViewInit {
       delivery: this.delivery.value,
       pickup: this.pickup.value,
     });
+    await this.updateTraderThumbnail();
+
     this.dataFormGroup.markAsPristine();
     this.saveSuccessful = true;
     setTimeout(() => {
@@ -136,25 +139,27 @@ export class ProfileComponent implements AfterViewInit {
       const file = this.businessImage.value;
       const task = this.user.uploadBusinessImage(file);
       this.imageUploadState = task.percentageChanges();
-      await task.then(async () => (this.imageUploadState = null));
+      await task.then(async (i) => (this.imageUploadState = null));
       this.businessImage.setValue(undefined);
 
-      if (!this.hasThumbnail) {
-        this.user
-          .getTraderBusinessImageThumbnails()
-          .subscribe(async (images) => {
-            if (images && images.length > 0) {
-              const url = await images[0].getDownloadURL();
-              this.traderService.updateTraderThumbnail(this.traderId, url);
-            }
-          });
-      }
+      await this.updateTraderThumbnail();
       await this.loadImages();
     } catch (e) {
       this.errorService.publishByText(
         'Upload fehlgeschlagen',
         'Beim Upload des Bildes ist ein Fehler aufgetreten. Womöglich unterstützen wir das Format nicht oder das Bild ist zu groß'
       );
+    }
+  }
+
+  async updateTraderThumbnail() {
+    if (!this.hasThumbnail) {
+      this.user.getTraderBusinessImageThumbnails().subscribe(async (images) => {
+        if (images && images.length > 0) {
+          const url = await images[0].getDownloadURL();
+          this.traderService.updateTraderThumbnail(this.traderId, url);
+        }
+      });
     }
   }
 
