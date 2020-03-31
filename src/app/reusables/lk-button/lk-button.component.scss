@@ -13,6 +13,7 @@ button {
   letter-spacing: 1.5px;
   border: 0;
   padding: 0px 25px;
+  outline: none !important;
 
   &:disabled,
   &:hover:disabled {
@@ -22,5 +23,9 @@ button {
 
   &:hover {
     box-shadow: 6px 6px 11px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    box-shadow: inset 4px 4px 5px 0px rgba(0, 0, 0, 0.08);
   }
 }
