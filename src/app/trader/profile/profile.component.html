@@ -2,15 +2,14 @@
   <app-lk-page-title
     [title]="loggedInUserState.traderProfile.businessname"
   ></app-lk-page-title>
-  <form [formGroup]="dataFormGroup" (ngSubmit)="updateProfile()">
-    <div *ngIf="!loggedInUserState.emailVerified" class="verify-mail-alert">
-      Bitte bestätige deine Email-Adresse!<br />
-      Du hast noch keine Email von uns erhalten?
-      <a [routerLink]="" (click)="resendEmailVerification()"
-        >Bestätigungsmail erneut senden</a
-      >.
-    </div>
-    <a [routerLink]="['/trader/register/edit']">Bearbeiten</a>
+  <div *ngIf="!loggedInUserState.emailVerified" class="verify-mail-alert">
+    Bitte bestätige deine Email-Adresse: {{loggedInUserState.traderProfile.email}}<br />
+    Du hast noch keine Email von uns erhalten? 
+    <a [routerLink]="" (click)="resendEmailVerification()"
+      >Bestätigungsmail erneut senden</a
+    >
+  </div>
+  <form *ngIf="loggedInUserState.emailVerified" [formGroup]="dataFormGroup" (ngSubmit)="updateProfile()">
     <div>
       Schritt 1: Wähle aus was auf Deinen Betrieb zutrifft:
     </div>
