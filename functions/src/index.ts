@@ -108,3 +108,12 @@ export const checkFileNumberLimit = functions.storage
         .catch(() => console.log('Check faild'));
     }
   });
+
+exports.deleteThumbnailsTriggeredByImageDeletion = functions.storage
+  .object()
+  .onDelete(async (snapshot, context) => {
+    //if (snapshot.)
+    console.log(snapshot);
+    console.log('#######');
+    console.log(context);
+  });
