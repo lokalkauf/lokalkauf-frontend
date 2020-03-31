@@ -111,9 +111,9 @@ export class TraderService {
     });
   }
 
-  updateTraderProfileStatus(traderId: string, status: TraderProfileStatus) {
+  updateTraderProfileStatus(traderId: string, newStatus: TraderProfileStatus) {
     this.db.collection('Traders').doc(traderId).update({
-      status: TraderProfileStatus,
+      status: newStatus,
     });
   }
 }
