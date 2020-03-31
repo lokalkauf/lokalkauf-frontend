@@ -40,7 +40,7 @@ export class FeedbackComponent {
             <h2>Bestätigung deiner Anfrage</h2>
             <h4>Du hast eine Anfrage versendet:</h4>
             <p>${this.message}</p>
-            <h4>Folgende Kontaktinformationen wurden hinterlassen:</h4>
+            <b>Folgende Kontaktinformationen wurden hinterlassen:</b>
             <p>${this.email ? this.email : '-'}</p>
             <br>
             <b> Dein LokalKauf Team </b>
