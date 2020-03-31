@@ -167,7 +167,7 @@
         lowerCaseCriteriaMsg="Kleinschreibung"
         upperCaseCriteriaMsg="Großschreibung"
         digitsCriteriaMsg="Zahlen"
-        specialCharsCriteriaMsg="Sonderzeichen [!#$%&'+?]"
+        specialCharsCriteriaMsg="Sonderzeichen (z.B.: !#$%&+?)"
         minCharsCriteriaMsg="Länge {{
           passwordWithValidation.value.length
         }} / {{ 8 }}"
@@ -190,11 +190,23 @@
     </div>
 
     <div class="button-and-error">
-      <app-lk-button
-        [disabled]="!registrationForm.valid"
-        type="submit"
-        label="Registrieren"
-      ></app-lk-button>
+      <ng-container *ngIf="registrationState === 'new'">
+        <app-lk-button
+          [disabled]="!registrationForm.valid"
+          type="submit"
+          label="Registrieren"
+        ></app-lk-button>
+      </ng-container>
+      <ng-container *ngIf="registrationState === 'edit'">
+        <app-lk-button
+          [disabled]="!registrationForm.valid"
+          type="submit"
+          label="Aktualisieren"
+        ></app-lk-button>
+        <span class="success" *ngIf="saveSuccessful">
+          Speichern erfolgreich
+        </span>
+      </ng-container>
       <div
         class="error"
         *ngIf="registrationForm.errors && registrationForm.errors.emailInUse"

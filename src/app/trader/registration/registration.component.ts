@@ -27,7 +27,6 @@ export enum RegistrationState {
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegistrationComponent implements OnInit {
   registrationForm = new FormGroup(
@@ -59,15 +58,10 @@ export class RegistrationComponent implements OnInit {
     ]
   );
   registrationState: RegistrationState;
+  saveSuccessful = false;
 
   ngOnInit(): void {
     window.scrollBy(0, 0);
-
-    if (this.registrationState === RegistrationState.edit) {
-      this.userService.getAuthenticatedTraderProfile().subscribe((user) => {
-        this.fillVal(user);
-      });
-    }
     this.setConditionalValidators();
   }
 
@@ -165,8 +159,12 @@ export class RegistrationComponent implements OnInit {
       });
     } else {
       this.registrationState = RegistrationState.edit;
+      if (this.registrationState === RegistrationState.edit) {
+        this.userService.getAuthenticatedTraderProfile().subscribe((user) => {
+          this.fillVal(user);
+        });
+      }
     }
-    console.log(this.registrationState);
   }
 
   async onSubmit() {
@@ -204,6 +202,7 @@ export class RegistrationComponent implements OnInit {
         await this.userService.register(email, password, traderProfilRegister);
       } else {
         await this.userService.updateTraderProfile(traderProfileUpdate);
+        this.saveSuccessful = true;
       }
     } catch (e) {
       switch (e.code) {
