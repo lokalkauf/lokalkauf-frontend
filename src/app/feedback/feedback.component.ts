@@ -36,7 +36,7 @@ export class FeedbackComponent {
       (!this.email || this.validMail(this.email))
     ) {
       const htmlMessage = `<div style="text-align:center;">
-      <img src="https://lokalkauf-staging.web.app/assets/logo.png" style="width:800px;height:300px;"/>
+      <img src="https://lokalkauf-staging.web.app/assets/logo.png" style="width:300px;height:100px">
             <h2>Bestätigung deiner Anfrage</h2>
             <h4>Du hast eine Anfrage versendet:</h4>
             <p>${this.message}</p>

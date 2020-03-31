@@ -95,75 +95,77 @@
         </div>
       </div>
     </div>
-    <div class="subheadline">Deine Zugangsdaten</div>
-    <div class="registration-input">
-      <app-lk-input
-        [warn]="email.touched && email.invalid"
-        type="email"
-        formControlName="email"
-        placeholder="Email*"
-      >
-      </app-lk-input>
-      <div class="warning" *ngIf="email.touched && email.invalid">
-        Bitte überprüfe die eingegebene Email-Adresse.
+
+    <ng-container *ngIf="registrationState === 'new'">
+      <div class="subheadline">Deine Zugangsdaten</div>
+      <div class="registration-input">
+        <app-lk-input
+          [warn]="email.touched && email.invalid"
+          type="email"
+          formControlName="email"
+          placeholder="Email*"
+        >
+        </app-lk-input>
+        <div class="warning" *ngIf="email.touched && email.invalid">
+          Bitte überprüfe die eingegebene Email-Adresse.
+        </div>
       </div>
-    </div>
 
-    <div class="registration-input">
-      <app-lk-input
-        matInput
-        #passwordWithValidation
-        type="password"
-        required
-        formControlName="password"
-        [formControl]="passwordComponentWithValidation.passwordFormControl"
-        placeholder="Passwort"
-      ></app-lk-input>
-    </div>
-    <div class="registration-input">
-      <app-lk-input
-        [warn]="
-          passwordRepeat.touched &&
-          (passwordRepeat.invalid ||
-            (registrationForm.errors && registrationForm.errors.notSame))
-        "
-        type="password"
-        formControlName="passwordRepeat"
-        placeholder="Passwort wiederholen*"
-      ></app-lk-input>
-      <div
-        class="warning"
-        *ngIf="registrationForm.errors && registrationForm.errors.notSame"
-      >
-        Die eingegebenen Passwörter stimmen nicht überein.
+      <div class="registration-input">
+        <app-lk-input
+          matInput
+          #passwordWithValidation
+          type="password"
+          required
+          formControlName="password"
+          [formControl]="passwordComponentWithValidation.passwordFormControl"
+          placeholder="Passwort"
+        ></app-lk-input>
       </div>
-    </div>
+      <div class="registration-input">
+        <app-lk-input
+          [warn]="
+            passwordRepeat.touched &&
+            (passwordRepeat.invalid ||
+              (registrationForm.errors && registrationForm.errors.notSame))
+          "
+          type="password"
+          formControlName="passwordRepeat"
+          placeholder="Passwort wiederholen*"
+        ></app-lk-input>
+        <div
+          class="warning"
+          *ngIf="registrationForm.errors && registrationForm.errors.notSame"
+        >
+          Die eingegebenen Passwörter stimmen nicht überein.
+        </div>
+      </div>
 
-    <!--      <mat-error *ngIf="passwordComponentWithValidation.passwordFormControl.hasError('required')">-->
-    <!--        Passwort ist notwendig!-->
-    <!--      </mat-error>-->
-    <!--      <mat-error *ngIf="passwordComponentWithValidation.passwordFormControl.hasError('pattern')">-->
-    <!--        Passwort ist nicht valide!-->
-    <!--      </mat-error>-->
+      <!--      <mat-error *ngIf="passwordComponentWithValidation.passwordFormControl.hasError('required')">-->
+      <!--        Passwort ist notwendig!-->
+      <!--      </mat-error>-->
+      <!--      <mat-error *ngIf="passwordComponentWithValidation.passwordFormControl.hasError('pattern')">-->
+      <!--        Passwort ist nicht valide!-->
+      <!--      </mat-error>-->
 
-    <mat-password-strength
-      #passwordComponentWithValidation
-      [password]="passwordWithValidation.value"
-    >
-    </mat-password-strength>
-    <!--Password's strength info-->
-    <mat-password-strength-info
-      [passwordComponent]="passwordComponentWithValidation"
-      lowerCaseCriteriaMsg="Kleinschreibung"
-      upperCaseCriteriaMsg="Großschreibung"
-      digitsCriteriaMsg="Zahlen"
-      specialCharsCriteriaMsg="Sonderzeichen"
-      minCharsCriteriaMsg="Länge {{ passwordWithValidation.value.length }} / {{
-        8
-      }}"
-    >
-    </mat-password-strength-info>
-
+      <mat-password-strength
+        #passwordComponentWithValidation
+        [password]="passwordWithValidation.value"
+      >
+      </mat-password-strength>
+      <!--Password's strength info-->
+      <mat-password-strength-info
+        [passwordComponent]="passwordComponentWithValidation"
+        lowerCaseCriteriaMsg="Kleinschreibung"
+        upperCaseCriteriaMsg="Großschreibung"
+        digitsCriteriaMsg="Zahlen"
+        specialCharsCriteriaMsg="Sonderzeichen"
+        minCharsCriteriaMsg="Länge {{
+          passwordWithValidation.value.length
+        }} / {{ 8 }}"
+      >
+      </mat-password-strength-info>
+    </ng-container>
     <div class="agb">
       <label>
         <app-lk-checkbox formControlName="agbRead"></app-lk-checkbox>
@@ -215,4 +217,6 @@
       </div>
     </div>
   </form>
+  <br />
+  <br />
 </div>
