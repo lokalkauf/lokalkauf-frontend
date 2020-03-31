@@ -112,8 +112,23 @@ export const checkFileNumberLimit = functions.storage
 exports.deleteThumbnailsTriggeredByImageDeletion = functions.storage
   .object()
   .onDelete(async (snapshot, context) => {
-    //if (snapshot.)
-    console.log(snapshot);
-    console.log('#######');
-    console.log(context);
+    if (snapshot.name && snapshot.name.indexOf('/BusinessImage/') > -1) {
+      const a = snapshot.name.indexOf('/BusinessImage/');
+
+      try {
+        let name = snapshot.name.substring(a + '/BusinessImage/'.length);
+        name =
+          name.substring(0, name.lastIndexOf('.')) +
+          '_200x200' +
+          name.substring(name.lastIndexOf('.'));
+        const thumbnail =
+          snapshot.name.substring(0, a) + '/BusinessImage/thumbs/' + name;
+      } catch (e) {
+        console.log(e);
+      }
+
+      console.log(snapshot);
+      console.log('#######');
+      console.log(' ' + thumbnail);
+    }
   });
