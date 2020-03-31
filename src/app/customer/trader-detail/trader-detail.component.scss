@@ -2,6 +2,7 @@
 
 .trader-detail {
   text-align: center;
+  margin-bottom: 20px;
 
   .trader-headline {
     color: $lightestgreen;
@@ -13,7 +14,7 @@
   }
 
   .trader-description {
-    margin-bottom: 10px;
+    margin: 20px 0;
   }
 
   .product-amount {
@@ -42,6 +43,10 @@
   .toggleDetails {
     color: $darkgreen;
   }
+}
+
+.carousel-container {
+  margin: 20px 0;
 }
 
 .carousel-inner {

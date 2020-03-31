@@ -17,6 +17,10 @@ h1 {
   color: $lightergreen;
 }
 
+.gray {
+  color: #aaa;
+}
+
 .leaflet-tile.leaflet-tile-loaded {
   filter: gray !important;
   -webkit-filter: grayscale(1) !important;
