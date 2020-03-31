@@ -31,7 +31,9 @@ export class FeedbackComponent {
 
   absenden() {
     if (
-      this.message && this.agb && (!this.email || this.validMail(this.email))
+      this.message &&
+      this.agb &&
+      (!this.email || this.validMail(this.email))
     ) {
       const htmlMessage = `<div style="text-align:center;">
       <img src="https://lokalkauf-staging.web.app/assets/logo.png" style="width:800px;height:300px;"/>
@@ -39,7 +41,7 @@ export class FeedbackComponent {
             <h4>Du hast eine Anfrage versendet:</h4>
             <p>${this.message}</p>
             <h4>Folgende Kontaktinformationen wurden hinterlassen:</h4>
-            <p>${this.email}</p>
+            <p>${this.email ? this.email : '-'}</p>
             <br>
             <b> Dein LokalKauf Team </b>
       </div>`;
