@@ -14,7 +14,7 @@ rules_version = '2';
   match /b/{bucket}/o {
     match /Traders/{uid}/{multiSegment=**} {
       allow read;
-      allow write: if isCurrentUser(uid) && checkSize(3) && isImage();
+      allow write: if isCurrentUser(uid) && checkSize(7) && isImage();
       allow delete: if isCurrentUser(uid);
     }
   }
