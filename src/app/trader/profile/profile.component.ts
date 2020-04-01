@@ -81,6 +81,8 @@ export class ProfileComponent implements AfterViewInit {
     });
 
     this.loadImages();
+
+    this.businessImage.valueChanges.subscribe((value) => console.log(value));
   }
 
   ngAfterViewInit() {
