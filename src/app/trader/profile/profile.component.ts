@@ -12,6 +12,7 @@ import { Reference } from '@angular/fire/storage/interfaces';
 import { map, flatMap } from 'rxjs/operators';
 import { ErrorService } from 'src/app/services/error.service';
 import { TraderService } from 'src/app/services/trader.service';
+import { TraderProfileStatus } from 'src/app/models/traderProfile';
 
 @Component({
   selector: 'app-profile',
@@ -26,6 +27,7 @@ export class ProfileComponent implements AfterViewInit {
       delivery: new FormControl(false),
       pickup: new FormControl(false),
       description: new FormControl(''),
+      public: new FormControl(true),
     },
     (form) => {
       const pickup = form.get('pickup').value;
@@ -44,6 +46,10 @@ export class ProfileComponent implements AfterViewInit {
 
   get delivery() {
     return this.dataFormGroup.get('delivery');
+  }
+
+  get public() {
+    return this.dataFormGroup.get('public');
   }
 
   businessImage = new FormControl();
@@ -89,6 +95,9 @@ export class ProfileComponent implements AfterViewInit {
         this.description.setValue(loggedInUser.traderProfile.description, {
           emitEvent: false,
         });
+        this.public.setValue(loggedInUser.traderProfile.status === TraderProfileStatus.PUBLIC, {
+          emitEvent: false,
+        });
         this.dataFormGroup.markAsPristine();
       }
     });
@@ -108,6 +117,7 @@ export class ProfileComponent implements AfterViewInit {
       description: this.description.value,
       delivery: this.delivery.value,
       pickup: this.pickup.value,
+      status: this.public.value ? TraderProfileStatus.PUBLIC : TraderProfileStatus.VERIFIED,
     });
     await this.updateTraderThumbnail();
 

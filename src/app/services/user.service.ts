@@ -87,9 +87,6 @@ export class UserService {
 
   async updateTraderProfile(partialTraderProfile: Partial<TraderProfile>) {
     console.log(partialTraderProfile);
-    if (partialTraderProfile.status === TraderProfileStatus.VERIFIED) {
-      partialTraderProfile.status = TraderProfileStatus.PUBLIC;
-    }
     await this.db
       .doc<TraderProfile>(`Traders/${this.auth.auth.currentUser.uid}`)
       .update(partialTraderProfile);

@@ -82,12 +82,20 @@
       </div>
     </div>
     <div class="buton-and-success">
+      <div class="dense">
+        <label>
+          <app-lk-checkbox formControlName="public"></app-lk-checkbox>
+          Profil veröffentlichen
+        </label>
+      </div>
+      <br/>
       <app-lk-button
         [disabled]="dataFormGroup.errors != null"
         label="Profil speichern"
         type="submit"
       >
       </app-lk-button>
+      <br/>
       <span class="success" *ngIf="saveSuccessful">
         Speichern erfolgreich
       </span>
