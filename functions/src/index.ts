@@ -112,25 +112,44 @@ export const checkFileNumberLimit = functions.storage
 exports.deleteThumbnailsTriggeredByImageDeletion = functions.storage
   .object()
   .onDelete(async (snapshot, context) => {
-    if (snapshot.name && snapshot.name.indexOf('/BusinessImage/') > -1) {
-      const a = snapshot.name.indexOf('/BusinessImage/');
+    //console.log('#######');
+    //console.log('#######' + snapshot.name);
 
-      let thumbnail = null;
+    if (
+      snapshot.name &&
+      snapshot.name.indexOf('/BusinessImages/') > -1 &&
+      snapshot.name.indexOf('/BusinessImages/thumbs') < 0
+    ) {
+      const a = snapshot.name.indexOf('/BusinessImages/');
+
+      console.log(`delete thumbnail of ${snapshot.name}`);
+
+      let thumbnail: string;
+
       try {
-        let name = snapshot.name.substring(a + '/BusinessImage/'.length);
+        let name = snapshot.name.substring(a + '/BusinessImages/'.length);
+
         name =
           name.substring(0, name.lastIndexOf('.')) +
           '_200x200' +
           name.substring(name.lastIndexOf('.'));
+
         thumbnail =
-          snapshot.name.substring(0, a) + '/BusinessImage/thumbs/' + name;
+          snapshot.name.substring(0, a) + '/BusinessImages/thumbs/' + name;
+
+        admin
+          .storage()
+          .bucket()
+          .deleteFiles({ prefix: thumbnail }, function (err) {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log(`${thumbnail} successfull deleted`);
+            }
+          });
       } catch (e) {
         console.log(e);
       }
-
-      console.log(snapshot);
-      console.log('#######');
-      console.log(' ' + thumbnail);
     }
   });
 

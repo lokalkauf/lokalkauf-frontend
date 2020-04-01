@@ -7,6 +7,7 @@
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
+    "deploy-delete-thumbnails": "firebase deploy --only functions:deleteThumbnailsTriggeredByImageDeletion",
     "logs": "firebase functions:log"
   },
   "engines": {
