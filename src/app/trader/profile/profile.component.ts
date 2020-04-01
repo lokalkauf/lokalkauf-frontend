@@ -81,6 +81,8 @@ export class ProfileComponent implements AfterViewInit {
     });
 
     this.loadImages();
+
+    this.businessImage.valueChanges.subscribe((value) => console.log(value));
   }
 
   ngAfterViewInit() {
@@ -95,9 +97,12 @@ export class ProfileComponent implements AfterViewInit {
         this.description.setValue(loggedInUser.traderProfile.description, {
           emitEvent: false,
         });
-        this.public.setValue(loggedInUser.traderProfile.status === TraderProfileStatus.PUBLIC, {
-          emitEvent: false,
-        });
+        this.public.setValue(
+          loggedInUser.traderProfile.status === TraderProfileStatus.PUBLIC,
+          {
+            emitEvent: false,
+          }
+        );
         this.dataFormGroup.markAsPristine();
       }
     });
@@ -117,7 +122,9 @@ export class ProfileComponent implements AfterViewInit {
       description: this.description.value,
       delivery: this.delivery.value,
       pickup: this.pickup.value,
-      status: this.public.value ? TraderProfileStatus.PUBLIC : TraderProfileStatus.VERIFIED,
+      status: this.public.value
+        ? TraderProfileStatus.PUBLIC
+        : TraderProfileStatus.VERIFIED,
     });
     await this.updateTraderThumbnail();
 
