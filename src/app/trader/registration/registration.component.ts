@@ -144,7 +144,7 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    router: Router,
+    private router: Router,
     traderService: TraderService
   ) {
     if (router.url.match('new')) {
@@ -257,5 +257,9 @@ export class RegistrationComponent implements OnInit {
 
   abortDelete() {
     this.delete = false;
+  }
+
+  verwerfen() {
+  this.router.navigate(['/trader/profile']);
   }
 }
