@@ -26,7 +26,8 @@
         placeholder="Deine Nachricht an uns"
         formControlName="mail_message"
         type="mail_message"
-      ></app-lk-textarea
+      >
+      </app-lk-textarea
       ><br /><br />
       Wie dürfen wir Dich kontaktieren?<br />
       <app-lk-input
@@ -54,5 +55,9 @@
       >
       </app-lk-button>
     </div>
+    <br />
+    <a [routerLink]="['/localtraders/0/0']">zurück zur Händerübersicht</a>
+    <br />
+    <br />
   </form>
 </div>

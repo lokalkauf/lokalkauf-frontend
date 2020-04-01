@@ -35,17 +35,6 @@ export class FeedbackComponent {
       this.agb &&
       (!this.email || this.validMail(this.email))
     ) {
-      const htmlMessage = `<div style="text-align:center;">
-      <img src="https://lokalkauf-staging.web.app/assets/lokalkaufLogoApp100.png" style="width:300px;height:100px">
-            <h2>Bestätigung deiner Anfrage</h2>
-            <h4>Du hast eine Anfrage versendet:</h4>
-            <p>${this.message}</p>
-            <b>Folgende Kontaktinformationen wurden hinterlassen:</b>
-            <p>${this.email ? this.email : '-'}</p>
-            <br>
-            <b> Dein LokalKauf Team </b>
-      </div>`;
-
       try {
         this.mailService.send(
           {
