@@ -176,4 +176,12 @@ export class UserService {
 
     return new Observable<TraderProfile>();
   }
+
+  async deleteUser(password: string) {
+    const credential = await this.auth.auth.signInWithEmailAndPassword(
+      this.auth.auth.currentUser.email,
+      password
+    );
+    await this.auth.auth.currentUser.delete();
+  }
 }

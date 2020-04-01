@@ -133,3 +133,19 @@ exports.deleteThumbnailsTriggeredByImageDeletion = functions.storage
       console.log(' ' + thumbnail);
     }
   });
+
+export const deleteUser = functions.auth.user().onDelete(async (user) => {
+  admin
+    .storage()
+    .bucket()
+    .deleteFiles({ prefix: `Traders/${user.uid}` }, function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(
+          `All the Firebase Storage files in users/${user.uid}/ have been deleted`
+        );
+      }
+    });
+  await admin.firestore().doc(`Traders/${user.uid}`).delete();
+});

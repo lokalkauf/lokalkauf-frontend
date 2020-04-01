@@ -3,13 +3,18 @@
     [title]="loggedInUserState.traderProfile.businessname"
   ></app-lk-page-title>
   <div *ngIf="!loggedInUserState.emailVerified" class="verify-mail-alert">
-    Bitte bestätige deine Email-Adresse: {{loggedInUserState.traderProfile.email}}<br />
-    Du hast noch keine Email von uns erhalten? 
+    Bitte bestätige deine Email-Adresse:
+    {{ loggedInUserState.traderProfile.email }}<br />
+    Du hast noch keine Email von uns erhalten?
     <a [routerLink]="" (click)="resendEmailVerification()"
       >Bestätigungsmail erneut senden</a
     >
   </div>
-  <form *ngIf="loggedInUserState.emailVerified" [formGroup]="dataFormGroup" (ngSubmit)="updateProfile()">
+  <form
+    *ngIf="loggedInUserState.emailVerified"
+    [formGroup]="dataFormGroup"
+    (ngSubmit)="updateProfile()"
+  >
     <a [routerLink]="['/trader/register/edit']">Bearbeiten</a>
     <div>
       Schritt 1: Wähle aus was auf Deinen Betrieb zutrifft:
@@ -45,7 +50,7 @@
     <div *ngIf="images$ | async as images">
       <div>
         Schritt 3: Zu guter Letzt lade Bilder von Deinem Laden oder Deinem
-        Angebot hoch (du kannst maximal 4 Bilder hochladen):
+        Angebot hoch (du kannst maximal 3 Bilder hochladen):
       </div>
       <div *ngIf="images.length < 3">
         <app-image-chooser [formControl]="businessImage"></app-image-chooser>
@@ -88,14 +93,14 @@
           Profil veröffentlichen
         </label>
       </div>
-      <br/>
+      <br />
       <app-lk-button
         [disabled]="dataFormGroup.errors != null"
         label="Profil speichern"
         type="submit"
       >
       </app-lk-button>
-      <br/>
+      <br />
       <span class="success" *ngIf="saveSuccessful">
         Speichern erfolgreich
       </span>

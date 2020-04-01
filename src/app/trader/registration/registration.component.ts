@@ -4,14 +4,13 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import {
-  Validators,
-  FormControl,
-  FormGroup,
-} from '@angular/forms';
+import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
-import { TraderProfile, TraderProfileStatus } from 'src/app/models/traderProfile';
+import {
+  TraderProfile,
+  TraderProfileStatus,
+} from 'src/app/models/traderProfile';
 import { TraderService } from 'src/app/services/trader.service';
 
 export enum RegistrationState {
@@ -56,6 +55,7 @@ export class RegistrationComponent implements OnInit {
   );
   registrationState: RegistrationState;
   saveSuccessful = false;
+  delete = false;
 
   ngOnInit(): void {
     window.scrollBy(0, 0);
@@ -144,7 +144,7 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    router: Router,
+    private router: Router,
     traderService: TraderService
   ) {
     if (router.url.match('new')) {
@@ -181,7 +181,7 @@ export class RegistrationComponent implements OnInit {
       pickup: false,
       telephone: this.phone.value,
       email: this.email.value,
-      status: TraderProfileStatus.CREATED
+      status: TraderProfileStatus.CREATED,
     };
 
     const traderProfileUpdate: Partial<TraderProfile> = {
@@ -249,5 +249,17 @@ export class RegistrationComponent implements OnInit {
       this.registrationForm.get('password').value ===
       this.registrationForm.get('passwordRepeat').value
     );
+  }
+
+  deleteProfile() {
+    this.delete = true;
+  }
+
+  abortDelete() {
+    this.delete = false;
+  }
+
+  verwerfen() {
+  this.router.navigate(['/trader/profile']);
   }
 }

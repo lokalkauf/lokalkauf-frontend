@@ -198,14 +198,25 @@
         ></app-lk-button>
       </ng-container>
       <ng-container *ngIf="registrationState === 'edit'">
-        <app-lk-button
-          [disabled]="!registrationForm.valid"
-          type="submit"
-          label="Aktualisieren"
-        ></app-lk-button>
-        <span class="success" *ngIf="saveSuccessful">
-          Speichern erfolgreich
-        </span>
+        <div class="button-container">
+          <div class="speichern">
+            <app-lk-button
+              [disabled]="!registrationForm.valid"
+              type="submit"
+              label="Aktualisieren"
+            ></app-lk-button>
+          </div>
+          <div class="verwerfen">
+            <app-lk-button
+              type="button"
+              label="Zurück"
+              (click)="verwerfen()"
+            ></app-lk-button>
+          </div>
+          <span class="success" *ngIf="saveSuccessful">
+            Speichern erfolgreich
+          </span>
+        </div>
       </ng-container>
       <div
         class="error"
@@ -237,6 +248,14 @@
       </div>
     </div>
   </form>
+  <div *ngIf="registrationState === 'edit'" class="delete-profile">
+    Ich möchte mein Profil
+    <a [routerLink]="" (click)="deleteProfile()">löschen</a>.
+  </div>
+  <app-delete-user
+    *ngIf="delete"
+    (abortDelete)="abortDelete()"
+  ></app-delete-user>
   <br />
   <br />
 </div>
