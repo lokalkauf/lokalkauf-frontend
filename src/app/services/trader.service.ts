@@ -28,11 +28,13 @@ export class TraderService {
 
   getTraderProfiles(
     traderIds: Array<string>,
-    status: TraderProfileStatus,
+    status: TraderProfileStatus
   ): Observable<Array<TraderProfile>> {
     return this.db
       .collection<TraderProfile>('Traders', (ref) =>
-        ref.where(firestore.FieldPath.documentId(), 'in', traderIds).where('status', '==', status)
+        ref
+          .where(firestore.FieldPath.documentId(), 'in', traderIds)
+          .where('status', '==', status)
       )
       .snapshotChanges()
       .pipe(
@@ -111,8 +113,11 @@ export class TraderService {
     });
   }
 
-  updateTraderProfileStatus(traderId: string, newStatus: TraderProfileStatus) {
-    this.db.collection('Traders').doc(traderId).update({
+  async updateTraderProfileStatus(
+    traderId: string,
+    newStatus: TraderProfileStatus
+  ) {
+    await this.db.collection('Traders').doc(traderId).update({
       status: newStatus,
     });
   }

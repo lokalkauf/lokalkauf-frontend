@@ -9,7 +9,6 @@ import { v4 as uuid } from 'uuid';
 import { TraderService } from './trader.service';
 import { GeoService } from './geo.service';
 import { User } from 'firebase';
-import { removeWhitespaces } from '@angular/compiler/src/ml_parser/html_whitespaces';
 
 export interface LoggedInUserState {
   uid: string;
@@ -138,11 +137,11 @@ export class UserService {
   }
 
   async verifyEmail(actionCode: string) {
-    await this.auth.auth.applyActionCode(actionCode)
-    .then(async (info) => {
-      this.traderService.updateTraderProfileStatus(this.auth.auth.currentUser.uid, TraderProfileStatus.VERIFIED);
-    })
-    ;
+    await this.auth.auth.applyActionCode(actionCode);
+    await this.traderService.updateTraderProfileStatus(
+      this.auth.auth.currentUser.uid,
+      TraderProfileStatus.VERIFIED
+    );
   }
 
   getTraderBusinessImageThumbnails() {
