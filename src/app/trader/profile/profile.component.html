@@ -16,7 +16,6 @@
     [formGroup]="dataFormGroup"
     (ngSubmit)="updateProfile()"
   >
-    <a [routerLink]="['/trader/register/edit']">Bearbeiten</a>
     <div>
       Schritt 1: Wähle aus was auf Deinen Betrieb zutrifft:
     </div>
@@ -87,13 +86,18 @@
         </div>
       </div>
     </div>
+
     <div class="buton-and-success">
+      <div>
+        Schritt 4: Dein Profil für die Kunden öffentlich verfügbar machen:
+      </div>
       <div class="dense">
         <label>
           <app-lk-checkbox formControlName="public"></app-lk-checkbox>
-          Profil veröffentlichen
+          Profil ist öffentlich
         </label>
       </div>
+
       <br />
       <app-lk-button
         [disabled]="dataFormGroup.errors != null"
@@ -101,10 +105,13 @@
         type="submit"
       >
       </app-lk-button>
-      <br />
       <span class="success" *ngIf="saveSuccessful">
         Speichern erfolgreich
       </span>
+      <div>
+        Meine Adressdaten
+        <a [routerLink]="['/trader/register/edit']">bearbeiten</a>
+      </div>
     </div>
   </form>
   <br />
