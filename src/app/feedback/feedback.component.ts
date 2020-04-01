@@ -35,25 +35,17 @@ export class FeedbackComponent {
       this.agb &&
       (!this.email || this.validMail(this.email))
     ) {
-      const htmlMessage = `<div style="text-align:center;">
-      <img src="https://lokalkauf-staging.web.app/assets/logo.png" style="width:300px;height:100px">
-            <h2>Bestätigung deiner Anfrage</h2>
-            <h4>Du hast eine Anfrage versendet:</h4>
-            <p>${this.message}</p>
-            <b>Folgende Kontaktinformationen wurden hinterlassen:</b>
-            <p>${this.email ? this.email : '-'}</p>
-            <br>
-            <b> Dein LokalKauf Team </b>
-      </div>`;
-
       try {
-        this.mailService.send({
-          fromName: this.email,
-          fromEMail: this.email,
-          toEMail: 'info@lokalkauf.org',
-          title: 'Feedbacknachricht',
-          message: htmlMessage,
-        } as EMail);
+        this.mailService.send(
+          {
+            fromName: this.email,
+            fromEMail: this.email,
+            toEMail: 'info@lokalkauf.org',
+            title: 'Feedbacknachricht',
+            message: this.message,
+          } as EMail,
+          'feedback'
+        );
         this.mailSent = true;
         this.showError = false;
       } catch (e) {
