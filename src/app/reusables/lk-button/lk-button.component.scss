@@ -28,4 +28,9 @@ button {
   &:active {
     box-shadow: inset 4px 4px 5px 0px rgba(0, 0, 0, 0.08);
   }
+
+  &.warn {
+    color: lightgrey;
+    background-color: $errorcolor;
+  }
 }

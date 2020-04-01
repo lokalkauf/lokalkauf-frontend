@@ -237,6 +237,14 @@
       </div>
     </div>
   </form>
+  <div *ngIf="registrationState === 'edit'" class="delete-profile">
+    Ich möchte mein Profil
+    <a [routerLink]="" (click)="deleteProfile()">löschen</a>.
+  </div>
+  <app-delete-user
+    *ngIf="delete"
+    (abortDelete)="abortDelete()"
+  ></app-delete-user>
   <br />
   <br />
 </div>

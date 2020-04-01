@@ -1,0 +1,22 @@
+<div class="delete-user">
+  <h2>Profil löschen</h2>
+  Bitte gib dein Passwort ein um Dein Profil zu löschen. Dieser Vorgang kann
+  nicht rückgängig gemacht werden!
+
+  <div class="password">
+    <app-lk-input
+      type="password"
+      [formControl]="password"
+      placeholder="Passwort"
+    ></app-lk-input>
+  </div>
+
+  <div class="buttons">
+    <app-lk-button
+      [warn]="true"
+      (click)="performDelete()"
+      label="Löschen"
+    ></app-lk-button>
+    <app-lk-button (click)="abort()" label="abbrechen"></app-lk-button>
+  </div>
+</div>
