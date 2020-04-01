@@ -58,7 +58,7 @@ export class ProfileComponent implements AfterViewInit {
   images$: Observable<Array<[string, Reference]>>;
   hasThumbnail: boolean;
   traderId: string;
-
+  mailResendedMessage: string;
   saveSuccessful = false;
 
   constructor(
@@ -103,7 +103,9 @@ export class ProfileComponent implements AfterViewInit {
     });
   }
 
+
   async resendEmailVerification() {
+    this.mailResendedMessage = 'Bestätigungsmail wurde erneu versendet!';
     await this.user.resendEmailVerification();
     // TODO: Inform user
   }
