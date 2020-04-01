@@ -1,0 +1,31 @@
+.delete-user {
+  position: fixed;
+  width: 700px;
+  top: 50%;
+  left: 50%;
+  margin-top: -200px;
+  margin-left: -350px;
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  padding: 40px;
+
+  @media screen and (max-width: 768px) {
+    width: 400px;
+    margin-left: -200px;
+    padding: 30px;
+  }
+
+  @media screen and (max-width: 490px) {
+    width: 300px;
+    margin-left: -200px;
+    padding: 20px;
+  }
+
+  .password {
+    margin-top: 20px;
+  }
+
+  .buttons {
+    margin-top: 20px;
+  }
+}

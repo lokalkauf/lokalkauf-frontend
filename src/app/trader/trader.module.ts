@@ -14,6 +14,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
+import { DeleteUserComponent } from './registration/delete-user/delete-user.component';
 
 const routes: Routes = [
   { path: 'trader/profile', component: ProfileComponent },
@@ -31,6 +32,7 @@ const routes: Routes = [
     ProfileComponent,
     LoginComponent,
     PasswordResetComponent,
+    DeleteUserComponent,
   ],
   imports: [
     CommonModule,

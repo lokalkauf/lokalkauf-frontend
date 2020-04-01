@@ -10,7 +10,7 @@ export class LkButtonComponent implements OnInit {
   @Input() disabled = false;
   @Input() type: string;
   @Input() minSizePercent: number;
-
+  @Input() warn = false;
   constructor() {}
 
   ngOnInit(): void {}
