@@ -8,7 +8,8 @@
     Du hast noch keine Email von uns erhalten?
     <a [routerLink]="" (click)="resendEmailVerification()"
       >Bestätigungsmail erneut senden</a
-    >
+    ><br /><br />
+    {{ mailResendedMessage }}
   </div>
   <form
     *ngIf="loggedInUserState.emailVerified"

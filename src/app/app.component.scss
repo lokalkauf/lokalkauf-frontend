@@ -154,6 +154,15 @@
 
 .start-header {
   margin-bottom: 0 !important;
+
+  #burger-menu {
+    .mat-icon {
+      margin-top: 16px !important;
+      line-height: 30px !important;
+      color: $lightergreen !important;
+      background-color: $white-transparent-60;
+    }
+  }
 }
 
 .mat-drawer {

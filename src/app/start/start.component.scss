@@ -16,9 +16,9 @@
 .start-logo-top {
   position: absolute;
   z-index: +1;
-  top: 5px;
-  left: 30px;
+  left: 24px;
   width: 100%;
+  top: 16px;
 
   @media screen and (max-width: 767px) {
     left: 30px;
@@ -37,8 +37,8 @@
 
     @media screen and (min-width: 768px) {
       position: absolute;
-      left: calc(50% - 300px);
-      top: 20px;
+      left: calc(50% - 340px);
+      // top: 20px;
     }
   }
 }
