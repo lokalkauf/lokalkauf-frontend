@@ -55,7 +55,6 @@ export class VerifyComponent implements OnInit {
           break;
         default:
           // Error: invalid mode.
-          console.log('Invalid mode' + this.mode);
           this.mode = 'invalid';
       }
     });
@@ -83,7 +82,6 @@ export class VerifyComponent implements OnInit {
           this.mode = 'passwordChangeCompleted';
         });
     } catch (error) {
-      console.error(error);
       this.errorService.publishByText(
         'Dein neues Passwort konnte nicht gespeichert werden.',
         'Bitte versuche es nochmal.'
@@ -95,7 +93,6 @@ export class VerifyComponent implements OnInit {
     try {
       await this.user.revokeEmailChange(actionCode);
     } catch (error) {
-      console.error(error);
       this.errorService.publishByText(
         'E-Mail konnte nicht wiederhergestellt werden',
         'Bitte prüfe Dein Profil oder kontaktiere uns.'
@@ -107,7 +104,6 @@ export class VerifyComponent implements OnInit {
     try {
       await this.user.verifyEmail(actionCode);
     } catch (error) {
-      console.error(error);
       this.errorService.publishByText(
         'E-Mail konnte nicht verifiziert werden',
         'Der Verifizierungslink wurde entweder bereits genutzt oder ist ungültig.' +
