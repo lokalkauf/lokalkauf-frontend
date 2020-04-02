@@ -15,7 +15,6 @@ export class AppComponent {
   constructor(public router: Router, public userService: UserService) {}
 
   navigate(route: string) {
-    console.log(route);
     this.opened = false;
     this.router.navigate([route]);
   }
