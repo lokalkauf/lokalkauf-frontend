@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { ErrorService } from 'src/app/services/error.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MustMatch } from './must-match.validator';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-verify',
@@ -28,7 +29,8 @@ export class VerifyComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private errorService: ErrorService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
   get password() {
@@ -112,5 +114,9 @@ export class VerifyComponent implements OnInit {
           'Bitte versuche Deine E-Mail erneut zu verifizeren oder kontaktiere uns.'
       );
     }
+  }
+
+  forceReload() {
+    this.document.location.href = window.location.origin + '/trader/profile';
   }
 }

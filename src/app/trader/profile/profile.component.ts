@@ -1,6 +1,6 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { Observable, from } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UserService, LoggedInUserState } from 'src/app/services/user.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Reference } from '@angular/fire/storage/interfaces';
@@ -64,7 +64,8 @@ export class ProfileComponent implements AfterViewInit {
 
   constructor(
     private user: UserService,
-    router: Router,
+    private router: Router,
+    private route: ActivatedRoute,
     private errorService: ErrorService,
     private traderService: TraderService
   ) {
