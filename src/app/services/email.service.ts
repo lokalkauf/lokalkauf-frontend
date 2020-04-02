@@ -20,7 +20,7 @@ export class EMailService {
 
   constructor(private http: HttpClient) {}
 
-  send(formdata: EMail) {
+  send(formdata: EMail, mailType: string) {
     // TODO update if firebase function changes
 
     const data = {
@@ -29,6 +29,7 @@ export class EMailService {
       toEmail: formdata.toEMail,
       title: formdata.title,
       message: formdata.message,
+      mailType,
     };
     try {
       const sendMailFunction = functions().httpsCallable(`sendMail`);

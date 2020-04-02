@@ -2,6 +2,7 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as nodemailer from 'nodemailer';
 import { google } from 'googleapis';
+
 admin.initializeApp();
 
 const MAX_NUMBER_OF_IMAGES = 6;
@@ -42,13 +43,38 @@ export const sendMail = functions.https.onCall(async (data, context) => {
   const tokens = await oauth2Client.refreshAccessToken();
   const accessToken = tokens.credentials.access_token;
 
-  const output = data.message;
+  let htmlOutput = '';
+  if (data.mailType == 'feedback') {
+    htmlOutput = `<div style="text-align:center;">
+    <img src="https://lokalkauf-staging.web.app/assets/logo.png" style="width:300px;height:100px">
+        <h2>Bestätigung deiner Anfrage</h2>
+        <h4>Du hast eine Anfrage versendet:</h4>
+        <p>${data.message}</p>
+        <b>Folgende Kontaktinformationen wurden hinterlassen:</b>
+        <p>${data.fromEmail}</p>
+        <br>
+        <b> Dein LokalKauf Team </b>
+</div>`;
+  } else if (data.mailType == 'trader-contact') {
+    htmlOutput = `<div style="text-align:center;">
+    <img src="https://lokalkauf-staging.web.app/assets/logo.png" style="width:300px;height:100px"/>
+          <h2>Neue Kundenanfrage</h2>
+          <h4>Du hast eine neue Anfrage</h4>
+          <p>${data.message}</p>
+          <b>Folgende Kontaktinformationen wurden hinterlassen:</b>
+          <p>${data.fromEmail}</p>
+          <br>
+          <b> Dein LokalKauf Team </b>
+          <br>
+          <img src="https://lokalkauf-staging.web.app/assets/thankyou-image.png"/>
+    </div>`;
+  }
 
   const mailOptions = {
     from: 'LokalKauf < info@lokalkauf.org >',
     to: data.toEmail,
     subject: data.title,
-    html: output,
+    html: htmlOutput,
     auth: {
       accessToken: accessToken,
     },
@@ -58,7 +84,7 @@ export const sendMail = functions.https.onCall(async (data, context) => {
     from: 'LokalKauf < info@lokalkauf.org >',
     to: data.fromEmail,
     subject: 'Kopie Deiner Nachricht: ' + data.title,
-    html: output,
+    html: htmlOutput,
     auth: {
       accessToken: accessToken,
     },
