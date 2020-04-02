@@ -52,7 +52,7 @@ export class StartComponent implements OnInit {
   showError: boolean;
 
   ngOnInit(): void {
-    this.getUserLocation();
+    //    this.getUserLocation();
   }
 
   registerTrader() {
