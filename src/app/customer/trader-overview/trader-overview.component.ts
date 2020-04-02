@@ -9,7 +9,10 @@ import { ActivatedRoute } from '@angular/router';
 import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
 import { GeoService } from 'src/app/services/geo.service';
 import { TraderService } from 'src/app/services/trader.service';
-import { TraderProfile, TraderProfileStatus } from 'src/app/models/traderProfile';
+import {
+  TraderProfile,
+  TraderProfileStatus,
+} from 'src/app/models/traderProfile';
 
 @Component({
   selector: 'app-trader-overview',
@@ -76,22 +79,23 @@ export class TraderOverviewComponent implements OnInit {
   }
 
   updateLocations(trlocaitons: Array<Location>) {
+    this.traders$ = new Array<TraderProfile>();
+
     if (!trlocaitons || trlocaitons.length < 1) {
       return;
     }
 
-    console.log('UÖDATESASDFADF: ' + trlocaitons.length);
+    const distinctLocations = trlocaitons.filter(
+      (thing, i, arr) =>
+        arr.findIndex((t) => t.traderId === thing.traderId) === i
+    );
+
+    console.log('UÖDATESASDFADF: ' + distinctLocations.length);
 
     // a lot of magic, couse of firebase limitation loading 10 ids in query at once
-    const ids = trlocaitons.map((l) => l.traderId);
-    const chunked = this.getChunks(ids, 10);
+    const ids = distinctLocations.map((l) => l.traderId);
+    const chunked = this.getChunks(ids, 2);
     console.log(chunked);
-
-    this.traders$.forEach((t) => {
-      this.traders$.pop();
-    });
-
-    this.traders$ = new Array<TraderProfile>();
 
     console.log('traders removed: ' + this.traders$.length);
 
@@ -104,7 +108,16 @@ export class TraderOverviewComponent implements OnInit {
             console.log('trader loaded: ' + t.length);
 
             t.forEach((trader) => {
-              this.traders$.push(trader);
+              if (
+                !this.traders$.find(
+                  (f) =>
+                    f.businessname === trader.businessname &&
+                    f.city === trader.city &&
+                    f.postcode === trader.postcode
+                )
+              ) {
+                this.traders$.push(trader);
+              }
             });
           }
         });
