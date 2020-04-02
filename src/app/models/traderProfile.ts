@@ -12,4 +12,12 @@ export interface TraderProfile {
   email: string;
   telephone: string;
   thumbnailUrl?: string;
+  status: TraderProfileStatus;
+}
+
+export enum TraderProfileStatus {
+  CREATED = 'CREATED',
+  VERIFIED = 'VERFIED',
+  PUBLIC = 'PUBLIC',
+  DELETED = 'DELETED'
 }

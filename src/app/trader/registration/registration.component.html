@@ -6,8 +6,16 @@
 </div>
 
 <app-lk-page-title
+  *ngIf="registrationState === 'new'"
   title="Anmeldung"
   subtitle="Melde Dich kostenlos an um Dein Geschäft, Dein Restaurant oder Dein Café online zu präsentieren und Deinen Kunden zu zeigen, dass Du weiterhin für sie da bist.
+  "
+></app-lk-page-title>
+
+<app-lk-page-title
+  *ngIf="registrationState === 'edit'"
+  title="Bearbeiten"
+  subtitle="Aktualisiere Deine Daten
   "
 ></app-lk-page-title>
 
@@ -95,75 +103,77 @@
         </div>
       </div>
     </div>
-    <div class="subheadline">Deine Zugangsdaten</div>
-    <div class="registration-input">
-      <app-lk-input
-        [warn]="email.touched && email.invalid"
-        type="email"
-        formControlName="email"
-        placeholder="Email*"
-      >
-      </app-lk-input>
-      <div class="warning" *ngIf="email.touched && email.invalid">
-        Bitte überprüfe die eingegebene Email-Adresse.
+
+    <ng-container *ngIf="registrationState === 'new'">
+      <div class="subheadline">Deine Zugangsdaten</div>
+      <div class="registration-input">
+        <app-lk-input
+          [warn]="email.touched && email.invalid"
+          type="email"
+          formControlName="email"
+          placeholder="Email*"
+        >
+        </app-lk-input>
+        <div class="warning" *ngIf="email.touched && email.invalid">
+          Bitte überprüfe die eingegebene Email-Adresse.
+        </div>
       </div>
-    </div>
 
-    <div class="registration-input">
-      <app-lk-input
-        matInput
-        #passwordWithValidation
-        type="password"
-        required
-        formControlName="password"
-        [formControl]="passwordComponentWithValidation.passwordFormControl"
-        placeholder="Passwort"
-      ></app-lk-input>
-    </div>
-    <div class="registration-input">
-      <app-lk-input
-        [warn]="
-          passwordRepeat.touched &&
-          (passwordRepeat.invalid ||
-            (registrationForm.errors && registrationForm.errors.notSame))
-        "
-        type="password"
-        formControlName="passwordRepeat"
-        placeholder="Passwort wiederholen*"
-      ></app-lk-input>
-      <div
-        class="warning"
-        *ngIf="registrationForm.errors && registrationForm.errors.notSame"
-      >
-        Die eingegebenen Passwörter stimmen nicht überein.
+      <div class="registration-input">
+        <app-lk-input
+          matInput
+          #passwordWithValidation
+          type="password"
+          required
+          formControlName="password"
+          [formControl]="passwordComponentWithValidation.passwordFormControl"
+          placeholder="Passwort"
+        ></app-lk-input>
       </div>
-    </div>
+      <div class="registration-input">
+        <app-lk-input
+          [warn]="
+            passwordRepeat.touched &&
+            (passwordRepeat.invalid ||
+              (registrationForm.errors && registrationForm.errors.notSame))
+          "
+          type="password"
+          formControlName="passwordRepeat"
+          placeholder="Passwort wiederholen*"
+        ></app-lk-input>
+        <div
+          class="warning"
+          *ngIf="registrationForm.errors && registrationForm.errors.notSame"
+        >
+          Die eingegebenen Passwörter stimmen nicht überein.
+        </div>
+      </div>
 
-    <!--      <mat-error *ngIf="passwordComponentWithValidation.passwordFormControl.hasError('required')">-->
-    <!--        Passwort ist notwendig!-->
-    <!--      </mat-error>-->
-    <!--      <mat-error *ngIf="passwordComponentWithValidation.passwordFormControl.hasError('pattern')">-->
-    <!--        Passwort ist nicht valide!-->
-    <!--      </mat-error>-->
+      <!--      <mat-error *ngIf="passwordComponentWithValidation.passwordFormControl.hasError('required')">-->
+      <!--        Passwort ist notwendig!-->
+      <!--      </mat-error>-->
+      <!--      <mat-error *ngIf="passwordComponentWithValidation.passwordFormControl.hasError('pattern')">-->
+      <!--        Passwort ist nicht valide!-->
+      <!--      </mat-error>-->
 
-    <mat-password-strength
-      #passwordComponentWithValidation
-      [password]="passwordWithValidation.value"
-    >
-    </mat-password-strength>
-    <!--Password's strength info-->
-    <mat-password-strength-info
-      [passwordComponent]="passwordComponentWithValidation"
-      lowerCaseCriteriaMsg="Kleinschreibung"
-      upperCaseCriteriaMsg="Großschreibung"
-      digitsCriteriaMsg="Zahlen"
-      specialCharsCriteriaMsg="Sonderzeichen"
-      minCharsCriteriaMsg="Länge {{ passwordWithValidation.value.length }} / {{
-        8
-      }}"
-    >
-    </mat-password-strength-info>
-
+      <mat-password-strength
+        #passwordComponentWithValidation
+        [password]="passwordWithValidation.value"
+      >
+      </mat-password-strength>
+      <!--Password's strength info-->
+      <mat-password-strength-info
+        [passwordComponent]="passwordComponentWithValidation"
+        lowerCaseCriteriaMsg="Kleinschreibung"
+        upperCaseCriteriaMsg="Großschreibung"
+        digitsCriteriaMsg="Zahlen"
+        specialCharsCriteriaMsg="Sonderzeichen (z.B.: !#$%&+?)"
+        minCharsCriteriaMsg="Länge {{
+          passwordWithValidation.value.length
+        }} / {{ 8 }}"
+      >
+      </mat-password-strength-info>
+    </ng-container>
     <div class="agb">
       <label>
         <app-lk-checkbox formControlName="agbRead"></app-lk-checkbox>
@@ -180,11 +190,34 @@
     </div>
 
     <div class="button-and-error">
-      <app-lk-button
-        [disabled]="!registrationForm.valid"
-        type="submit"
-        label="Registrieren"
-      ></app-lk-button>
+      <ng-container *ngIf="registrationState === 'new'">
+        <app-lk-button
+          [disabled]="!registrationForm.valid"
+          type="submit"
+          label="Registrieren"
+        ></app-lk-button>
+      </ng-container>
+      <ng-container *ngIf="registrationState === 'edit'">
+        <div class="button-container">
+          <div class="speichern">
+            <app-lk-button
+              [disabled]="!registrationForm.valid"
+              type="submit"
+              label="Aktualisieren"
+            ></app-lk-button>
+          </div>
+          <div class="verwerfen">
+            <app-lk-button
+              type="button"
+              label="Zurück"
+              (click)="verwerfen()"
+            ></app-lk-button>
+          </div>
+          <span class="success" *ngIf="saveSuccessful">
+            Speichern erfolgreich
+          </span>
+        </div>
+      </ng-container>
       <div
         class="error"
         *ngIf="registrationForm.errors && registrationForm.errors.emailInUse"
@@ -215,4 +248,14 @@
       </div>
     </div>
   </form>
+  <div *ngIf="registrationState === 'edit'" class="delete-profile">
+    Ich möchte mein Profil
+    <a [routerLink]="" (click)="deleteProfile()">löschen</a>.
+  </div>
+  <app-delete-user
+    *ngIf="delete"
+    (abortDelete)="abortDelete()"
+  ></app-delete-user>
+  <br />
+  <br />
 </div>

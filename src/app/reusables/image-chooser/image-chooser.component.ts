@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import loadImage from 'blueimp-load-image';
+import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   selector: 'app-image-chooser',
@@ -17,48 +19,66 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 export class ImageChooserComponent implements OnInit, ControlValueAccessor {
   uploadState: Observable<number> | null = null;
 
-  selectedFile: File;
+  selectedFile: Blob;
   selectedFileDataUrl: string;
 
-  constructor() {}
+  constructor(private errorService: ErrorService) {}
 
   private onTouchedCallback: () => void = () => {};
-  private onChangeCallback: (file: File) => void = () => {};
+  private onChangeCallback: (file: Blob) => void = () => {};
 
   ngOnInit(): void {}
 
-  async onInputChang(event) {
+  async onInputChange(event) {
     const file = event.target.files[0] as File;
-    this.onChangeCallback(file);
-    this.fileChanged(file);
+    this.fileChanged(file, true);
   }
 
-  async fileChanged(file?: File) {
+  async fileChanged(file?: File | Blob, dispatch = false) {
     if (!file) {
       this.selectedFile = undefined;
       this.selectedFileDataUrl = undefined;
       return;
     }
 
-    this.selectedFile = file;
-    this.selectedFileDataUrl = await new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.addEventListener(
-        'load',
-        () => {
-          resolve(reader.result as string);
+    const blob = await new Promise<Blob>((resolve) => {
+      loadImage(
+        file,
+        (image) => {
+          if (!(image instanceof HTMLCanvasElement)) {
+            this.selectedFile = undefined;
+            this.selectedFileDataUrl = undefined;
+            this.errorService.publishByText(
+              'Laden Fehlgeschlagen',
+              'Das Bild konnte nicht geladen werden'
+            );
+            return;
+          }
+
+          image.toBlob(resolve);
+          this.selectedFileDataUrl = image.toDataURL('image/png');
         },
-        false
+        {
+          maxWidth: 1024,
+          maxHeight: 1024,
+          orientation: true,
+        }
       );
-      reader.readAsDataURL(this.selectedFile);
     });
+
+    this.selectedFile = blob;
+    console.log(this.selectedFileDataUrl);
+    if (dispatch) {
+      console.log(blob);
+      this.onChangeCallback(blob);
+    }
   }
 
   onInputBlur() {
     this.onTouchedCallback();
   }
 
-  writeValue(imageFile?: File): void {
+  writeValue(imageFile?: Blob): void {
     if (imageFile) {
       this.fileChanged(imageFile);
     } else {

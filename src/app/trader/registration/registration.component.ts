@@ -6,16 +6,23 @@ import {
 } from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatPasswordStrengthComponent } from '@angular-material-extensions/password-strength';
 import { UserService } from 'src/app/services/user.service';
-import { TraderProfile } from 'src/app/models/traderProfile';
+import {
+  TraderProfile,
+  TraderProfileStatus,
+} from 'src/app/models/traderProfile';
+import { TraderService } from 'src/app/services/trader.service';
+
+export enum RegistrationState {
+  new = 'new',
+  edit = 'edit',
+}
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegistrationComponent implements OnInit {
   registrationForm = new FormGroup(
@@ -46,9 +53,45 @@ export class RegistrationComponent implements OnInit {
       },
     ]
   );
+  registrationState: RegistrationState;
+  saveSuccessful = false;
+  delete = false;
 
   ngOnInit(): void {
     window.scrollBy(0, 0);
+    this.setConditionalValidators();
+  }
+
+  setConditionalValidators() {
+    const password = this.registrationForm.get('password');
+    const password2 = this.registrationForm.get('passwordRepeat');
+    const email = this.registrationForm.get('email');
+
+    if (this.registrationState === RegistrationState.edit) {
+      password.setValidators(null);
+      password2.setValidators(null);
+      email.setValidators(null);
+    } else {
+      password.setValidators([Validators.required]);
+      password2.setValidators([Validators.required]);
+      email.setValidators([Validators.required]);
+    }
+    password.updateValueAndValidity();
+    password2.updateValueAndValidity();
+    email.updateValueAndValidity();
+  }
+
+  fillVal(user: TraderProfile) {
+    this.registrationForm.patchValue({
+      phone: user.telephone,
+      ownerFirstname: user.ownerFirstname.toString(),
+      ownerLastname: user.ownerLastname.toString(),
+      postcode: user.postcode.toString(),
+      street: user.street,
+      streetnumber: user.number,
+      city: user.city,
+      businessname: user.businessname,
+    });
   }
 
   get email() {
@@ -99,19 +142,33 @@ export class RegistrationComponent implements OnInit {
     return this.registrationForm.get('ownerLastname');
   }
 
-  constructor(private userService: UserService, router: Router) {
-    this.userService.isLoggedIn$.subscribe((isLoggedIn) => {
-      if (isLoggedIn) {
-        router.navigateByUrl(`trader/profile`);
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    traderService: TraderService
+  ) {
+    if (router.url.match('new')) {
+      this.registrationState = RegistrationState.new;
+      this.userService.isLoggedIn$.subscribe((isLoggedIn) => {
+        if (isLoggedIn) {
+          router.navigateByUrl(`trader/profile`);
+        }
+      });
+    } else {
+      this.registrationState = RegistrationState.edit;
+      if (this.registrationState === RegistrationState.edit) {
+        this.userService.getAuthenticatedTraderProfile().subscribe((user) => {
+          this.fillVal(user);
+        });
       }
-    });
+    }
   }
 
   async onSubmit() {
     const email = this.email.value;
     const password = this.password.value;
 
-    const traderProfile: TraderProfile = {
+    const traderProfilRegister: TraderProfile = {
       businessname: this.businessname.value,
       ownerFirstname: this.ownerFirstname.value,
       ownerLastname: this.ownerLastname.value,
@@ -124,10 +181,27 @@ export class RegistrationComponent implements OnInit {
       pickup: false,
       telephone: this.phone.value,
       email: this.email.value,
+      status: TraderProfileStatus.CREATED,
+    };
+
+    const traderProfileUpdate: Partial<TraderProfile> = {
+      businessname: this.businessname.value,
+      ownerFirstname: this.ownerFirstname.value,
+      ownerLastname: this.ownerLastname.value,
+      postcode: this.postcode.value,
+      city: this.city.value,
+      street: this.street.value,
+      number: this.streetnumber.value,
+      telephone: this.phone.value,
     };
 
     try {
-      await this.userService.register(email, password, traderProfile);
+      if (this.registrationState === RegistrationState.new) {
+        await this.userService.register(email, password, traderProfilRegister);
+      } else {
+        await this.userService.updateTraderProfile(traderProfileUpdate);
+        this.saveSuccessful = true;
+      }
     } catch (e) {
       switch (e.code) {
         case 'auth/email-already-in-use':
@@ -175,5 +249,17 @@ export class RegistrationComponent implements OnInit {
       this.registrationForm.get('password').value ===
       this.registrationForm.get('passwordRepeat').value
     );
+  }
+
+  deleteProfile() {
+    this.delete = true;
+  }
+
+  abortDelete() {
+    this.delete = false;
+  }
+
+  verwerfen() {
+    this.router.navigate(['/trader/profile']);
   }
 }

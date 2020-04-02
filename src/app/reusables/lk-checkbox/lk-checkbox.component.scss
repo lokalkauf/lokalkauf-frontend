@@ -3,10 +3,13 @@
 input[type='checkbox'] {
   display: none;
 }
+
 input[type='checkbox'] + .checkbox {
   display: inline-block;
   height: 1.2rem;
+  margin-bottom: -0.26rem;
 }
+
 input[type='checkbox'] + .checkbox::before {
   width: 1.2rem;
   height: 1.2rem;
@@ -18,7 +21,11 @@ input[type='checkbox'] + .checkbox::before {
   float: left;
   margin-right: 5px;
 }
+
 input[type='checkbox']:checked + .checkbox::before {
-  box-shadow: inset 0px 0px 0px 0.2rem #fff;
-  background-color: $lightergreen;
+  // box-shadow: inset 0px 0px 0px 0.2rem #fff;
+  background-image: url('../../../assets/checkbox16px.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 16px;
 }

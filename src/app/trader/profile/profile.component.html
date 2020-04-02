@@ -2,14 +2,20 @@
   <app-lk-page-title
     [title]="loggedInUserState.traderProfile.businessname"
   ></app-lk-page-title>
-  <form [formGroup]="dataFormGroup" (ngSubmit)="updateProfile()">
-    <div *ngIf="!loggedInUserState.emailVerified" class="verify-mail-alert">
-      Bitte bestätige deine Email-Adresse!<br />
-      Du hast noch keine Email von uns erhalten?
-      <a [routerLink]="" (click)="resendEmailVerification()"
-        >Bestätigungsmail erneut senden</a
-      >.
-    </div>
+  <div *ngIf="!loggedInUserState.emailVerified" class="verify-mail-alert">
+    Bitte bestätige deine Email-Adresse:
+    {{ loggedInUserState.traderProfile.email }}<br />
+    Du hast noch keine Email von uns erhalten?
+    <a [routerLink]="" (click)="resendEmailVerification()"
+      >Bestätigungsmail erneut senden</a
+    ><br /><br />
+    {{ mailResendedMessage }}
+  </div>
+  <form
+    *ngIf="loggedInUserState.emailVerified"
+    [formGroup]="dataFormGroup"
+    (ngSubmit)="updateProfile()"
+  >
     <div>
       Schritt 1: Wähle aus was auf Deinen Betrieb zutrifft:
     </div>
@@ -44,7 +50,7 @@
     <div *ngIf="images$ | async as images">
       <div>
         Schritt 3: Zu guter Letzt lade Bilder von Deinem Laden oder Deinem
-        Angebot hoch (du kannst maximal 4 Bilder hochladen):
+        Angebot hoch (du kannst maximal 3 Bilder hochladen):
       </div>
       <div *ngIf="images.length < 3">
         <app-image-chooser [formControl]="businessImage"></app-image-chooser>
@@ -80,15 +86,31 @@
         </div>
       </div>
     </div>
+
     <div class="buton-and-success">
+      <div>
+        Schritt 4: Dein Profil für die Kunden öffentlich verfügbar machen:
+      </div>
+      <div class="dense">
+        <label>
+          <app-lk-checkbox formControlName="public"></app-lk-checkbox>
+          Profil ist öffentlich
+        </label>
+      </div>
+
+      <br />
       <app-lk-button
         [disabled]="dataFormGroup.errors != null"
         label="Profil speichern"
         type="submit"
       >
       </app-lk-button>
-      <div class="success" *ngIf="saveSuccessful">
+      <span class="success" *ngIf="saveSuccessful">
         Speichern erfolgreich
+      </span>
+      <div>
+        Meine Adressdaten
+        <a [routerLink]="['/trader/register/edit']">bearbeiten</a>
       </div>
     </div>
   </form>

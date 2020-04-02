@@ -9,5 +9,5 @@
   ></div>
   <div *ngIf="uploadState | async as percent">{{ percent }} %</div>
   <div class="label">Bild auswählen...</div>
-  <input type="file" (change)="onInputChang($event)" (blur)="onInputBlur()" />
+  <input type="file" (change)="onInputChange($event)" (blur)="onInputBlur()" />
 </label>

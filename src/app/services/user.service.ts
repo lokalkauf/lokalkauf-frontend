@@ -3,13 +3,12 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, combineLatest, of, from } from 'rxjs';
 import { map, switchMap, flatMap } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { TraderProfile } from '../models/traderProfile';
+import { TraderProfile, TraderProfileStatus } from '../models/traderProfile';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { v4 as uuid } from 'uuid';
 import { TraderService } from './trader.service';
 import { GeoService } from './geo.service';
 import { User } from 'firebase';
-import { removeWhitespaces } from '@angular/compiler/src/ml_parser/html_whitespaces';
 
 export interface LoggedInUserState {
   uid: string;
@@ -131,11 +130,15 @@ export class UserService {
   async revokeEmailChange(actionCode: string) {
     await this.auth.auth
       .checkActionCode(actionCode)
-      .then((info) => this.auth.auth.applyActionCode(actionCode));
+      .then(async (info) => await this.auth.auth.applyActionCode(actionCode));
   }
 
   async verifyEmail(actionCode: string) {
     await this.auth.auth.applyActionCode(actionCode);
+    await this.traderService.updateTraderProfileStatus(
+      this.auth.auth.currentUser.uid,
+      TraderProfileStatus.VERIFIED
+    );
   }
 
   getTraderBusinessImageThumbnails() {
@@ -172,5 +175,13 @@ export class UserService {
     }
 
     return new Observable<TraderProfile>();
+  }
+
+  async deleteUser(password: string) {
+    const credential = await this.auth.auth.signInWithEmailAndPassword(
+      this.auth.auth.currentUser.email,
+      password
+    );
+    await this.auth.auth.currentUser.delete();
   }
 }
