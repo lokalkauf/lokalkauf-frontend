@@ -40,8 +40,6 @@ export class TraderOverviewComponent implements OnInit {
     return;
 
     this.route.params.subscribe((params) => {
-      console.log('lat' + params.lat + ' lng: ' + params.lng);
-
       try {
         const pos = [
           Number.parseFloat(params.lat),
@@ -72,8 +70,6 @@ export class TraderOverviewComponent implements OnInit {
         });
       })
       .finally(() => {
-        console.log('loaded locations..');
-        console.log(this.locations);
         this.updateLocations(this.locations);
       });
   }
@@ -90,23 +86,15 @@ export class TraderOverviewComponent implements OnInit {
         arr.findIndex((t) => t.traderId === thing.traderId) === i
     );
 
-    console.log('UÖDATESASDFADF: ' + distinctLocations.length);
-
     // a lot of magic, couse of firebase limitation loading 10 ids in query at once
     const ids = distinctLocations.map((l) => l.traderId);
     const chunked = this.getChunks(ids, 2);
-    console.log(chunked);
-
-    console.log('traders removed: ' + this.traders$.length);
 
     for (const chunk of chunked) {
       this.traderService
         .getTraderProfiles(chunk, TraderProfileStatus.PUBLIC)
         .subscribe((t: TraderProfile[]) => {
-          console.log('loading of trader done.');
           if (t && t.length > 0) {
-            console.log('trader loaded: ' + t.length);
-
             t.forEach((trader) => {
               if (
                 !this.traders$.find(

@@ -30,8 +30,6 @@ export class GeoService {
   }
 
   createLocation(traderId: string, coords: Array<number>) {
-    console.log('set locaiton: ' + traderId + 'crds ' + coords);
-
     return this.locations
       .doc(traderId)
       .set({
@@ -43,11 +41,9 @@ export class GeoService {
   }
 
   async createLocationByAddress(traderId: string, address: string) {
-    const ll = await this.findCoordinatesByAddress(address).pipe(
-      map((r) =>
-        r.records.map((m) => m.fields)
-      )
-    ).toPromise();
+    const ll = await this.findCoordinatesByAddress(address)
+      .pipe(map((r) => r.records.map((m) => m.fields)))
+      .toPromise();
 
     if (ll && ll.length > 0) {
       return this.createLocation(traderId, ll[0].geo_point_2d);

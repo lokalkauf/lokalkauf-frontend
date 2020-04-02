@@ -1,13 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Product } from '../../models/product';
-import { Trader } from '../../models/trader';
-import {
-  AngularFireStorage,
-  AngularFireUploadTask,
-} from '@angular/fire/storage';
-import { map, tap } from 'rxjs/operators';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { v4 as uuid } from 'uuid';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
@@ -17,7 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: './create-product.component.html',
   styleUrls: ['./create-product.component.scss'],
 })
-export class CreateProductComponent implements OnInit {
+export class CreateProductComponent {
   @Input() traderId: string;
 
   productForm = new FormGroup({
@@ -41,13 +36,8 @@ export class CreateProductComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    this.productForm.get('file').valueChanges.pipe(tap(console.log));
-  }
-
   async onSubmit() {
     const name = this.productForm.get('name').value;
-    const category = this.productForm.get('category').value;
     const price = Number.parseFloat(this.productForm.get('price').value);
     const description = this.productForm.get('description').value;
 

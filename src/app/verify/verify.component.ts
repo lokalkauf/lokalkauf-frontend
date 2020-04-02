@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { ErrorService } from 'src/app/services/error.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MustMatch } from './must-match.validator';
 
 @Component({
@@ -12,12 +12,15 @@ import { MustMatch } from './must-match.validator';
 })
 export class VerifyComponent implements OnInit {
   mode: string;
-  passwordForm = this.formBuilder.group({
-    password: ['', [Validators.required, Validators.minLength(8)]],
-    confirmPassword: ['', Validators.required]
-  }, {
-    validator: MustMatch('password', 'confirmPassword')
-  });
+  passwordForm = this.formBuilder.group(
+    {
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['', Validators.required],
+    },
+    {
+      validator: MustMatch('password', 'confirmPassword'),
+    }
+  );
   verifiedActionCode: string;
 
   constructor(
@@ -26,9 +29,11 @@ export class VerifyComponent implements OnInit {
     private route: ActivatedRoute,
     private errorService: ErrorService,
     private formBuilder: FormBuilder
-  ) { }
+  ) {}
 
-  get password() { return this.passwordForm.get('password'); }
+  get password() {
+    return this.passwordForm.get('password');
+  }
 
   async ngOnInit(): Promise<void> {
     this.route.queryParams.subscribe((params) => {
@@ -56,10 +61,9 @@ export class VerifyComponent implements OnInit {
 
   async handleResetPassword(actionCode: string, lang: string) {
     try {
-      await this.user.verifyPasswordReset(actionCode).
-        then(() => {
-          this.verifiedActionCode = actionCode;
-        });
+      await this.user.verifyPasswordReset(actionCode).then(() => {
+        this.verifiedActionCode = actionCode;
+      });
     } catch (error) {
       console.error(error);
       this.errorService.publishByText(
@@ -71,9 +75,11 @@ export class VerifyComponent implements OnInit {
 
   async confirmPasswordReset() {
     try {
-      await this.user.confirmPasswordReset(this.verifiedActionCode, this.password.value).then(() => {
-        this.mode = 'passwordChangeCompleted';
-      });
+      await this.user
+        .confirmPasswordReset(this.verifiedActionCode, this.password.value)
+        .then(() => {
+          this.mode = 'passwordChangeCompleted';
+        });
     } catch (error) {
       console.error(error);
       this.errorService.publishByText(
@@ -103,7 +109,7 @@ export class VerifyComponent implements OnInit {
       this.errorService.publishByText(
         'E-Mail konnte nicht verifiziert werden',
         'Der Verifizierungslink wurde entweder bereits genutzt oder ist ungültig.' +
-        'Bitte versuche Deine E-Mail erneut zu verifizeren oder kontaktiere uns.'
+          'Bitte versuche Deine E-Mail erneut zu verifizeren oder kontaktiere uns.'
       );
     }
   }
