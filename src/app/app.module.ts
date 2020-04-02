@@ -42,6 +42,7 @@ import { HttpCommunicationInterceptor } from './interceptors/http-communication.
 import { ErrorDisplayComponent } from './error-display/error-display.component';
 import { AboutUsComponent } from './about-us/about-us.compontent';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
+import { FaqComponent } from './faq/faq.component';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -49,6 +50,7 @@ const routes: Routes = [
   { path: 'feedback', component: FeedbackComponent },
   { path: 'verify', component: VerifyComponent },
   { path: 'aboutus', component: AboutUsComponent },
+  { path: 'faq', component: FaqComponent },
 ];
 
 @NgModule({
@@ -62,6 +64,7 @@ const routes: Routes = [
     SafePipe,
     SpinnerComponent,
     StartComponent,
+    FaqComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,7 +84,7 @@ const routes: Routes = [
     CustomerModule,
     TraderModule,
     TransportModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { anchorScrolling: 'enabled' }),
     ReusablesModule,
     FormsModule,
     ReactiveFormsModule,
