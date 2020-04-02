@@ -108,6 +108,9 @@
       </div>
 
       <br />
+      <div class="success" *ngIf="saveSuccessful">
+        Speichern erfolgreich
+      </div>
       <app-lk-button
         [disabled]="dataFormGroup.errors != null"
         label="Profil speichern"
@@ -115,9 +118,6 @@
       >
       </app-lk-button>
 
-      <span class="success" *ngIf="saveSuccessful">
-        Speichern erfolgreich
-      </span>
       <div>
         Meine Adressdaten
         <a [routerLink]="['/trader/register/edit']">bearbeiten</a>

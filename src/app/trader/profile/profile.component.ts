@@ -133,7 +133,7 @@ export class ProfileComponent implements AfterViewInit {
     this.saveSuccessful = true;
     setTimeout(() => {
       this.saveSuccessful = false;
-    }, 5000);
+    }, 15000);
   }
 
   async loadImages() {
