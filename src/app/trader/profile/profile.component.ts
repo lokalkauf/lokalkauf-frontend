@@ -110,7 +110,7 @@ export class ProfileComponent implements AfterViewInit {
   }
 
   async resendEmailVerification() {
-    this.mailResendedMessage = 'Bestätigungsmail wurde erneu versendet!';
+    this.mailResendedMessage = 'Bestätigungsmail wurde erneut versendet!';
     await this.user.resendEmailVerification();
     // TODO: Inform user
   }
