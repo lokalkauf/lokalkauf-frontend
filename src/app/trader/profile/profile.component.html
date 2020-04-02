@@ -11,11 +11,7 @@
     ><br /><br />
     {{ mailResendedMessage }}
   </div>
-  <form
-    *ngIf="loggedInUserState.emailVerified"
-    [formGroup]="dataFormGroup"
-    (ngSubmit)="updateProfile()"
-  >
+  <form *ngIf="loggedInUserState.emailVerified" [formGroup]="dataFormGroup">
     <div>
       Schritt 1: Wähle aus was auf Deinen Betrieb zutrifft:
     </div>
@@ -76,12 +72,25 @@
           *ngFor="let image of images"
           [ngStyle]="{ 'background-image': 'url(' + image[0] + ')' }"
         >
-          <div class="delete-button">
-            <app-lk-button
-              type="button"
+          <div class="btns">
+            <button
               (click)="deleteImage(image[1])"
-              label="Bild löschen"
-            ></app-lk-button>
+              mat-fab
+              class="md-mini icn-danger"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button
+              (click)="setThumbnail(image[1])"
+              mat-fab
+              class="md-mini"
+              [ngClass]="isSelectedThumbnail(image[1])"
+            >
+              <mat-icon>photo_library</mat-icon>
+            </button>
+            <!-- <button mat-fab class="md-mini icn-disabled">
+              <mat-icon>photo_library</mat-icon>
+            </button>             -->
           </div>
         </div>
       </div>
@@ -102,9 +111,10 @@
       <app-lk-button
         [disabled]="dataFormGroup.errors != null"
         label="Profil speichern"
-        type="submit"
+        (click)="updateProfile()"
       >
       </app-lk-button>
+
       <span class="success" *ngIf="saveSuccessful">
         Speichern erfolgreich
       </span>
