@@ -1,7 +1,7 @@
 <div
   class="app-map"
   leaflet
-  (leafletMapReady)="onMapReady($event)"
+  (leafletMapMoveEnd)="updatedBounding($event)"
   [leafletOptions]="options"
   [leafletLayers]="markers"
 ></div>
