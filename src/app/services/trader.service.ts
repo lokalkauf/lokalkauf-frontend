@@ -48,9 +48,10 @@ export class TraderService {
   }
 
   async updateTraderThumbnailUrl(traderId: string, url: string) {
-    await this.db.collection('Traders').doc(traderId).update({
-      thumbnailUrl: url,
-    });
+    await this.db
+      .collection('Traders')
+      .doc(traderId)
+      .update({ thumbnailUrl: url });
   }
 
   async updateTraderProfileStatus(
