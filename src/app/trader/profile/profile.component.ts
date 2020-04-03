@@ -167,8 +167,6 @@ export class ProfileComponent implements AfterViewInit {
     }
   }
 
-
-
   async deleteImage(image: ImageSource) {
     await this.imageService.delteImageByUrl(image.url);
     await this.loadImages();
@@ -191,11 +189,10 @@ export class ProfileComponent implements AfterViewInit {
       for (const t of thumbnails) {
         if (t.indexOf(name) > -1) {
           await this.traderService.updateTraderThumbnailUrl(this.traderId, t);
+          break;
         }
       }
     }
-
-    return false;
   }
 
   isSelectedThumbnail(image: ImageSource) {
