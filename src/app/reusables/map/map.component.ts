@@ -28,7 +28,7 @@ import {
 } from 'leaflet';
 
 import { Location } from 'src/app/models/location';
-import { GeoService } from 'src/app/services/geo.service';
+import { GeoService } from 'src/app/services/map/geo.service';
 import { mixinColor } from '@angular/material/core';
 import { NONE_TYPE } from '@angular/compiler';
 import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';

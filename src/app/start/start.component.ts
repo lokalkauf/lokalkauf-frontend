@@ -10,12 +10,10 @@ import { Router } from '@angular/router';
 import { isNumber } from 'util';
 import { debounce } from 'lodash';
 
-import { GeoService } from 'src/app/services//geo.service';
-import { tap } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { GeoService } from 'src/app/services/map/geo.service';
 import { ScrollStrategy } from '@angular/cdk/overlay';
-import { $ } from 'protractor';
 import { UserService } from '../services/user.service';
+import { GeocoderService } from '../services/map/geocoder.service';
 
 @Component({
   selector: 'app-start',
@@ -50,6 +48,7 @@ export class StartComponent implements OnInit {
   constructor(
     public router: Router,
     private geo: GeoService,
+    private geocoderService: GeocoderService,
     public userService: UserService
   ) {
     this.search = debounce(this.search, 2000);
@@ -75,7 +74,7 @@ export class StartComponent implements OnInit {
         this.currentPosition = ps;
         this.disabledLosButton = false;
 
-        this.geo
+        this.geocoderService
           .getPostalAndCityByLocation(this.currentPosition)
           .subscribe((p: any) => {
             this.plz =
@@ -118,8 +117,10 @@ export class StartComponent implements OnInit {
   }
 
   search(searchtext) {
-    this.geo.findCoordinatesByAddress(searchtext).subscribe((d: any) => {
-      this.suggestion = d.records.map((m) => m.fields);
-    });
+    this.geocoderService
+      .findCoordinatesByAddress(searchtext)
+      .subscribe((d: any) => {
+        this.suggestion = d.records.map((m) => m.fields);
+      });
   }
 }

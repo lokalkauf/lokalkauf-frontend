@@ -7,7 +7,7 @@ import { Location } from 'src/app/models/location';
 import { ActivatedRoute } from '@angular/router';
 
 import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
-import { GeoService } from 'src/app/services/geo.service';
+import { GeoService } from 'src/app/services/map/geo.service';
 import { TraderService } from 'src/app/services/trader.service';
 import {
   TraderProfile,

@@ -7,7 +7,7 @@ import { TraderProfile, TraderProfileStatus } from '../models/traderProfile';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { v4 as uuid } from 'uuid';
 import { TraderService } from './trader.service';
-import { GeoService } from './geo.service';
+import { GeoService } from './map/geo.service';
 import { User } from 'firebase';
 
 export interface LoggedInUserState {
@@ -70,9 +70,12 @@ export class UserService {
       traderProfile
     );
 
-    await this.geo.createLocationByAddress(
+    await this.geo.createLocationByDetails(
       credential.user.uid,
-      traderProfile.postcode
+      traderProfile.postcode,
+      traderProfile.city,
+      traderProfile.street,
+      traderProfile.number + ''
     );
 
     await credential.user.sendEmailVerification();
