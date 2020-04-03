@@ -9,9 +9,15 @@
         </app-lk-button> </a
       ><br />
     </div>
-    <div class="contactButton">
+    <div *ngIf="!trader.storeEmail" class="contactButton">
       <a [href]="'mailto:' + trader.email">
         <app-lk-button [label]="trader.email" [minSizePercent]="70">
+        </app-lk-button>
+      </a>
+    </div>
+    <div *ngIf="trader.storeEmail" class="contactButton">
+      <a [href]="'mailto:' + trader.storeEmail">
+        <app-lk-button [label]="trader.storeEmail" [minSizePercent]="70">
         </app-lk-button>
       </a>
     </div>
