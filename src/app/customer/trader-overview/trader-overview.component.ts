@@ -35,26 +35,25 @@ export class TraderOverviewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loadTmpLocations();
-
-    return;
-
     this.route.params.subscribe((params) => {
       try {
         const pos = [
           Number.parseFloat(params.lat),
           Number.parseFloat(params.lng),
         ];
-        this.geo.setUserPosition(pos);
+
+        // this.geo.setUserPosition(pos);
+
+        this.loadTmpLocations(pos);
       } catch {
         console.log('no location available');
       }
     });
   }
 
-  loadTmpLocations() {
+  loadTmpLocations(position: number[]) {
     this.geo
-      .getLocations(this.STATIC_RADIUS, this.STATIC_LOCATION)
+      .getLocations(this.STATIC_RADIUS, position)
       .then((value: GeoQuerySnapshot) => {
         this.locations = new Array<Location>();
 
