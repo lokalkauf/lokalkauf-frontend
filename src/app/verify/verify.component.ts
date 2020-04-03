@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { ErrorService } from 'src/app/services/error.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MustMatch } from './must-match.validator';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-verify',
@@ -12,12 +13,15 @@ import { MustMatch } from './must-match.validator';
 })
 export class VerifyComponent implements OnInit {
   mode: string;
-  passwordForm = this.formBuilder.group({
-    password: ['', [Validators.required, Validators.minLength(8)]],
-    confirmPassword: ['', Validators.required]
-  }, {
-    validator: MustMatch('password', 'confirmPassword')
-  });
+  passwordForm = this.formBuilder.group(
+    {
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['', Validators.required],
+    },
+    {
+      validator: MustMatch('password', 'confirmPassword'),
+    }
+  );
   verifiedActionCode: string;
 
   constructor(
@@ -25,10 +29,13 @@ export class VerifyComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private errorService: ErrorService,
-    private formBuilder: FormBuilder
-  ) { }
+    private formBuilder: FormBuilder,
+    @Inject(DOCUMENT) private document: Document
+  ) {}
 
-  get password() { return this.passwordForm.get('password'); }
+  get password() {
+    return this.passwordForm.get('password');
+  }
 
   async ngOnInit(): Promise<void> {
     this.route.queryParams.subscribe((params) => {
@@ -48,7 +55,6 @@ export class VerifyComponent implements OnInit {
           break;
         default:
           // Error: invalid mode.
-          console.log('Invalid mode' + this.mode);
           this.mode = 'invalid';
       }
     });
@@ -56,10 +62,9 @@ export class VerifyComponent implements OnInit {
 
   async handleResetPassword(actionCode: string, lang: string) {
     try {
-      await this.user.verifyPasswordReset(actionCode).
-        then(() => {
-          this.verifiedActionCode = actionCode;
-        });
+      await this.user.verifyPasswordReset(actionCode).then(() => {
+        this.verifiedActionCode = actionCode;
+      });
     } catch (error) {
       console.error(error);
       this.errorService.publishByText(
@@ -71,11 +76,12 @@ export class VerifyComponent implements OnInit {
 
   async confirmPasswordReset() {
     try {
-      await this.user.confirmPasswordReset(this.verifiedActionCode, this.password.value).then(() => {
-        this.mode = 'passwordChangeCompleted';
-      });
+      await this.user
+        .confirmPasswordReset(this.verifiedActionCode, this.password.value)
+        .then(() => {
+          this.mode = 'passwordChangeCompleted';
+        });
     } catch (error) {
-      console.error(error);
       this.errorService.publishByText(
         'Dein neues Passwort konnte nicht gespeichert werden.',
         'Bitte versuche es nochmal.'
@@ -87,7 +93,6 @@ export class VerifyComponent implements OnInit {
     try {
       await this.user.revokeEmailChange(actionCode);
     } catch (error) {
-      console.error(error);
       this.errorService.publishByText(
         'E-Mail konnte nicht wiederhergestellt werden',
         'Bitte prüfe Dein Profil oder kontaktiere uns.'
@@ -99,12 +104,15 @@ export class VerifyComponent implements OnInit {
     try {
       await this.user.verifyEmail(actionCode);
     } catch (error) {
-      console.error(error);
       this.errorService.publishByText(
         'E-Mail konnte nicht verifiziert werden',
         'Der Verifizierungslink wurde entweder bereits genutzt oder ist ungültig.' +
-        'Bitte versuche Deine E-Mail erneut zu verifizeren oder kontaktiere uns.'
+          'Bitte versuche Deine E-Mail erneut zu verifizeren oder kontaktiere uns.'
       );
     }
+  }
+
+  forceReload() {
+    this.document.location.href = window.location.origin + '/trader/profile';
   }
 }

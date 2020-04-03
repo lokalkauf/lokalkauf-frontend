@@ -15,6 +15,7 @@ import { tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ScrollStrategy } from '@angular/cdk/overlay';
 import { $ } from 'protractor';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-start',
@@ -43,20 +44,25 @@ export class StartComponent implements OnInit {
   currentPosition: Array<number>;
   disabledLosButton: boolean;
 
+  isLoggedIn = false;
+
   @ViewChild('plzInput') plzInput: ElementRef;
-  constructor(private router: Router, private geo: GeoService) {
+  constructor(
+    public router: Router,
+    private geo: GeoService,
+    public userService: UserService
+  ) {
     this.search = debounce(this.search, 2000);
     this.disabledLosButton = true;
+    this.userService.isLoggedIn$.subscribe((loggedin) => {
+      this.isLoggedIn = loggedin;
+    });
   }
 
   showError: boolean;
 
   ngOnInit(): void {
-    this.getUserLocation();
-  }
-
-  consoleLog(event: any) {
-    console.log(event);
+    //    this.getUserLocation();
   }
 
   registerTrader() {
@@ -72,14 +78,10 @@ export class StartComponent implements OnInit {
         this.geo
           .getPostalAndCityByLocation(this.currentPosition)
           .subscribe((p: any) => {
-            console.log('receive location ');
-            console.log(p);
-
             this.plz =
               p.results[0].components.postcode +
               ' ' +
               p.results[0].components.city;
-            console.log('receive location ' + this.plz);
 
             // this.plzInput.nativeElement.value = this.plz;
             // this.elRef.nativeElement.querySelector('#plz-input').value = this.plz;
@@ -111,17 +113,13 @@ export class StartComponent implements OnInit {
 
   setposition(position: Array<number>) {
     this.suggestion = null;
-    console.log('pos: ' + position);
     this.currentPosition = position;
     this.disabledLosButton = false;
   }
 
   search(searchtext) {
     this.geo.findCoordinatesByAddress(searchtext).subscribe((d: any) => {
-      console.log(d);
       this.suggestion = d.records.map((m) => m.fields);
-
-      console.log('result: ' + this.suggestion);
     });
   }
 }

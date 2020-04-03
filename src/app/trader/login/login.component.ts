@@ -30,7 +30,6 @@ export class LoginComponent {
     try {
       await this.user.login(email, password);
     } catch (e) {
-      console.log(e);
       switch (e.code) {
         case 'auth/invalid-email':
           this.loginForm.setErrors({

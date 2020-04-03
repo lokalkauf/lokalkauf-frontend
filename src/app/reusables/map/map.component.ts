@@ -113,8 +113,6 @@ export class MapComponent implements OnInit, AfterViewInit {
     let trCreated = false;
 
     this.map.on('click', (e: any) => {
-      console.log('open popup..');
-
       const ma = marker(e.latlng);
       ma.bindPopup(this.popup)
         .addTo(this.targets)
@@ -133,9 +131,6 @@ export class MapComponent implements OnInit, AfterViewInit {
             });
         })
         .on('popupclose', (evs: any) => {
-          console.log('close win!!!');
-          console.log(evs);
-
           this.loadTraders(this.radius);
         });
 
@@ -156,14 +151,10 @@ export class MapComponent implements OnInit, AfterViewInit {
     const radius = dist * 2; // 0.75
     const radiusInKm = radius / 1000;
 
-    console.log('current radius' + radiusInKm + 'km');
-
     this.loadTraders(radiusInKm);
   }
 
   loadTraders(radius: number) {
-    // console.log('start loading docs...');
-
     this.geo
       .getLocations(radius, this.getPositionOfUserCircleMarkerAsArray())
       .then((value: GeoQuerySnapshot) => {
@@ -244,10 +235,6 @@ export class MapComponent implements OnInit, AfterViewInit {
             distance: Number.parseFloat(e.target.options.attribution),
           };
 
-          console.log('marker selected: ' + tradersLocation);
-          console.log(e);
-          console.log(tradersLocation);
-
           self.scrollToView2(tradersLocation.id);
         });
     }
@@ -255,8 +242,6 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   updateUserCircleMarker(pos: LatLng) {
     const lln = latLng(pos[0], pos[1]);
-
-    console.log('war hier: ' + pos);
 
     (this.markers[0] as CircleMarker).setLatLng(pos);
     this.map.setView(pos, this.options.zoom);
@@ -278,9 +263,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     window.location.hash = '#scroller.' + elem;
   }
 
-  /* debug stuff */
   createTraderLocationForDebug(traderID: string, position: LatLng) {
-    console.log('create location: ' + traderID + ' at position: ' + position);
     this.geo.createLocation(traderID, [position.lat, position.lng]);
   }
 }

@@ -56,17 +56,25 @@ input {
       vertical-align: top;
     }
 
-    .delete-button {
-      bottom: 10px;
+    .btns {
       position: absolute;
-      width: 100%;
-
-      app-lk-button {
-        display: block;
-        margin: 0 auto;
-        width: max-content;
-      }
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      text-align: center;
     }
+
+    // .delete-button {
+    //   bottom: 10px;
+    //   position: absolute;
+    //   width: 100%;
+
+    //   app-lk-button {
+    //     display: block;
+    //     margin: 0 auto;
+    //     width: max-content;
+    //   }
+    // }
   }
 }
 
@@ -76,6 +84,37 @@ input {
   margin: 0 auto;
 }
 
+.mat-mini-fab.mat-accent {
+  background-color: #fff;
+  outline: none;
+  font-size: 0.8rem;
+  display: inline-block;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
 .success {
-  margin-left: 2rem;
+  margin-top: 0px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  color: $darkgreen;
+}
+
+.icn-success {
+  color: rgb(27, 176, 27);
+}
+
+.icn-danger {
+  color: rgb(191, 61, 31);
+}
+
+.icn-disabled {
+  color: rgb(138, 138, 138);
+}
+
+.cicon {
+  font-size: 20px;
+  height: 20px;
+  width: 20px;
+  line-height: 20px;
 }

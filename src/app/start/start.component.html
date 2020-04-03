@@ -19,7 +19,7 @@
     <div class="divider"></div>
     <div class="intro-text-box">
       Finde hier Deinen Lieblingsladen oder Restaurant um die Ecke und kauf
-      lokal!
+      lokal:
     </div>
 
     <div id="start-input-container">
@@ -55,15 +55,29 @@
 
   <div class="divider"></div>
 
-  <div>
+  <div *ngIf="!isLoggedIn">
     <div class="additional-intro-text">
-      Du bist Händler, Gastronom oder Ladenbesitzer dann melde Dich hier an:
+      Du bist Händler, Gastronom oder Ladenbesitzer, dann melde Dich hier an:
     </div>
     <div>
       <app-lk-button
         id="register-button"
-        (click)="registerTrader()"
+        (click)="router.navigateByUrl('/trader/login')"
         label="Geschäftsprofil anlegen"
+      >
+      </app-lk-button>
+    </div>
+  </div>
+
+  <div *ngIf="isLoggedIn">
+    <div class="additional-intro-text">
+      Hier gehts zu deinem Profil:
+    </div>
+    <div>
+      <app-lk-button
+        id="register-button"
+        (click)="router.navigateByUrl('/trader/profile')"
+        label="Mein Händlerprofil"
       >
       </app-lk-button>
     </div>
