@@ -67,9 +67,7 @@ export class ImageChooserComponent implements OnInit, ControlValueAccessor {
     });
 
     this.selectedFile = blob;
-    console.log(this.selectedFileDataUrl);
     if (dispatch) {
-      console.log(blob);
       this.onChangeCallback(blob);
     }
   }

@@ -34,24 +34,16 @@ form {
   .button-and-error {
     display: block;
     align-items: center;
-    max-width: 500px;
     text-align: center;
 
     @media screen and (max-width: 600px) {
       flex-direction: column-reverse;
-
-      .error {
-        margin-bottom: 10px;
-      }
     }
 
     .error {
-      font-size: 0.7rem;
-      margin-left: 20px;
-      padding: 10px;
-      background-color: lightcoral;
-      border: 1px solid darkred;
-      border-radius: 15px;
+      margin-top: 1.4rem;
+      color: $errorcolor;
+      font-size: 0.8rem;
     }
   }
 }

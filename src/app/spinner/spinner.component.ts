@@ -8,12 +8,8 @@ import { SpinnerService } from '../services/spinner.service';
   templateUrl: './spinner.component.html',
   styleUrls: ['./spinner.component.scss'],
 })
-export class SpinnerComponent implements OnInit {
+export class SpinnerComponent {
   isLoading$: Subject<boolean> = this.loading.isLoading;
 
   constructor(private loading: SpinnerService) {}
-
-  ngOnInit() {
-    this.isLoading$.subscribe((x) => console.log('loading', x));
-  }
 }

@@ -71,7 +71,6 @@ export class TraderContactComponent implements OnInit {
     };
 
     // TODO finalize call for backend sending mail
-    console.log(email);
 
     try {
       await this.mailService.send(email, 'trader-contact');

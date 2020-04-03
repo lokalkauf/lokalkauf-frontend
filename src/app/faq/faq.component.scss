@@ -1,0 +1,53 @@
+@import '../../variables.scss';
+
+#faq-view-container {
+  height: 100%;
+  width: 100%;
+  display: table;
+}
+
+#faq-content {
+  @media screen and (max-width: 767px) {
+    width: 100%;
+    left: 0;
+    right: 0;
+  }
+
+  @media screen and (min-width: 768px) {
+    width: 740px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  text-align: justify;
+  font-size: 0.8rem;
+
+  h1,
+  h2 {
+    text-transform: uppercase;
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: $darkgreen !important;
+  }
+
+  h1 {
+    margin-bottom: 2rem;
+  }
+
+  h2 {
+    margin-top: 3.3rem;
+    font-size: 1.1rem;
+  }
+
+  h3 {
+    margin-top: 1.2rem;
+    font-size: 1rem;
+  }
+
+  a {
+    cursor: pointer;
+  }
+}

@@ -1,18 +1,16 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectorRef,
-  AfterViewInit,
-} from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { Observable, from } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UserService, LoggedInUserState } from 'src/app/services/user.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Reference } from '@angular/fire/storage/interfaces';
-import { map, flatMap } from 'rxjs/operators';
+import { flatMap } from 'rxjs/operators';
 import { ErrorService } from 'src/app/services/error.service';
 import { TraderService } from 'src/app/services/trader.service';
-import { TraderProfileStatus, TraderProfile } from 'src/app/models/traderProfile';
+import {
+  TraderProfileStatus,
+  TraderProfile,
+} from 'src/app/models/traderProfile';
 import { v1 as uuid } from 'uuid';
 import { flipInY } from '@angular-material-extensions/password-strength';
 
@@ -66,7 +64,8 @@ export class ProfileComponent implements AfterViewInit {
 
   constructor(
     private user: UserService,
-    router: Router,
+    private router: Router,
+    private route: ActivatedRoute,
     private errorService: ErrorService,
     private traderService: TraderService
   ) {
@@ -84,16 +83,7 @@ export class ProfileComponent implements AfterViewInit {
       }
     });
 
-
-
     this.loadImages();
-
-    this.businessImage.valueChanges.subscribe(
-      (value) => {
-        console.log('image changed:');
-        console.log(value);
-      }
-    );
   }
 
   ngAfterViewInit() {
@@ -120,7 +110,7 @@ export class ProfileComponent implements AfterViewInit {
   }
 
   async resendEmailVerification() {
-    this.mailResendedMessage = 'Bestätigungsmail wurde erneu versendet!';
+    this.mailResendedMessage = 'Bestätigungsmail wurde erneut versendet!';
     await this.user.resendEmailVerification();
     // TODO: Inform user
   }
@@ -144,7 +134,7 @@ export class ProfileComponent implements AfterViewInit {
     this.saveSuccessful = true;
     setTimeout(() => {
       this.saveSuccessful = false;
-    }, 5000);
+    }, 15000);
   }
 
   async loadImages() {
@@ -170,8 +160,6 @@ export class ProfileComponent implements AfterViewInit {
       // workaround for missing file.name.
       // upload component should be refactored
       file.name = 'WR' + uuid() + 'WR' + file.type.replace('image/', '.');
-
-
 
       const task = this.user.uploadBusinessImage(file);
 
@@ -211,25 +199,13 @@ export class ProfileComponent implements AfterViewInit {
       tid
     );
 
-    console.log(
-      'set thumbnail: ' +
-        image.name +
-        ' tid: ' +
-        this.user.getAuthenticatedUser().uid
-    );
-    console.log(image);
-
     const name = image.name.substring(0, image.name.lastIndexOf('.'));
 
     if (thumbnails && thumbnails.length > 0) {
       thumbnails.forEach(async (t) => {
         const url = (await t.getDownloadURL()) as string;
 
-        console.log('name: ' + name);
-        console.log(url);
-
         if (url.indexOf(name) > -1) {
-          console.log('ITS a MATCH!!!: ' + url);
           this.traderService.updateTraderThumbnail(tid, url);
         }
       });
@@ -243,11 +219,10 @@ export class ProfileComponent implements AfterViewInit {
 
     if (this.traderProfil) {
       const name = image.name.substring(0, image.name.lastIndexOf('.'));
-      const currentThumbnail = (this.traderProfil.thumbnailUrl) ? this.traderProfil.thumbnailUrl : '###';
+      const currentThumbnail = this.traderProfil.thumbnailUrl
+        ? this.traderProfil.thumbnailUrl
+        : '###';
       isThumbnail = currentThumbnail.indexOf(name) > -1;
-
-      console.log('current thumbnail: ' + this.traderProfil.thumbnailUrl);
-      console.log('name: ' + isThumbnail);
     }
 
     return isThumbnail ? 'icn-success' : 'icn-disabled';

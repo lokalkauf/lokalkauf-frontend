@@ -47,7 +47,5 @@ export class ImageCarouselComponent implements OnInit {
   showImageInModal(imageUrl: string) {
     this.selectedImageUrl = imageUrl;
     this.showModal = true;
-
-    console.log(this.showModal);
   }
 }

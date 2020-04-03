@@ -201,6 +201,9 @@ export class RegistrationComponent implements OnInit {
       } else {
         await this.userService.updateTraderProfile(traderProfileUpdate);
         this.saveSuccessful = true;
+        setTimeout(() => {
+          this.saveSuccessful = false;
+        }, 15000);
       }
     } catch (e) {
       switch (e.code) {
