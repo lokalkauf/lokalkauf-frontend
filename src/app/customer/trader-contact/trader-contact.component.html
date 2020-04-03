@@ -15,6 +15,12 @@
         </app-lk-button>
       </a>
     </div>
+    <div *ngIf="trader.homepage" class="contactButton">
+      <a [href]="trader.homepage">
+        <app-lk-button [label]="trader.homepage" [minSizePercent]="70">
+        </app-lk-button>
+      </a>
+    </div>
   </div>
   <form
     [formGroup]="contactForm"

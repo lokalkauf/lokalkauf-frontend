@@ -43,9 +43,18 @@
         formControlName="description"
       ></app-lk-textarea>
     </div>
+    <div>
+      Schritt 3: Hast du eventuell eine Homepage? Dann trage es doch hier ein:
+    </div>
+    <div>
+      <app-lk-input
+        placeholder="homepage"
+        formControlName="homepage"
+      ></app-lk-input>
+    </div>
     <div *ngIf="images">
       <div>
-        Schritt 3: Zu guter Letzt lade Bilder von Deinem Laden oder Deinem
+        Schritt 4: Zu guter Letzt lade Bilder von Deinem Laden oder Deinem
         Angebot hoch (du kannst maximal 3 Bilder hochladen):
       </div>
       <div *ngIf="images.length < 3">
