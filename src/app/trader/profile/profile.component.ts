@@ -29,6 +29,7 @@ export class ProfileComponent implements AfterViewInit {
       delivery: new FormControl(false),
       pickup: new FormControl(false),
       description: new FormControl(''),
+      homepage: new FormControl(''),
       public: new FormControl(true),
     },
     (form) => {
@@ -48,6 +49,10 @@ export class ProfileComponent implements AfterViewInit {
 
   get delivery() {
     return this.dataFormGroup.get('delivery');
+  }
+
+  get homepage() {
+    return this.dataFormGroup.get('homepage');
   }
 
   get public() {
@@ -100,6 +105,9 @@ export class ProfileComponent implements AfterViewInit {
         this.description.setValue(loggedInUser.traderProfile.description, {
           emitEvent: false,
         });
+        this.homepage.setValue(loggedInUser.traderProfile.homepage, {
+          emitEvent: false,
+        });
         this.public.setValue(
           loggedInUser.traderProfile.status === TraderProfileStatus.PUBLIC,
           {
@@ -126,6 +134,7 @@ export class ProfileComponent implements AfterViewInit {
       description: this.description.value,
       delivery: this.delivery.value,
       pickup: this.pickup.value,
+      homepage: this.homepage.value,
       status: this.public.value
         ? TraderProfileStatus.PUBLIC
         : TraderProfileStatus.VERIFIED,
