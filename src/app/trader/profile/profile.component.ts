@@ -81,8 +81,8 @@ export class ProfileComponent implements AfterViewInit {
           this.traderProfil = tp;
           this.hasThumbnail = tp.thumbnailUrl != null;
           this.traderId = this.user.getAuthenticatedUser().uid;
+          await this.loadImages();
           await this.setTraderThumbnailIfNotExists();
-          this.loadImages();
         });
       }
     });
