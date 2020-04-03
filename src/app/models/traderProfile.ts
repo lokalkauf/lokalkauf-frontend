@@ -12,6 +12,7 @@ export interface TraderProfile {
   email: string;
   telephone: string;
   thumbnailUrl?: string;
+  storeEmail: string;
   homepage: string;
   status: TraderProfileStatus;
 }

@@ -44,17 +44,26 @@
       ></app-lk-textarea>
     </div>
     <div>
-      Schritt 3: Hast du eventuell eine Homepage? Dann trage es doch hier ein:
+      Schritt 3: Hat dein Geschäft eine eigene E-Mail Adresse?
     </div>
     <div>
       <app-lk-input
-        placeholder="homepage"
+        placeholder="E-Mail"
+        formControlName="storeEmail"
+      ></app-lk-input>
+    </div>
+    <div>
+      Schritt 4: Hast du eventuell eine Homepage? Dann trage es doch hier ein:
+    </div>
+    <div>
+      <app-lk-input
+        placeholder="Homepage"
         formControlName="homepage"
       ></app-lk-input>
     </div>
     <div *ngIf="images">
       <div>
-        Schritt 4: Zu guter Letzt lade Bilder von Deinem Laden oder Deinem
+        Schritt 5: Zu guter Letzt lade Bilder von Deinem Laden oder Deinem
         Angebot hoch (du kannst maximal 3 Bilder hochladen):
       </div>
       <div *ngIf="images.length < 3">

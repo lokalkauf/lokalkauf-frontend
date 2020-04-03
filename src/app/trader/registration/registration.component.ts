@@ -181,6 +181,7 @@ export class RegistrationComponent implements OnInit {
       pickup: false,
       telephone: this.phone.value,
       email: this.email.value,
+      storeEmail: '',
       homepage: '',
       status: TraderProfileStatus.CREATED,
     };

@@ -29,6 +29,7 @@ export class ProfileComponent implements AfterViewInit {
       delivery: new FormControl(false),
       pickup: new FormControl(false),
       description: new FormControl(''),
+      storeEmail: new FormControl(''),
       homepage: new FormControl(''),
       public: new FormControl(true),
     },
@@ -49,6 +50,10 @@ export class ProfileComponent implements AfterViewInit {
 
   get delivery() {
     return this.dataFormGroup.get('delivery');
+  }
+
+  get storeEmail() {
+    return this.dataFormGroup.get('storeEmail');
   }
 
   get homepage() {
@@ -106,6 +111,9 @@ export class ProfileComponent implements AfterViewInit {
         this.description.setValue(loggedInUser.traderProfile.description, {
           emitEvent: false,
         });
+        this.storeEmail.setValue(loggedInUser.traderProfile.storeEmail, {
+          emitEvent: false,
+        });
         this.homepage.setValue(loggedInUser.traderProfile.homepage, {
           emitEvent: false,
         });
@@ -135,6 +143,7 @@ export class ProfileComponent implements AfterViewInit {
       description: this.description.value,
       delivery: this.delivery.value,
       pickup: this.pickup.value,
+      storeEmail: this.storeEmail.value,
       homepage: this.homepage.value,
       status: this.public.value
         ? TraderProfileStatus.PUBLIC
