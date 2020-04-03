@@ -81,7 +81,7 @@ export class ProfileComponent implements AfterViewInit {
           this.traderProfil = tp;
           this.hasThumbnail = tp.thumbnailUrl != null;
           this.traderId = this.user.getAuthenticatedUser().uid;
-          await this.updateTraderThumbnail();
+          await this.setTraderThumbnailIfNotExists();
           this.loadImages();
         });
       }
@@ -130,7 +130,7 @@ export class ProfileComponent implements AfterViewInit {
         ? TraderProfileStatus.PUBLIC
         : TraderProfileStatus.VERIFIED,
     });
-    await this.updateTraderThumbnail();
+    await this.setTraderThumbnailIfNotExists();
 
     this.dataFormGroup.markAsPristine();
     this.saveSuccessful = true;
@@ -157,7 +157,7 @@ export class ProfileComponent implements AfterViewInit {
       await task.then(async (i) => (this.imageUploadState = null));
       this.businessImage.setValue(undefined);
 
-      await this.updateTraderThumbnail();
+      await this.setTraderThumbnailIfNotExists();
       await this.loadImages();
     } catch (e) {
       this.errorService.publishByText(
@@ -167,7 +167,14 @@ export class ProfileComponent implements AfterViewInit {
     }
   }
 
-  async updateTraderThumbnail() {
+
+
+  async deleteImage(image: ImageSource) {
+    await this.imageService.delteImageByUrl(image.url);
+    await this.loadImages();
+  }
+
+  async setTraderThumbnailIfNotExists() {
     if (!this.hasThumbnail && this.traderId) {
       const imgs = await this.images$.toPromise();
       if (imgs && imgs.length > 0) {
@@ -176,21 +183,16 @@ export class ProfileComponent implements AfterViewInit {
     }
   }
 
-  async deleteImage(image: ImageSource) {
-    await this.imageService.delteImageByUrl(image.url);
-    await this.loadImages();
-  }
-
   async setThumbnail(image: ImageSource) {
     const thumbnails = await this.imageService.getAllCurrentTraderThumbnailUrls();
     const name = ImageSource.nameWithoutExtension(image.name);
 
     if (thumbnails && thumbnails.length > 0) {
-      thumbnails.forEach(async (t) => {
+      for (const t of thumbnails) {
         if (t.indexOf(name) > -1) {
           await this.traderService.updateTraderThumbnailUrl(this.traderId, t);
         }
-      });
+      }
     }
 
     return false;
