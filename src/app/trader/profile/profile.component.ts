@@ -77,11 +77,12 @@ export class ProfileComponent implements AfterViewInit {
       if (!isLoggedIn) {
         router.navigateByUrl('/trader/login');
       } else {
+        this.loadImages();
+
         this.user.getAuthenticatedTraderProfile().subscribe(async (tp) => {
           this.traderProfil = tp;
           this.hasThumbnail = tp.thumbnailUrl != null;
           this.traderId = this.user.getAuthenticatedUser().uid;
-          await this.loadImages();
           await this.setTraderThumbnailIfNotExists();
         });
       }
