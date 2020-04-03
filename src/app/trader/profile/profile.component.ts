@@ -57,7 +57,7 @@ export class ProfileComponent implements AfterViewInit {
   businessImage = new FormControl();
   imageUploadState?: Observable<number>;
 
-  images$: Observable<Array<ImageSource>>;
+  images: Array<ImageSource>;
   hasThumbnail: boolean;
   traderId: string;
   traderProfil: TraderProfile;
@@ -140,7 +140,7 @@ export class ProfileComponent implements AfterViewInit {
   }
 
   async loadImages() {
-    this.images$ = from(this.imageService.getAllCurrentTraderImages());
+    this.images = await this.imageService.getAllCurrentTraderImages();
   }
 
   async uploadImage() {
@@ -174,9 +174,9 @@ export class ProfileComponent implements AfterViewInit {
 
   async setTraderThumbnailIfNotExists() {
     if (!this.hasThumbnail && this.traderId) {
-      const imgs = await this.images$.toPromise();
-      if (imgs && imgs.length > 0) {
-        await this.setThumbnail(imgs[0]);
+      // const imgs = await this.images$.toPromise();
+      if (this.images && this.images.length > 0) {
+        await this.setThumbnail(this.images[0]);
       }
     }
   }
