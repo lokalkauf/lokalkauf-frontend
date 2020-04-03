@@ -1,2 +1,6 @@
 <p>trader-map works!</p>
-<app-map [traderLocations]="locations"> </app-map>
+<app-map
+  [traderLocations]="locations"
+  (boundingboxChanged)="changeTraders($event)"
+>
+</app-map>

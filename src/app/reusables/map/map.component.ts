@@ -25,6 +25,8 @@ import {
 import { Location } from 'src/app/models/location';
 import { GeoService } from 'src/app/services/map/geo.service';
 import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
+import { MapMarkerData } from 'src/app/models/mapMarkerData';
+import { MapSettings } from 'src/app/models/mapSettings';
 
 @Component({
   selector: 'app-map',
@@ -32,14 +34,13 @@ import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
-  @Output() boundingboxChanged: EventEmitter<LatLngBounds> = new EventEmitter<
-    LatLngBounds
+  @Output() boundingboxChanged: EventEmitter<MapSettings> = new EventEmitter<
+    MapSettings
   >();
 
   map: Map;
   radius: 0.5;
 
-  @Output() locationsOnMap = new EventEmitter<any>();
   locations: Array<Location> = new Array<Location>();
 
   mct = 'https://maps.omniscale.net/v2/{id}/style.grayscale/{z}/{x}/{y}.png';
@@ -75,9 +76,9 @@ export class MapComponent implements OnInit {
   constructor(private geo: GeoService) {}
 
   @Input('traderLocations')
-  set setTraderLocations(traderLocations: Array<Location>) {
+  set setTraderLocations(traderLocations: Array<MapMarkerData>) {
     this.markers = traderLocations.map((x) =>
-      marker(latLng(x.coordinates[0], x.coordinates[1])).setIcon(
+      marker(latLng(x.locationLatitude, x.locationLongitude)).setIcon(
         icon({
           iconUrl: '/assets/pin.png',
           shadowUrl: '/assets/pin-shadow.png',
@@ -96,6 +97,10 @@ export class MapComponent implements OnInit {
   // logic..
 
   updatedBounding(eventData: LeafletEvent) {
-    this.boundingboxChanged.emit(eventData.target.getBounds());
+    const map: Map = eventData.target;
+    const center = map.getCenter();
+    const boundingBox: LatLngBounds = map.getBounds();
+    const radiusToEdge = map.distance(center, boundingBox.getNorthEast());
+    this.boundingboxChanged.emit({ boundingBox, center, radiusToEdge });
   }
 }
