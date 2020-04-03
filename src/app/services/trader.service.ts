@@ -47,68 +47,8 @@ export class TraderService {
       );
   }
 
-  async getTraderBusinessImageThumbnails(traderId: string) {
-    const imageList = await this.storage.storage
-      .ref(`Traders/${traderId}/BusinessImages/thumbs`)
-      .list();
-    const images = await Promise.all(
-      imageList.items.map(async (item) => {
-        const metadata = await item.getMetadata();
-        if (metadata.contentType.startsWith('image/')) {
-          return item;
-        }
-      })
-    );
-    return images.filter((item) => item != null);
-  }
-
-  async getTraderBusinessImages(
-    traderId: string
-  ): Promise<firebase.storage.Reference[]> {
-    const imageList = await this.storage.storage
-      .ref(`Traders/${traderId}/BusinessImages`)
-      .list();
-    const images = await Promise.all(
-      imageList.items.map(async (item) => {
-        const metadata = await item.getMetadata();
-        if (metadata.contentType.startsWith('image/')) {
-          return item;
-        }
-      })
-    );
-    return images.filter((item) => item != null);
-  }
-
-  getTraderBusinessImageUrls(traderId: string): Observable<Array<string>> {
-    const startObservable$ = from(this.getTraderBusinessImages(traderId));
-
-    const returnObservable$ = startObservable$.pipe(
-      flatMap((images) =>
-        from(Promise.all<string>(images.map((image) => image.getDownloadURL())))
-      )
-    );
-
-    return returnObservable$;
-  }
-
-  getTraderBusinessImageThumbnailsUrls(
-    traderId: string
-  ): Observable<Array<string>> {
-    const startObservable$ = from(
-      this.getTraderBusinessImageThumbnails(traderId)
-    );
-
-    const returnObservable$ = startObservable$.pipe(
-      flatMap((images) =>
-        from(Promise.all<string>(images.map((image) => image.getDownloadURL())))
-      )
-    );
-
-    return returnObservable$;
-  }
-
-  updateTraderThumbnail(traderId: string, url: string) {
-    this.db.collection('Traders').doc(traderId).update({
+  async updateTraderThumbnailUrl(traderId: string, url: string) {
+    await this.db.collection('Traders').doc(traderId).update({
       thumbnailUrl: url,
     });
   }

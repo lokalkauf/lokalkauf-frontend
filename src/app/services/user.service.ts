@@ -91,13 +91,6 @@ export class UserService {
       .update(partialTraderProfile);
   }
 
-  uploadBusinessImage(file: File) {
-    const filePath = `Traders/${
-      this.auth.auth.currentUser.uid
-    }/BusinessImages/${uuid()}-${file.name}`;
-    return this.storage.upload(filePath, file);
-  }
-
   async login(email: string, password: string) {
     const rmWhiteSpacesMail = email.replace(/\s/g, '');
     await this.auth.auth.signInWithEmailAndPassword(
@@ -137,24 +130,6 @@ export class UserService {
     await this.traderService.updateTraderProfileStatus(
       this.auth.auth.currentUser.uid,
       TraderProfileStatus.VERIFIED
-    );
-  }
-
-  getTraderBusinessImageThumbnails() {
-    return this.auth.user.pipe(
-      map((user) => user.uid),
-      flatMap((traderId) =>
-        from(this.traderService.getTraderBusinessImageThumbnails(traderId))
-      )
-    );
-  }
-
-  getTraderBusinessImages(): Observable<firebase.storage.Reference[]> {
-    return this.auth.user.pipe(
-      map((user) => user.uid),
-      flatMap((traderId) =>
-        from(this.traderService.getTraderBusinessImages(traderId))
-      )
     );
   }
 

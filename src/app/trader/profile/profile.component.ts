@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserService, LoggedInUserState } from 'src/app/services/user.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Reference } from '@angular/fire/storage/interfaces';
-import { flatMap } from 'rxjs/operators';
+import { flatMap, map, tap } from 'rxjs/operators';
 import { ErrorService } from 'src/app/services/error.service';
 import { TraderService } from 'src/app/services/trader.service';
 import {
@@ -13,6 +13,8 @@ import {
 } from 'src/app/models/traderProfile';
 import { v1 as uuid } from 'uuid';
 import { flipInY } from '@angular-material-extensions/password-strength';
+import { ImageService } from 'src/app/services/image.service';
+import { ImageSource } from 'src/app/models/imageSource';
 
 @Component({
   selector: 'app-profile',
@@ -55,7 +57,7 @@ export class ProfileComponent implements AfterViewInit {
   businessImage = new FormControl();
   imageUploadState?: Observable<number>;
 
-  images$: Observable<Array<[string, Reference]>>;
+  images$: Observable<Array<ImageSource>>;
   hasThumbnail: boolean;
   traderId: string;
   traderProfil: TraderProfile;
@@ -67,7 +69,8 @@ export class ProfileComponent implements AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private errorService: ErrorService,
-    private traderService: TraderService
+    private traderService: TraderService,
+    private imageService: ImageService
   ) {
     this.loggedInUserState$ = user.loggedInUserState$;
     user.isLoggedIn$.subscribe((isLoggedIn) => {
@@ -79,11 +82,10 @@ export class ProfileComponent implements AfterViewInit {
           this.hasThumbnail = tp.thumbnailUrl != null;
           this.traderId = this.user.getAuthenticatedUser().uid;
           await this.updateTraderThumbnail();
+          this.loadImages();
         });
       }
     });
-
-    this.loadImages();
   }
 
   ngAfterViewInit() {
@@ -138,19 +140,7 @@ export class ProfileComponent implements AfterViewInit {
   }
 
   async loadImages() {
-    this.images$ = this.user
-      .getTraderBusinessImages()
-      .pipe(
-        flatMap((images) =>
-          from(
-            Promise.all(
-              images.map((image) =>
-                Promise.all([image.getDownloadURL(), image])
-              )
-            )
-          )
-        )
-      );
+    this.images$ = from(this.imageService.getAllCurrentTraderImages());
   }
 
   async uploadImage() {
@@ -161,7 +151,7 @@ export class ProfileComponent implements AfterViewInit {
       // upload component should be refactored
       file.name = 'WR' + uuid() + 'WR' + file.type.replace('image/', '.');
 
-      const task = this.user.uploadBusinessImage(file);
+      const task = this.imageService.uploadCurrentTraderImage(file);
 
       this.imageUploadState = task.percentageChanges();
       await task.then(async (i) => (this.imageUploadState = null));
@@ -179,52 +169,36 @@ export class ProfileComponent implements AfterViewInit {
 
   async updateTraderThumbnail() {
     if (!this.hasThumbnail && this.traderId) {
-      this.user.getTraderBusinessImageThumbnails().subscribe(async (images) => {
-        if (images && images.length > 0) {
-          const url = await images[0].getDownloadURL();
-          this.traderService.updateTraderThumbnail(this.traderId, url);
-        }
-      });
+      const imgs = await this.images$.toPromise();
+      if (imgs && imgs.length > 0) {
+        await this.setThumbnail(imgs[0]);
+      }
     }
   }
 
-  async deleteImage(image: Reference) {
-    await image.delete();
+  async deleteImage(image: ImageSource) {
+    await this.imageService.delteImageByUrl(image.url);
     await this.loadImages();
   }
 
-  async setThumbnail(image: Reference) {
-    const tid = this.user.getAuthenticatedUser().uid;
-    const thumbnails = await this.traderService.getTraderBusinessImageThumbnails(
-      tid
-    );
-
-    const name = image.name.substring(0, image.name.lastIndexOf('.'));
+  async setThumbnail(image: ImageSource) {
+    const thumbnails = await this.imageService.getAllCurrentTraderThumbnailUrls();
+    const name = ImageSource.nameWithoutExtension(image.name);
 
     if (thumbnails && thumbnails.length > 0) {
       thumbnails.forEach(async (t) => {
-        const url = (await t.getDownloadURL()) as string;
-
-        if (url.indexOf(name) > -1) {
-          this.traderService.updateTraderThumbnail(tid, url);
+        if (t.indexOf(name) > -1) {
+          await this.traderService.updateTraderThumbnailUrl(this.traderId, t);
         }
       });
     }
 
-    // this.traderService.updateTraderThumbnail(this.traderId, url);
+    return false;
   }
 
-  isSelectedThumbnail(image: Reference) {
-    let isThumbnail = false;
-
-    if (this.traderProfil) {
-      const name = image.name.substring(0, image.name.lastIndexOf('.'));
-      const currentThumbnail = this.traderProfil.thumbnailUrl
-        ? this.traderProfil.thumbnailUrl
-        : '###';
-      isThumbnail = currentThumbnail.indexOf(name) > -1;
-    }
-
-    return isThumbnail ? 'icn-success' : 'icn-disabled';
+  isSelectedThumbnail(image: ImageSource) {
+    return ImageSource.isPartOf(image.name, this.traderProfil.thumbnailUrl)
+      ? 'icn-success'
+      : 'icn-disabled';
   }
 }

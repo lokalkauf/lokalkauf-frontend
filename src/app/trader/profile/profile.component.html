@@ -70,23 +70,29 @@
         <div
           class="image-item"
           *ngFor="let image of images"
-          [ngStyle]="{ 'background-image': 'url(' + image[0] + ')' }"
+          [ngStyle]="{ 'background-image': 'url(' + image.url + ')' }"
         >
           <div class="btns">
             <button
-              (click)="deleteImage(image[1])"
+              (click)="deleteImage(image)"
               mat-mini-fab
               class="md-mini icn-danger"
             >
-              <mat-icon class="cicon">delete</mat-icon>
+              <mat-icon class="cicon" title="Das Bild löschen.."
+                >delete</mat-icon
+              >
             </button>
             <button
-              (click)="setThumbnail(image[1])"
+              (click)="setThumbnail(image)"
               mat-mini-fab
               class="md-mini"
-              [ngClass]="isSelectedThumbnail(image[1])"
+              [ngClass]="isSelectedThumbnail(image)"
             >
-              <mat-icon class="cicon">photo_library</mat-icon>
+              <mat-icon
+                class="cicon"
+                title="Dieses Bild in der Übersicht anzeigen"
+                >photo_library</mat-icon
+              >
             </button>
             <!-- <button mat-fab class="md-mini icn-disabled">
               <mat-icon>photo_library</mat-icon>
