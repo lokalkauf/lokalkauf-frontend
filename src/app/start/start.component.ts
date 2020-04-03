@@ -108,7 +108,7 @@ export class StartComponent implements OnInit {
   }
 
   reducedAction() {
-    this.router.navigate(['/localtraders', 0, 0]);
+    this.router.navigate(['/localtraders', 50.083352, 8.241451]);
   }
 
   setposition(position: Array<number>) {
