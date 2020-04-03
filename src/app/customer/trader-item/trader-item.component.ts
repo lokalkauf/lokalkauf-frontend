@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, HostBinding } from '@angular/core';
 import { Trader } from '../../models/trader';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
 import { TraderProfile } from 'src/app/models/traderProfile';
@@ -18,27 +18,27 @@ export class TraderItemComponent implements OnInit {
   trader$: Observable<Omit<TraderProfile, 'id'>>;
 
   constructor(private db: AngularFirestore) {}
+  bgImageVariable: string;
 
   ngOnInit(): void {
     this.trader$ = this.db
       .collection('Traders')
       .doc<Omit<TraderProfile, 'id'>>(this.trader.id)
       .valueChanges()
-      .pipe(map((x) => ({ ...x, id: this.trader.id })));
-
-    /*this.productAmount$ = this.db
-      .collection<Omit<Trader, 'id'>>(`Traders/${this.trader.id}/Products`)
-      .get()
-      .pipe(map((snap) => snap.size));*/
+      .pipe(
+        map((x) => ({
+          ...x,
+          id: this.trader.id,
+          thumbnailUrl: x.thumbnailUrl
+            ? x.thumbnailUrl
+            : './assets/lokalkauf-pin.png',
+        }))
+      );
   }
 
-  @HostBinding('style.backgroundImage')
   getThumbnail(trader: TraderProfile) {
-    const url =
-      trader && trader.thumbnailUrl
-        ? trader.thumbnailUrl
-        : './assets/lokalkauf-pin.png';
-
-    return `url(${url})`;
+    if (trader) {
+      return { 'background-image': `url(\' ${trader.thumbnailUrl}  \')` };
+    }
   }
 }
