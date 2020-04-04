@@ -3,4 +3,11 @@ export interface MapMarkerData {
   additionalData: any;
   locationLongitude: number;
   locationLatitude: number;
+  activatedStatus?: ActivatedStatus;
+}
+
+export enum ActivatedStatus {
+  DEACTIVATED,
+  DEFAULT,
+  ACTIVATED,
 }

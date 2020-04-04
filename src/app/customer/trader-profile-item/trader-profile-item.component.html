@@ -1,0 +1,17 @@
+<a href="#linkToTraderTODO">
+  <div class="trader-item-container" *ngIf="trader">
+    <div
+      class="image-left"
+      [style.backgroundImage]="getThumbnail(trader)"
+    ></div>
+    <div class="content">
+      <div class="headline">{{ trader.businessname }}</div>
+      <div class="address">
+        {{ trader.street }}
+        {{ trader.number }}
+        <br />{{ trader.postcode }}
+        {{ trader.city }}
+      </div>
+    </div>
+  </div>
+</a>

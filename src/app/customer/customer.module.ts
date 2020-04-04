@@ -22,6 +22,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TraderContactComponent } from './trader-contact/trader-contact.component';
 import { ReusablesModule } from '../reusables/reusables.module';
 import { InquiryConfirmationComponent } from './inquiry-confirmation/inquiry-confirmation.component';
+import { TraderProfileItemComponent } from './trader-profile-item/trader-profile-item.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,7 @@ const routes: Routes = [
     ShoppingcartItemComponent,
     TraderContactComponent,
     InquiryConfirmationComponent,
+    TraderProfileItemComponent,
   ],
   imports: [
     CommonModule,
