@@ -23,7 +23,6 @@ export class LoginComponent {
   }
 
   async onSubmit() {
-    console.log('onsubmit');
     const email = this.loginForm.get('email').value;
     const password = this.loginForm.get('password').value;
 

@@ -121,11 +121,9 @@ export class VerifyComponent implements OnInit {
   }
 
   async handleVerifyEmail(actionCode: string, lang: string) {
-    console.log('handleVerifyMail');
     try {
       await this.user.verifyEmail(actionCode);
       this.stage = VerifyComponentStage.VERIFY_EMAIL_COMPLETED;
-      console.log('handleVerifyMailCompleted');
     } catch (error) {
       console.log(error);
       this.stage = VerifyComponentStage.INVALID_ACTION;
