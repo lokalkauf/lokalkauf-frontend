@@ -6,7 +6,7 @@ import {
 } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { EMail } from '../models/email';
-import { functions } from 'firebase/app';
+import { functions } from 'firebase';
 
 @Injectable({
   providedIn: 'root',
