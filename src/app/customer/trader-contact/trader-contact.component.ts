@@ -36,6 +36,14 @@ export class TraderContactComponent implements OnInit {
     return this.contactForm.get('mail_message');
   }
 
+  get trader_mail() {
+    if (this.trader.storeEmail === '') {
+      return this.trader.email;
+    } else {
+      return this.trader.storeEmail;
+    }
+  }
+
   get agbRead() {
     return this.contactForm.get('agbRead');
   }
@@ -58,7 +66,8 @@ export class TraderContactComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  async onSubmit(receiverEmail: string, receiverName: string) {
+  async onSubmit(receiverName: string) {
+    const receiverEmail = this.trader_mail;
     if (!this.agbRead) {
       this.errorService.publishByText(
         'AGB und Datenschutzerklärung wurden nicht gelesen',

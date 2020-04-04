@@ -30,10 +30,7 @@
 
     <div class="trader-contact-adress" [innerHtml]="getAdress()"></div>
   </div>
-  <form
-    [formGroup]="contactForm"
-    (ngSubmit)="onSubmit(trader.email, trader.businessname)"
-  >
+  <form [formGroup]="contactForm" (ngSubmit)="onSubmit(trader.businessname)">
     <div class="text contactformdescription">
       Oder über das Kontaktformular:<br />
       <app-lk-textarea

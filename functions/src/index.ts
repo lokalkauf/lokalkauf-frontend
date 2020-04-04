@@ -84,7 +84,12 @@ export const sendMail = functions.https.onCall(async (data, context) => {
     from: 'LokalKauf < info@lokalkauf.org >',
     to: data.fromEmail,
     subject: 'Kopie Deiner Nachricht: ' + data.title,
-    html: htmlOutput,
+    html:
+      `<h2>Hi, dies ist die Kopie Deiner Nachricht.</h2>
+           <hr>
+           <div style="background: lightgrey">` +
+      htmlOutput +
+      `</div>`,
     auth: {
       accessToken: accessToken,
     },
