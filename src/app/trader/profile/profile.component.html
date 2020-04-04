@@ -64,7 +64,9 @@
     <div *ngIf="images">
       <div>
         Schritt 5: Zu guter Letzt lade Bilder von Deinem Laden oder Deinem
-        Angebot hoch (du kannst maximal 3 Bilder hochladen):
+        Angebot hoch Du kannst maximal 3 Bilder hochladen und mit Klick auf das
+        Bildzeichen rechts das Bild markieren, dass du als Startbild setzen
+        möchtest):
       </div>
       <div *ngIf="images.length < 3">
         <app-image-chooser [formControl]="businessImage"></app-image-chooser>
@@ -134,7 +136,7 @@
 
     <div class="buton-and-success">
       <div>
-        Schritt 4: Dein Profil für die Kunden öffentlich verfügbar machen:
+        Schritt 6: Dein Profil für die Kunden öffentlich verfügbar machen:
       </div>
       <div class="dense">
         <label>
