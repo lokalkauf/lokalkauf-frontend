@@ -38,7 +38,7 @@ export class TraderMapComponent implements OnInit {
         this.locations = new Array<MapMarkerData>();
         value.forEach((loc: GeoFirestoreTypes.QueryDocumentSnapshot) => {
           this.locations.push({
-            additionalData: loc.data().g,
+            additionalData: loc.id,
             html: '',
             locationLatitude: loc.data().coordinates.latitude,
             locationLongitude: loc.data().coordinates.longitude,
@@ -57,11 +57,12 @@ export class TraderMapComponent implements OnInit {
     const north = this.currentMapBounds.getNorth();
     const south = this.currentMapBounds.getSouth();
 
-    const betweenWestAndEast =
-      Math.abs(location.locationLongitude - west) < Math.abs(east - west);
-    const betweenNorthAndSouth =
-      Math.abs(location.locationLatitude - north) < Math.abs(south - north);
+    const lat = location.locationLatitude;
+    const long = location.locationLongitude;
 
-    return betweenWestAndEast && betweenNorthAndSouth;
+    return (
+      ((long > west && long < east) || (long < west && long > east)) &&
+      ((lat > north && lat < south) || (lat < north && lat > south))
+    );
   }
 }

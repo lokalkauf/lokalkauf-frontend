@@ -1,15 +1,32 @@
-<p>trader-map works!</p>
-<app-map
-  [traderLocations]="locations"
-  (boundingboxChanged)="changeTraders($event)"
-  (markerClicked)="markerClicked($event)"
->
-</app-map>
-<div id="overlay" style="background-color: green;">
-  <div *ngFor="let location of locations">
-    <div *ngIf="locationInBounds(location)">
-      {{ location.locationLatitude }} - {{ location.locationLongitude }}
-      Should be app-trader-item later
+<div>
+  <div
+    id="map-underlay"
+    style="height: 70vh; width: 100%; position: sticky; top: 0px; z-index: 1;"
+  >
+    <app-map
+      [traderLocations]="locations"
+      (boundingboxChanged)="changeTraders($event)"
+      (markerClicked)="markerClicked($event)"
+    >
+    </app-map>
+  </div>
+  <div
+    id="map-overlay"
+    style="
+      z-index: 2;
+      position: relative;
+      background-color: grey;
+      margin-top: -20px;
+      border-radius: 20px 20px 0px 0px;
+      padding: 15px;
+      min-height: 30vh;
+    "
+  >
+    <h1>Händler in deiner Nähe</h1>
+    <div *ngFor="let location of locations">
+      <div *ngIf="locationInBounds(location)">
+        {{ location.additionalData }}
+      </div>
     </div>
   </div>
 </div>
