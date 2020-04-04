@@ -4,6 +4,7 @@ import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
 import { Location } from '../../models/location';
 import { MapMarkerData } from 'src/app/models/mapMarkerData';
 import { MapSettings } from 'src/app/models/mapSettings';
+import { LatLngBounds } from 'leaflet';
 
 @Component({
   selector: 'app-trader-map',
@@ -12,6 +13,7 @@ import { MapSettings } from 'src/app/models/mapSettings';
 })
 export class TraderMapComponent implements OnInit {
   locations: Array<MapMarkerData> = new Array<MapMarkerData>();
+  currentMapBounds: LatLngBounds;
 
   constructor(private geoService: GeoService) {}
 
@@ -24,9 +26,8 @@ export class TraderMapComponent implements OnInit {
     if (radius > 30) {
       radius = 30;
     }
-    console.log('Task: load ');
-    console.log([settings.center.lat, settings.center.lng]);
-    console.log(radius);
+    this.currentMapBounds = settings.boundingBox;
+    // TODO: Enable this again, if change of map should load new traders
     // this.loadTraders(radius, [settings.center.lat, settings.center.lng]);
   }
 
@@ -44,5 +45,23 @@ export class TraderMapComponent implements OnInit {
           });
         });
       });
+  }
+
+  markerClicked(marker: MapMarkerData) {
+    console.log(marker);
+  }
+
+  locationInBounds(location: MapMarkerData) {
+    const west = this.currentMapBounds.getWest();
+    const east = this.currentMapBounds.getEast();
+    const north = this.currentMapBounds.getNorth();
+    const south = this.currentMapBounds.getSouth();
+
+    const betweenWestAndEast =
+      Math.abs(location.locationLongitude - west) < Math.abs(east - west);
+    const betweenNorthAndSouth =
+      Math.abs(location.locationLatitude - north) < Math.abs(south - north);
+
+    return betweenWestAndEast && betweenNorthAndSouth;
   }
 }

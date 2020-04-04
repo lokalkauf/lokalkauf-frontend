@@ -81,7 +81,7 @@ export class GeoService {
     return query.get();
   }
 
-  getUserPosition(): Observable<any> {
+  getUserPosition(): Observable<Array<number>> {
     return new Observable((observer) => {
       let currentPos = this.manuelUserPosition;
 

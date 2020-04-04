@@ -2,6 +2,7 @@
   class="app-map"
   leaflet
   (leafletMapMoveEnd)="updatedBounding($event)"
+  (leafletMapReady)="saveMap($event)"
   [leafletOptions]="options"
   [leafletLayers]="markers"
 ></div>

@@ -2,5 +2,14 @@
 <app-map
   [traderLocations]="locations"
   (boundingboxChanged)="changeTraders($event)"
+  (markerClicked)="markerClicked($event)"
 >
 </app-map>
+<div id="overlay" style="background-color: green;">
+  <div *ngFor="let location of locations">
+    <div *ngIf="locationInBounds(location)">
+      {{ location.locationLatitude }} - {{ location.locationLongitude }}
+      Should be app-trader-item later
+    </div>
+  </div>
+</div>

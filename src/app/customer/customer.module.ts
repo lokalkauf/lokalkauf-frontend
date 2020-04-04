@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'buy/confirmation', component: BuyConfirmationComponent },
   { path: 'cart', component: ShoppingcartComponent },
   { path: 'localtraders/:lat/:lng', component: TraderOverviewComponent },
-  { path: 'tradermap', component: TraderMapComponent },
+  { path: 'tradermap/:lat/:lng/:zoomlvl', component: TraderMapComponent },
   { path: 'trader-detail/:id', component: TraderDetailComponent },
   { path: 'trader/:traderId/contact', component: TraderContactComponent },
   { path: 'contacted', component: InquiryConfirmationComponent },
