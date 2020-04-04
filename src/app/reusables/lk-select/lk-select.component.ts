@@ -1,8 +1,4 @@
-import {
-  NG_VALUE_ACCESSOR,
-  ControlValueAccessor,
-  SelectControlValueAccessor,
-} from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { LkInputComponent } from '../lk-input/lk-input.component';
 import {
   Component,
@@ -10,6 +6,9 @@ import {
   OnChanges,
   SimpleChanges,
   forwardRef,
+  Output,
+  EventEmitter,
+  OnInit,
 } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -31,27 +30,37 @@ export interface LkSelectOptions {
     },
   ],
 })
-export class LkSelectComponent implements ControlValueAccessor, OnChanges {
-  @Input() placeholder: string;
+export class LkSelectComponent
+  implements ControlValueAccessor, OnChanges, OnInit {
+  @Input() placeholder: Observable<string>;
   @Input() name: string;
   @Input() options: Observable<LkSelectOptions[]>;
   @Input() intValue = '';
+  @Output() ngModelChange = new EventEmitter();
 
   optionsAsValue: LkSelectOptions[];
 
   public touched = false;
 
+  ngOnInit() {
+    this.internalValue = 'TEST';
+    this.intValue = 'TEST';
+    console.log(this.internalValue);
+
+    this.ngModelChange.emit(this.internalValue);
+  }
+
   public comparer(c1: any, c2: any) {
     console.log(c1, ' <> ', c2);
-    return c1 && c2 ? c1.id === c2.id : c1 === c2;
+    return c1 && c2 ? c1.lng === c2.lng && c1.lat === c2.lat : c1 === c2;
   }
 
   public onChange: any = (_) => {
     /*Empty*/
-  }
+  };
   public onTouched: any = () => {
     /*Empty*/
-  }
+  };
 
   get internalValue() {
     return this.intValue;

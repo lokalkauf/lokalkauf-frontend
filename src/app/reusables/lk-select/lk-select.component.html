@@ -5,6 +5,9 @@
     [compareWith]="comparer"
     (blur)="onTouched($event)"
   >
+    <option value="TEST" hidden disabled selected>{{
+      placeholder | async
+    }}</option>
     <option [ngValue]="item.value" *ngFor="let item of options | async">{{
       item.display
     }}</option>

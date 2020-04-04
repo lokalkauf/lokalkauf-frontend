@@ -44,6 +44,7 @@ export class StartComponent implements OnInit {
   suggestion: any;
 
   standorte: Observable<LkSelectOptions[]>;
+  standortPreselect: Observable<string>;
 
   currentPosition: Array<number>;
   disabledLosButton: boolean;
@@ -63,6 +64,7 @@ export class StartComponent implements OnInit {
     this.userService.isLoggedIn$.subscribe((loggedin) => {
       this.isLoggedIn = loggedin;
     });
+    this.standortPreselect = of('Bitte wähle eine Stadt aus');
     this.standorte = of([
       {
         key: '1',
