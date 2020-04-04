@@ -110,6 +110,63 @@ export const sendMail = functions.https.onCall(async (data, context) => {
   return;
 });
 
+export const sendCustomVerifyMail = functions.auth
+  .user()
+  .onCreate(async (user) => {
+    const refreshToken = functions.config().mail.oauth.refresh_token;
+    const url = functions.config().app.url;
+    const apiKey = functions.config().app.apikey;
+
+    oauth2Client.setCredentials({
+      refresh_token: refreshToken,
+    });
+    const tokens = await oauth2Client.refreshAccessToken();
+    const accessToken = tokens.credentials.access_token;
+    let link = '';
+    let parameter;
+
+    if (typeof user.email === 'undefined') {
+      return;
+    }
+    link = await admin.auth().generateEmailVerificationLink(user.email);
+    parameter = link.split('&');
+    const finalLink =
+      url +
+      '/verify?mode=verifyEmail&' +
+      parameter.slice(1, 2) +
+      '&apiKey=' +
+      apiKey +
+      '&lang=de';
+
+    const message =
+      '<div style="text-align:center;">' +
+      '<img src="https://lokalkauf-staging.web.app/assets/logo.png" style="width:300px;height:100px"/>' +
+      '<h4>Lieber lokalkauf-Nutzer,</h4>' +
+      '<p>Vielen Dank, dass du dich für lokalkauf entschieden hast!</p>' +
+      '<p>Bitte klicke auf den folgenden Link, um die Registrierung abzuschließen: </p>' +
+      '<a href="' +
+      finalLink +
+      '">hier klicken</a>' +
+      '<p>Erst nach erfolgreicher Bestätigung, kannst du dein Profil bearbeiten.</p>' +
+      '<p>Viel Grüße,</p>' +
+      '<p>Dein lokalkauf-Team<p>';
+
+    const mailOptions = {
+      from: 'LokalKauf < info@lokalkauf.org >',
+      to: user.email,
+      subject: 'Bestätige deine E-Mail-Adresse für lokalkauf',
+      html: message,
+      auth: {
+        accessToken: accessToken,
+      },
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error, info);
+      }
+    });
+  });
+
 export const checkFileNumberLimit = functions.storage
   .object()
   .onFinalize(async (object) => {
