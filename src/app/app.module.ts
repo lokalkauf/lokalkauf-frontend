@@ -94,7 +94,7 @@ const routes: Routes = [
     HttpClientModule,
     MatPasswordStrengthModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production,
+      enabled: true,
     }),
   ],
   exports: [RouterModule],
