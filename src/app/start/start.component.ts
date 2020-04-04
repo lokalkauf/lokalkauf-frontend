@@ -133,7 +133,6 @@ export class StartComponent implements OnInit {
   }
 
   reducedAction(val: any) {
-    console.log(val.internalValue);
     if (val.internalValue) {
       this.router.navigate([
         '/localtraders',

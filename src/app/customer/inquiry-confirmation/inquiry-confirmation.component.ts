@@ -12,6 +12,13 @@ export class InquiryConfirmationComponent implements OnInit {
   ngOnInit(): void {}
 
   redirectToStart() {
-    this.router.navigate(['/']);
+    const city = localStorage.getItem('city') as any;
+    console.log('kk', city);
+    if (city) {
+      const deserCity = JSON.parse(city);
+      this.router.navigate(['/localtraders', deserCity.lat, deserCity.lng]);
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 }

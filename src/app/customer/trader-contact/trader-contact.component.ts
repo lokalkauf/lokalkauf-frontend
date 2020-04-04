@@ -85,4 +85,14 @@ export class TraderContactComponent implements OnInit {
       );
     }
   }
+
+  navigateBackToOverview() {
+    const city = localStorage.getItem('city') as any;
+    if (city) {
+      const deserCity = JSON.parse(city);
+      this.router.navigate(['/localtraders', deserCity.lat, deserCity.lng]);
+    } else {
+      this.router.navigate(['/']);
+    }
+  }
 }
