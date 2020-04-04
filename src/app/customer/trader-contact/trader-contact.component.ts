@@ -37,10 +37,10 @@ export class TraderContactComponent implements OnInit {
   }
 
   get trader_mail() {
-    if (this.trader.storeEmail === '') {
-      return this.trader.email;
-    } else {
+    if (this.trader.storeEmail) {
       return this.trader.storeEmail;
+    } else {
+      return this.trader.email;
     }
   }
 
