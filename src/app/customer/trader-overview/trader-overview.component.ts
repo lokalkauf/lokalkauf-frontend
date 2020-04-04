@@ -41,7 +41,6 @@ export class TraderOverviewComponent implements OnInit {
           Number.parseFloat(params.lat),
           Number.parseFloat(params.lng),
         ];
-
         // this.geo.setUserPosition(pos);
 
         this.loadTmpLocations(pos);

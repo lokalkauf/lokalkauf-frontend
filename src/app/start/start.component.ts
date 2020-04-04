@@ -67,12 +67,12 @@ export class StartComponent implements OnInit {
       {
         key: '1',
         display: 'Brühl',
-        value: { lng: '50.823525', lat: '6.897674' },
+        value: { lat: '50.823525', lng: '6.897674' },
       },
       {
         key: '2',
         display: 'Wiesbaden',
-        value: { lng: '50.0833521', lat: '8.24145' },
+        value: { lat: '50.0833521', lng: '8.24145' },
       },
     ]);
   }
@@ -135,8 +135,8 @@ export class StartComponent implements OnInit {
     if (val.internalValue) {
       this.router.navigate([
         '/localtraders',
-        val.internalValue.lng,
         val.internalValue.lat,
+        val.internalValue.lng,
       ]);
       localStorage.setItem('city', JSON.stringify(val.internalValue));
     }

@@ -25,7 +25,7 @@ export class AppComponent {
     const city = localStorage.getItem('city');
     if (city) {
       const cityDeser = JSON.parse(city);
-      route = '/localtraders/' + cityDeser.lng + '/' + cityDeser.lat;
+      route = '/localtraders/' + cityDeser.lat + '/' + cityDeser.lng;
     }
     this.router.navigate([route]);
   }
