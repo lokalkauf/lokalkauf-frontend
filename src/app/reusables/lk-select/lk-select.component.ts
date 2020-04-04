@@ -43,15 +43,12 @@ export class LkSelectComponent
   public touched = false;
 
   ngOnInit() {
-    this.internalValue = 'TEST';
-    this.intValue = 'TEST';
-    console.log(this.internalValue);
-
+    this.internalValue = 'DEFAULT';
+    this.intValue = 'DEFAULT';
     this.ngModelChange.emit(this.internalValue);
   }
 
   public comparer(c1: any, c2: any) {
-    console.log(c1, ' <> ', c2);
     return c1 && c2 ? c1.lng === c2.lng && c1.lat === c2.lat : c1 === c2;
   }
 
