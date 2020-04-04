@@ -68,7 +68,12 @@
       </app-lk-button>
     </div>
     <br />
-    <a [routerLink]="['/localtraders/0/0']">zurück zur Händerübersicht</a>
+    <app-lk-button
+      (click)="location.back()"
+      type="submit"
+      label="zurück zur Händerübersicht"
+    >
+    </app-lk-button>
     <br />
     <br />
   </form>

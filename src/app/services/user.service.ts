@@ -89,6 +89,13 @@ export class UserService {
     await this.db
       .doc<TraderProfile>(`Traders/${this.auth.auth.currentUser.uid}`)
       .update(partialTraderProfile);
+
+    if (partialTraderProfile.postcode) {
+      await this.geo.createLocationByAddress(
+        this.auth.auth.currentUser.uid,
+        partialTraderProfile.postcode
+      );
+    }
   }
 
   async login(email: string, password: string) {

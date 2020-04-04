@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { Trader } from '../../models/trader';
 import { EMail } from '../../models/email';
@@ -40,6 +41,7 @@ export class TraderContactComponent implements OnInit {
 
   constructor(
     private router: Router,
+    public location: Location,
     private mailService: EMailService,
     private errorService: ErrorService
   ) {}
