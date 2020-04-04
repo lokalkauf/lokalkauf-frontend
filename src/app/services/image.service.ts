@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, from } from 'rxjs';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { map, switchMap, flatMap } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
 import { ImageSource } from '../models/imageSource';
 
@@ -10,15 +7,27 @@ import { ImageSource } from '../models/imageSource';
   providedIn: 'root',
 })
 export class ImageService {
-  currentUserId: string;
+  constructor(private storage: AngularFireStorage) {}
 
-  constructor(
-    private auth: AngularFireAuth,
-    private storage: AngularFireStorage
-  ) {
-    auth.user.subscribe((user) => {
-      this.currentUserId = user.uid;
-    });
+  async getThumbnail(
+    image: ImageSource,
+    size = '200x200'
+  ): Promise<ImageSource> {
+    const foldername = image.path.substring(0, image.path.lastIndexOf('/') + 1);
+    const filenameWithoutExt = image.path.substring(
+      image.path.lastIndexOf('/'),
+      image.path.lastIndexOf('.')
+    );
+    const ext = image.path.split('.').pop();
+    const thumbnailPath =
+      foldername + 'thumbs' + filenameWithoutExt + '_' + size + '.' + ext;
+    const thumnbnailRef = await this.storage.storage.ref(thumbnailPath);
+    return {
+      url: await thumnbnailRef.getDownloadURL(),
+      size: (await thumnbnailRef.getMetadata()).size,
+      name: thumnbnailRef.name,
+      path: thumnbnailRef.fullPath,
+    };
   }
 
   async getAllTraderThumbnails(traderId: string): Promise<ImageSource[]> {
@@ -34,6 +43,7 @@ export class ImageService {
             url: await item.getDownloadURL(),
             size: metadata.size,
             name: metadata.name,
+            path: item.fullPath,
           };
         }
       })
@@ -42,16 +52,8 @@ export class ImageService {
     return images.filter((item) => item != null);
   }
 
-  async getAllCurrentTraderThumbnails() {
-    return this.getAllTraderThumbnails(this.currentUserId);
-  }
-
   async getAllTraderThumbnailUrls(traderId: string) {
     return (await this.getAllTraderThumbnails(traderId)).map((i) => i.url);
-  }
-
-  async getAllCurrentTraderThumbnailUrls() {
-    return this.getAllTraderThumbnailUrls(this.currentUserId);
   }
 
   async getAllTraderImages(traderId: string): Promise<ImageSource[]> {
@@ -66,6 +68,7 @@ export class ImageService {
             url: await item.getDownloadURL(),
             size: metadata.size,
             name: metadata.name,
+            path: item.fullPath,
           };
         }
       })
@@ -74,16 +77,8 @@ export class ImageService {
     return images.filter((item) => item != null);
   }
 
-  async getAllCurrentTraderImages() {
-    return this.getAllTraderImages(this.currentUserId);
-  }
-
   async getAllTraderImageUrls(traderId: string) {
     return (await this.getAllTraderImages(traderId)).map((i) => i.url);
-  }
-
-  async getAllCurrentTraderImageUrls() {
-    return this.getAllTraderImageUrls(this.currentUserId);
   }
 
   uploadTraderImage(traderId: string, file: File) {
@@ -93,14 +88,20 @@ export class ImageService {
     return this.storage.upload(filePath, file);
   }
 
-  uploadCurrentTraderImage(file: File) {
-    return this.uploadTraderImage(this.currentUserId, file);
-  }
-
   async delteImageByUrl(url: string) {
     const imgRef = this.storage.storage.refFromURL(url);
     if (imgRef) {
       await imgRef.delete();
     }
+  }
+
+  async getImage(path: string): Promise<ImageSource> {
+    const image = await this.storage.storage.ref(path);
+    return {
+      url: await image.getDownloadURL(),
+      size: (await image.getMetadata()).size,
+      name: image.name,
+      path: image.fullPath,
+    };
   }
 }

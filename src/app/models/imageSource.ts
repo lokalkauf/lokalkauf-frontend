@@ -2,6 +2,7 @@ export class ImageSource {
   url: string;
   size: number;
   name: string;
+  path: string;
 
   static isPartOf(name: string, sourceURL: string) {
     if (sourceURL) {

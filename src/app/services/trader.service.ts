@@ -1,29 +1,31 @@
-import { Injectable, Query } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, FieldPath } from '@angular/fire/firestore';
+import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { firestore } from 'firebase';
-import { Observable, combineLatest, of, from } from 'rxjs';
-import { map, switchMap, flatMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { TraderProfile, TraderProfileStatus } from '../models/traderProfile';
-import { AngularFireStorage } from '@angular/fire/storage';
-import { Reference } from '@angular/fire/storage/interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TraderService {
-  constructor(
-    private auth: AngularFireAuth,
-    private db: AngularFirestore,
-    private storage: AngularFireStorage
-  ) {}
+  constructor(private db: AngularFirestore) {}
 
   async createTraderProfile(id: string, trader: TraderProfile) {
     await this.db.collection('Traders').doc(id).set(trader);
   }
 
-  getTraderProfile(id: string) {
-    return this.db.collection('Traders').doc<TraderProfile>(id).valueChanges();
+  getTraderProfile(id: string): Observable<TraderProfile> {
+    return this.db
+      .collection('Traders')
+      .doc<Omit<TraderProfile, 'id'>>(id)
+      .valueChanges()
+      .pipe(
+        map((tp) => ({
+          ...tp,
+          id,
+        }))
+      );
   }
 
   getTraderProfiles(
@@ -45,13 +47,6 @@ export class TraderService {
           });
         })
       );
-  }
-
-  async updateTraderThumbnailUrl(traderId: string, url: string) {
-    await this.db
-      .collection('Traders')
-      .doc(traderId)
-      .update({ thumbnailUrl: url });
   }
 
   async updateTraderProfileStatus(

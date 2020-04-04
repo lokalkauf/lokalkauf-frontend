@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, HostBinding } from '@angular/core';
 import { Trader } from '../../models/trader';
-import { Observable, of } from 'rxjs';
+import { Observable, of, from } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
+import { map, flatMap, distinctUntilChanged } from 'rxjs/operators';
 import { TraderProfile } from 'src/app/models/traderProfile';
+import { ImageService } from 'src/app/services/image.service';
 
 @Component({
   selector: 'app-trader-item',
@@ -17,7 +18,12 @@ export class TraderItemComponent implements OnInit {
 
   trader$: Observable<Omit<TraderProfile, 'id'>>;
 
-  constructor(private db: AngularFirestore) {}
+  thumbnail$: Observable<string>;
+
+  constructor(
+    private db: AngularFirestore,
+    private imageService: ImageService
+  ) {}
   bgImageVariable: string;
 
   ngOnInit(): void {
@@ -26,17 +32,30 @@ export class TraderItemComponent implements OnInit {
       .doc<Omit<TraderProfile, 'id'>>(this.trader.id)
       .valueChanges()
       .pipe(
-        map((x) => ({
-          ...x,
-          id: this.trader.id,
-          thumbnailUrl: x.thumbnailUrl
-            ? x.thumbnailUrl
-            : './assets/lokalkauf-pin.png',
-        }))
+        map((trader) => {
+          return {
+            ...trader,
+            id: this.trader.id,
+          };
+        })
       );
+
+    this.thumbnail$ = this.trader$.pipe(
+      map((trader) => trader.defaultImagePath),
+      distinctUntilChanged(),
+      flatMap(async (imagePath) =>
+        imagePath
+          ? (
+              await this.imageService.getThumbnail(
+                await this.imageService.getImage(imagePath)
+              )
+            ).url
+          : './assets/lokalkauf-pin.png'
+      )
+    );
   }
 
-  getThumbnail(trader: TraderProfile) {
+  getThumbnail(trader: TraderProfile & { thumbnailUrl: string | null }) {
     if (trader) {
       return { 'background-image': `url(\' ${trader.thumbnailUrl}  \')` };
     }

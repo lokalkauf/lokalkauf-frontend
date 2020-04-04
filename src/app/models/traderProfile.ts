@@ -11,7 +11,7 @@ export interface TraderProfile {
   delivery: boolean;
   email: string;
   telephone: string;
-  thumbnailUrl?: string;
+  defaultImagePath?: string;
   storeEmail: string;
   homepage: string;
   status: TraderProfileStatus;

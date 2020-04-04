@@ -9,6 +9,7 @@ import { v4 as uuid } from 'uuid';
 import { TraderService } from './trader.service';
 import { GeoService } from './geo.service';
 import { User } from 'firebase';
+import { ImageService } from './image.service';
 
 export interface LoggedInUserState {
   uid: string;
@@ -26,8 +27,8 @@ export class UserService {
   constructor(
     private auth: AngularFireAuth,
     private db: AngularFirestore,
-    private storage: AngularFireStorage,
     private traderService: TraderService,
+    private imageService: ImageService,
     private geo: GeoService
   ) {
     this.isLoggedIn$ = this.auth.user.pipe(map((user) => user != null));
@@ -39,15 +40,7 @@ export class UserService {
       switchMap((partialData) =>
         combineLatest([
           of(partialData),
-          db
-            .doc<TraderProfile>(`Traders/${partialData.uid}`)
-            .valueChanges()
-            .pipe(
-              map((traderProfile) => ({
-                ...traderProfile,
-                id: partialData.uid,
-              }))
-            ),
+          traderService.getTraderProfile(partialData.uid),
         ])
       ),
       map(([partialData, traderProfile]) => ({ ...partialData, traderProfile }))
@@ -64,7 +57,6 @@ export class UserService {
       password
     );
 
-    // this.db.doc(`Traders/${credential.user.uid}`).set(traderProfile);
     await this.traderService.createTraderProfile(
       credential.user.uid,
       traderProfile
@@ -141,11 +133,7 @@ export class UserService {
   }
 
   getAuthenticatedUser(): User {
-    if (this.auth != null && this.auth.auth != null) {
-      return this.auth.auth.currentUser;
-    }
-
-    return null;
+    return this.auth?.auth?.currentUser;
   }
 
   getAuthenticatedTraderProfile(): Observable<TraderProfile> {
@@ -164,5 +152,16 @@ export class UserService {
       password
     );
     await this.auth.auth.currentUser.delete();
+  }
+
+  getAllTraderImages() {
+    return this.imageService.getAllTraderImages(this.auth.auth.currentUser.uid);
+  }
+
+  uploadTraderImage(file: File) {
+    return this.imageService.uploadTraderImage(
+      this.auth.auth.currentUser.uid,
+      file
+    );
   }
 }

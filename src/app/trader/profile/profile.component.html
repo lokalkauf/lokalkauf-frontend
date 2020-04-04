@@ -93,7 +93,13 @@
           <div class="btns">
             <button
               type="button"
-              (click)="deleteImage(image)"
+              (click)="
+                deleteImage(
+                  image,
+                  image.path ===
+                    loggedInUserState.traderProfile.defaultImagePath
+                )
+              "
               mat-mini-fab
               class="md-mini icn-danger"
             >
@@ -103,10 +109,14 @@
             </button>
             <button
               type="button"
-              (click)="setThumbnail(image)"
+              (click)="setDefaultImage(image)"
               mat-mini-fab
               class="md-mini"
-              [ngClass]="isSelectedThumbnail(image)"
+              [ngClass]="
+                image.path === loggedInUserState.traderProfile.defaultImagePath
+                  ? 'icn-success'
+                  : 'icn-disabled'
+              "
             >
               <mat-icon
                 class="cicon"
