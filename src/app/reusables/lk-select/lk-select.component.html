@@ -1,0 +1,7 @@
+<div class="lt-select-wrapper fa fa-angle-down">
+  <select [name]="name" [(ngModel)]="internalValue" (blur)="onTouched($event)">
+    <option [ngValue]="item.value" *ngFor="let item of options | async">{{
+      item.display
+    }}</option>
+  </select>
+</div>

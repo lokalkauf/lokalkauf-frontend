@@ -23,7 +23,16 @@
     </div>
 
     <div id="start-input-container">
-      <div id="start-input-center">
+      <div class="start-input-center">
+        <app-lk-select
+          #startTownList
+          id="start-select"
+          name="standort"
+          [options]="standorte"
+        ></app-lk-select>
+      </div>
+
+      <div class="start-input-center">
         <!--
         <input type="hidden" id="start-input" placeholder="Coords" [(ngModel)]="coords" [value]="coovalue" />
         <input id="plz-input" #plzInput type="text" name="coordbox" placeholder="PLZ" matInput [matAutocomplete]="auto"
@@ -41,8 +50,8 @@
         </app-lk-button>
         -->
         <app-lk-button
-          id="start-button-wiesbaden"
-          (click)="reducedAction()"
+          id="start-button-intial-towns"
+          (click)="reducedAction(startTownList)"
           label="Jetzt suchen!"
         >
         </app-lk-button>

@@ -4,6 +4,7 @@ import {
   InjectionToken,
   ElementRef,
   ViewChild,
+  ɵsetCurrentInjector,
 } from '@angular/core';
 import { Link } from '../models/link';
 import { Router } from '@angular/router';
@@ -12,10 +13,11 @@ import { debounce } from 'lodash';
 
 import { GeoService } from 'src/app/services//geo.service';
 import { tap } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { ScrollStrategy } from '@angular/cdk/overlay';
 import { $ } from 'protractor';
 import { UserService } from '../services/user.service';
+import { LkSelectOptions } from '../reusables/lk-select/lk-select.component';
 
 @Component({
   selector: 'app-start',
@@ -41,6 +43,8 @@ export class StartComponent implements OnInit {
   coords: string;
   suggestion: any;
 
+  standorte: Observable<LkSelectOptions[]>;
+
   currentPosition: Array<number>;
   disabledLosButton: boolean;
 
@@ -57,6 +61,18 @@ export class StartComponent implements OnInit {
     this.userService.isLoggedIn$.subscribe((loggedin) => {
       this.isLoggedIn = loggedin;
     });
+    this.standorte = of([
+      {
+        key: '1',
+        display: 'Wiesbaden',
+        value: { lng: '50.0833521', lat: '8.24145' },
+      },
+      {
+        key: '2',
+        display: 'Brühl',
+        value: { lng: '50.823525', lat: '6.897674' },
+      },
+    ]);
   }
 
   showError: boolean;
@@ -107,8 +123,15 @@ export class StartComponent implements OnInit {
     }
   }
 
-  reducedAction() {
-    this.router.navigate(['/localtraders', 50.083352, 8.241451]);
+  reducedAction(val: any) {
+    console.log(val.internalValue);
+    if (val.internalValue) {
+      this.router.navigate([
+        '/localtraders',
+        val.internalValue.lng,
+        val.internalValue.lat,
+      ]);
+    }
   }
 
   setposition(position: Array<number>) {
