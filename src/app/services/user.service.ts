@@ -66,8 +66,6 @@ export class UserService {
       credential.user.uid,
       traderProfile.postcode
     );
-
-    await credential.user.sendEmailVerification();
   }
 
   async getLoggedInUserStateOnce() {
