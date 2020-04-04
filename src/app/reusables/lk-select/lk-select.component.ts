@@ -40,12 +40,18 @@ export class LkSelectComponent implements ControlValueAccessor, OnChanges {
   optionsAsValue: LkSelectOptions[];
 
   public touched = false;
+
+  public comparer(c1: any, c2: any) {
+    console.log(c1, ' <> ', c2);
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
+
   public onChange: any = (_) => {
     /*Empty*/
-  };
+  }
   public onTouched: any = () => {
     /*Empty*/
-  };
+  }
 
   get internalValue() {
     return this.intValue;

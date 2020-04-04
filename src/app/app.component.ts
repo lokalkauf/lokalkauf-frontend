@@ -18,4 +18,15 @@ export class AppComponent {
     this.opened = false;
     this.router.navigate([route]);
   }
+
+  navigateTraders() {
+    this.opened = false;
+    let route = '/';
+    const city = localStorage.getItem('city');
+    if (city) {
+      const cityDeser = JSON.parse(city);
+      route = '/localtraders/' + cityDeser.lng + '/' + cityDeser.lat;
+    }
+    this.router.navigate([route]);
+  }
 }

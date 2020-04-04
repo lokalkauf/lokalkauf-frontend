@@ -50,6 +50,8 @@ export class StartComponent implements OnInit {
 
   isLoggedIn = false;
 
+  preSelectedValue: any;
+
   @ViewChild('plzInput') plzInput: ElementRef;
   constructor(
     public router: Router,
@@ -64,13 +66,13 @@ export class StartComponent implements OnInit {
     this.standorte = of([
       {
         key: '1',
-        display: 'Wiesbaden',
-        value: { lng: '50.0833521', lat: '8.24145' },
+        display: 'Brühl',
+        value: { lng: '50.823525', lat: '6.897674' },
       },
       {
         key: '2',
-        display: 'Brühl',
-        value: { lng: '50.823525', lat: '6.897674' },
+        display: 'Wiesbaden',
+        value: { lng: '50.0833521', lat: '8.24145' },
       },
     ]);
   }
@@ -79,6 +81,11 @@ export class StartComponent implements OnInit {
 
   ngOnInit(): void {
     //    this.getUserLocation();
+
+    const city = localStorage.getItem('city');
+    if (city) {
+      this.preSelectedValue = city;
+    }
   }
 
   registerTrader() {
@@ -131,6 +138,7 @@ export class StartComponent implements OnInit {
         val.internalValue.lng,
         val.internalValue.lat,
       ]);
+      localStorage.setItem('city', JSON.stringify(val.internalValue));
     }
   }
 
