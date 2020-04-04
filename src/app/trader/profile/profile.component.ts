@@ -171,7 +171,6 @@ export class ProfileComponent implements AfterViewInit {
       await this.setDefaultImage(this.images[0]);
     }
     if (isDefaultImage && this.images.length === 0) {
-      console.log('remove');
       await this.removeDefaultImage();
     }
   }

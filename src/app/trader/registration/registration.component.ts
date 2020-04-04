@@ -158,7 +158,9 @@ export class RegistrationComponent implements OnInit {
       this.registrationState = RegistrationState.edit;
       if (this.registrationState === RegistrationState.edit) {
         this.userService.getAuthenticatedTraderProfile().subscribe((user) => {
-          this.fillVal(user);
+          if (user) {
+            this.fillVal(user);
+          }
         });
       }
     }

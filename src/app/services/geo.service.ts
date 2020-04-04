@@ -11,7 +11,7 @@ import {
   GeoQuery,
   GeoQuerySnapshot,
 } from 'geofirestore';
-import { firestore } from 'firebase';
+import { firestore } from 'firebase/app';
 
 @Injectable({
   providedIn: 'root',

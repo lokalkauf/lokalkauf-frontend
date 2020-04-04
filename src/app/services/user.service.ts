@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, combineLatest, of, from } from 'rxjs';
-import { map, switchMap, flatMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { TraderProfile, TraderProfileStatus } from '../models/traderProfile';
-import { AngularFireStorage } from '@angular/fire/storage';
-import { v4 as uuid } from 'uuid';
 import { TraderService } from './trader.service';
 import { GeoService } from './geo.service';
-import { User } from 'firebase';
+import { User } from 'firebase/app';
 import { ImageService } from './image.service';
 
 export interface LoggedInUserState {
@@ -33,10 +31,14 @@ export class UserService {
   ) {
     this.isLoggedIn$ = this.auth.user.pipe(map((user) => user != null));
     this.loggedInUserState$ = this.auth.user.pipe(
-      map((user) => ({
-        uid: user.uid,
-        emailVerified: user.emailVerified,
-      })),
+      map((user) =>
+        user
+          ? {
+              uid: user.uid,
+              emailVerified: user.emailVerified,
+            }
+          : null
+      ),
       switchMap((partialData) =>
         combineLatest([
           of(partialData),
@@ -44,6 +46,16 @@ export class UserService {
         ])
       ),
       map(([partialData, traderProfile]) => ({ ...partialData, traderProfile }))
+    );
+    this.loggedInUserState$.pipe(
+      map((user) => {
+        if (
+          user?.emailVerified &&
+          user.traderProfile.status === TraderProfileStatus.CREATED
+        ) {
+          this.updateTraderProfile({ status: TraderProfileStatus.VERIFIED });
+        }
+      })
     );
   }
 
@@ -124,10 +136,6 @@ export class UserService {
 
   async verifyEmail(actionCode: string) {
     await this.auth.auth.applyActionCode(actionCode);
-    await this.traderService.updateTraderProfileStatus(
-      this.auth.auth.currentUser.uid,
-      TraderProfileStatus.VERIFIED
-    );
   }
 
   getAuthenticatedUser(): User {

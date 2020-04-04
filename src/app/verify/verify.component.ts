@@ -5,6 +5,7 @@ import { ErrorService } from 'src/app/services/error.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MustMatch } from './must-match.validator';
 import { DOCUMENT } from '@angular/common';
+import { filter } from 'rxjs/operators';
 
 enum VerifyComponentStage {
   RESET_PASSWORD = 'RESET_PASSWORD',
@@ -120,9 +121,11 @@ export class VerifyComponent implements OnInit {
   }
 
   async handleVerifyEmail(actionCode: string, lang: string) {
+    console.log('handleVerifyMail');
     try {
       await this.user.verifyEmail(actionCode);
       this.stage = VerifyComponentStage.VERIFY_EMAIL_COMPLETED;
+      console.log('handleVerifyMailCompleted');
     } catch (error) {
       console.log(error);
       this.stage = VerifyComponentStage.INVALID_ACTION;
