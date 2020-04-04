@@ -54,9 +54,11 @@ export class LkSelectComponent
 
   public onChange: any = (_) => {
     /*Empty*/
+    // tslint:disable-next-line:semicolon
   };
   public onTouched: any = () => {
     /*Empty*/
+    // tslint:disable-next-line:semicolon
   };
 
   get internalValue() {
