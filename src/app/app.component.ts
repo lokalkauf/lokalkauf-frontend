@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { UserService } from './services/user.service';
+import { StorageService } from './services/storage.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,11 @@ export class AppComponent {
   events: string[] = [];
   opened: boolean;
 
-  constructor(public router: Router, public userService: UserService) {}
+  constructor(
+    public router: Router,
+    public userService: UserService,
+    private storageService: StorageService
+  ) {}
 
   navigate(route: string) {
     this.opened = false;
@@ -22,10 +27,9 @@ export class AppComponent {
   navigateTraders() {
     this.opened = false;
     let route = '/';
-    const city = localStorage.getItem('city');
+    const city = this.storageService.loadLocation();
     if (city) {
-      const cityDeser = JSON.parse(city);
-      route = '/localtraders/' + cityDeser.lat + '/' + cityDeser.lng;
+      route = '/localtraders/' + city.lat + '/' + city.lng;
     }
     this.router.navigate([route]);
   }

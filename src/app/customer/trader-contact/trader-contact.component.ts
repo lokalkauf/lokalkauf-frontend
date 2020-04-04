@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ErrorService } from 'src/app/services/error.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-trader-contact',
@@ -43,7 +44,8 @@ export class TraderContactComponent implements OnInit {
     private router: Router,
     public location: Location,
     private mailService: EMailService,
-    private errorService: ErrorService
+    private errorService: ErrorService,
+    private storageService: StorageService
   ) {}
 
   ngOnInit(): void {}
@@ -87,10 +89,9 @@ export class TraderContactComponent implements OnInit {
   }
 
   navigateBackToOverview() {
-    const city = localStorage.getItem('city') as any;
+    const city = this.storageService.loadLocation();
     if (city) {
-      const deserCity = JSON.parse(city);
-      this.router.navigate(['/localtraders', deserCity.lat, deserCity.lng]);
+      this.router.navigate(['/localtraders', city.lat, city.lng]);
     } else {
       this.router.navigate(['/']);
     }

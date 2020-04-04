@@ -18,6 +18,7 @@ import { ScrollStrategy } from '@angular/cdk/overlay';
 import { $ } from 'protractor';
 import { UserService } from '../services/user.service';
 import { LkSelectOptions } from '../reusables/lk-select/lk-select.component';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-start',
@@ -57,7 +58,8 @@ export class StartComponent implements OnInit {
   constructor(
     public router: Router,
     private geo: GeoService,
-    public userService: UserService
+    public userService: UserService,
+    private storageService: StorageService
   ) {
     this.search = debounce(this.search, 2000);
     this.disabledLosButton = true;
@@ -84,7 +86,7 @@ export class StartComponent implements OnInit {
   ngOnInit(): void {
     //    this.getUserLocation();
 
-    const city = localStorage.getItem('city');
+    const city = this.storageService.loadLocation();
     if (city) {
       this.preSelectedValue = city;
     }
@@ -139,7 +141,7 @@ export class StartComponent implements OnInit {
         val.internalValue.lat,
         val.internalValue.lng,
       ]);
-      localStorage.setItem('city', JSON.stringify(val.internalValue));
+      this.storageService.saveLocation(val.internalValue);
     }
   }
 
