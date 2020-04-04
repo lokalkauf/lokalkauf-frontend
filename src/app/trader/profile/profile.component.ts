@@ -76,8 +76,7 @@ export class ProfileComponent implements AfterViewInit {
 
   constructor(
     private user: UserService,
-    private router: Router,
-    private route: ActivatedRoute,
+    router: Router,
     private errorService: ErrorService,
     private traderService: TraderService,
     private imageService: ImageService
@@ -140,11 +139,11 @@ export class ProfileComponent implements AfterViewInit {
 
   async updateProfile() {
     await this.user.updateTraderProfile({
-      description: this.description.value,
-      delivery: this.delivery.value,
-      pickup: this.pickup.value,
-      storeEmail: this.storeEmail.value,
-      homepage: this.homepage.value,
+      description: this.description.value || null,
+      delivery: this.delivery.value || null,
+      pickup: this.pickup.value || null,
+      storeEmail: this.storeEmail.value || null,
+      homepage: this.homepage.value || null,
       status: this.public.value
         ? TraderProfileStatus.PUBLIC
         : TraderProfileStatus.VERIFIED,
@@ -165,10 +164,6 @@ export class ProfileComponent implements AfterViewInit {
   async uploadImage() {
     try {
       const file = this.businessImage.value;
-
-      // workaround for missing file.name.
-      // upload component should be refactored
-      file.name = 'WR' + uuid() + 'WR' + file.type.replace('image/', '.');
 
       const task = this.imageService.uploadCurrentTraderImage(file);
 
