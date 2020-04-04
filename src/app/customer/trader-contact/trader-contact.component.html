@@ -22,11 +22,13 @@
       </a>
     </div>
     <div *ngIf="trader.homepage" class="contactButton">
-      <a [href]="trader.homepage">
+      <a [href]="trader.homepage" target="_blank">
         <app-lk-button [label]="trader.homepage" [minSizePercent]="70">
         </app-lk-button>
       </a>
     </div>
+
+    <div class="trader-contact-adress" [innerHtml]="getAdress()"></div>
   </div>
   <form
     [formGroup]="contactForm"

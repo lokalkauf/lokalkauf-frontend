@@ -40,6 +40,14 @@ export class TraderContactComponent implements OnInit {
     return this.contactForm.get('agbRead');
   }
 
+  getAdress() {
+    // check for at least one mandantory field, if you visit the profile detail page at least once
+    if (this.trader.city) {
+      return `<span>Adresse</span> <br />${this.trader.street} ${this.trader.number}
+      <br />${this.trader.postcode} ${this.trader.city}`;
+    }
+  }
+
   constructor(
     private router: Router,
     public location: Location,
