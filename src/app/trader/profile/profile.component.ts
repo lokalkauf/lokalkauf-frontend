@@ -15,7 +15,7 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements AfterViewInit {
-  loggedInUserState$: Observable<LoggedInUserState | null>;
+  loggedInUserState$: Observable<LoggedInUserState>;
 
   dataFormGroup = new FormGroup(
     {
