@@ -255,4 +255,7 @@ export const deleteUser = functions.auth.user().onDelete(async (user) => {
       }
     });
   await admin.firestore().doc(`Traders/${user.uid}`).delete();
+  console.log(`Deleted Firestore document Traders/${user.uid}`);
+  await admin.firestore().doc(`locations/${user.uid}`).delete();
+  console.log(`Deleted Firestore document locations/${user.uid}`);
 });
