@@ -44,7 +44,13 @@ export class TraderDetailComponent implements OnInit {
           .collection('Traders')
           .doc<Omit<TraderProfile, 'id'>>(params.id)
           .valueChanges()
-          .pipe(map((x) => ({ ...x, id: params.id })))
+          .pipe(
+            map((x) => ({
+              ...x,
+              homepage: this.getCorrectUrl(x.homepage),
+              id: params.id,
+            }))
+          )
       )
     );
 
@@ -65,6 +71,14 @@ export class TraderDetailComponent implements OnInit {
           .pipe(map((snap) => snap.size))
       )
     );
+  }
+
+  getCorrectUrl(url?: string) {
+    if (url) {
+      const lowerurl = url.toLowerCase();
+      return !lowerurl.startsWith('http') ? 'http://' + lowerurl : lowerurl;
+    }
+    return url;
   }
 
   shortenText(inputText: string) {
