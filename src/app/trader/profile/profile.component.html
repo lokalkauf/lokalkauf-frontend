@@ -59,7 +59,7 @@
       <app-lk-input
         placeholder="Homepage"
         formControlName="homepage"
-        pattern="(^http://)|(^https://)"
+        pattern="https?://.+"
       ></app-lk-input>
     </div>
     <div class="warning" *ngIf="homepage.invalid">
