@@ -7,6 +7,7 @@ import { ErrorService } from 'src/app/services/error.service';
 import { TraderProfileStatus } from 'src/app/models/traderProfile';
 import { ImageService } from 'src/app/services/image.service';
 import { ImageSource } from 'src/app/models/imageSource';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -14,7 +15,7 @@ import { ImageSource } from 'src/app/models/imageSource';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements AfterViewInit {
-  loggedInUserState$: Observable<LoggedInUserState>;
+  loggedInUserState$: Observable<LoggedInUserState | null>;
 
   dataFormGroup = new FormGroup(
     {
@@ -69,7 +70,9 @@ export class ProfileComponent implements AfterViewInit {
     private errorService: ErrorService,
     private imageService: ImageService
   ) {
-    this.loggedInUserState$ = user.loggedInUserState$;
+    this.loggedInUserState$ = user.loggedInUserState$.pipe(
+      filter((loggedInUser) => loggedInUser != null)
+    );
     user.isLoggedIn$.subscribe((isLoggedIn) => {
       if (!isLoggedIn) {
         router.navigateByUrl('/trader/login');

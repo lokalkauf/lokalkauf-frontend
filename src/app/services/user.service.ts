@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, combineLatest, of, from } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, filter } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { TraderProfile, TraderProfileStatus } from '../models/traderProfile';
 import { TraderService } from './trader.service';
@@ -31,21 +31,17 @@ export class UserService {
   ) {
     this.isLoggedIn$ = this.auth.user.pipe(map((user) => user != null));
     this.loggedInUserState$ = this.auth.user.pipe(
-      map((user) =>
+      switchMap((user) =>
         user
-          ? {
-              uid: user.uid,
-              emailVerified: user.emailVerified,
-            }
-          : null
-      ),
-      switchMap((partialData) =>
-        combineLatest([
-          of(partialData),
-          traderService.getTraderProfile(partialData.uid),
-        ])
-      ),
-      map(([partialData, traderProfile]) => ({ ...partialData, traderProfile }))
+          ? traderService.getTraderProfile(user.uid).pipe(
+              map((traderProfile) => ({
+                uid: user.uid,
+                emailVerified: user.emailVerified,
+                traderProfile,
+              }))
+            )
+          : of(null)
+      )
     );
     this.loggedInUserState$.pipe(
       map((user) => {
