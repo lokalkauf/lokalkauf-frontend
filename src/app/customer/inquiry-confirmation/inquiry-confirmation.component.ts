@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-inquiry-confirmation',
@@ -7,11 +8,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./inquiry-confirmation.component.scss'],
 })
 export class InquiryConfirmationComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private storageService: StorageService) {}
 
   ngOnInit(): void {}
 
   redirectToStart() {
-    this.router.navigate(['/']);
+    const city = this.storageService.loadLocation();
+    if (city) {
+      this.router.navigate(['/localtraders', city.lat, city.lng]);
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 }

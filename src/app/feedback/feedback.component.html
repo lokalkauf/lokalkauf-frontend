@@ -1,14 +1,14 @@
 <div id="feedback-overlay">
   <div id="feedback-inset" *ngIf="!mailSent">
-    <h1>Ihre Ideen sind uns wichtig</h1>
+    <h1>Deine Ideen sind uns wichtig</h1>
     <app-lk-textarea
       [(ngModel)]="message"
-      [placeholder]="'Ihre Nachricht an uns'"
+      [placeholder]="'Deine Nachricht an uns'"
     >
     </app-lk-textarea>
 
     <div class="content">
-      Möchten Sie Feedback von uns? <br />Dann hinterlassen Sie Ihre
+      Möchtest Du Feedback von uns? <br />Dann hinterlasse hier deine
       E-Mailadresse.
     </div>
 
@@ -46,8 +46,8 @@
     </div>
   </div>
   <div class="feedback-error" *ngIf="showError">
-    Bitte geben Sie einen Nachrichtentext ein und ggf. gültige E-Mail-Adresse.
-    <br />Bitte bestätigen Sie zudem die AGBs und Datenschutzbestimmungen.
+    Bitte gebe einen Nachrichtentext ein und ggf. eine gültige E-Mail-Adresse.
+    <br />Bitte bestätige zudem die AGBs und Datenschutzbestimmungen.
   </div>
 
   <div id="thankyou" *ngIf="mailSent">

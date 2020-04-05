@@ -10,20 +10,33 @@
     <div id="backdrop-start"></div>
     <div class="intro-text-box-headline">Willkommen bei lokalkauf</div>
     <div class="intro-text-box">
-      Du kannst bei deinem Lieblingsladen, Restaurant oder Café nicht mehr vor
-      Ort einkaufen? Du bist ein Einzelhändler oder Gastronom und musstest
-      deinen Laden schließen?
+      Du kannst bei Deinem Lieblingsladen, Lieblingsrestaurant oder
+      Lieblingscafé nicht mehr vor Ort einkaufen?
+      <br />
+      <br />Du bist ein Einzelhändler oder Gastronom und musstest deinen Laden
+      schließen?
       <br />
       <br />Wir bringen Euch wieder zusammen.
     </div>
     <div class="divider"></div>
     <div class="intro-text-box">
-      Finde hier Deinen Lieblingsladen oder Restaurant um die Ecke und kauf
+      Finde hier Deinen Lieblingsladen oder ein Restaurant um die Ecke und kauf
       lokal:
     </div>
 
     <div id="start-input-container">
-      <div id="start-input-center">
+      <div class="start-input-center">
+        <app-lk-select
+          #startTownList
+          id="start-select"
+          name="standort"
+          [options]="standorte"
+          [placeholder]="standortPreselect"
+        >
+        </app-lk-select>
+      </div>
+
+      <div class="start-input-center">
         <!--
         <input type="hidden" id="start-input" placeholder="Coords" [(ngModel)]="coords" [value]="coovalue" />
         <input id="plz-input" #plzInput type="text" name="coordbox" placeholder="PLZ" matInput [matAutocomplete]="auto"
@@ -41,8 +54,8 @@
         </app-lk-button>
         -->
         <app-lk-button
-          id="start-button-wiesbaden"
-          (click)="reducedAction()"
+          id="start-button-intial-towns"
+          (click)="reducedAction(startTownList)"
           label="Jetzt suchen!"
         >
         </app-lk-button>
@@ -57,7 +70,7 @@
 
   <div *ngIf="!isLoggedIn">
     <div class="additional-intro-text">
-      Du bist Händler, Gastronom oder Ladenbesitzer, dann melde Dich hier an:
+      Du bist Einzelhändler oder Gastronom? Dann melde Dich hier an:
     </div>
     <div>
       <app-lk-button

@@ -1,0 +1,20 @@
+<div class="lt-select-wrapper fa fa-angle-down">
+  <select
+    [name]="name"
+    [(ngModel)]="internalValue"
+    [compareWith]="comparer"
+    (blur)="onTouched($event)"
+  >
+    <option
+      *ngIf="placeholder | async"
+      value="DEFAULT"
+      hidden
+      disabled
+      selected
+      >{{ placeholder | async }}</option
+    >
+    <option [ngValue]="item.value" *ngFor="let item of options | async">{{
+      item.display
+    }}</option>
+  </select>
+</div>

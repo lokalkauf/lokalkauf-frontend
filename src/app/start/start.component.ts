@@ -4,6 +4,7 @@ import {
   InjectionToken,
   ElementRef,
   ViewChild,
+  ɵsetCurrentInjector,
 } from '@angular/core';
 import { Link } from '../models/link';
 import { Router } from '@angular/router';
@@ -12,10 +13,12 @@ import { debounce } from 'lodash';
 
 import { GeoService } from 'src/app/services//geo.service';
 import { tap } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { ScrollStrategy } from '@angular/cdk/overlay';
 import { $ } from 'protractor';
 import { UserService } from '../services/user.service';
+import { LkSelectOptions } from '../reusables/lk-select/lk-select.component';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-start',
@@ -41,28 +44,52 @@ export class StartComponent implements OnInit {
   coords: string;
   suggestion: any;
 
+  standorte: Observable<LkSelectOptions[]>;
+  standortPreselect: Observable<string>;
+
   currentPosition: Array<number>;
   disabledLosButton: boolean;
 
   isLoggedIn = false;
 
+  preSelectedValue: any;
+
   @ViewChild('plzInput') plzInput: ElementRef;
   constructor(
     public router: Router,
     private geo: GeoService,
-    public userService: UserService
+    public userService: UserService,
+    private storageService: StorageService
   ) {
     this.search = debounce(this.search, 2000);
     this.disabledLosButton = true;
     this.userService.isLoggedIn$.subscribe((loggedin) => {
       this.isLoggedIn = loggedin;
     });
+    this.standortPreselect = of('Bitte wähle eine Stadt aus');
+    this.standorte = of([
+      {
+        key: '1',
+        display: 'Brühl',
+        value: { lat: '50.823525', lng: '6.897674' },
+      },
+      {
+        key: '2',
+        display: 'Wiesbaden',
+        value: { lat: '50.0833521', lng: '8.24145' },
+      },
+    ]);
   }
 
   showError: boolean;
 
   ngOnInit(): void {
     //    this.getUserLocation();
+
+    const city = this.storageService.loadLocation();
+    if (city) {
+      this.preSelectedValue = city;
+    }
   }
 
   registerTrader() {
@@ -107,8 +134,15 @@ export class StartComponent implements OnInit {
     }
   }
 
-  reducedAction() {
-    this.router.navigate(['/localtraders', 0, 0]);
+  reducedAction(val: any) {
+    if (val.internalValue) {
+      this.router.navigate([
+        '/localtraders',
+        val.internalValue.lat,
+        val.internalValue.lng,
+      ]);
+      this.storageService.saveLocation(val.internalValue);
+    }
   }
 
   setposition(position: Array<number>) {

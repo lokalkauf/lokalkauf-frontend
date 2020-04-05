@@ -11,7 +11,9 @@ export interface TraderProfile {
   delivery: boolean;
   email: string;
   telephone: string;
-  thumbnailUrl?: string;
+  defaultImagePath?: string;
+  storeEmail: string;
+  homepage: string;
   status: TraderProfileStatus;
 }
 
@@ -19,5 +21,5 @@ export enum TraderProfileStatus {
   CREATED = 'CREATED',
   VERIFIED = 'VERFIED',
   PUBLIC = 'PUBLIC',
-  DELETED = 'DELETED'
+  DELETED = 'DELETED',
 }

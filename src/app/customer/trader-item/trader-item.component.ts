@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, HostBinding } from '@angular/core';
 import { Trader } from '../../models/trader';
-import { Observable } from 'rxjs';
+import { Observable, of, from } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
+import { map, flatMap, distinctUntilChanged } from 'rxjs/operators';
 import { TraderProfile } from 'src/app/models/traderProfile';
+import { ImageService } from 'src/app/services/image.service';
 
 @Component({
   selector: 'app-trader-item',
@@ -17,28 +18,46 @@ export class TraderItemComponent implements OnInit {
 
   trader$: Observable<Omit<TraderProfile, 'id'>>;
 
-  constructor(private db: AngularFirestore) {}
+  thumbnail$: Observable<string>;
+
+  constructor(
+    private db: AngularFirestore,
+    private imageService: ImageService
+  ) {}
+  bgImageVariable: string;
 
   ngOnInit(): void {
     this.trader$ = this.db
       .collection('Traders')
       .doc<Omit<TraderProfile, 'id'>>(this.trader.id)
       .valueChanges()
-      .pipe(map((x) => ({ ...x, id: this.trader.id })));
+      .pipe(
+        map((trader) => {
+          return {
+            ...trader,
+            id: this.trader.id,
+          };
+        })
+      );
 
-    /*this.productAmount$ = this.db
-      .collection<Omit<Trader, 'id'>>(`Traders/${this.trader.id}/Products`)
-      .get()
-      .pipe(map((snap) => snap.size));*/
+    this.thumbnail$ = this.trader$.pipe(
+      map((trader) => trader.defaultImagePath),
+      distinctUntilChanged(),
+      flatMap(async (imagePath) =>
+        imagePath
+          ? (
+              await this.imageService.getThumbnail(
+                await this.imageService.getImage(imagePath)
+              )
+            ).url
+          : './assets/lokalkauf-pin.png'
+      )
+    );
   }
 
-  @HostBinding('style.backgroundImage')
-  getThumbnail(trader: TraderProfile) {
-    const url =
-      trader && trader.thumbnailUrl
-        ? trader.thumbnailUrl
-        : './assets/lokalkauf-pin.png';
-
-    return `url(${url})`;
+  getThumbnail(trader: TraderProfile & { thumbnailUrl: string | null }) {
+    if (trader) {
+      return { 'background-image': `url(\' ${trader.thumbnailUrl}  \')` };
+    }
   }
 }

@@ -9,17 +9,28 @@
         </app-lk-button> </a
       ><br />
     </div>
-    <div class="contactButton">
+    <div *ngIf="!trader.storeEmail" class="contactButton">
       <a [href]="'mailto:' + trader.email">
         <app-lk-button [label]="trader.email" [minSizePercent]="70">
         </app-lk-button>
       </a>
     </div>
+    <div *ngIf="trader.storeEmail" class="contactButton">
+      <a [href]="'mailto:' + trader.storeEmail">
+        <app-lk-button [label]="trader.storeEmail" [minSizePercent]="70">
+        </app-lk-button>
+      </a>
+    </div>
+    <div *ngIf="trader.homepage" class="contactButton">
+      <a [href]="trader.homepage" target="_blank">
+        <app-lk-button [label]="trader.homepage" [minSizePercent]="70">
+        </app-lk-button>
+      </a>
+    </div>
+
+    <div class="trader-contact-adress" [innerHtml]="getAdress()"></div>
   </div>
-  <form
-    [formGroup]="contactForm"
-    (ngSubmit)="onSubmit(trader.email, trader.businessname)"
-  >
+  <form [formGroup]="contactForm" (ngSubmit)="onSubmit(trader.businessname)">
     <div class="text contactformdescription">
       Oder über das Kontaktformular:<br />
       <app-lk-textarea
@@ -56,7 +67,12 @@
       </app-lk-button>
     </div>
     <br />
-    <a [routerLink]="['/localtraders/0/0']">zurück zur Händerübersicht</a>
+    <app-lk-button
+      type="button"
+      (click)="navigateBackToOverview()"
+      label="zurück zur Händerübersicht"
+    >
+    </app-lk-button>
     <br />
     <br />
   </form>

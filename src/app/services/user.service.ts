@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, combineLatest, of, from } from 'rxjs';
-import { map, switchMap, flatMap } from 'rxjs/operators';
+import { map, switchMap, filter } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { TraderProfile, TraderProfileStatus } from '../models/traderProfile';
-import { AngularFireStorage } from '@angular/fire/storage';
-import { v4 as uuid } from 'uuid';
 import { TraderService } from './trader.service';
 import { GeoService } from './geo.service';
-import { User } from 'firebase';
+import { User } from 'firebase/app';
+import { ImageService } from './image.service';
 
 export interface LoggedInUserState {
   uid: string;
@@ -26,31 +25,33 @@ export class UserService {
   constructor(
     private auth: AngularFireAuth,
     private db: AngularFirestore,
-    private storage: AngularFireStorage,
     private traderService: TraderService,
+    private imageService: ImageService,
     private geo: GeoService
   ) {
     this.isLoggedIn$ = this.auth.user.pipe(map((user) => user != null));
     this.loggedInUserState$ = this.auth.user.pipe(
-      map((user) => ({
-        uid: user.uid,
-        emailVerified: user.emailVerified,
-      })),
-      switchMap((partialData) =>
-        combineLatest([
-          of(partialData),
-          db
-            .doc<TraderProfile>(`Traders/${partialData.uid}`)
-            .valueChanges()
-            .pipe(
+      switchMap((user) =>
+        user
+          ? traderService.getTraderProfile(user.uid).pipe(
               map((traderProfile) => ({
-                ...traderProfile,
-                id: partialData.uid,
+                uid: user.uid,
+                emailVerified: user.emailVerified,
+                traderProfile,
               }))
-            ),
-        ])
-      ),
-      map(([partialData, traderProfile]) => ({ ...partialData, traderProfile }))
+            )
+          : of(null)
+      )
+    );
+    this.loggedInUserState$.pipe(
+      map((user) => {
+        if (
+          user?.emailVerified &&
+          user.traderProfile.status === TraderProfileStatus.CREATED
+        ) {
+          this.updateTraderProfile({ status: TraderProfileStatus.VERIFIED });
+        }
+      })
     );
   }
 
@@ -64,7 +65,6 @@ export class UserService {
       password
     );
 
-    // this.db.doc(`Traders/${credential.user.uid}`).set(traderProfile);
     await this.traderService.createTraderProfile(
       credential.user.uid,
       traderProfile
@@ -74,8 +74,6 @@ export class UserService {
       credential.user.uid,
       traderProfile.postcode
     );
-
-    await credential.user.sendEmailVerification();
   }
 
   async getLoggedInUserStateOnce() {
@@ -89,13 +87,13 @@ export class UserService {
     await this.db
       .doc<TraderProfile>(`Traders/${this.auth.auth.currentUser.uid}`)
       .update(partialTraderProfile);
-  }
 
-  uploadBusinessImage(file: File) {
-    const filePath = `Traders/${
-      this.auth.auth.currentUser.uid
-    }/BusinessImages/${uuid()}-${file.name}`;
-    return this.storage.upload(filePath, file);
+    if (partialTraderProfile.postcode) {
+      await this.geo.createLocationByAddress(
+        this.auth.auth.currentUser.uid,
+        partialTraderProfile.postcode
+      );
+    }
   }
 
   async login(email: string, password: string) {
@@ -134,36 +132,10 @@ export class UserService {
 
   async verifyEmail(actionCode: string) {
     await this.auth.auth.applyActionCode(actionCode);
-    await this.traderService.updateTraderProfileStatus(
-      this.auth.auth.currentUser.uid,
-      TraderProfileStatus.VERIFIED
-    );
-  }
-
-  getTraderBusinessImageThumbnails() {
-    return this.auth.user.pipe(
-      map((user) => user.uid),
-      flatMap((traderId) =>
-        from(this.traderService.getTraderBusinessImageThumbnails(traderId))
-      )
-    );
-  }
-
-  getTraderBusinessImages(): Observable<firebase.storage.Reference[]> {
-    return this.auth.user.pipe(
-      map((user) => user.uid),
-      flatMap((traderId) =>
-        from(this.traderService.getTraderBusinessImages(traderId))
-      )
-    );
   }
 
   getAuthenticatedUser(): User {
-    if (this.auth != null && this.auth.auth != null) {
-      return this.auth.auth.currentUser;
-    }
-
-    return null;
+    return this.auth?.auth?.currentUser;
   }
 
   getAuthenticatedTraderProfile(): Observable<TraderProfile> {
@@ -182,5 +154,16 @@ export class UserService {
       password
     );
     await this.auth.auth.currentUser.delete();
+  }
+
+  getAllTraderImages() {
+    return this.imageService.getAllTraderImages(this.auth.auth.currentUser.uid);
+  }
+
+  uploadTraderImage(file: File) {
+    return this.imageService.uploadTraderImage(
+      this.auth.auth.currentUser.uid,
+      file
+    );
   }
 }

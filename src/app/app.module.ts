@@ -26,6 +26,7 @@ import { TransportMainComponent } from './transport/transport-main/transport-mai
 import { ShoppingcartService } from './services/shoppingcart.service';
 import { UserService } from './services/user.service';
 import { TraderService } from './services/trader.service';
+import { ImageService } from './services/image.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReusablesModule } from './reusables/reusables.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -43,6 +44,7 @@ import { ErrorDisplayComponent } from './error-display/error-display.component';
 import { AboutUsComponent } from './about-us/about-us.compontent';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 import { FaqComponent } from './faq/faq.component';
+import { StorageService } from './services/storage.service';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -92,7 +94,7 @@ const routes: Routes = [
     HttpClientModule,
     MatPasswordStrengthModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production,
+      enabled: true,
     }),
   ],
   exports: [RouterModule],
@@ -101,14 +103,15 @@ const routes: Routes = [
     UserService,
     TraderService,
     SpinnerService,
+    StorageService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpCommunicationInterceptor,
       multi: true,
     },
     EMailService,
+    ImageService,
   ],
-
   bootstrap: [AppComponent],
 })
 export class AppModule {}

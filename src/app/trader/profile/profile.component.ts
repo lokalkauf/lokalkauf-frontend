@@ -1,18 +1,13 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { Observable, from } from 'rxjs';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 import { UserService, LoggedInUserState } from 'src/app/services/user.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Reference } from '@angular/fire/storage/interfaces';
-import { flatMap } from 'rxjs/operators';
 import { ErrorService } from 'src/app/services/error.service';
-import { TraderService } from 'src/app/services/trader.service';
-import {
-  TraderProfileStatus,
-  TraderProfile,
-} from 'src/app/models/traderProfile';
-import { v1 as uuid } from 'uuid';
-import { flipInY } from '@angular-material-extensions/password-strength';
+import { TraderProfileStatus } from 'src/app/models/traderProfile';
+import { ImageService } from 'src/app/services/image.service';
+import { ImageSource } from 'src/app/models/imageSource';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -27,6 +22,8 @@ export class ProfileComponent implements AfterViewInit {
       delivery: new FormControl(false),
       pickup: new FormControl(false),
       description: new FormControl(''),
+      storeEmail: new FormControl(''),
+      homepage: new FormControl(''),
       public: new FormControl(true),
     },
     (form) => {
@@ -48,6 +45,14 @@ export class ProfileComponent implements AfterViewInit {
     return this.dataFormGroup.get('delivery');
   }
 
+  get storeEmail() {
+    return this.dataFormGroup.get('storeEmail');
+  }
+
+  get homepage() {
+    return this.dataFormGroup.get('homepage');
+  }
+
   get public() {
     return this.dataFormGroup.get('public');
   }
@@ -55,35 +60,26 @@ export class ProfileComponent implements AfterViewInit {
   businessImage = new FormControl();
   imageUploadState?: Observable<number>;
 
-  images$: Observable<Array<[string, Reference]>>;
-  hasThumbnail: boolean;
-  traderId: string;
-  traderProfil: TraderProfile;
+  images: Array<ImageSource>;
   mailResendedMessage: string;
   saveSuccessful = false;
 
   constructor(
     private user: UserService,
-    private router: Router,
-    private route: ActivatedRoute,
+    router: Router,
     private errorService: ErrorService,
-    private traderService: TraderService
+    private imageService: ImageService
   ) {
-    this.loggedInUserState$ = user.loggedInUserState$;
+    this.loggedInUserState$ = user.loggedInUserState$.pipe(
+      filter((loggedInUser) => loggedInUser != null)
+    );
     user.isLoggedIn$.subscribe((isLoggedIn) => {
       if (!isLoggedIn) {
         router.navigateByUrl('/trader/login');
       } else {
-        this.user.getAuthenticatedTraderProfile().subscribe(async (tp) => {
-          this.traderProfil = tp;
-          this.hasThumbnail = tp.thumbnailUrl != null;
-          this.traderId = this.user.getAuthenticatedUser().uid;
-          await this.updateTraderThumbnail();
-        });
+        this.loadImages();
       }
     });
-
-    this.loadImages();
   }
 
   ngAfterViewInit() {
@@ -96,6 +92,12 @@ export class ProfileComponent implements AfterViewInit {
           emitEvent: false,
         });
         this.description.setValue(loggedInUser.traderProfile.description, {
+          emitEvent: false,
+        });
+        this.storeEmail.setValue(loggedInUser.traderProfile.storeEmail, {
+          emitEvent: false,
+        });
+        this.homepage.setValue(loggedInUser.traderProfile.homepage, {
           emitEvent: false,
         });
         this.public.setValue(
@@ -121,14 +123,15 @@ export class ProfileComponent implements AfterViewInit {
 
   async updateProfile() {
     await this.user.updateTraderProfile({
-      description: this.description.value,
-      delivery: this.delivery.value,
-      pickup: this.pickup.value,
+      description: this.description.value || null,
+      delivery: this.delivery.value || null,
+      pickup: this.pickup.value || null,
+      storeEmail: this.storeEmail.value || null,
+      homepage: this.homepage.value || null,
       status: this.public.value
         ? TraderProfileStatus.PUBLIC
         : TraderProfileStatus.VERIFIED,
     });
-    await this.updateTraderThumbnail();
 
     this.dataFormGroup.markAsPristine();
     this.saveSuccessful = true;
@@ -138,37 +141,24 @@ export class ProfileComponent implements AfterViewInit {
   }
 
   async loadImages() {
-    this.images$ = this.user
-      .getTraderBusinessImages()
-      .pipe(
-        flatMap((images) =>
-          from(
-            Promise.all(
-              images.map((image) =>
-                Promise.all([image.getDownloadURL(), image])
-              )
-            )
-          )
-        )
-      );
+    this.images = await this.user.getAllTraderImages();
   }
 
   async uploadImage() {
     try {
       const file = this.businessImage.value;
-
-      // workaround for missing file.name.
-      // upload component should be refactored
-      file.name = 'WR' + uuid() + 'WR' + file.type.replace('image/', '.');
-
-      const task = this.user.uploadBusinessImage(file);
+      const task = this.user.uploadTraderImage(file);
 
       this.imageUploadState = task.percentageChanges();
-      await task.then(async (i) => (this.imageUploadState = null));
+      await task;
+      this.imageUploadState = null;
       this.businessImage.setValue(undefined);
 
-      await this.updateTraderThumbnail();
       await this.loadImages();
+
+      if (this.images.length === 1) {
+        await this.setDefaultImage(this.images[0]);
+      }
     } catch (e) {
       this.errorService.publishByText(
         'Upload fehlgeschlagen',
@@ -177,54 +167,22 @@ export class ProfileComponent implements AfterViewInit {
     }
   }
 
-  async updateTraderThumbnail() {
-    if (!this.hasThumbnail && this.traderId) {
-      this.user.getTraderBusinessImageThumbnails().subscribe(async (images) => {
-        if (images && images.length > 0) {
-          const url = await images[0].getDownloadURL();
-          this.traderService.updateTraderThumbnail(this.traderId, url);
-        }
-      });
-    }
-  }
-
-  async deleteImage(image: Reference) {
-    await image.delete();
+  async deleteImage(image: ImageSource, isDefaultImage: boolean) {
+    await this.imageService.delteImageByUrl(image.url);
     await this.loadImages();
+    if (isDefaultImage && this.images.length > 0) {
+      await this.setDefaultImage(this.images[0]);
+    }
+    if (isDefaultImage && this.images.length === 0) {
+      await this.removeDefaultImage();
+    }
   }
 
-  async setThumbnail(image: Reference) {
-    const tid = this.user.getAuthenticatedUser().uid;
-    const thumbnails = await this.traderService.getTraderBusinessImageThumbnails(
-      tid
-    );
-
-    const name = image.name.substring(0, image.name.lastIndexOf('.'));
-
-    if (thumbnails && thumbnails.length > 0) {
-      thumbnails.forEach(async (t) => {
-        const url = (await t.getDownloadURL()) as string;
-
-        if (url.indexOf(name) > -1) {
-          this.traderService.updateTraderThumbnail(tid, url);
-        }
-      });
-    }
-
-    // this.traderService.updateTraderThumbnail(this.traderId, url);
+  async setDefaultImage(image: ImageSource) {
+    await this.user.updateTraderProfile({ defaultImagePath: image.path });
   }
 
-  isSelectedThumbnail(image: Reference) {
-    let isThumbnail = false;
-
-    if (this.traderProfil) {
-      const name = image.name.substring(0, image.name.lastIndexOf('.'));
-      const currentThumbnail = this.traderProfil.thumbnailUrl
-        ? this.traderProfil.thumbnailUrl
-        : '###';
-      isThumbnail = currentThumbnail.indexOf(name) > -1;
-    }
-
-    return isThumbnail ? 'icn-success' : 'icn-disabled';
+  async removeDefaultImage() {
+    await this.user.updateTraderProfile({ defaultImagePath: '' });
   }
 }

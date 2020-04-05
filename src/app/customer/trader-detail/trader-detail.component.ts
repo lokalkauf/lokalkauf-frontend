@@ -12,6 +12,7 @@ import { EMailService } from '../../services/email.service';
 import { ErrorService } from 'src/app/services/error.service';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { TraderService } from 'src/app/services/trader.service';
+import { ImageService } from 'src/app/services/image.service';
 
 @Component({
   selector: 'app-trader-detail',
@@ -32,7 +33,8 @@ export class TraderDetailComponent implements OnInit {
     private router: Router,
     private errorService: ErrorService,
     private storage: AngularFireStorage,
-    private traderService: TraderService
+    private traderService: TraderService,
+    private imageService: ImageService
   ) {}
 
   ngOnInit(): void {
@@ -47,8 +49,10 @@ export class TraderDetailComponent implements OnInit {
     );
 
     this.traderImages$ = this.route.params.pipe(
-      flatMap((params) =>
-        this.traderService.getTraderBusinessImageUrls(params.id)
+      flatMap(
+        async (params) =>
+          await this.imageService.getAllTraderImageUrls(params.id)
+        // this.traderService.getTraderBusinessImageUrls(params.id)
       ),
       map((x) => x.map((y) => new CarouselEntry(y)))
     );

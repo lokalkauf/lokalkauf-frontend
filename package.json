@@ -1,6 +1,6 @@
 {
   "name": "lokalkauf-frontend",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -29,10 +29,13 @@
     "blueimp-load-image": "^2.28.0",
     "email-validator": "^2.0.4",
     "firebase": "^7.12.0",
+    "firebase-admin": "^8.10.0",
+    "firebase-functions": "^3.6.0",
     "geofire": "^5.0.1",
     "geofirestore": "^3.4.1",
     "googleapis": "^48.0.0",
     "leaflet": "^1.6.0",
+    "nodemailer": "^6.4.6",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "uuid": "^7.0.2",

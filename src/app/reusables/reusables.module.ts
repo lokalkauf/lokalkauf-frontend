@@ -17,6 +17,7 @@ import { FullscreenModalComponent } from './fullscreen-modal/fullscreen-modal.co
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { LkSelectComponent } from './lk-select/lk-select.component';
 
 const routes: Routes = [];
 
@@ -30,6 +31,7 @@ const routes: Routes = [];
     ImageCarouselComponent,
     LkPageTitleComponent,
     LkCheckboxComponent,
+    LkSelectComponent,
     ImageChooserComponent,
     FullscreenModalComponent,
   ],
@@ -52,6 +54,7 @@ const routes: Routes = [];
     LkTextareaComponent,
     LkPageTitleComponent,
     LkCheckboxComponent,
+    LkSelectComponent,
     ImageChooserComponent,
     ImageCarouselComponent,
     FullscreenModalComponent,

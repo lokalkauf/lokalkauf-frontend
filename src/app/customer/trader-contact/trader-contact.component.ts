@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { Trader } from '../../models/trader';
 import { EMail } from '../../models/email';
@@ -10,6 +11,7 @@ import { Observable } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ErrorService } from 'src/app/services/error.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-trader-contact',
@@ -34,19 +36,38 @@ export class TraderContactComponent implements OnInit {
     return this.contactForm.get('mail_message');
   }
 
+  get trader_mail() {
+    if (this.trader.storeEmail) {
+      return this.trader.storeEmail;
+    } else {
+      return this.trader.email;
+    }
+  }
+
   get agbRead() {
     return this.contactForm.get('agbRead');
   }
 
+  getAdress() {
+    // check for at least one mandantory field, if you visit the profile detail page at least once
+    if (this.trader.city) {
+      return `<span>Adresse</span> <br />${this.trader.street} ${this.trader.number}
+      <br />${this.trader.postcode} ${this.trader.city}`;
+    }
+  }
+
   constructor(
     private router: Router,
+    public location: Location,
     private mailService: EMailService,
-    private errorService: ErrorService
+    private errorService: ErrorService,
+    private storageService: StorageService
   ) {}
 
   ngOnInit(): void {}
 
-  async onSubmit(receiverEmail: string, receiverName: string) {
+  async onSubmit(receiverName: string) {
+    const receiverEmail = this.trader_mail;
     if (!this.agbRead) {
       this.errorService.publishByText(
         'AGB und Datenschutzerklärung wurden nicht gelesen',
@@ -81,6 +102,15 @@ export class TraderContactComponent implements OnInit {
         'Aufgrund eines Systemfehlers konnte die Nachricht an ' +
           'den Händler nicht verschickt werden. Bitte versuche es erneut oder kontaktiere den Support.'
       );
+    }
+  }
+
+  navigateBackToOverview() {
+    const city = this.storageService.loadLocation();
+    if (city) {
+      this.router.navigate(['/localtraders', city.lat, city.lng]);
+    } else {
+      this.router.navigate(['/']);
     }
   }
 }

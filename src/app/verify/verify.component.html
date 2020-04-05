@@ -1,5 +1,5 @@
 <div class="verify">
-  <div *ngIf="mode === 'resetPassword'">
+  <div *ngIf="stage === 'RESET_PASSWORD_VERIFIED'">
     <h2>
       Bitte geben Sie Ihr neues Passwort ein:
     </h2>
@@ -54,7 +54,7 @@
       </div>
     </form>
   </div>
-  <div *ngIf="mode === 'passwordChangeCompleted'">
+  <div *ngIf="stage === 'RESET_PASSWORD_COMPLETED'">
     <h2>
       Dein Password wurde erfolgreich geändert.
     </h2>
@@ -64,7 +64,7 @@
       </app-lk-button>
     </div>
   </div>
-  <div *ngIf="mode === 'recoverEmail'">
+  <div *ngIf="stage === 'RECOVER_EMAIL_COMPLETED'">
     <h2>
       Deine vorherige E-Mail-Adresse wurde wiederhergestellt.
     </h2>
@@ -74,7 +74,7 @@
       </app-lk-button>
     </div>
   </div>
-  <div *ngIf="mode === 'verifyEmail'">
+  <div *ngIf="stage === 'VERIFY_EMAIL_COMPLETED'">
     <h2>
       Deine E-Mail-Adresse wurde erfolgreich bestätigt.
     </h2>
@@ -84,7 +84,7 @@
       </app-lk-button>
     </div>
   </div>
-  <div *ngIf="mode === 'invalid'">
+  <div *ngIf="stage === 'INVALID_ACTION'">
     <h2>
       Deine Anfrage war ungültig.
     </h2>

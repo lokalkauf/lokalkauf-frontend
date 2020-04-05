@@ -43,10 +43,30 @@
         formControlName="description"
       ></app-lk-textarea>
     </div>
-    <div *ngIf="images$ | async as images">
+    <div>
+      Schritt 3: Hat dein Geschäft eine eigene E-Mail Adresse?
+    </div>
+    <div>
+      <app-lk-input
+        placeholder="E-Mail"
+        formControlName="storeEmail"
+      ></app-lk-input>
+    </div>
+    <div>
+      Schritt 4: Hast du eventuell eine Homepage? Dann trage es doch hier ein:
+    </div>
+    <div>
+      <app-lk-input
+        placeholder="Homepage"
+        formControlName="homepage"
+      ></app-lk-input>
+    </div>
+    <div *ngIf="images">
       <div>
-        Schritt 3: Zu guter Letzt lade Bilder von Deinem Laden oder Deinem
-        Angebot hoch (du kannst maximal 3 Bilder hochladen):
+        Schritt 5: Zu guter Letzt lade Bilder von Deinem Laden oder Deinem
+        Angebot hoch (Du kannst maximal 3 Bilder hochladen und mit Klick auf das
+        Bildzeichen rechts das Bild markieren, dass du als Startbild setzen
+        möchtest):
       </div>
       <div *ngIf="images.length < 3">
         <app-image-chooser [formControl]="businessImage"></app-image-chooser>
@@ -70,23 +90,41 @@
         <div
           class="image-item"
           *ngFor="let image of images"
-          [ngStyle]="{ 'background-image': 'url(' + image[0] + ')' }"
+          [ngStyle]="{ 'background-image': 'url(' + image.url + ')' }"
         >
           <div class="btns">
             <button
-              (click)="deleteImage(image[1])"
+              type="button"
+              (click)="
+                deleteImage(
+                  image,
+                  image.path ===
+                    loggedInUserState.traderProfile.defaultImagePath
+                )
+              "
               mat-mini-fab
               class="md-mini icn-danger"
             >
-              <mat-icon class="cicon">delete</mat-icon>
+              <mat-icon class="cicon" title="Das Bild löschen.."
+                >delete</mat-icon
+              >
             </button>
             <button
-              (click)="setThumbnail(image[1])"
+              type="button"
+              (click)="setDefaultImage(image)"
               mat-mini-fab
               class="md-mini"
-              [ngClass]="isSelectedThumbnail(image[1])"
+              [ngClass]="
+                image.path === loggedInUserState.traderProfile.defaultImagePath
+                  ? 'icn-success'
+                  : 'icn-disabled'
+              "
             >
-              <mat-icon class="cicon">photo_library</mat-icon>
+              <mat-icon
+                class="cicon"
+                title="Dieses Bild in der Übersicht anzeigen"
+                >photo_library</mat-icon
+              >
             </button>
             <!-- <button mat-fab class="md-mini icn-disabled">
               <mat-icon>photo_library</mat-icon>
@@ -98,7 +136,7 @@
 
     <div class="buton-and-success">
       <div>
-        Schritt 4: Dein Profil für die Kunden öffentlich verfügbar machen:
+        Schritt 6: Dein Profil für die Kunden öffentlich verfügbar machen:
       </div>
       <div class="dense">
         <label>

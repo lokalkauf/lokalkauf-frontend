@@ -19,13 +19,13 @@ import { ErrorService } from 'src/app/services/error.service';
 export class ImageChooserComponent implements OnInit, ControlValueAccessor {
   uploadState: Observable<number> | null = null;
 
-  selectedFile: Blob;
+  selectedFile: File;
   selectedFileDataUrl: string;
 
   constructor(private errorService: ErrorService) {}
 
   private onTouchedCallback: () => void = () => {};
-  private onChangeCallback: (file: Blob) => void = () => {};
+  private onChangeCallback: (file: File) => void = () => {};
 
   ngOnInit(): void {}
 
@@ -34,14 +34,14 @@ export class ImageChooserComponent implements OnInit, ControlValueAccessor {
     this.fileChanged(file, true);
   }
 
-  async fileChanged(file?: File | Blob, dispatch = false) {
+  async fileChanged(file?: File, dispatch = false) {
     if (!file) {
       this.selectedFile = undefined;
       this.selectedFileDataUrl = undefined;
       return;
     }
 
-    const blob = await new Promise<Blob>((resolve) => {
+    this.selectedFile = await new Promise<File>((resolve) => {
       loadImage(
         file,
         (image) => {
@@ -55,7 +55,13 @@ export class ImageChooserComponent implements OnInit, ControlValueAccessor {
             return;
           }
 
-          image.toBlob(resolve);
+          const pngFilename =
+            file.name.split('/').pop().split('.').shift() + '.png';
+
+          image.toBlob(
+            (b) => resolve(new File([b], pngFilename, { type: 'image/png' })),
+            'image/png'
+          );
           this.selectedFileDataUrl = image.toDataURL('image/png');
         },
         {
@@ -65,10 +71,8 @@ export class ImageChooserComponent implements OnInit, ControlValueAccessor {
         }
       );
     });
-
-    this.selectedFile = blob;
     if (dispatch) {
-      this.onChangeCallback(blob);
+      this.onChangeCallback(this.selectedFile);
     }
   }
 
@@ -76,7 +80,7 @@ export class ImageChooserComponent implements OnInit, ControlValueAccessor {
     this.onTouchedCallback();
   }
 
-  writeValue(imageFile?: Blob): void {
+  writeValue(imageFile?: File): void {
     if (imageFile) {
       this.fileChanged(imageFile);
     } else {
