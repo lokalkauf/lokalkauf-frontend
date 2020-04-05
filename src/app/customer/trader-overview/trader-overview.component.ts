@@ -20,7 +20,7 @@ import {
   styleUrls: ['./trader-overview.component.scss'],
 })
 export class TraderOverviewComponent implements OnInit {
-  traders$: Array<TraderProfile> = new Array<TraderProfile>();
+  traders: TraderProfile[] = [];
 
   STATIC_LOCATION: number[] = [50.083352, 8.241451]; // 51.54136, 7.687467
   STATIC_RADIUS = 10;
@@ -72,9 +72,7 @@ export class TraderOverviewComponent implements OnInit {
       });
   }
 
-  updateLocations(trlocaitons: Array<Location>) {
-    this.traders$ = new Array<TraderProfile>();
-
+  async updateLocations(trlocaitons: Array<Location>) {
     if (!trlocaitons || trlocaitons.length < 1) {
       return;
     }
@@ -84,39 +82,15 @@ export class TraderOverviewComponent implements OnInit {
         arr.findIndex((t) => t.traderId === thing.traderId) === i
     );
 
-    // a lot of magic, couse of firebase limitation loading 10 ids in query at once
     const ids = distinctLocations.map((l) => l.traderId);
-    const chunked = this.getChunks(ids, 2);
 
-    for (const chunk of chunked) {
-      this.traderService
-        .getTraderProfiles(chunk, TraderProfileStatus.PUBLIC)
-        .subscribe((t: TraderProfile[]) => {
-          if (t && t.length > 0) {
-            t.forEach((trader) => {
-              if (
-                !this.traders$.find(
-                  (f) =>
-                    f.businessname === trader.businessname &&
-                    f.city === trader.city &&
-                    f.postcode === trader.postcode
-                )
-              ) {
-                this.traders$.push(trader);
-              }
-            });
-          }
-        });
-    }
-  }
+    const traderProfiles = await this.traderService.getTraderProfiles(
+      ids,
+      TraderProfileStatus.PUBLIC
+    );
 
-  getChunks(arr, size) {
-    return arr.reduce((acc, _, i) => {
-      if (i % size === 0) {
-        acc.push(arr.slice(i, i + size));
-      }
-
-      return acc;
-    }, []);
+    this.traders = traderProfiles.sort((traderA, traderB) =>
+      traderA.businessname.localeCompare(traderB.businessname)
+    );
   }
 }

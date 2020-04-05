@@ -84,16 +84,10 @@ export class UserService {
   }
 
   async updateTraderProfile(partialTraderProfile: Partial<TraderProfile>) {
-    await this.db
-      .doc<TraderProfile>(`Traders/${this.auth.auth.currentUser.uid}`)
-      .update(partialTraderProfile);
-
-    if (partialTraderProfile.postcode) {
-      await this.geo.createLocationByAddress(
-        this.auth.auth.currentUser.uid,
-        partialTraderProfile.postcode
-      );
-    }
+    this.traderService.updateTraderProfile(
+      partialTraderProfile,
+      this.auth.auth.currentUser.uid
+    );
   }
 
   async login(email: string, password: string) {
@@ -149,7 +143,7 @@ export class UserService {
   }
 
   async deleteUser(password: string) {
-    const credential = await this.auth.auth.signInWithEmailAndPassword(
+    await this.auth.auth.signInWithEmailAndPassword(
       this.auth.auth.currentUser.email,
       password
     );
