@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { isNumber } from 'util';
 import { debounce } from 'lodash';
 
-import { GeoService } from 'src/app/services//geo.service';
+import { GeoService } from 'src/app/services/geo.service';
 import { tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { ScrollStrategy } from '@angular/cdk/overlay';
@@ -71,12 +71,42 @@ export class StartComponent implements OnInit {
       {
         key: '1',
         display: 'Brühl',
-        value: { lat: '50.823525', lng: '6.897674' },
+        value: { lat: '50.823525', lng: '6.897674', rad: 10 },
       },
       {
         key: '2',
         display: 'Wiesbaden',
-        value: { lat: '50.0833521', lng: '8.24145' },
+        value: { lat: '50.0833521', lng: '8.24145', rad: 10 },
+      },
+      {
+        key: '3',
+        display: 'Regionalverband Saarbrücken',
+        value: { lat: '49.2789', lng: '6.9437', rad: 25 },
+      },
+      {
+        key: '4',
+        display: 'Saarpfalz-Kreis',
+        value: { lat: '49.1805', lng: '7.2194', rad: 25 },
+      },
+      {
+        key: '5',
+        display: 'Neunkirchen',
+        value: { lat: '49.3518', lng: '7.1864', rad: 25 },
+      },
+      {
+        key: '6',
+        display: ' St. Wendel',
+        value: { lat: '49.46667', lng: '7.166669', rad: 25 },
+      },
+      {
+        key: '7',
+        display: 'Saarlouis',
+        value: { lat: '49.3135', lng: '6.7523', rad: 25 },
+      },
+      {
+        key: '8',
+        display: 'Merzig-Wadern',
+        value: { lat: '49.4572', lng: '6.6867', rad: 35 },
       },
     ]);
   }
@@ -125,11 +155,12 @@ export class StartComponent implements OnInit {
   }
 
   action() {
-    if (this.currentPosition && this.currentPosition.length === 2) {
+    if (this.currentPosition && this.currentPosition.length === 3) {
       this.router.navigate([
         '/localtraders',
         this.currentPosition[0],
         this.currentPosition[1],
+        this.currentPosition[2],
       ]);
     }
   }
@@ -140,6 +171,7 @@ export class StartComponent implements OnInit {
         '/localtraders',
         val.internalValue.lat,
         val.internalValue.lng,
+        val.internalValue.rad,
       ]);
       this.storageService.saveLocation(val.internalValue);
     }

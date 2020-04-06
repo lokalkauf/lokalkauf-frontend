@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 export interface Location {
   lat: string;
   lng: string;
+  rad?: number;
 }
 
 @Injectable()

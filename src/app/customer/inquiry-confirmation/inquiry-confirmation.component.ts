@@ -15,7 +15,12 @@ export class InquiryConfirmationComponent implements OnInit {
   redirectToStart() {
     const city = this.storageService.loadLocation();
     if (city) {
-      this.router.navigate(['/localtraders', city.lat, city.lng]);
+      this.router.navigate([
+        '/localtraders',
+        city.lat,
+        city.lng,
+        city.rad ? city.rad : 10,
+      ]);
     } else {
       this.router.navigate(['/']);
     }

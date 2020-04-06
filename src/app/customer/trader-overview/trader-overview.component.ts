@@ -24,6 +24,7 @@ export class TraderOverviewComponent implements OnInit {
 
   STATIC_LOCATION: number[] = [50.083352, 8.241451]; // 51.54136, 7.687467
   STATIC_RADIUS = 10;
+  paramRadius: number;
 
   locations: Array<Location>;
 
@@ -42,7 +43,7 @@ export class TraderOverviewComponent implements OnInit {
           Number.parseFloat(params.lng),
         ];
         // this.geo.setUserPosition(pos);
-
+        this.paramRadius = Number.parseFloat(params.rad);
         this.loadTmpLocations(pos);
       } catch {
         console.log('no location available');
@@ -51,8 +52,9 @@ export class TraderOverviewComponent implements OnInit {
   }
 
   loadTmpLocations(position: number[]) {
+    const radius = this.paramRadius ? this.paramRadius : this.STATIC_RADIUS;
     this.geo
-      .getLocations(this.STATIC_RADIUS, position)
+      .getLocations(radius, position)
       .then((value: GeoQuerySnapshot) => {
         this.locations = new Array<Location>();
 
