@@ -4,12 +4,13 @@ import { firestore } from 'firebase';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TraderProfile, TraderProfileStatus } from '../models/traderProfile';
+import { GeoService } from './geo.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TraderService {
-  constructor(private db: AngularFirestore) {}
+  constructor(private db: AngularFirestore, private geo: GeoService) {}
 
   async createTraderProfile(id: string, trader: TraderProfile) {
     await this.db.collection('Traders').doc(id).set(trader);
@@ -28,25 +29,31 @@ export class TraderService {
       );
   }
 
-  getTraderProfiles(
+  async getTraderProfiles(
     traderIds: Array<string>,
     status: TraderProfileStatus
-  ): Observable<Array<TraderProfile>> {
-    return this.db
-      .collection<TraderProfile>('Traders', (ref) =>
-        ref
-          .where(firestore.FieldPath.documentId(), 'in', traderIds)
+  ): Promise<Array<TraderProfile>> {
+    const chunks = this.getChunks(traderIds, 10);
+
+    const snapshots = await Promise.all(
+      chunks.map((chunk) =>
+        this.db
+          .collection<Omit<TraderProfile, 'id'>>('Traders')
+          .ref.where(firestore.FieldPath.documentId(), 'in', chunk)
           .where('status', '==', status)
+          .get()
       )
-      .snapshotChanges()
-      .pipe(
-        map((actions) => {
-          return actions.map((a) => {
-            const data = a.payload.doc.data();
-            return { ...data, id: a.payload.doc.id };
-          });
-        })
-      );
+    );
+
+    const docs = snapshots.reduce(
+      (combined, snapshot) => combined.concat(snapshot.docs),
+      [] as firestore.QueryDocumentSnapshot<firestore.DocumentData>[]
+    );
+
+    return docs.map((doc) => ({
+      ...(doc.data() as Omit<TraderProfile, 'id'>),
+      id: doc.id,
+    })) as TraderProfile[];
   }
 
   async updateTraderProfileStatus(
@@ -56,5 +63,31 @@ export class TraderService {
     await this.db.collection('Traders').doc(traderId).update({
       status: newStatus,
     });
+  }
+
+  async updateTraderProfile(
+    partialTraderProfile: Partial<TraderProfile>,
+    traderId: string
+  ) {
+    await this.db
+      .doc<TraderProfile>(`Traders/${traderId}`)
+      .update(partialTraderProfile);
+
+    if (partialTraderProfile.postcode) {
+      await this.geo.createLocationByAddress(
+        traderId,
+        partialTraderProfile.postcode
+      );
+    }
+  }
+
+  private getChunks<T>(arr: T[], size: number): T[][] {
+    return arr.reduce((acc, _, i) => {
+      if (i % size === 0) {
+        acc.push(arr.slice(i, i + size));
+      }
+
+      return acc;
+    }, []);
   }
 }

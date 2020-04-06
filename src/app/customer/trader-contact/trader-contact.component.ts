@@ -86,11 +86,12 @@ export class TraderContactComponent implements OnInit {
       fromName: this.mail_contact.value,
       id: 0,
       message: this.mail_message.value,
-      title: 'Jemand hat eine Anfrage an Sie gestellt',
+      title: 'Jemand hat Dir eine Anfrage gestellt',
       toEMail: receiverEmail,
       toName: receiverName,
     };
 
+    console.log(email);
     // TODO finalize call for backend sending mail
 
     try {

@@ -59,7 +59,12 @@
       <app-lk-input
         placeholder="Homepage"
         formControlName="homepage"
+        pattern="https?://.+"
       ></app-lk-input>
+    </div>
+    <div class="warning" *ngIf="homepage.invalid">
+      Deine Homepage muss mit http:// oder https:// beginnen, damit es aufrufbar
+      ist.
     </div>
     <div *ngIf="images">
       <div>

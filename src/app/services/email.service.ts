@@ -27,6 +27,7 @@ export class EMailService {
       fromName: formdata.fromName,
       fromEmail: formdata.fromEMail,
       toEmail: formdata.toEMail,
+      toName: formdata.toName,
       title: formdata.title,
       message: formdata.message,
       mailType,

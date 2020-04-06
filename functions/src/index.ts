@@ -44,6 +44,7 @@ export const sendMail = functions.https.onCall(async (data, context) => {
   const accessToken = tokens.credentials.access_token;
 
   let htmlOutput = '';
+  let cpSubject = '';
   if (data.mailType == 'feedback') {
     htmlOutput = `<div style="text-align:center;">
     <img src="https://lokalkauf-staging.web.app/assets/logo.png" style="width:300px;height:100px">
@@ -55,6 +56,7 @@ export const sendMail = functions.https.onCall(async (data, context) => {
         <br>
         <b> Dein LokalKauf Team </b>
 </div>`;
+    cpSubject = 'Kopie Deines Feedbacks';
   } else if (data.mailType == 'trader-contact') {
     htmlOutput = `<div style="text-align:center;">
     <img src="https://lokalkauf-staging.web.app/assets/logo.png" style="width:300px;height:100px"/>
@@ -68,6 +70,7 @@ export const sendMail = functions.https.onCall(async (data, context) => {
           <br>
           <img src="https://lokalkauf-staging.web.app/assets/thankyou-image.png"/>
     </div>`;
+    cpSubject = 'Kopie Deiner Nachricht an das Geschäft: ' + data.toName;
   }
 
   const mailOptions = {
@@ -83,7 +86,7 @@ export const sendMail = functions.https.onCall(async (data, context) => {
   const cpMailOptions = {
     from: 'LokalKauf < info@lokalkauf.org >',
     to: data.fromEmail,
-    subject: 'Kopie Deiner Nachricht: ' + data.title,
+    subject: cpSubject,
     html:
       `<h2>Hi, dies ist die Kopie Deiner Nachricht.</h2>
            <hr>
