@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
@@ -81,6 +82,7 @@ const routes: Routes = [
     BrowserModule,
     CommonModule,
     AppRoutingModule,
+    FlexLayoutModule,
     MatToolbarModule,
     MatIconModule,
     MatSidenavModule,

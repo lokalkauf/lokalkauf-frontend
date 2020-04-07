@@ -85,9 +85,11 @@
   </mat-sidenav-content>
 </mat-sidenav-container> -->
 
-<mat-toolbar color="primary" class="fixed-header">
+<mat-toolbar color="default" class="fixed-header">
   <mat-toolbar-row>
-    <h1>SimpleCRM</h1>
+    <a mat-button [routerLink]="'/'">
+      <img src="/assets/lokalkaufLogoApp.png" />
+    </a>
     <span class="menu-spacer"></span>
     <div fxHide.lt-sm>
       <a mat-button [routerLink]="'/accounts'" routerLinkActive="active">
@@ -96,8 +98,15 @@
       <a mat-button [routerLink]="'/create-account'"> Create Account </a>
       <a mat-button [routerLink]="'/contacts'"> Contacts </a>
     </div>
-    <mat-icon>account_circle</mat-icon>
-    <button mat-icon-button (click)="sidenav.toggle()" fxHide.gt-xs>
+    <button mat-mini-fab class="avatar">
+      <mat-icon>face</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      (click)="sidenav.toggle()"
+      class="icon-button-large"
+      fxHide.gt-xs
+    >
       <mat-icon>menu</mat-icon>
     </button>
   </mat-toolbar-row>

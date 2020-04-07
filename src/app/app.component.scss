@@ -2,6 +2,10 @@
   flex: 1 1 auto;
 }
 
+mat-toolbar {
+  background-color: transparent;
+}
+
 mat-toolbar-row {
   max-width: 1024px;
   margin-left: auto;
@@ -18,6 +22,12 @@ mat-sidenav-content {
 mat-sidenav-container {
   background-color: transparent;
   flex-grow: 1;
+}
+
+button.mat-mini-fab.avatar {
+  box-shadow: none;
+  background-color: #eee;
+  color: #888;
 }
 
 // @import '../variables.scss';
