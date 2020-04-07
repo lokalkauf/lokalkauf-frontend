@@ -47,6 +47,9 @@ export class StartComponent implements OnInit {
   standorte: Observable<LkSelectOptions[]>;
   standortPreselect: Observable<string>;
 
+  storeTypes: Observable<LkSelectOptions[]>;
+  storeTypePreselect: Observable<string>;
+
   currentPosition: Array<number>;
   disabledLosButton: boolean;
 
@@ -107,6 +110,49 @@ export class StartComponent implements OnInit {
         key: '8',
         display: 'Merzig-Wadern',
         value: { lat: '49.4572', lng: '6.6867', rad: 35 },
+      },
+    ]);
+    this.storeTypePreselect = of('Nach was bist du auf der Suche?');
+    this.storeTypes = of([
+      {
+        key: '1',
+        display: 'Gastronomie',
+        value: 'gastronomie',
+      },
+      {
+        key: '2',
+        display: 'Lebensmittel',
+        value: 'lebensmittel',
+      },
+      {
+        key: '3',
+        display: 'Fashion',
+        value: 'fashion',
+      },
+      {
+        key: '4',
+        display: 'Buchhandlung',
+        value: 'buchhandlung',
+      },
+      {
+        key: '5',
+        display: 'Home & Decor',
+        value: 'homedecor',
+      },
+      {
+        key: '6',
+        display: 'Blumen & Garten',
+        value: 'blumengarten',
+      },
+      {
+        key: '7',
+        display: 'Handwerk',
+        value: 'handwerk',
+      },
+      {
+        key: '8',
+        display: 'Sonstiges',
+        value: 'sonstiges',
       },
     ]);
   }
