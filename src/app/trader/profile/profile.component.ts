@@ -175,42 +175,47 @@ export class ProfileComponent implements AfterViewInit {
             emitEvent: false,
           }
         );
-        this.lebensmittel.setValue(
-          loggedInUser.traderProfile.storeType.lebensmittel,
-          {
+        if (loggedInUser.traderProfile.storeType) {
+          this.lebensmittel.setValue(
+            loggedInUser.traderProfile.storeType.lebensmittel,
+            {
+              emitEvent: false,
+            }
+          );
+          this.fashion.setValue(loggedInUser.traderProfile.storeType.fashion, {
             emitEvent: false,
-          }
-        );
-        this.fashion.setValue(loggedInUser.traderProfile.storeType.fashion, {
-          emitEvent: false,
-        });
-        this.buchhandlung.setValue(
-          loggedInUser.traderProfile.storeType.buchhandlung,
-          {
-            emitEvent: false,
-          }
-        );
-        this.homedecor.setValue(
-          loggedInUser.traderProfile.storeType.homedecor,
-          {
-            emitEvent: false,
-          }
-        );
-        this.blumengarten.setValue(
-          loggedInUser.traderProfile.storeType.blumengarten,
-          {
-            emitEvent: false,
-          }
-        );
-        this.handwerk.setValue(loggedInUser.traderProfile.storeType.handwerk, {
-          emitEvent: false,
-        });
-        this.sonstiges.setValue(
-          loggedInUser.traderProfile.storeType.sonstiges,
-          {
-            emitEvent: false,
-          }
-        );
+          });
+          this.buchhandlung.setValue(
+            loggedInUser.traderProfile.storeType.buchhandlung,
+            {
+              emitEvent: false,
+            }
+          );
+          this.homedecor.setValue(
+            loggedInUser.traderProfile.storeType.homedecor,
+            {
+              emitEvent: false,
+            }
+          );
+          this.blumengarten.setValue(
+            loggedInUser.traderProfile.storeType.blumengarten,
+            {
+              emitEvent: false,
+            }
+          );
+          this.handwerk.setValue(
+            loggedInUser.traderProfile.storeType.handwerk,
+            {
+              emitEvent: false,
+            }
+          );
+          this.sonstiges.setValue(
+            loggedInUser.traderProfile.storeType.sonstiges,
+            {
+              emitEvent: false,
+            }
+          );
+        }
 
         this.public.setValue(
           loggedInUser.traderProfile.status === TraderProfileStatus.PUBLIC,
