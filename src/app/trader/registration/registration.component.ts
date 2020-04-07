@@ -186,6 +186,16 @@ export class RegistrationComponent implements OnInit {
       storeEmail: '',
       homepage: '',
       status: TraderProfileStatus.CREATED,
+      storeType: {
+        gastronomie: false,
+        lebensmittel: false,
+        fashion: false,
+        buchhandlung: false,
+        homedecor: false,
+        blumengarten: false,
+        handwerk: false,
+        sonstiges: false,
+      },
     };
 
     const traderProfileUpdate: Partial<TraderProfile> = {

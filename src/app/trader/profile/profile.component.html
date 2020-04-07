@@ -34,10 +34,54 @@
       class="warning"
       *ngIf="dataFormGroup.errors && dataFormGroup.errors.notDeliveryAndPickup"
     >
-      Bitte Wähle mindestens eine Option aus.
+      Bitte wähle mindestens eine Option aus.
     </div>
     <div>
-      Schritt 2: Beschreibe Deinen Betrieb, erzähl etwas über Dich, Deine
+      Schritt 2: Wähle maximal zwei Kategorien aus die für Geschäft zutreffen:
+    </div>
+    <div class="dense" [formGroup]="storeFormGroup">
+      <label>
+        <app-lk-checkbox formControlName="gastronomie"> </app-lk-checkbox>
+        Gastronomie </label
+      ><br />
+      <label>
+        <app-lk-checkbox formControlName="lebensmittel"></app-lk-checkbox>
+        Lebensmittel </label
+      ><br />
+      <label>
+        <app-lk-checkbox formControlName="fashion"></app-lk-checkbox>
+        Fashion </label
+      ><br />
+      <label>
+        <app-lk-checkbox formControlName="buchhandlung"> </app-lk-checkbox>
+        Buchhandlung </label
+      ><br />
+      <label>
+        <app-lk-checkbox formControlName="homedecor"> </app-lk-checkbox>
+        Home&Decor </label
+      ><br />
+      <label>
+        <app-lk-checkbox formControlName="blumengarten"></app-lk-checkbox>
+        Blumen&Garten </label
+      ><br />
+      <label>
+        <app-lk-checkbox formControlName="handwerk"></app-lk-checkbox>
+        Handwerk </label
+      ><br />
+      <label>
+        <app-lk-checkbox formControlName="sonstiges"> </app-lk-checkbox>
+        Sonstige </label
+      ><br />
+      <div
+        class="warning"
+        *ngIf="storeFormGroup.errors && storeFormGroup.errors.storeCountError"
+      >
+        Bitte wähle mindestens eine und maximal zwei Optionen aus.
+      </div>
+    </div>
+
+    <div>
+      Schritt 3: Beschreibe Deinen Betrieb, erzähl etwas über Dich, Deine
       Öffnungs-, Liefer- und Abholzeiten und was Du anbietest:
     </div>
     <div>
@@ -47,7 +91,7 @@
       ></app-lk-textarea>
     </div>
     <div>
-      Schritt 3: Hat dein Geschäft eine eigene E-Mail Adresse?
+      Schritt 4: Hat dein Geschäft eine eigene E-Mail Adresse?
     </div>
     <div>
       <app-lk-input
@@ -56,7 +100,7 @@
       ></app-lk-input>
     </div>
     <div>
-      Schritt 4: Hast du eventuell eine Homepage? Dann trage es doch hier ein:
+      Schritt 5: Hast du eventuell eine Homepage? Dann trage es doch hier ein:
     </div>
     <div>
       <app-lk-input
@@ -71,7 +115,7 @@
     </div>
     <div *ngIf="images">
       <div>
-        Schritt 5: Zu guter Letzt lade Bilder von Deinem Laden oder Deinem
+        Schritt 6: Zu guter Letzt lade Bilder von Deinem Laden oder Deinem
         Angebot hoch (Du kannst maximal 3 Bilder hochladen und mit Klick auf das
         Bildzeichen rechts das Bild markieren, dass du als Startbild setzen
         möchtest):
@@ -144,7 +188,7 @@
 
     <div class="buton-and-success">
       <div>
-        Schritt 6: Dein Profil für die Kunden öffentlich verfügbar machen:
+        Schritt 7: Dein Profil für die Kunden öffentlich verfügbar machen:
       </div>
       <div class="dense">
         <label>
@@ -158,7 +202,9 @@
         Speichern erfolgreich
       </div>
       <app-lk-button
-        [disabled]="dataFormGroup.errors != null"
+        [disabled]="
+          dataFormGroup.errors != null || storeFormGroup.errors != null
+        "
         label="Profil speichern"
         (click)="updateProfile()"
       >
