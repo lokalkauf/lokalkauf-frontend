@@ -92,11 +92,18 @@
     </a>
     <span class="menu-spacer"></span>
     <div fxHide.lt-sm>
-      <a mat-button [routerLink]="'/accounts'" routerLinkActive="active">
-        Accounts
+      <a mat-button (click)="navigateTraders()" routerLinkActive="active"
+        >H&auml;ndlersuche</a
+      >
+      <a
+        mat-button
+        [routerLink]="'/trader/login'"
+        *ngIf="(userService.isLoggedIn$ | async) === false"
+      >
+        H&auml;ndler Login
       </a>
-      <a mat-button [routerLink]="'/create-account'"> Create Account </a>
-      <a mat-button [routerLink]="'/contacts'"> Contacts </a>
+      <a mat-button [routerLink]="'/aboutus'">Das sind wir</a>
+      <a mat-button [routerLink]="'/faq'">Hilfe</a>
     </div>
     <button mat-mini-fab class="avatar">
       <mat-icon>face</mat-icon>
@@ -132,6 +139,25 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <router-outlet></router-outlet>
+    <div class="footer">
+      <a
+        mat-list-item
+        href="http://www.info.lokalkauf.org/impressum"
+        target="_blank"
+      >
+        Impressum
+      </a>
+      <a mat-list-item href="http://www.info.lokalkauf.org/agb" target="_blank">
+        AGB
+      </a>
+      <a
+        mat-list-item
+        href="http://www.info.lokalkauf.org/datenschutz"
+        target="_blank"
+      >
+        Datenschutz-erklärung
+      </a>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
 

@@ -30,6 +30,23 @@ button.mat-mini-fab.avatar {
   color: #888;
 }
 
+.footer {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #eee;
+
+  .mat-list-item {
+    display: inline-block;
+    margin: 20px;
+    font-size: 0.8rem;
+    color: #666;
+  }
+
+  .mat-list-item:hover {
+    color: #0f0;
+  }
+}
 // @import '../variables.scss';
 
 // #header {
