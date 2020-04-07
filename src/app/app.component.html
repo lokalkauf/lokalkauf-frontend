@@ -87,7 +87,7 @@
 
 <mat-toolbar color="default" class="fixed-header">
   <mat-toolbar-row>
-    <a mat-button [routerLink]="'/'">
+    <a mat-button [routerLink]="'/'" class="logo-link">
       <img src="/assets/lokalkaufLogoApp.png" />
     </a>
     <span class="menu-spacer"></span>
@@ -108,12 +108,7 @@
     <button mat-mini-fab class="avatar">
       <mat-icon>face</mat-icon>
     </button>
-    <button
-      mat-icon-button
-      (click)="sidenav.toggle()"
-      class="icon-button-large"
-      fxHide.gt-xs
-    >
+    <button mat-icon-button (click)="sidenav.toggle()" fxHide.gt-xs>
       <mat-icon>menu</mat-icon>
     </button>
   </mat-toolbar-row>
@@ -125,6 +120,9 @@
 
 <mat-sidenav-container>
   <mat-sidenav #sidenav position="end" mode="site" fixedInViewport>
+    <button mat-icon-button class="close-btn" (click)="sidenav.toggle()">
+      <mat-icon>close</mat-icon>
+    </button>
     <mat-nav-list>
       <a mat-list-item [routerLink]="'/accounts'"> Accounts </a>
       <a mat-list-item [routerLink]="'/create-account'"> Create Account </a>

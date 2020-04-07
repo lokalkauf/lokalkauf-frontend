@@ -26,10 +26,24 @@ mat-sidenav-container {
   flex-grow: 1;
 }
 
+mat-nav-list {
+  margin-top: 40px;
+}
+
 button.mat-mini-fab.avatar {
   box-shadow: none;
   background-color: #eee;
   color: #888;
+}
+
+.logo-link {
+  padding: 0;
+}
+
+.close-btn {
+  margin: 10px;
+  float: right;
+  background-color: none;
 }
 
 .footer {
