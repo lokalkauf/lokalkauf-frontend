@@ -19,6 +19,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { LkSelectComponent } from './lk-select/lk-select.component';
 import { WarningBoxComponent } from './warning-box/warning-box.component';
+import { NgxStarRatingModule } from 'ngx-star-rating';
+import { RatingStarComponent } from './rating-star/rating-star.component';
 
 const routes: Routes = [];
 
@@ -36,6 +38,7 @@ const routes: Routes = [];
     ImageChooserComponent,
     FullscreenModalComponent,
     WarningBoxComponent,
+    RatingStarComponent,
   ],
   imports: [
     CommonModule,
@@ -47,6 +50,7 @@ const routes: Routes = [];
     MatInputModule,
     MatButtonModule,
     MatTooltipModule,
+    NgxStarRatingModule,
   ],
   exports: [
     MapComponent,
@@ -61,6 +65,7 @@ const routes: Routes = [];
     ImageCarouselComponent,
     FullscreenModalComponent,
     WarningBoxComponent,
+    RatingStarComponent,
   ],
 })
 export class ReusablesModule {}
