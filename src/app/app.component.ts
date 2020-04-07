@@ -25,7 +25,6 @@ export class AppComponent {
   }
 
   navigateTraders() {
-    console.log('test');
     this.opened = false;
     let route = '/';
     const city = this.storageService.loadLocation();
@@ -38,7 +37,6 @@ export class AppComponent {
         '/' +
         (city.rad ? city.rad.toString() : '10');
     }
-    console.log(route);
     this.router.navigate([route]);
   }
 }
