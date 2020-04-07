@@ -15,6 +15,16 @@ export interface TraderProfile {
   storeEmail: string;
   homepage: string;
   status: TraderProfileStatus;
+  storeType: {
+    gastronomie: boolean;
+    lebensmittel: boolean;
+    fashion: boolean;
+    buchhandlung: boolean;
+    homedecor: boolean;
+    blumengarten: boolean;
+    handwerk: boolean;
+    sonstiges: boolean;
+  };
 }
 
 export enum TraderProfileStatus {
