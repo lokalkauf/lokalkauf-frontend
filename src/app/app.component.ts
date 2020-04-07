@@ -25,15 +25,20 @@ export class AppComponent {
   }
 
   navigateTraders() {
+    console.log('test');
     this.opened = false;
     let route = '/';
     const city = this.storageService.loadLocation();
     if (city) {
       route =
-        '/localtraders/' + city.lat + '/' + city.lng + '/' + city.rad
-          ? city.rad.toString(0)
-          : '10';
+        '/localtraders/' +
+        city.lat +
+        '/' +
+        city.lng +
+        '/' +
+        (city.rad ? city.rad.toString() : '10');
     }
+    console.log(route);
     this.router.navigate([route]);
   }
 }

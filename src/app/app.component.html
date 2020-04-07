@@ -93,28 +93,37 @@
     <span class="menu-spacer"></span>
     <div fxHide.lt-sm>
       <a mat-button (click)="navigateTraders()" routerLinkActive="active"
-        >H&auml;ndlersuche</a
-      >
-      <a
-        mat-button
-        *ngIf="userService.isLoggedIn$ | async"
-        [routerLink]="'/trader/profile'"
-      >
-        Mein Händlerprofil
-      </a>
-      <a
-        mat-button
-        [routerLink]="'/trader/login'"
-        *ngIf="(userService.isLoggedIn$ | async) === false"
-      >
-        H&auml;ndler Login
+        >H&auml;ndlersuche
       </a>
       <a mat-button [routerLink]="'/aboutus'">Das sind wir</a>
       <a mat-button [routerLink]="'/faq'">Hilfe</a>
     </div>
-    <button mat-mini-fab class="avatar">
-      <mat-icon>face</mat-icon>
+    <button mat-mini-fab class="avatar" [matMenuTriggerFor]="storeMenu">
+      <mat-icon>store</mat-icon>
     </button>
+    <mat-menu #storeMenu="matMenu">
+      <button
+        mat-menu-item
+        [routerLink]="'/trader/login'"
+        *ngIf="(userService.isLoggedIn$ | async) === false"
+      >
+        H&auml;ndler Login
+      </button>
+      <button
+        mat-menu-item
+        *ngIf="userService.isLoggedIn$ | async"
+        [routerLink]="'/trader/profile'"
+      >
+        Mein Händlerprofil
+      </button>
+      <button
+        mat-menu-item
+        *ngIf="userService.isLoggedIn$ | async"
+        (click)="userService.logout()"
+      >
+        Ausloggen
+      </button>
+    </mat-menu>
     <button mat-icon-button (click)="sidenav.toggle()" fxHide.gt-xs>
       <mat-icon>menu</mat-icon>
     </button>
@@ -131,20 +140,8 @@
       <mat-icon>close</mat-icon>
     </button>
     <mat-nav-list>
-      <a mat-list-item [routerLink]="'/accounts'"> H&auml;ndlersuche </a>
-      <a
-        mat-list-item
-        [routerLink]="'/trader/login'"
-        *ngIf="(userService.isLoggedIn$ | async) === false"
-      >
-        H&auml;ndler Login
-      </a>
-      <a
-        mat-list-item
-        *ngIf="userService.isLoggedIn$ | async"
-        [routerLink]="'/trader/profile'"
-      >
-        Mein Händlerprofil
+      <a mat-list-item (click)="navigateTraders()" routerLinkActive="active"
+        >H&auml;ndlersuche
       </a>
       <a mat-list-item [routerLink]="'/aboutus'"> Das sind wir </a>
       <a mat-list-item [routerLink]="'/faq'"> Hilfe</a>
