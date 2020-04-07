@@ -10,6 +10,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Routes, RouterModule } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -89,6 +90,7 @@ const routes: Routes = [
     MatCardModule,
     MatMenuModule,
     MatListModule,
+    MatButtonModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
