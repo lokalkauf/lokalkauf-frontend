@@ -1,20 +1,32 @@
-<button
-  mat-icon-button
-  [color]="color"
-  *ngFor="let ratingId of ratingArr; index as i"
-  [id]="'star_' + i"
-  (click)="onClick(i + 1)"
-  [matTooltip]="ratingId + 1"
-  matTooltipPosition="above"
->
-  <mat-icon>
-    {{ showIcon(i) }}
-  </mat-icon>
-</button>
-<mat-error *ngIf="starCount == null || starCount == 0">
-  Star count is <strong>required</strong> and cannot be zero
-</mat-error>
-<p class="body-2">
-  Your rated <span class="body-2">{{ rating }}</span> /
-  <span class="body-2">{{ starCount }}</span>
-</p>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
+
+<div class="rating-star">
+  <ngx-star-rating
+    [(ngModel)]="ratingStar"
+    [id]="'ratingStars'"
+    [disabled]="disabled"
+    (change)="changeRate($event)"
+  ></ngx-star-rating>
+</div>
+
+<!--  USAGE EXAMPLE
+
+In *.html
+  <form [formGroup]="ratingForm">
+    <app-rating-star initialRating="2" (finalRating)="changeRating($event)" >Show me</app-rating-star>
+    <div>Rating: {{rating}}</div>
+  </form>
+
+----
+
+In *.ts
+  rating = 0;
+
+  changeRating(newVal) {
+    this.rating = newVal;
+  }
+
+-->
