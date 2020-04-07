@@ -4,9 +4,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Routes, RouterModule } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -46,6 +49,9 @@ import { MatPasswordStrengthModule } from '@angular-material-extensions/password
 import { FaqComponent } from './faq/faq.component';
 import { StorageService } from './services/storage.service';
 
+import { ToolbarComponent } from './layout/toolbar/toolbar.component';
+import { SidenavComponent } from './layout/sidenav/sidenav.component';
+
 const routes: Routes = [
   { path: '', component: StartComponent },
   { path: 'transport', component: TransportMainComponent },
@@ -67,17 +73,22 @@ const routes: Routes = [
     SpinnerComponent,
     StartComponent,
     FaqComponent,
+    ToolbarComponent,
+    SidenavComponent,
   ],
   imports: [
     BrowserModule,
     CommonModule,
     AppRoutingModule,
+    MatToolbarModule,
     MatIconModule,
     MatSidenavModule,
     MatSnackBarModule,
     MatFormFieldModule,
     MatAutocompleteModule,
     MatCardModule,
+    MatMenuModule,
+    MatListModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
