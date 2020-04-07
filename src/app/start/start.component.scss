@@ -1,220 +1,124 @@
 @import '../../variables.scss';
 
 .hero {
-  img {
+  position: relative;
+  background-image: url('/assets/backpane-hipster.jpeg');
+  width: 100%;
+  height: 70vh;
+  background-size: cover;
+  background-position: 50% 20%;
+  .start-logo-top {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 20px 16px;
+  }
+  .start-logo-bottom {
+    position: absolute;
+    display: block;
     width: 100%;
-    height: 70vh;
-    object-fit: cover;
-    object-position: 50% 20%;
+    bottom: 0px;
+    img {
+      display: block;
+      margin: 20px auto;
+    }
   }
 }
 
-// .home-start {
-//   width: calc(100%);
-//   text-align: center;
-//   margin-top: 10.4rem;
+.home-start {
+  max-width: 1024px;
+  margin: 16px auto;
+  text-align: center;
+}
 
-//   @media screen and (min-width: 768px) {
-//     width: 740px;
-//     margin-left: auto;
-//     margin-right: auto;
-//     margin-top: 28.4rem;
-//   }
-// }
+.home-start > .intro-text > .intro-text-box-headline {
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 1.4rem;
+  display: none;
+}
 
-// .start-logo-top {
-//   position: absolute;
-//   z-index: +1;
-//   left: 24px;
-//   width: 100%;
-//   top: 16px;
+.home-start > .intro-text {
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 1rem 30px;
+  background-color: $slightesttranslucentwhite;
+  line-height: 1.1rem;
+  min-height: 240px;
+}
 
-//   @media screen and (max-width: 767px) {
-//     left: 30px;
-//     width: calc(100% - 100px);
-//   }
+.additional-intro-text {
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 1rem 2rem;
+  background-color: $slightesttranslucentwhite;
+  line-height: 1.1rem;
 
-//   @media screen and (min-width: 768px) {
-//     margin-left: auto;
-//     margin-right: auto;
-//   }
+  .intro-text-hint {
+    margin-top: 2rem;
+    font-size: 0.75rem;
+    text-align: center;
+    color: $errorcolor;
 
-//   img {
-//     @media screen and (max-width: 767px) {
-//       width: 2rem;
-//     }
+    a {
+      color: $errorcolor;
+      text-decoration: underline;
+    }
+  }
+}
 
-//     @media screen and (min-width: 768px) {
-//       position: absolute;
-//       left: calc(50% - 340px);
-//       // top: 20px;
-//     }
-//   }
-// }
+.divider {
+  width: 7rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 0.05rem solid $darkgreen;
 
-// #backdrop-start {
-//   background: no-repeat url('../../assets/backpane-hipster.png');
-//   background-size: cover;
-//   margin-top: -22px;
-//   width: 100%;
-//   height: 400px;
-//   position: absolute;
-//   z-index: -1;
-//   top: 0;
+  @media screen and (min-width: 768px) {
+    width: 12rem;
+  }
+}
 
-//   @media screen and (max-width: 767px) {
-//     left: 0;
-//   }
+.start-form {
+  width: 100%;
+  display: inline-grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 0px;
 
-//   @media screen and (min-width: 768px) {
-//     width: 700px;
-//     margin-left: auto;
-//     margin-right: auto;
-//   }
-// }
+  margin-top: 30px;
+}
 
-// @media screen and (min-width: 768px) {
-//   #backdrop-start {
-//     height: 750px;
-//   }
-// }
+#start-input-center {
+  text-align: center;
+}
 
-// .home-start > img {
-//   margin-bottom: 20px;
-// }
+#start-input-container {
+  margin-left: 1.2rem;
+  margin-right: 1.2rem;
+  margin-top: 1rem;
+}
 
-// //.home-start > .intro-text {
-// //margin-bottom: 1.4rem;
-// //}
+.start-input-center {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
 
-// .home-start > .intro-text > .intro-text-box-headline {
-//   font-size: 1rem;
-//   text-align: center;
-//   margin-bottom: 1.4rem;
-//   display: none;
-// }
+#start-button {
+  float: right;
+}
 
-// .home-start > .intro-text {
-//   font-size: 0.8rem;
-//   text-align: center;
-//   padding: 1rem 30px;
-//   background-color: $slightesttranslucentwhite;
-//   line-height: 1.1rem;
-//   min-height: 240px;
-// }
-
-// .additional-intro-text {
-//   font-size: 0.8rem;
-//   text-align: center;
-//   padding: 1rem 2rem;
-//   background-color: $slightesttranslucentwhite;
-//   line-height: 1.1rem;
-
-//   .intro-text-hint {
-//     margin-top: 2rem;
-//     font-size: 0.75rem;
-//     text-align: center;
-//     color: $errorcolor;
-
-//     a {
-//       color: $errorcolor;
-//       text-decoration: underline;
-//     }
-//   }
-// }
-
-// .divider {
-//   width: 7rem;
-//   margin-left: auto;
-//   margin-right: auto;
-//   padding-top: 1.5rem;
-//   margin-bottom: 1.5rem;
-//   border-bottom: 0.05rem solid $darkgreen;
-
-//   @media screen and (min-width: 768px) {
-//     width: 12rem;
-//   }
-// }
-
-// .start-form {
-//   width: 100%;
-//   display: inline-grid;
-//   grid-template-columns: repeat(2, 1fr);
-//   grid-template-rows: 1fr;
-//   grid-column-gap: 20px;
-//   grid-row-gap: 0px;
-
-//   margin-top: 30px;
-// }
-
-// #start-input-center {
-//   text-align: center;
-// }
-
-// #start-input-container {
-//   margin-left: 1.2rem;
-//   margin-right: 1.2rem;
-//   margin-top: 1rem;
-// }
-
-// #start-input,
-// #plz-input {
-//   float: left;
-// }
-
-// @media screen and (max-width: 368px) {
-//   #start-input,
-//   #plz-input {
-//     width: 5rem;
-//   }
-// }
-
-// @media screen and (min-width: 369px) {
-//   #start-input,
-//   #plz-input {
-//     width: 8rem;
-//   }
-// }
-
-// @media screen and (min-width: 490px) {
-//   #start-input,
-//   #plz-input {
-//     width: 15rem;
-//   }
-// }
-
-// .start-input-center {
-//   margin-top: 1rem;
-//   margin-bottom: 1rem;
-// }
-
-// #start-button {
-//   float: right;
-// }
-
-// #start-error {
-//   margin: 1.2rem 0;
-//   float: left;
-//   font-size: 0.8rem;
-//   color: $errorcolor;
-// }
-
-// #start-long-lat {
-//   float: left;
-//   margin: 0.75rem 0;
-//   font-size: 0.9rem;
-// }
-
-// input {
-//   box-sizing: border-box;
-//   border-radius: 20px;
-//   font-size: 0.8rem;
-//   font-weight: 100;
-//   min-width: 4rem;
-//   height: 2.4rem;
-//   letter-spacing: 1.5px;
-//   background-color: white;
-//   padding-left: 1rem;
-//   border: dotted 1px $lightergreen;
-//   outline: none;
-// }
+input {
+  box-sizing: border-box;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 100;
+  min-width: 4rem;
+  height: 2.4rem;
+  letter-spacing: 1.5px;
+  background-color: white;
+  padding-left: 1rem;
+  border: dotted 1px $lightergreen;
+  outline: none;
+}

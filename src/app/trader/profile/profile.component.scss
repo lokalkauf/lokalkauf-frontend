@@ -1,5 +1,12 @@
 @import '../../../variables.scss';
 
+.profile-wrapper {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
 .verify-mail-alert {
   background-color: lightgoldenrodyellow;
   border: 1px solid lightsalmon;

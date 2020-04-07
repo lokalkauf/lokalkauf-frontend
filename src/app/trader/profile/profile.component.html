@@ -1,4 +1,7 @@
-<div *ngIf="loggedInUserState$ | async as loggedInUserState">
+<div
+  class="profile-wrapper"
+  *ngIf="loggedInUserState$ | async as loggedInUserState"
+>
   <app-lk-page-title
     [title]="loggedInUserState.traderProfile.businessname"
   ></app-lk-page-title>
@@ -63,8 +66,8 @@
       ></app-lk-input>
     </div>
     <div class="warning" *ngIf="homepage.invalid">
-      Deine Homepage muss mit http:// oder https:// beginnen, damit sie aufrufbar
-      ist.
+      Deine Homepage muss mit http:// oder https:// beginnen, damit sie
+      aufrufbar ist.
     </div>
     <div *ngIf="images">
       <div>

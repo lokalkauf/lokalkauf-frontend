@@ -1,5 +1,5 @@
 <div class="trader-detail" *ngIf="trader$ | async as trader">
-  <div class="trader-headline">{{ trader.businessname }}</div>
+  <app-lk-page-title [title]="trader.businessname"></app-lk-page-title>
   <div
     class="trader-description text"
     *ngIf="trader.description && !showMoreText"
