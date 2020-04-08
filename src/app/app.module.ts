@@ -38,7 +38,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { VerifyComponent } from './verify/verify.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-
+import { MatTabsModule, MatTabGroup } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
 import { EMailService } from './services/email.service';
 import { SafePipe } from './pipes/safe.pipe';
@@ -89,6 +89,8 @@ const routes: Routes = [
     MatSnackBarModule,
     MatFormFieldModule,
     MatAutocompleteModule,
+    MatTabsModule,
+    MatTabGroup,
     MatCardModule,
     MatMenuModule,
     MatListModule,
