@@ -26,9 +26,9 @@
       Finde hier Deinen Lieblingsladen oder ein Restaurant um die Ecke und kauf
       lokal:
 
-      <br />
+      <!-- <br />
       <button mat-flat-button color="primary">primary</button>
-      <button mat-flat-button color="accent">Accent</button>
+      <button mat-flat-button color="accent">Accent</button> -->
     </div>
 
     <div id="start-input-container">
@@ -60,54 +60,55 @@
         <app-lk-button id="start-button" (click)="action()" label="los" [disabled]="disabledLosButton">
         </app-lk-button>
         -->
-        <app-lk-button
+        <button
+          mat-flat-button
+          color="primary"
+          (click)="reducedAction(startTownList)"
+        >
+          Jetzt suchen!
+        </button>
+        <!-- <app-lk-button
           id="start-button-intial-towns"
           (click)="reducedAction(startTownList)"
           label="Jetzt suchen!"
         >
-        </app-lk-button>
+        </app-lk-button> -->
       </div>
       <!--<div id="start-error" *ngIf="showError">
         Bitte geben Sie eine Postleitzahl an oder aktivieren Sie Ihr GPS
       </div>-->
     </div>
-  </div>
+    h
+    <div class="divider"></div>
 
-  <div class="divider"></div>
+    <div *ngIf="!isLoggedIn">
+      <div class="additional-intro-text">
+        Du bist Einzelhändler oder Gastronom? Dann melde Dich hier an:
+      </div>
+      <div>
+        <button mat-flat-button color="accent" [routerLink]="'/trader/login'">
+          Geschäftsprofil anlegen
+        </button>
+      </div>
+    </div>
 
-  <div *ngIf="!isLoggedIn">
+    <div *ngIf="isLoggedIn">
+      <div class="additional-intro-text">
+        Hier gehts zu deinem Profil:
+      </div>
+      <div>
+        <button mat-flat-button color="accent" [routerLink]="'/trader/profile'">
+          Mein Händlerprofil
+        </button>
+      </div>
+    </div>
+
     <div class="additional-intro-text">
-      Du bist Einzelhändler oder Gastronom? Dann melde Dich hier an:
-    </div>
-    <div>
-      <app-lk-button
-        id="register-button"
-        (click)="router.navigateByUrl('/trader/login')"
-        label="Geschäftsprofil anlegen"
-      >
-      </app-lk-button>
-    </div>
-  </div>
-
-  <div *ngIf="isLoggedIn">
-    <div class="additional-intro-text">
-      Hier gehts zu deinem Profil:
-    </div>
-    <div>
-      <app-lk-button
-        id="register-button"
-        (click)="router.navigateByUrl('/trader/profile')"
-        label="Mein Händlerprofil"
-      >
-      </app-lk-button>
-    </div>
-  </div>
-
-  <div class="additional-intro-text">
-    <div class="intro-text-hint">
-      Unsere Plattform befindet sich aktuell noch in der Entwicklung. Hast Du
-      noch
-      <a [routerLink]="'/feedback'">Ideen oder Feedback</a>?
+      <div class="intro-text-hint">
+        Unsere Plattform befindet sich aktuell noch in der Entwicklung. Hast Du
+        noch
+        <a [routerLink]="'/feedback'">Ideen oder Feedback</a>?
+      </div>
     </div>
   </div>
 </div>
