@@ -7,7 +7,6 @@ import { LkInputComponent } from './lk-input/lk-input.component';
 import { LkButtonComponent } from './lk-button/lk-button.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LkTextareaComponent } from './lk-textarea/lk-textarea.component';
-import { ImageCarouselComponent } from './image-carousel/image-carousel.component';
 import { Routes, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { LkPageTitleComponent } from './lk-page-title/lk-page-title.component';
@@ -31,7 +30,6 @@ const routes: Routes = [];
     LkInputComponent,
     LkButtonComponent,
     LkTextareaComponent,
-    ImageCarouselComponent,
     LkPageTitleComponent,
     LkCheckboxComponent,
     LkSelectComponent,
@@ -62,7 +60,6 @@ const routes: Routes = [];
     LkCheckboxComponent,
     LkSelectComponent,
     ImageChooserComponent,
-    ImageCarouselComponent,
     FullscreenModalComponent,
     WarningBoxComponent,
     RatingStarComponent,
