@@ -31,12 +31,12 @@
   <form [formGroup]="contactForm" (ngSubmit)="onSubmit(trader.businessname)">
     <div class="text contactformdescription">
       Oder über das Kontaktformular:<br />
-      <app-lk-textarea
+      <lk-textarea
         placeholder="Deine Nachricht an uns"
         formControlName="mail_message"
         type="mail_message"
       >
-      </app-lk-textarea
+      </lk-textarea
       ><br /><br />
       Wie dürfen wir Dich kontaktieren?<br />
       <lk-input

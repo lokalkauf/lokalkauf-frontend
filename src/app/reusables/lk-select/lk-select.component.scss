@@ -1,77 +1,56 @@
-@import '../../../theme/variables.scss';
-
-.lt-select-wrapper {
+mat-form-field {
   width: 100%;
-  position: relative;
-
-  select {
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    height: 2.4rem;
-    background: url('../../../assets/lt-select.png') repeat;
-    color: $appblackGrey;
-    font-family: 'Lato', sans-serif;
-    font-size: 0.8rem;
-    cursor: pointer;
-    border: dotted 1px $lightergreen;
-    border-radius: 20px;
-    padding-left: 20px;
-    outline: none;
-  }
-
-  select::-ms-expand {
-    display: none;
-  }
-
-  select option {
-    color: $appblackGrey;
-  }
-
-  select:focus::-ms-value {
-    background-color: transparent;
-  }
 }
 
-.fa {
-  font-weight: 900;
-}
+// @import '../../../theme/variables.scss';
 
-.lt-select-wrapper::before {
-  font-size: 20px;
-  position: absolute;
-  right: 15px;
-  top: 12px;
-  color: $darkgreen;
-  pointer-events: none;
-}
+// .lt-select-wrapper {
+//   width: 100%;
+//   position: relative;
 
-.fa-angle-down::before {
-  content: '▾';
-}
+//   select {
+//     -moz-appearance: none;
+//     -webkit-appearance: none;
+//     appearance: none;
+//     width: 100%;
+//     height: 2.4rem;
+//     background: url('../../../assets/lt-select.png') repeat;
+//     color: $appblackGrey;
+//     font-family: 'Lato', sans-serif;
+//     font-size: 0.8rem;
+//     cursor: pointer;
+//     border: dotted 1px $lightergreen;
+//     border-radius: 20px;
+//     padding-left: 20px;
+//     outline: none;
+//   }
 
-/*
-select {
-  box-sizing: border-box;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 100;
-  min-width: 4rem;
-  height: 2.4rem;
-  letter-spacing: 1.5px;
-  background-color: white;
-  padding-left: 1rem;
-  border: dotted 1px $lightergreen;
-  width: 100%;
-  outline: none;
-}
+//   select::-ms-expand {
+//     display: none;
+//   }
 
-select:focus {
-  background-color: #eee !important;
-}
+//   select option {
+//     color: $appblackGrey;
+//   }
 
-select option {
-  font-weight: 200;
-}
-*/
+//   select:focus::-ms-value {
+//     background-color: transparent;
+//   }
+// }
+
+// .fa {
+//   font-weight: 900;
+// }
+
+// .lt-select-wrapper::before {
+//   font-size: 20px;
+//   position: absolute;
+//   right: 15px;
+//   top: 12px;
+//   color: $darkgreen;
+//   pointer-events: none;
+// }
+
+// .fa-angle-down::before {
+//   content: '▾';
+// }

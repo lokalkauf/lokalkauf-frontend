@@ -12,16 +12,15 @@
   </app-warning-box>
   <div id="traders-overview-row">
     <app-lk-page-title title="Alles aus Deiner Nähe"></app-lk-page-title>
-    <div id="traders-overview-headline">Alles aus Deiner Nähe</div>
     <div class="traders-input-center">
-      <app-lk-select
+      <lk-select
         #storeTypeList
         id="store-types"
         name="storeType"
         [options]="storeTypes"
-        [placeholder]="storeTypePreselect"
+        [placeholder]="'Nach was bist du auf der Suche?'"
       >
-      </app-lk-select>
+      </lk-select>
     </div>
     <div class="traders-input-center">
       <lk-button

@@ -33,14 +33,14 @@
 
     <div id="start-input-container">
       <div class="start-input-center">
-        <app-lk-select
+        <lk-select
           #startTownList
           id="start-select"
           name="standort"
           [options]="standorte"
-          [placeholder]="standortPreselect"
+          [placeholder]="'Bitte wähle eine Stadt aus'"
         >
-        </app-lk-select>
+        </lk-select>
       </div>
 
       <div class="start-input-center">

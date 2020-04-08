@@ -19,7 +19,7 @@ export interface LkSelectOptions {
 }
 
 @Component({
-  selector: 'app-lk-select',
+  selector: 'lk-select',
   templateUrl: './lk-select.component.html',
   styleUrls: ['./lk-select.component.scss'],
   providers: [
