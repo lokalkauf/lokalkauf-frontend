@@ -82,7 +82,7 @@
       [ngClass]="router.url === '/' ? 'start-header' : ''"
     >
       <div *ngIf="router.url !== '/'" id="logo" (click)="navigate('/')">
-        <img src="/assets/lokalkaufLogoApp.png" height="30" />
+        <img src="/assets/lokalkaufLogoApp.png" height="30" alt="" />
       </div>
       <div id="burger-menu">
         <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
