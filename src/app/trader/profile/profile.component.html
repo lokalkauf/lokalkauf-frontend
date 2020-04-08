@@ -90,10 +90,19 @@
       Öffnungs-, Liefer- und Abholzeiten und was Du anbietest:
     </div>
     <div>
-      <app-lk-textarea
+      <mat-form-field>
+        <mat-label>Beschreibungstext</mat-label>
+        <textarea
+          matInput
+          placeholder="Beschreibungstext"
+          formControlName="description"
+        ></textarea>
+      </mat-form-field>
+
+      <!-- <app-lk-textarea
         placeholder="Beschreibungstext"
         formControlName="description"
-      ></app-lk-textarea>
+      ></app-lk-textarea> -->
     </div>
     <div>
       Schritt 4: Hat dein Geschäft eine eigene E-Mail Adresse?
