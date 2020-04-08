@@ -12,7 +12,8 @@
   </app-warning-box>
   <div id="traders-overview-row">
     <app-lk-page-title title="Alles aus Deiner Nähe"></app-lk-page-title>
-    <div>
+    <div id="traders-overview-headline">Alles aus Deiner Nähe</div>
+    <div class="traders-input-center">
       <app-lk-select
         #storeTypeList
         id="store-types"
@@ -21,6 +22,8 @@
         [placeholder]="storeTypePreselect"
       >
       </app-lk-select>
+    </div>
+    <div class="traders-input-center">
       <app-lk-button
         id="shop-types-button"
         (click)="reducedAction(storeTypeList)"

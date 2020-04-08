@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, combineLatest, forkJoin, of } from 'rxjs';
-import { map, reduce } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Trader } from '../../models/trader';
 import { Location } from 'src/app/models/location';
 import { ActivatedRoute } from '@angular/router';
 import { LkSelectOptions } from 'src/app/reusables/lk-select/lk-select.component';
@@ -13,7 +11,6 @@ import {
   TraderProfile,
   TraderProfileStatus,
 } from 'src/app/models/traderProfile';
-
 
 @Component({
   selector: 'app-trader-overview',
@@ -104,7 +101,6 @@ export class TraderOverviewComponent implements OnInit {
     });
   }
 
-
   reducedAction(val: any) {
     if (val.internalValue) {
       this.storeType = val.intValue;
@@ -152,22 +148,20 @@ export class TraderOverviewComponent implements OnInit {
       TraderProfileStatus.PUBLIC
     );
 
-    if (this.storeType && this.storeType !== 'alle' ) {
+    if (this.storeType && this.storeType !== 'alle') {
       const selectedStores = [];
-      traderProfiles.filter(i => {
+      traderProfiles.filter((i) => {
         if (i.storeType && i.storeType[this.storeType]) {
           selectedStores.push(i);
         }
-      }
-      );
+      });
       this.traders = selectedStores.sort((traderA, traderB) =>
-      traderA.businessname.localeCompare(traderB.businessname)
+        traderA.businessname.localeCompare(traderB.businessname)
       );
     } else {
       this.traders = traderProfiles.sort((traderA, traderB) =>
-      traderA.businessname.localeCompare(traderB.businessname)
-    );
+        traderA.businessname.localeCompare(traderB.businessname)
+      );
     }
-
   }
 }

@@ -15,7 +15,6 @@ import { GeoService } from 'src/app/services/geo.service';
 import { tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { ScrollStrategy } from '@angular/cdk/overlay';
-import { $ } from 'protractor';
 import { UserService } from '../services/user.service';
 import { LkSelectOptions } from '../reusables/lk-select/lk-select.component';
 import { StorageService } from '../services/storage.service';
@@ -35,6 +34,7 @@ export class StartComponent implements OnInit {
   ];
 
   MAT_AUTOCOMPLETE_SCROLL_STRATEGY: InjectionToken<() => ScrollStrategy>;
+  DEFAULT = 'DEFAULT';
 
   lat: number;
   lng: number;
@@ -166,7 +166,7 @@ export class StartComponent implements OnInit {
   }
 
   reducedAction(val: any) {
-    if (val.internalValue) {
+    if (val.internalValue !== this.DEFAULT) {
       this.router.navigate([
         '/localtraders',
         val.internalValue.lat,
