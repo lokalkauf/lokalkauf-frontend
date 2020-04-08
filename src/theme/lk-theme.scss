@@ -3,21 +3,17 @@
 
 @include mat-core();
 
-$custom-theme-primary: mat-palette($lk-colors-green);
-$custom-theme-accent: mat-palette($lk-colors-blue);
-$custom-theme-warn: mat-palette($mat-red);
+$lk-theme-primary: mat-palette($lk-colors-green);
+$lk-theme-accent: mat-palette($lk-colors-blue);
+$lk-theme-warn: mat-palette($mat-red);
 
-$custom-theme: mat-light-theme(
-  $custom-theme-primary,
-  $custom-theme-accent,
-  $custom-theme-warn
-);
+$lk-theme: mat-light-theme($lk-theme-primary, $lk-theme-accent, $lk-theme-warn);
 
-$custom-typography: mat-typography-config(
+$lk-typography: mat-typography-config(
   $font-family: 'Open Sans',
   $headline: mat-typography-level(32px, 48px, 700),
   $body-1: mat-typography-level(16px, 24px, 500),
 );
 
-@include mat-core($custom-typography);
-@include angular-material-theme($custom-theme);
+@include mat-core($lk-typography);
+@include angular-material-theme($lk-theme);

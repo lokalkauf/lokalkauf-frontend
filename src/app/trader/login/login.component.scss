@@ -6,7 +6,7 @@
   font-size: 0.8rem;
 
   h2 {
-    color: $lightergreen;
+    color: $normalgreen;
   }
 }
 
@@ -19,12 +19,11 @@ form {
   margin-top: 50px;
   text-align: center;
 
-  lk-input {
-    display: inline-block;
-    margin-bottom: 20px !important;
+  .login-inputs {
     max-width: 500px;
-    margin: 0 10px;
-    width: 70%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   #lk-button-container {
