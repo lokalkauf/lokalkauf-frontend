@@ -6,7 +6,8 @@ import {
   EventEmitter,
   ViewEncapsulation,
 } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable, Subject } from 'rxjs';
+import { Event } from '@angular/router';
 
 @Component({
   selector: 'app-rating-star',
@@ -15,40 +16,21 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   encapsulation: ViewEncapsulation.Emulated,
 })
 export class RatingStarComponent implements OnInit {
-  @Input() private rating: number;
-  @Input() private starCount: number;
-  @Input() private color: string;
-  @Output() private ratingUpdated = new EventEmitter();
+  @Input() disabled = false;
+  @Input() initialRating = 1;
 
-  private snackBarDuration = 2000;
-  private ratingArr = [];
+  @Output() finalRating: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor(private snackBar: MatSnackBar) {}
+  ratingStar: number;
+
+  constructor() {}
 
   ngOnInit() {
-    for (let index = 0; index < this.starCount; index++) {
-      this.ratingArr.push(index);
-    }
-  }
-  onClick(rating: number) {
-    this.snackBar.open('You rated ' + rating + ' / ' + this.starCount, '', {
-      duration: this.snackBarDuration,
-    });
-    this.ratingUpdated.emit(rating);
-    return false;
+    this.ratingStar = this.initialRating;
+    this.changeRate(this.ratingStar);
   }
 
-  showIcon(index: number) {
-    if (this.rating >= index + 1) {
-      return 'star';
-    } else {
-      return 'star_border';
-    }
+  changeRate(event: any) {
+    this.finalRating.emit(this.ratingStar);
   }
-}
-
-export enum StarRatingColor {
-  primary = 'primary',
-  accent = 'accent',
-  warn = 'warn',
 }

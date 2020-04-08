@@ -29,7 +29,9 @@ export class AppComponent {
     let route = '/';
     const city = this.storageService.loadLocation();
     if (city) {
-      route = '/localtraders/' + city.lat + '/' + city.lng;
+      route = `/localtraders/${city.lat}/${city.lng}/${
+        city.rad ? city.rad.toString() : '10'
+      }`;
     }
     this.router.navigate([route]);
   }

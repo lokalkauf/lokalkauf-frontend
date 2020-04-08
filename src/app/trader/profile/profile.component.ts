@@ -21,6 +21,7 @@ export class ProfileComponent implements AfterViewInit {
     {
       delivery: new FormControl(false),
       pickup: new FormControl(false),
+      sonstiges: new FormControl(false),
       description: new FormControl(''),
       storeEmail: new FormControl(''),
       homepage: new FormControl(''),
@@ -30,6 +31,42 @@ export class ProfileComponent implements AfterViewInit {
       const pickup = form.get('pickup').value;
       const delivery = form.get('delivery').value;
       return !pickup && !delivery ? { notDeliveryAndPickup: true } : null;
+    }
+  );
+
+  storeFormGroup = new FormGroup(
+    {
+      gastronomie: new FormControl(false),
+      lebensmittel: new FormControl(false),
+      fashion: new FormControl(false),
+      buchhandlung: new FormControl(false),
+      homedecor: new FormControl(false),
+      blumengarten: new FormControl(false),
+      handwerk: new FormControl(false),
+      sonstiges: new FormControl(false),
+    },
+    (form) => {
+      const gastronomie = form.get('gastronomie').value;
+      const lebensmittel = form.get('lebensmittel').value;
+      const fashion = form.get('fashion').value;
+      const buchhandlung = form.get('buchhandlung').value;
+      const homedecor = form.get('homedecor').value;
+      const blumengarten = form.get('blumengarten').value;
+      const handwerk = form.get('handwerk').value;
+      const sonstiges = form.get('sonstiges').value;
+      const selectedStoreTypes = [
+        gastronomie,
+        lebensmittel,
+        fashion,
+        buchhandlung,
+        homedecor,
+        blumengarten,
+        handwerk,
+        sonstiges,
+      ].filter((v) => v).length;
+      return selectedStoreTypes > 2 || selectedStoreTypes === 0
+        ? { storeCountError: true }
+        : null;
     }
   );
 
@@ -55,6 +92,38 @@ export class ProfileComponent implements AfterViewInit {
 
   get public() {
     return this.dataFormGroup.get('public');
+  }
+
+  get gastronomie() {
+    return this.storeFormGroup.get('gastronomie');
+  }
+
+  get lebensmittel() {
+    return this.storeFormGroup.get('lebensmittel');
+  }
+
+  get fashion() {
+    return this.storeFormGroup.get('fashion');
+  }
+
+  get buchhandlung() {
+    return this.storeFormGroup.get('buchhandlung');
+  }
+
+  get homedecor() {
+    return this.storeFormGroup.get('homedecor');
+  }
+
+  get blumengarten() {
+    return this.storeFormGroup.get('blumengarten');
+  }
+
+  get handwerk() {
+    return this.storeFormGroup.get('handwerk');
+  }
+
+  get sonstiges() {
+    return this.storeFormGroup.get('sonstiges');
   }
 
   businessImage = new FormControl();
@@ -84,7 +153,7 @@ export class ProfileComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.loggedInUserState$.subscribe((loggedInUser) => {
-      if (!this.dataFormGroup.dirty) {
+      if (!this.dataFormGroup.dirty && !this.storeFormGroup.dirty) {
         this.delivery.setValue(loggedInUser.traderProfile.delivery, {
           emitEvent: false,
         });
@@ -100,6 +169,54 @@ export class ProfileComponent implements AfterViewInit {
         this.homepage.setValue(loggedInUser.traderProfile.homepage, {
           emitEvent: false,
         });
+        this.gastronomie.setValue(
+          loggedInUser.traderProfile.storeType.gastronomie,
+          {
+            emitEvent: false,
+          }
+        );
+        if (loggedInUser.traderProfile.storeType) {
+          this.lebensmittel.setValue(
+            loggedInUser.traderProfile.storeType.lebensmittel,
+            {
+              emitEvent: false,
+            }
+          );
+          this.fashion.setValue(loggedInUser.traderProfile.storeType.fashion, {
+            emitEvent: false,
+          });
+          this.buchhandlung.setValue(
+            loggedInUser.traderProfile.storeType.buchhandlung,
+            {
+              emitEvent: false,
+            }
+          );
+          this.homedecor.setValue(
+            loggedInUser.traderProfile.storeType.homedecor,
+            {
+              emitEvent: false,
+            }
+          );
+          this.blumengarten.setValue(
+            loggedInUser.traderProfile.storeType.blumengarten,
+            {
+              emitEvent: false,
+            }
+          );
+          this.handwerk.setValue(
+            loggedInUser.traderProfile.storeType.handwerk,
+            {
+              emitEvent: false,
+            }
+          );
+          this.sonstiges.setValue(
+            loggedInUser.traderProfile.storeType.sonstiges,
+            {
+              emitEvent: false,
+            }
+          );
+        }
+
         this.public.setValue(
           loggedInUser.traderProfile.status === TraderProfileStatus.PUBLIC,
           {
@@ -128,6 +245,16 @@ export class ProfileComponent implements AfterViewInit {
       pickup: this.pickup.value || null,
       storeEmail: this.storeEmail.value || null,
       homepage: this.homepage.value || null,
+      storeType: {
+        gastronomie: this.gastronomie.value || null,
+        lebensmittel: this.lebensmittel.value || null,
+        fashion: this.fashion.value || null,
+        buchhandlung: this.buchhandlung.value || null,
+        homedecor: this.homedecor.value || null,
+        blumengarten: this.blumengarten.value || null,
+        handwerk: this.handwerk.value || null,
+        sonstiges: this.sonstiges.value || null,
+      },
       status: this.public.value
         ? TraderProfileStatus.PUBLIC
         : TraderProfileStatus.VERIFIED,
