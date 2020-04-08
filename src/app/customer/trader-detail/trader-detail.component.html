@@ -52,15 +52,17 @@
     >
     <span> Abholung</span>
   </div>
-  <mat-carousel
-    *ngIf="traderImages$ | async as images"
-    [hideArrows]="false"
-    [hideIndicators]="false"
-    [proportion]="50"
-  >
-    <mat-carousel-slide *ngFor="let image of images" [image]="image">
-    </mat-carousel-slide>
-  </mat-carousel>
+  <div class="carousel">
+    <mat-carousel
+      *ngIf="traderImages$ | async as images"
+      [hideArrows]="false"
+      [hideIndicators]="false"
+      [proportion]="50"
+    >
+      <mat-carousel-slide *ngFor="let image of images" [image]="image">
+      </mat-carousel-slide>
+    </mat-carousel>
+  </div>
   <app-trader-contact [trader]="trader"></app-trader-contact>
   <p class="trader-product-amount" *ngIf="(productAmount$ | async) > 0">
     <span
