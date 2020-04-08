@@ -12,6 +12,8 @@ import {
   TraderProfileStatus,
 } from 'src/app/models/traderProfile';
 import { TraderService } from 'src/app/services/trader.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteUserComponent } from './delete-user/delete-user.component';
 
 export enum RegistrationState {
   new = 'new',
@@ -145,7 +147,8 @@ export class RegistrationComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    traderService: TraderService
+    traderService: TraderService,
+    public dialog: MatDialog
   ) {
     if (router.url.match('new')) {
       this.registrationState = RegistrationState.new;
@@ -269,11 +272,8 @@ export class RegistrationComponent implements OnInit {
   }
 
   deleteProfile() {
-    this.delete = true;
-  }
-
-  abortDelete() {
-    this.delete = false;
+    const dialog = this.dialog.open(DeleteUserComponent);
+    dialog.afterClosed().subscribe(() => console.log('closed'));
   }
 
   verwerfen() {
