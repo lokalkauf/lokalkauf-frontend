@@ -18,6 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { LkSelectComponent } from './lk-select/lk-select.component';
+import { WarningBoxComponent } from './warning-box/warning-box.component';
 
 const routes: Routes = [];
 
@@ -34,6 +35,7 @@ const routes: Routes = [];
     LkSelectComponent,
     ImageChooserComponent,
     FullscreenModalComponent,
+    WarningBoxComponent,
   ],
   imports: [
     CommonModule,
@@ -58,6 +60,7 @@ const routes: Routes = [];
     ImageChooserComponent,
     ImageCarouselComponent,
     FullscreenModalComponent,
+    WarningBoxComponent,
   ],
 })
 export class ReusablesModule {}

@@ -1,5 +1,10 @@
 @import '../../../variables.scss';
 
+app-warning-box {
+  display: block;
+  margin-top: 20px;
+}
+
 #traders-view-container {
   max-width: 1024px;
   margin: 0 auto;

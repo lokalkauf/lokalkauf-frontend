@@ -14,6 +14,9 @@ mat-toolbar-row {
 }
 
 mat-sidenav-content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   width: 100%;
   margin: 0;
   padding: 0;
@@ -52,10 +55,14 @@ button.mat-mini-fab.avatar {
   background-color: none;
 }
 
+.main-content {
+  flex-grow: 1;
+  width: 100%;
+}
+
 .footer {
   text-align: center;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
   background-color: #f4f4f4;
 
   .mat-list-item {

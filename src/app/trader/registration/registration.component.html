@@ -1,25 +1,26 @@
-<div class="alert-warning">
-  Unsere Plattform befindet sich in der Pilotphase. Bisher können Kunden nur
-  Händler aus ausgewählten Städten finden.<br />
-  Wenn Du der erste sein willst, wenn wir in Deiner Stadt starten, kannst du
-  dich hier vorab registrieren.
-</div>
-
-<app-lk-page-title
-  *ngIf="registrationState === 'new'"
-  title="Anmeldung"
-  subtitle="Melde Dich kostenlos an um Dein Geschäft, Dein Restaurant oder Dein Café online zu präsentieren und Deinen Kunden zu zeigen, dass Du weiterhin für sie da bist.
-  "
-></app-lk-page-title>
-
-<app-lk-page-title
-  *ngIf="registrationState === 'edit'"
-  title="Bearbeiten"
-  subtitle="Aktualisiere Deine Daten
-  "
-></app-lk-page-title>
-
 <div class="registration-form">
+  <app-warning-box
+    content="Unsere Plattform befindet sich in der Pilotphase. Bisher können Kunden nur
+Händler aus ausgewählten Städten finden.<br />
+Wenn Du der erste sein willst, wenn wir in Deiner Stadt starten, kannst du
+dich hier vorab registrieren."
+  >
+  </app-warning-box>
+
+  <app-lk-page-title
+    *ngIf="registrationState === 'new'"
+    title="Anmeldung"
+    subtitle="Melde Dich kostenlos an um Dein Geschäft, Dein Restaurant oder Dein Café online zu präsentieren und Deinen Kunden zu zeigen, dass Du weiterhin für sie da bist.
+  "
+  ></app-lk-page-title>
+
+  <app-lk-page-title
+    *ngIf="registrationState === 'edit'"
+    title="Bearbeiten"
+    subtitle="Aktualisiere Deine Daten
+  "
+  ></app-lk-page-title>
+
   <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
     <div class="registration-input">
       <app-lk-input

@@ -5,10 +5,11 @@
       (locationsOnMap)="updateLocations($event)"
     ></app-map>
   </div> -->
-  <div class="alert-warning" style="height: unset;">
-    Unsere Plattform befindet sich in der Testphase. Diese Testphase beschränkt
-    sich aktuell auf die Händler in ausgewählten Städten!
-  </div>
+  <app-warning-box
+    content="Unsere Plattform befindet sich in der Testphase. Diese Testphase beschränkt
+  sich aktuell auf die Händler in ausgewählten Städten!"
+  >
+  </app-warning-box>
   <div id="traders-overview-row">
     <app-lk-page-title title="Alles aus Deiner Nähe"></app-lk-page-title>
     <div id="traders-overview-content">

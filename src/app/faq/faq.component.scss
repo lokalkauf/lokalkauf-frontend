@@ -1,24 +1,10 @@
 @import '../../variables.scss';
 
 #faq-view-container {
-  height: 100%;
-  width: 100%;
-  display: table;
-}
-
-#faq-content {
-  @media screen and (max-width: 767px) {
-    width: 100%;
-    left: 0;
-    right: 0;
-  }
-
-  @media screen and (min-width: 768px) {
-    width: 740px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
   text-align: justify;
   font-size: 0.8rem;
 

@@ -30,9 +30,12 @@ export class AppComponent {
     const city = this.storageService.loadLocation();
     if (city) {
       route =
-        '/localtraders/' + city.lat + '/' + city.lng + '/' + city.rad
-          ? city.rad.toString(0)
-          : '10';
+        '/localtraders/' +
+        city.lat +
+        '/' +
+        city.lng +
+        '/' +
+        (city.rad ? city.rad.toString() : '10');
     }
     this.router.navigate([route]);
   }
