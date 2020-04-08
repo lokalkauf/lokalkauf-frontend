@@ -23,82 +23,82 @@ dich hier vorab registrieren."
 
   <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
     <div class="registration-input">
-      <app-lk-input
+      <lk-input
         [warn]="businessname.touched && businessname.invalid"
         type="text"
         formControlName="businessname"
         placeholder="Firmenname*"
-      ></app-lk-input>
+      ></lk-input>
       <div class="warning" *ngIf="businessname.touched && businessname.invalid">
         Bitte gib Deinen Firmennamen ein
       </div>
     </div>
     <div class="registration-input">
-      <app-lk-input
+      <lk-input
         [warn]="ownerFirstname.touched && ownerFirstname.invalid"
         type="text"
         formControlName="ownerFirstname"
         placeholder="Vorname"
-      ></app-lk-input>
+      ></lk-input>
     </div>
     <div class="registration-input">
-      <app-lk-input
+      <lk-input
         [warn]="ownerLastname.touched && ownerLastname.invalid"
         type="text"
         formControlName="ownerLastname"
         placeholder="Nachname"
-      ></app-lk-input>
+      ></lk-input>
     </div>
     <div class="registration-input">
-      <app-lk-input
+      <lk-input
         [warn]="phone.touched && phone.invalid"
         type="tel"
         formControlName="phone"
         placeholder="Telefonnummer*"
-      ></app-lk-input>
+      ></lk-input>
       <div class="warning" *ngIf="phone.touched && phone.invalid">
         Bitte gib eine gültige Telefonnummer ein
       </div>
     </div>
     <div class="address">
       <div class="registration-input street">
-        <app-lk-input
+        <lk-input
           [warn]="street.touched && street.invalid"
           type="text"
           formControlName="street"
           placeholder="Straße*"
-        ></app-lk-input>
+        ></lk-input>
         <div class="warning" *ngIf="street.touched && street.invalid">
           Bitte gib eine Straße ein
         </div>
       </div>
       <div class="registration-input streetnumber">
-        <app-lk-input
+        <lk-input
           [warn]="streetnumber.touched && streetnumber.invalid"
           type="text"
           formControlName="streetnumber"
           placeholder="Nr.*"
-        ></app-lk-input>
+        ></lk-input>
       </div>
       <div class="registration-input postcode">
-        <app-lk-input
+        <lk-input
           [warn]="postcode.touched && postcode.invalid"
           type="number"
           formControlName="postcode"
           placeholder="Plz*"
-        ></app-lk-input>
+        ></lk-input>
         <div class="warning" *ngIf="postcode.touched && postcode.invalid">
           Format: 44135
         </div>
       </div>
       <div class="registration-input city">
-        <app-lk-input
+        <lk-input
           [warn]="city.touched && city.invalid"
           type="text"
           formControlName="city"
           placeholder="Stadt*"
         >
-        </app-lk-input>
+        </lk-input>
         <div class="warning" *ngIf="city.touched && city.invalid">
           Bitte gib eine Stadt ein
         </div>
@@ -108,20 +108,20 @@ dich hier vorab registrieren."
     <ng-container *ngIf="registrationState === 'new'">
       <div class="subheadline">Deine Zugangsdaten</div>
       <div class="registration-input">
-        <app-lk-input
+        <lk-input
           [warn]="email.touched && email.invalid"
           type="email"
           formControlName="email"
           placeholder="Email*"
         >
-        </app-lk-input>
+        </lk-input>
         <div class="warning" *ngIf="email.touched && email.invalid">
           Bitte überprüfe die eingegebene Email-Adresse.
         </div>
       </div>
 
       <div class="registration-input">
-        <app-lk-input
+        <lk-input
           matInput
           #passwordWithValidation
           type="password"
@@ -129,10 +129,10 @@ dich hier vorab registrieren."
           formControlName="password"
           [formControl]="passwordComponentWithValidation.passwordFormControl"
           placeholder="Passwort"
-        ></app-lk-input>
+        ></lk-input>
       </div>
       <div class="registration-input">
-        <app-lk-input
+        <lk-input
           [warn]="
             passwordRepeat.touched &&
             (passwordRepeat.invalid ||
@@ -141,7 +141,7 @@ dich hier vorab registrieren."
           type="password"
           formControlName="passwordRepeat"
           placeholder="Passwort wiederholen*"
-        ></app-lk-input>
+        ></lk-input>
         <div
           class="warning"
           *ngIf="registrationForm.errors && registrationForm.errors.notSame"
@@ -192,27 +192,27 @@ dich hier vorab registrieren."
 
     <div class="button-and-error">
       <ng-container *ngIf="registrationState === 'new'">
-        <app-lk-button
+        <lk-button
           [disabled]="!registrationForm.valid"
           type="submit"
           label="Registrieren"
-        ></app-lk-button>
+        ></lk-button>
       </ng-container>
       <ng-container *ngIf="registrationState === 'edit'">
         <div class="button-container">
           <div class="speichern">
-            <app-lk-button
+            <lk-button
               [disabled]="!registrationForm.valid"
               type="submit"
               label="Aktualisieren"
-            ></app-lk-button>
+            ></lk-button>
           </div>
           <div class="verwerfen">
-            <app-lk-button
+            <lk-button
               type="button"
               label="Zurück"
               (click)="verwerfen()"
-            ></app-lk-button>
+            ></lk-button>
           </div>
           <span class="success" *ngIf="saveSuccessful">
             Speichern erfolgreich

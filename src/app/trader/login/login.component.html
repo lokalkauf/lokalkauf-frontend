@@ -2,21 +2,21 @@
 
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <div>
-    <app-lk-input
+    <lk-input
       formControlName="email"
       name="login"
       placeholder="Email"
-    ></app-lk-input>
-    <app-lk-input
+    ></lk-input>
+    <lk-input
       formControlName="password"
       type="password"
       name="password"
       placeholder="Passwort"
-    ></app-lk-input>
+    ></lk-input>
   </div>
 
-  <div id="app-lk-button-container">
-    <app-lk-button type="submit" label="Login"></app-lk-button>
+  <div id="lk-button-container">
+    <lk-button type="submit" label="Login"></lk-button>
   </div>
 
   <div class="button-and-error">

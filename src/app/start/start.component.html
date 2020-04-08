@@ -57,22 +57,17 @@
         <div id="start-long-lat" *ngIf="coovalue">
           GPS-Umkreisermittlung: 5km
         </div>
-        <app-lk-button id="start-button" (click)="action()" label="los" [disabled]="disabledLosButton">
-        </app-lk-button>
+        <lk-button id="start-button" (click)="action()" label="los" [disabled]="disabledLosButton">
+        </lk-button>
         -->
-        <button
-          mat-flat-button
-          color="primary"
-          (click)="reducedAction(startTownList)"
-        >
-          Jetzt suchen!
-        </button>
-        <!-- <app-lk-button
+        <lk-button (click)="reducedAction(startTownList)" label="Jetzt suchen!">
+        </lk-button>
+        <!-- <lk-button
           id="start-button-intial-towns"
           (click)="reducedAction(startTownList)"
           label="Jetzt suchen!"
         >
-        </app-lk-button> -->
+        </lk-button> -->
       </div>
       <!--<div id="start-error" *ngIf="showError">
         Bitte geben Sie eine Postleitzahl an oder aktivieren Sie Ihr GPS
@@ -85,9 +80,12 @@
         Du bist Einzelhändler oder Gastronom? Dann melde Dich hier an:
       </div>
       <div>
-        <button mat-flat-button color="accent" [routerLink]="'/trader/login'">
-          Geschäftsprofil anlegen
-        </button>
+        <lk-button
+          color="accent"
+          [routerLink]="'/trader/login'"
+          label="Geschäftsprofil anlegen"
+        >
+        </lk-button>
       </div>
     </div>
 
@@ -96,9 +94,11 @@
         Hier gehts zu deinem Profil:
       </div>
       <div>
-        <button mat-flat-button color="accent" [routerLink]="'/trader/profile'">
-          Mein Händlerprofil
-        </button>
+        <lk-button
+          color="accent"
+          [routerLink]="'/trader/profile'"
+          label="Mein Händlerprofil"
+        ></lk-button>
       </div>
     </div>
 

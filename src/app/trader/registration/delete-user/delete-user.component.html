@@ -4,19 +4,19 @@
   nicht rückgängig gemacht werden!
 
   <div class="password">
-    <app-lk-input
+    <lk-input
       type="password"
       [formControl]="password"
       placeholder="Passwort"
-    ></app-lk-input>
+    ></lk-input>
   </div>
 
   <div class="buttons">
-    <app-lk-button
+    <lk-button
       [warn]="true"
       (click)="performDelete()"
       label="Löschen"
-    ></app-lk-button>
-    <app-lk-button (click)="abort()" label="abbrechen"></app-lk-button>
+    ></lk-button>
+    <lk-button (click)="abort()" label="abbrechen"></lk-button>
   </div>
 </div>
