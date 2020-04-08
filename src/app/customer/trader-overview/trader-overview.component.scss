@@ -43,14 +43,15 @@ app-warning-box {
 
 #traders-overview-content {
   padding-top: 2rem;
+  margin-bottom: 2rem;
   display: grid;
   grid-gap: 1.5rem;
   background-color: white;
   width: 100%;
+}
 
-  @media screen and (max-width: 767px) {
-    margin: 0px;
-    width: 100%;
-    margin-top: 20px;
-  }
+.traders-input-center {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
 }

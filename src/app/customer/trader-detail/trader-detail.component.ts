@@ -3,7 +3,6 @@ import { AngularFirestore, Reference } from '@angular/fire/firestore';
 import { Observable, from, Subscription, defer } from 'rxjs';
 import { flatMap, map, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CarouselEntry } from 'src/app/models/carouselEntry';
 import { Link } from 'src/app/models/link';
 import { TraderProfile } from 'src/app/models/traderProfile';
 import { Trader } from 'src/app/models/trader';
@@ -22,18 +21,13 @@ import { ImageService } from 'src/app/services/image.service';
 export class TraderDetailComponent implements OnInit {
   trader$: Observable<Omit<TraderProfile, 'id'>>;
   productAmount$: Observable<number>;
-  traderImages$: Observable<Array<CarouselEntry>>;
+  traderImages$: Observable<string[]>;
 
   showMoreText = false;
 
   constructor(
     private db: AngularFirestore,
     private route: ActivatedRoute,
-    private mailService: EMailService,
-    private router: Router,
-    private errorService: ErrorService,
-    private storage: AngularFireStorage,
-    private traderService: TraderService,
     private imageService: ImageService
   ) {}
 
@@ -59,8 +53,7 @@ export class TraderDetailComponent implements OnInit {
         async (params) =>
           await this.imageService.getAllTraderImageUrls(params.id)
         // this.traderService.getTraderBusinessImageUrls(params.id)
-      ),
-      map((x) => x.map((y) => new CarouselEntry(y)))
+      )
     );
 
     this.productAmount$ = this.route.params.pipe(

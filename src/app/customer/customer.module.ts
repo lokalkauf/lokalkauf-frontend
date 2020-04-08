@@ -22,6 +22,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TraderContactComponent } from './trader-contact/trader-contact.component';
 import { ReusablesModule } from '../reusables/reusables.module';
 import { InquiryConfirmationComponent } from './inquiry-confirmation/inquiry-confirmation.component';
+import { MatCarouselModule } from '@ngmodule/material-carousel';
 
 const routes: Routes = [
   {
@@ -62,6 +63,7 @@ const routes: Routes = [
     MatInputModule,
     MatButtonModule,
     ReusablesModule,
+    MatCarouselModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
   ],

@@ -12,6 +12,25 @@
   </app-warning-box>
   <div id="traders-overview-row">
     <app-lk-page-title title="Alles aus Deiner Nähe"></app-lk-page-title>
+    <div id="traders-overview-headline">Alles aus Deiner Nähe</div>
+    <div class="traders-input-center">
+      <app-lk-select
+        #storeTypeList
+        id="store-types"
+        name="storeType"
+        [options]="storeTypes"
+        [placeholder]="storeTypePreselect"
+      >
+      </app-lk-select>
+    </div>
+    <div class="traders-input-center">
+      <app-lk-button
+        id="shop-types-button"
+        (click)="reducedAction(storeTypeList)"
+        label="Jetzt filtern!"
+      >
+      </app-lk-button>
+    </div>
     <div id="traders-overview-content">
       <app-trader-item
         *ngFor="let trader of traders"
