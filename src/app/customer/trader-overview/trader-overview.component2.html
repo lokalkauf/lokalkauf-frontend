@@ -11,7 +11,7 @@
   </div>
   <div id="traders-overview-row">
     <div id="traders-overview-headline">Alles aus Deiner Nähe</div>
-    <div align="center">
+    <div class="traders-input-center">
       <app-lk-select
         #storeTypeList
         id="store-types"
@@ -20,6 +20,8 @@
         [placeholder]="storeTypePreselect"
       >
       </app-lk-select>
+    </div>
+    <div class="traders-input-center">
       <app-lk-button
         id="shop-types-button"
         (click)="reducedAction(storeTypeList)"
