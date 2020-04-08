@@ -90,7 +90,6 @@ const routes: Routes = [
     MatFormFieldModule,
     MatAutocompleteModule,
     MatTabsModule,
-    MatTabGroup,
     MatCardModule,
     MatMenuModule,
     MatListModule,

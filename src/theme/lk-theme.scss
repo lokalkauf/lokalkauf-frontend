@@ -1,0 +1,17 @@
+@import '../../node_modules/@angular/material/theming';
+@import './lk-theme-color-palette.scss';
+@import './components/all.scss';
+
+@include mat-core();
+
+$custom-theme-primary: mat-palette($lk-colors-green);
+$custom-theme-accent: mat-palette($lk-colors-blue);
+$custom-theme-warn: mat-palette($mat-red);
+
+$custom-theme: mat-light-theme(
+  $custom-theme-primary,
+  $custom-theme-accent,
+  $custom-theme-warn
+);
+
+@include angular-material-theme($custom-theme);

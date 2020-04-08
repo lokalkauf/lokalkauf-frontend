@@ -35,7 +35,7 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss",
+              "src/theme/styles.scss",
               "./node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": [],
@@ -104,7 +104,7 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss"
+              "src/theme/styles.scss"
             ],
             "scripts": []
           }
