@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import './lk-theme';
+@import './lk-theme.scss';
+@import './variables.scss';
 
 html {
   height: 100%;
@@ -9,6 +10,16 @@ body {
   height: 100%;
   margin: 0;
   font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Bitter, 'serif';
+  color: $normalgreen;
 }
 
 app-root {

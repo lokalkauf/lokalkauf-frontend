@@ -1,27 +1,23 @@
-#about-us-view-container {
+.about-us {
   max-width: 1024px;
   margin: 0 auto;
   padding: 0 16px;
   box-sizing: border-box;
-}
 
-#about-us-box {
   img {
     display: block;
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
+    width: calc(100% + 32px);
+    margin-left: -16px;
+    margin-bottom: 20px;
+
+    @media screen and (min-width: 600px) {
+      margin: 0 auto;
+      width: 600px;
+    }
   }
 
-  #about-us-content {
+  .about-us-content {
     text-align: justify;
-    font-size: 0.8rem;
-
-    #about-us-header {
-      padding: 1.4rem 0;
-      font-size: 1rem;
-      font-weight: 400;
-    }
 
     .about-us-box {
       display: flex;
@@ -32,8 +28,8 @@
 
       .about-us-names {
         width: 50%;
-        text-align: left;
-        font-size: 0.7rem;
+        text-align: center;
+        font-size: 0.8rem;
         padding-bottom: 2rem;
       }
     }
