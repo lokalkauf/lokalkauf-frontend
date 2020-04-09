@@ -11,6 +11,8 @@ import {
   TraderProfile,
   TraderProfileStatus,
 } from 'src/app/models/traderProfile';
+import { SpinnerComponent } from 'src/app/spinner/spinner.component';
+import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({
   selector: 'app-trader-overview',
@@ -33,7 +35,8 @@ export class TraderOverviewComponent implements OnInit {
     db: AngularFirestore,
     private route: ActivatedRoute,
     private geo: GeoService,
-    private traderService: TraderService
+    private traderService: TraderService,
+    private spinnerService: SpinnerService
   ) {
     this.storeTypePreselect = of('Nach was bist du auf der Suche?');
     this.storeTypes = of([
@@ -109,6 +112,7 @@ export class TraderOverviewComponent implements OnInit {
   }
 
   loadTmpLocations(position: number[]) {
+    this.spinnerService.show();
     const radius = this.paramRadius ? this.paramRadius : this.STATIC_RADIUS;
     this.geo
       .getLocations(radius, position)
@@ -128,6 +132,7 @@ export class TraderOverviewComponent implements OnInit {
       })
       .finally(() => {
         this.updateLocations(this.locations);
+        this.spinnerService.hide();
       });
   }
 
