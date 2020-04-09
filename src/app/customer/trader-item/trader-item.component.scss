@@ -5,48 +5,37 @@ a {
   text-decoration: none;
 }
 
-.trader-item-container {
-  box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.2) !important;
-  height: 100px;
-  width: 100%;
-  border-radius: 10px;
+mat-card {
+  display: flex;
+  overflow: hidden;
+  align-items: center;
 
-  .image-left {
-    height: 100px;
+  .trader-thumbnail {
+    display: block;
     width: 100px;
-    float: left;
-
-    border-top-left-radius: 10px 10px;
-    border-bottom-left-radius: 10px 10px;
-
-    background-position: center center;
-    background-size: cover;
-
-    img {
-      width: 100%;
-      height: 100%;
-      border: 0;
-      border-top-left-radius: 10px 10px;
-      border-bottom-left-radius: 10px 10px;
-    }
+    height: 100px;
+    margin-left: -16px;
+    margin-top: -16px;
+    margin-bottom: -16px;
+    margin-right: 16px;
+    object-fit: cover;
   }
 
-  .content {
-    float: left;
-    margin: 0.4rem;
-    width: calc(100% - 120px);
+  .trader-item-content {
+    width: 100%;
+    display: flex;
 
     .headline {
-      font-size: 0.9rem;
       margin: 0.2rem 0;
-      padding-left: 0.4rem;
+      margin-top: 0px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .address {
-      float: left;
       width: 100%;
-      font-size: 0.7rem;
-      padding-left: 0.4rem;
+      font-size: 0.8rem;
     }
 
     .distance {
