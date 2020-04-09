@@ -1,10 +1,6 @@
 @import './../../../theme/variables.scss';
 
-.trader-detail {
-  max-width: 1024px;
-  margin: 0 auto;
-  padding: 0 16px;
-  box-sizing: border-box;
+lk-container {
   text-align: center;
 
   .trader-product-amount {
