@@ -25,6 +25,7 @@ mat-sidenav-content {
 }
 
 mat-sidenav-container {
+  overflow-y: scroll;
   background-color: transparent;
   flex-grow: 1;
 }

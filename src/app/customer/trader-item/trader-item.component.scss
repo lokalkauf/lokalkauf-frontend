@@ -5,10 +5,16 @@ a {
   text-decoration: none;
 }
 
+:host {
+  display: block;
+  width: 100%;
+}
+
 mat-card {
   display: flex;
   overflow: hidden;
   align-items: stretch;
+  max-width: 100%;
 
   .trader-thumbnail {
     display: block;
