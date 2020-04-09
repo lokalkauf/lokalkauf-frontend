@@ -1,7 +1,7 @@
-<div id="traders-view-container">
-  <!-- <div id="traders-map-row">
+<div class="traders-view-container">
+  <!-- <div class="traders-map-row">
     <app-map
-      id="tradersmap"
+      class="tradersmap"
       (locationsOnMap)="updateLocations($event)"
     ></app-map>
   </div> -->
@@ -10,12 +10,12 @@
   sich aktuell auf die Händler in ausgewählten Städten!"
   >
   </app-warning-box>
-  <div id="traders-overview-row">
+  <div class="traders-overview-row">
     <app-lk-page-title title="Alles aus Deiner Nähe"></app-lk-page-title>
     <div class="traders-input-center">
       <lk-select
         #storeTypeList
-        id="store-types"
+        class="store-types"
         name="storeType"
         [options]="storeTypes"
         [placeholder]="'Nach was bist du auf der Suche?'"
@@ -24,13 +24,13 @@
     </div>
     <div class="traders-input-center">
       <lk-button
-        id="shop-types-button"
+        class="shop-types-button"
         (click)="reducedAction(storeTypeList)"
         label="Jetzt filtern!"
       >
       </lk-button>
     </div>
-    <div id="traders-overview-content">
+    <div class="traders-overview-content">
       <app-trader-item
         *ngFor="let trader of traders"
         [trader]="trader"

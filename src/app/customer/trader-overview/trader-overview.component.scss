@@ -5,23 +5,23 @@ app-warning-box {
   margin-top: 20px;
 }
 
-#traders-view-container {
+.traders-view-container {
   max-width: 1024px;
   margin: 0 auto;
   padding: 0 16px;
   box-sizing: border-box;
 }
 
-#traders-map-row {
+.traders-map-row {
   height: 50%;
   max-height: 26rem;
 }
 
-#traders-overview-row {
+.traders-overview-row {
   width: 100%;
 }
 
-#tradersmap {
+.tradersmap {
   top: 0rem;
   z-index: 0;
   height: 50%;
@@ -41,11 +41,12 @@ app-warning-box {
   }
 }
 
-#traders-overview-content {
+.traders-overview-content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   padding-top: 2rem;
   margin-bottom: 2rem;
-  display: grid;
-  grid-gap: 1.5rem;
   background-color: white;
   width: 100%;
 }
@@ -60,4 +61,8 @@ app-warning-box {
   margin-top: 1rem;
   margin-bottom: 1rem;
   text-align: center;
+}
+
+app-trader-item {
+  margin-bottom: 16px;
 }
