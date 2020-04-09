@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -49,6 +50,7 @@ import { AboutUsComponent } from './about-us/about-us.compontent';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 import { FaqComponent } from './faq/faq.component';
 import { StorageService } from './services/storage.service';
+import { SearchInputComponent } from './start/search-input/search-input.component';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -71,6 +73,7 @@ const routes: Routes = [
     SpinnerComponent,
     StartComponent,
     FaqComponent,
+    SearchInputComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,6 +89,7 @@ const routes: Routes = [
     MatCardModule,
     MatMenuModule,
     MatListModule,
+    MatInputModule,
     MatButtonModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),

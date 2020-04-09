@@ -4,20 +4,17 @@ import {
   InjectionToken,
   ElementRef,
   ViewChild,
-  ɵsetCurrentInjector,
 } from '@angular/core';
 import { Link } from '../models/link';
 import { Router } from '@angular/router';
-import { isNumber } from 'util';
 import { debounce } from 'lodash';
 
 import { GeoService } from 'src/app/services/geo.service';
-import { tap } from 'rxjs/operators';
-import { BehaviorSubject, Observable, of } from 'rxjs';
 import { ScrollStrategy } from '@angular/cdk/overlay';
 import { UserService } from '../services/user.service';
-import { LkSelectOptions } from '../reusables/lk-select/lk-select.component';
 import { StorageService } from '../services/storage.service';
+import { FormControl, Validators } from '@angular/forms';
+import { SearchInputComponent } from './search-input/search-input.component';
 
 @Component({
   selector: 'app-start',
@@ -44,9 +41,6 @@ export class StartComponent implements OnInit {
   coords: string;
   suggestion: any;
 
-  standorte: Observable<LkSelectOptions[]>;
-  standortPreselect: Observable<string>;
-
   currentPosition: Array<number>;
   disabledLosButton: boolean;
 
@@ -54,6 +48,9 @@ export class StartComponent implements OnInit {
 
   preSelectedValue: any;
 
+  locationFormControl = new FormControl(null, [Validators.required]);
+
+  @ViewChild('searchInput', { read: ElementRef }) searchInput: any;
   @ViewChild('plzInput') plzInput: ElementRef;
   constructor(
     public router: Router,
@@ -66,55 +63,12 @@ export class StartComponent implements OnInit {
     this.userService.isLoggedIn$.subscribe((loggedin) => {
       this.isLoggedIn = loggedin;
     });
-    this.standortPreselect = of('Bitte wähle eine Stadt aus');
-    this.standorte = of([
-      {
-        key: '1',
-        display: 'Brühl',
-        value: { lat: '50.823525', lng: '6.897674', rad: 10 },
-      },
-      {
-        key: '2',
-        display: 'Wiesbaden',
-        value: { lat: '50.0833521', lng: '8.24145', rad: 10 },
-      },
-      {
-        key: '3',
-        display: 'Regionalverband Saarbrücken',
-        value: { lat: '49.2789', lng: '6.9437', rad: 25 },
-      },
-      {
-        key: '4',
-        display: 'Saarpfalz-Kreis',
-        value: { lat: '49.1805', lng: '7.2194', rad: 25 },
-      },
-      {
-        key: '5',
-        display: 'Neunkirchen',
-        value: { lat: '49.3518', lng: '7.1864', rad: 25 },
-      },
-      {
-        key: '6',
-        display: ' St. Wendel',
-        value: { lat: '49.46667', lng: '7.166669', rad: 25 },
-      },
-      {
-        key: '7',
-        display: 'Saarlouis',
-        value: { lat: '49.3135', lng: '6.7523', rad: 25 },
-      },
-      {
-        key: '8',
-        display: 'Merzig-Wadern',
-        value: { lat: '49.4572', lng: '6.6867', rad: 35 },
-      },
-    ]);
   }
 
   showError: boolean;
 
   ngOnInit(): void {
-    //    this.getUserLocation();
+    // this.getUserLocation();
 
     const city = this.storageService.loadLocation();
     if (city) {
@@ -165,16 +119,19 @@ export class StartComponent implements OnInit {
     }
   }
 
-  reducedAction(val: any) {
-    if (val.internalValue !== this.DEFAULT) {
-      this.router.navigate([
-        '/localtraders',
-        val.internalValue.lat,
-        val.internalValue.lng,
-        val.internalValue.rad,
-      ]);
-      this.storageService.saveLocation(val.internalValue);
+  searchPlace() {
+    const val = this.locationFormControl.value;
+    if (!val) {
+      this.searchInput.nativeElement.getElementsByTagName('input')[0].focus();
+      return;
     }
+    this.router.navigate([
+      '/localtraders',
+      val.location.lat,
+      val.location.lng,
+      val.location.rad,
+    ]);
+    this.storageService.saveLocation(val.location);
   }
 
   setposition(position: Array<number>) {

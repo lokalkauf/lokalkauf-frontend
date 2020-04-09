@@ -7,19 +7,18 @@
   height: 70vh;
   background-size: cover;
   background-position: 50% 20%;
-  .start-logo-top {
-    max-width: 1024px;
-    margin: 0 auto;
-    padding: 20px 16px;
-  }
-  .start-logo-bottom {
+
+  .hero-search-container {
     position: absolute;
-    display: block;
+    bottom: 10%;
     width: 100%;
-    bottom: 0px;
-    img {
-      display: block;
-      margin: 20px auto;
+
+    lk-container {
+      text-align: center;
+
+      lk-button {
+        width: 266px;
+      }
     }
   }
 }

@@ -1,6 +1,18 @@
 <!-- <app-horizontal-scaling-bar [links]="links" (clickedLink)="consoleLog($event);">
 </app-horizontal-scaling-bar>-->
-<div class="hero"></div>
+<div class="hero">
+  <div class="hero-search-container">
+    <lk-container>
+      <form (submit)="searchPlace()">
+        <lk-search-input
+          [formControl]="locationFormControl"
+          #searchInput
+        ></lk-search-input>
+        <lk-button type="submit" label="Händler suchen"></lk-button>
+      </form>
+    </lk-container>
+  </div>
+</div>
 
 <lk-container>
   <div class="intro">
