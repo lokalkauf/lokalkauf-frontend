@@ -14,7 +14,6 @@ import { ScrollStrategy } from '@angular/cdk/overlay';
 import { UserService } from '../services/user.service';
 import { StorageService } from '../services/storage.service';
 import { FormControl, Validators } from '@angular/forms';
-import { SearchInputComponent } from './search-input/search-input.component';
 
 @Component({
   selector: 'app-start',
