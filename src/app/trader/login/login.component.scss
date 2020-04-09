@@ -2,6 +2,7 @@
 
 lk-container {
   text-align: center;
+  margin-top: 70px;
 }
 
 .info {
@@ -21,8 +22,9 @@ form {
     margin: 0 auto;
   }
 
-  #lk-button-container {
-    margin-top: 20px;
+  lk-button {
+    margin-top: 40px;
+    width: 220px;
   }
 
   .button-and-error {
