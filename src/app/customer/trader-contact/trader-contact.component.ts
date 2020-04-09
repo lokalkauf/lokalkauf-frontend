@@ -21,7 +21,7 @@ export class TraderContactComponent implements OnInit {
   contactForm = new FormGroup({
     mail_message: new FormControl('', [Validators.required]),
     mail_contact: new FormControl('', [Validators.required]),
-    agbRead: new FormControl('', [Validators.requiredTrue]),
+    agbRead: new FormControl(false, [Validators.requiredTrue]),
   });
 
   get mail_contact() {
