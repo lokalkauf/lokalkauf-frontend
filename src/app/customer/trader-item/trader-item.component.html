@@ -1,19 +1,19 @@
 <a [routerLink]="'/trader-detail/' + trader.id" name="scroller.{{ trader.id }}">
-  <div class="trader-item-container">
-    <div
-      class="image-left"
+  <mat-card>
+    <img
+      class="trader-thumbnail"
       *ngIf="thumbnail$ | async as thumbnail"
-      [ngStyle]="{ 'background-image': 'url(' + thumbnail + ')' }"
-    ></div>
-    <div class="content">
-      <div class="headline">{{ (trader$ | async)?.businessname }}</div>
-      <div class="address">
+      [src]="thumbnail"
+    />
+    <mat-card-header>
+      <mat-card-title>{{ (trader$ | async)?.businessname }}</mat-card-title>
+      <mat-card-subtitle>
         <!-- <div class="distance"><span class="highlight">1,8</span><br />km</div> -->
         {{ (trader$ | async)?.street }}
         {{ (trader$ | async)?.number }}
         <br />{{ (trader$ | async)?.postcode }}
         {{ (trader$ | async)?.city }}
-      </div>
-    </div>
-  </div>
+      </mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
 </a>
