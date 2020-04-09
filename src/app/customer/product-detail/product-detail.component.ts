@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, combineLatest } from 'rxjs';
-import { map, flatMap, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { flatMap, tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from '../../models/product';
 import { ShoppingcartService } from '../../services/shoppingcart.service';

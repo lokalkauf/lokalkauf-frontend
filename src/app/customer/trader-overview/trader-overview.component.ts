@@ -8,7 +8,6 @@ import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
 import { GeoService } from '../../services/geo.service';
 import { TraderService } from '../../services/trader.service';
 import { TraderProfile, TraderProfileStatus } from '../../models/traderProfile';
-import { SpinnerComponent } from '../../spinner/spinner.component';
 import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
@@ -29,7 +28,6 @@ export class TraderOverviewComponent implements OnInit {
   storeTypePreselect: Observable<string>;
 
   constructor(
-    db: AngularFirestore,
     private route: ActivatedRoute,
     private geo: GeoService,
     private traderService: TraderService,

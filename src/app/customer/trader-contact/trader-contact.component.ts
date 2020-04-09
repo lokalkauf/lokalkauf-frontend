@@ -1,15 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { Trader } from '../../models/trader';
 import { EMail } from '../../models/email';
 import { EMailService } from '../../services/email.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TraderProfile } from '../../models/traderProfile';
-import { Observable } from 'rxjs';
-import { flatMap, map } from 'rxjs/operators';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { ErrorService } from '../../services/error.service';
 import { StorageService } from '../../services/storage.service';
 

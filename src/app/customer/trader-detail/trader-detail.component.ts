@@ -1,16 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AngularFirestore, Reference } from '@angular/fire/firestore';
-import { Observable, from, Subscription, defer } from 'rxjs';
-import { flatMap, map, tap } from 'rxjs/operators';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Link } from '../../models/link';
+import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { flatMap, map } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 import { TraderProfile } from '../../models/traderProfile';
 import { Trader } from '../../models/trader';
-import { EMail } from '../../models/email';
-import { EMailService } from '../../services/email.service';
-import { ErrorService } from '../../services/error.service';
-import { AngularFireStorage } from '@angular/fire/storage';
-import { TraderService } from '../../services/trader.service';
 import { ImageService } from '../../services/image.service';
 
 @Component({

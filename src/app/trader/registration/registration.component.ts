@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  ViewEncapsulation,
-} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
@@ -144,7 +139,6 @@ export class RegistrationComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    traderService: TraderService,
     public dialog: MatDialog
   ) {
     if (router.url.match('new')) {

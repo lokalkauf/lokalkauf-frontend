@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, HostBinding } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Trader } from '../../models/trader';
-import { Observable, of, from } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map, flatMap, distinctUntilChanged } from 'rxjs/operators';
 import { TraderProfile } from '../../models/traderProfile';

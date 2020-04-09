@@ -1,5 +1,4 @@
-import { Injectable, Component, OnInit, Input } from '@angular/core';
-import { HttpCommunicationInterceptor } from '../interceptors/http-communication.interceptor';
+import { Component } from '@angular/core';
 import { Subject } from 'rxjs';
 import { SpinnerService } from '../services/spinner.service';
 
