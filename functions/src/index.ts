@@ -48,13 +48,12 @@ export const sendMail = functions.https.onCall(async (data, context) => {
   if (data.mailType == 'feedback') {
     htmlOutput = `<div style="text-align:center;">
     <img src="https://lokalkauf-staging.web.app/assets/logo.png" style="width:300px;height:100px">
-        <h2>Bestätigung deiner Anfrage</h2>
-        <h4>Du hast eine Anfrage versendet:</h4>
+        <h2>Lokalkauf hat ein Feedback bekommen!</h2>
+        <h4>Folgende Nachricht ist eingegenagen:</h4>
         <p>${data.message}</p>
         <b>Folgende Kontaktinformationen wurden hinterlassen:</b>
         <p>${data.fromEmail}</p>
         <br>
-        <b> Dein LokalKauf Team </b>
 </div>`;
     cpSubject = 'Kopie Deines Feedbacks';
   } else if (data.mailType == 'trader-contact') {
