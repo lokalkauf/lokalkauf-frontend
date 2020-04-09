@@ -3,9 +3,9 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, combineLatest } from 'rxjs';
 import { map, flatMap, tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-import { Product } from 'src/app/models/product';
-import { ShoppingcartService } from 'src/app/services/shoppingcart.service';
-import { ProductService } from 'src/app/services/product.service';
+import { Product } from '../../models/product';
+import { ShoppingcartService } from '../../services/shoppingcart.service';
+import { ProductService } from '../../services/product.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductDetailFeedbackComponent } from '../product-detail-feedback/product-detail-feedback.component';
 

@@ -3,8 +3,8 @@ import { Trader } from '../../models/trader';
 import { Observable, of, from } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map, flatMap, distinctUntilChanged } from 'rxjs/operators';
-import { TraderProfile } from 'src/app/models/traderProfile';
-import { ImageService } from 'src/app/services/image.service';
+import { TraderProfile } from '../../models/traderProfile';
+import { ImageService } from '../../services/image.service';
 
 @Component({
   selector: 'app-trader-item',

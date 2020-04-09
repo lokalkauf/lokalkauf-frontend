@@ -1,8 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from '../../../services/user.service';
 import { Router } from '@angular/router';
-import { ErrorService } from 'src/app/services/error.service';
+import { ErrorService } from '../../../services/error.service';
 import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-delete-user',

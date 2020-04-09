@@ -3,15 +3,15 @@ import { AngularFirestore, Reference } from '@angular/fire/firestore';
 import { Observable, from, Subscription, defer } from 'rxjs';
 import { flatMap, map, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Link } from 'src/app/models/link';
-import { TraderProfile } from 'src/app/models/traderProfile';
-import { Trader } from 'src/app/models/trader';
+import { Link } from '../../models/link';
+import { TraderProfile } from '../../models/traderProfile';
+import { Trader } from '../../models/trader';
 import { EMail } from '../../models/email';
 import { EMailService } from '../../services/email.service';
-import { ErrorService } from 'src/app/services/error.service';
+import { ErrorService } from '../../services/error.service';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { TraderService } from 'src/app/services/trader.service';
-import { ImageService } from 'src/app/services/image.service';
+import { TraderService } from '../../services/trader.service';
+import { ImageService } from '../../services/image.service';
 
 @Component({
   selector: 'app-trader-detail',

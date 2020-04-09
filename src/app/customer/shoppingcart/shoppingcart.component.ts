@@ -1,6 +1,6 @@
 import { Component, OnInit, forwardRef } from '@angular/core';
-import { ShoppingcartService } from 'src/app/services/shoppingcart.service';
-import { CartEntry } from 'src/app/models/cartEntry';
+import { ShoppingcartService } from '../../services/shoppingcart.service';
+import { CartEntry } from '../../models/cartEntry';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({

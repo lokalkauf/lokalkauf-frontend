@@ -1,18 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Location } from 'src/app/models/location';
+import { Location } from '../../models/location';
 import { ActivatedRoute } from '@angular/router';
-import { LkSelectOptions } from 'src/app/reusables/lk-select/lk-select.component';
+import { LkSelectOptions } from '../../reusables/lk-select/lk-select.component';
 import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
-import { GeoService } from 'src/app/services/geo.service';
-import { TraderService } from 'src/app/services/trader.service';
-import {
-  TraderProfile,
-  TraderProfileStatus,
-} from 'src/app/models/traderProfile';
-import { SpinnerComponent } from 'src/app/spinner/spinner.component';
-import { SpinnerService } from 'src/app/services/spinner.service';
+import { GeoService } from '../../services/geo.service';
+import { TraderService } from '../../services/trader.service';
+import { TraderProfile, TraderProfileStatus } from '../../models/traderProfile';
+import { SpinnerComponent } from '../../spinner/spinner.component';
+import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
   selector: 'app-trader-overview',

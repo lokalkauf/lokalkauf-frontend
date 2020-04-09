@@ -10,8 +10,8 @@ import { TraderProfile } from '../../models/traderProfile';
 import { Observable } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { ErrorService } from 'src/app/services/error.service';
-import { StorageService } from 'src/app/services/storage.service';
+import { ErrorService } from '../../services/error.service';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-trader-contact',
