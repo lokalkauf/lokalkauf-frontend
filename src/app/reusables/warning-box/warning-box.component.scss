@@ -1,0 +1,10 @@
+@import '../../../theme/variables.scss';
+
+.alert-warning {
+  background-color: rgb(255, 236, 236);
+  padding: 20px;
+  margin-bottom: 20px;
+  color: $errorcolor;
+  height: unset;
+  min-height: unset;
+}

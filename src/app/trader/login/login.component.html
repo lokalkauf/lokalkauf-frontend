@@ -1,59 +1,62 @@
-<app-lk-page-title title="Händler Login"></app-lk-page-title>
+<lk-container>
+  <h1>Händler Login</h1>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="login-inputs">
+      <lk-input
+        formControlName="email"
+        name="login"
+        placeholder="Email"
+      ></lk-input>
+      <lk-input
+        formControlName="password"
+        type="password"
+        name="password"
+        placeholder="Passwort"
+      ></lk-input>
+    </div>
 
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <div>
-    <app-lk-input
-      formControlName="email"
-      name="login"
-      placeholder="Email"
-    ></app-lk-input>
-    <app-lk-input
-      formControlName="password"
-      type="password"
-      name="password"
-      placeholder="Passwort"
-    ></app-lk-input>
-  </div>
+    <lk-button type="submit" label="Anmelden"></lk-button>
 
-  <div id="app-lk-button-container">
-    <app-lk-button type="submit" label="Login"></app-lk-button>
+    <div class="button-and-error">
+      <div
+        class="error"
+        *ngIf="loginForm.errors && loginForm.errors.userDisabled"
+      >
+        <span>Dieser Benutzer ist deaktiviert.</span>
+      </div>
+      <div
+        class="error"
+        *ngIf="loginForm.errors && loginForm.errors.invalidMail"
+      >
+        <span>Die angegebene E-Mail Adresse ist ungültig.</span>
+      </div>
+      <div
+        class="error"
+        *ngIf="loginForm.errors && loginForm.errors.userNotFound"
+      >
+        <span>Der Benutzer konnte nicht gefunden werden.</span>
+      </div>
+      <div
+        class="error"
+        *ngIf="loginForm.errors && loginForm.errors.wrongPassword"
+      >
+        <span>Das angegebene Passwort ist falsch.</span>
+      </div>
+      <div
+        class="error"
+        *ngIf="loginForm.errors && loginForm.errors.undefinedError"
+      >
+        <span>Tut uns leid, da ist entwas schiefgelaufen.</span>
+      </div>
+    </div>
+  </form>
+  <br />
+  <div class="info">
+    Noch kein Konto? Dann gehts
+    <a routerLink="/trader/register/new">hier lang</a>
+    <br />
+    <a routerLink="/trader/password-reset">Passwort vergessen?</a>
+    <br />
+    <br />
   </div>
-
-  <div class="button-and-error">
-    <div
-      class="error"
-      *ngIf="loginForm.errors && loginForm.errors.userDisabled"
-    >
-      <span>Dieser Benutzer ist deaktiviert.</span>
-    </div>
-    <div class="error" *ngIf="loginForm.errors && loginForm.errors.invalidMail">
-      <span>Die angegebene E-Mail Adresse ist ungültig.</span>
-    </div>
-    <div
-      class="error"
-      *ngIf="loginForm.errors && loginForm.errors.userNotFound"
-    >
-      <span>Der Benutzer konnte nicht gefunden werden.</span>
-    </div>
-    <div
-      class="error"
-      *ngIf="loginForm.errors && loginForm.errors.wrongPassword"
-    >
-      <span>Das angegebene Passwort ist falsch.</span>
-    </div>
-    <div
-      class="error"
-      *ngIf="loginForm.errors && loginForm.errors.undefinedError"
-    >
-      <span>Tut uns leid, da ist entwas schiefgelaufen.</span>
-    </div>
-  </div>
-</form>
-<br />
-<div class="info">
-  Noch kein Konto? Dann gehts <a routerLink="/trader/register/new">hier lang</a>
-  <br />
-  <a routerLink="/trader/password-reset">Passwort vergessen?</a>
-  <br />
-  <br />
-</div>
+</lk-container>

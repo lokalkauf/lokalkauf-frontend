@@ -1,0 +1,24 @@
+@import './lk-theme';
+@import '~@angular/material/theming';
+
+$lk-primary: map-get($lk-theme, primary);
+$lk-accent: map-get($lk-theme, accent);
+
+$lightestgreen: mat-color($lk-primary, 100);
+$lightergreen: mat-color($lk-primary, 200);
+$normalgreen: mat-color($lk-primary, 500);
+$darkgreen: mat-color($lk-primary, 900);
+
+$appblack: rgb(0, 0, 0);
+$appblackGrey: #323232;
+$appgrey: rgb(50, 50, 50);
+$lightestgrey: #ccc;
+$white: #ffffff;
+
+$slighttranslucentwhite: rgba(255, 255, 255, 0.8);
+$slightesttranslucentwhite: rgba(255, 255, 255, 0.9);
+$white-transparent-60: rgba(255, 255, 255, 0.6);
+
+$intensivered: #f00;
+
+$errorcolor: #c55a11;

@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 @Component({
-  selector: 'app-lk-input',
+  selector: 'lk-input',
   templateUrl: './lk-input.component.html',
   styleUrls: ['./lk-input.component.scss'],
   providers: [
@@ -14,10 +14,11 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
   ],
 })
 export class LkInputComponent implements ControlValueAccessor {
-  @Input() type: string;
+  @Input() type = 'text';
   @Input() placeholder: string;
   @Input() warn = false;
   @Input() name: string;
+  @Input() pattern: string;
 
   // The internal data model
   private innerValue: any = '';
@@ -60,5 +61,13 @@ export class LkInputComponent implements ControlValueAccessor {
   // From ControlValueAccessor interface
   registerOnTouched(fn: any) {
     this.onTouchedCallback = fn;
+  }
+
+  getErrorMessage() {
+    if (this.value.hasError()) {
+      return 'error...';
+    }
+
+    return '';
   }
 }

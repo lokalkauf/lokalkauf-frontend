@@ -5,29 +5,30 @@
       (locationsOnMap)="updateLocations($event)"
     ></app-map>
   </div> -->
-  <div class="alert-warning" style="height: unset;">
-    Unsere Plattform befindet sich in der Testphase. Diese Testphase beschränkt
-    sich aktuell auf die Händler in ausgewählten Städten!
-  </div>
+  <app-warning-box
+    content="Unsere Plattform befindet sich in der Testphase. Diese Testphase beschränkt
+  sich aktuell auf die Händler in ausgewählten Städten!"
+  >
+  </app-warning-box>
   <div id="traders-overview-row">
-    <div id="traders-overview-headline">Alles aus Deiner Nähe</div>
+    <app-lk-page-title title="Alles aus Deiner Nähe"></app-lk-page-title>
     <div class="traders-input-center">
-      <app-lk-select
+      <lk-select
         #storeTypeList
         id="store-types"
         name="storeType"
         [options]="storeTypes"
-        [placeholder]="storeTypePreselect"
+        [placeholder]="'Nach was bist du auf der Suche?'"
       >
-      </app-lk-select>
+      </lk-select>
     </div>
     <div class="traders-input-center">
-      <app-lk-button
+      <lk-button
         id="shop-types-button"
         (click)="reducedAction(storeTypeList)"
         label="Jetzt filtern!"
       >
-      </app-lk-button>
+      </lk-button>
     </div>
     <div id="traders-overview-content">
       <app-trader-item

@@ -50,7 +50,7 @@ export class TraderItemComponent implements OnInit {
                 await this.imageService.getImage(imagePath)
               )
             ).url
-          : './assets/lokalkauf-pin.png'
+          : null
       )
     );
   }

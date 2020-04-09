@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ImageCarouselComponent } from './image-carousel.component';
+import { SearchInputComponent } from './search-input.component';
 
-describe('ImageCarouselComponent', () => {
-  let component: ImageCarouselComponent;
-  let fixture: ComponentFixture<ImageCarouselComponent>;
+describe('SearchInputComponent', () => {
+  let component: SearchInputComponent;
+  let fixture: ComponentFixture<SearchInputComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ImageCarouselComponent],
+      declarations: [SearchInputComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ImageCarouselComponent);
+    fixture = TestBed.createComponent(SearchInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

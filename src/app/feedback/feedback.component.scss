@@ -1,26 +1,16 @@
-@import '../../variables.scss';
+@import '../../theme/variables.scss';
 
 #feedback-overlay {
-  position: relative;
-  z-index: 100;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
   background-color: $slighttranslucentwhite;
 }
 
 #feedback-inset {
-  padding: 0.4rem 0px;
-
   h1 {
     margin-bottom: 40px;
-  }
-
-  @media screen and (min-width: 768px) {
-    width: 740px;
-    margin-left: auto;
-    margin-right: auto;
   }
 }
 
@@ -59,10 +49,6 @@
 
 #feedback-absenden {
   float: right;
-}
-
-#feedback-verwerfen {
-  float: left;
 }
 
 .content {

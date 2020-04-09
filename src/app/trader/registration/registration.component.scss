@@ -1,4 +1,9 @@
-@import '../../../variables.scss';
+@import '../../../theme/variables.scss';
+
+app-warning-box {
+  display: block;
+  margin-top: 20px;
+}
 
 .registration-head {
   text-align: center;
@@ -11,6 +16,11 @@
 }
 
 .registration-form {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+
   .registration-input {
     margin-bottom: 20px;
   }

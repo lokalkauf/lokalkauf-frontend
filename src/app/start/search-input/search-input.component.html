@@ -1,0 +1,19 @@
+<form>
+  <input
+    type="text"
+    [matAutocomplete]="auto"
+    [formControl]="myControl"
+    placeholder="Ort finden"
+    (blur)="onBlur()"
+    (focus)="onFocus()"
+  />
+
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayWith">
+    <mat-option
+      *ngFor="let standort of filteredValues$ | async"
+      [value]="standort"
+    >
+      {{ standort.display }}
+    </mat-option>
+  </mat-autocomplete>
+</form>

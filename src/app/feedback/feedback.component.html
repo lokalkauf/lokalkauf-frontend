@@ -1,22 +1,20 @@
 <div id="feedback-overlay">
+  <!--
   <div id="feedback-inset" *ngIf="!mailSent">
     <h1>Deine Ideen sind uns wichtig</h1>
-    <app-lk-textarea
-      [(ngModel)]="message"
-      [placeholder]="'Deine Nachricht an uns'"
-    >
-    </app-lk-textarea>
+    <lk-textarea [(ngModel)]="message" [placeholder]="'Deine Nachricht an uns'">
+    </lk-textarea>
 
     <div class="content">
       Möchtest Du Feedback von uns? <br />Dann hinterlasse hier deine
       E-Mailadresse.
     </div>
 
-    <app-lk-input
+    <lk-input
       [type]="email"
       [(ngModel)]="email"
       [placeholder]="'E-Mail Adresse'"
-    ></app-lk-input>
+    ></lk-input>
 
     <div class="content">
       <label for="agbread">
@@ -40,23 +38,20 @@
     </div>
 
     <div id="feedback-controls">
-      <app-lk-button
+      <lk-button
         id="feedback-verwerfen"
         (click)="verwerfen()"
         label="verwerfen"
-      ></app-lk-button>
-      <app-lk-button
-        id="feedback-absenden"
-        (click)="absenden()"
-        label="absenden"
-      >
-      </app-lk-button>
+      ></lk-button>
+      <lk-button id="feedback-absenden" (click)="absenden()" label="absenden">
+      </lk-button>
     </div>
   </div>
   <div class="feedback-error" *ngIf="showError">
     Bitte gebe einen Nachrichtentext ein und ggf. eine gültige E-Mail-Adresse.
     <br />Bitte bestätige zudem die AGBs und Datenschutzbestimmungen.
   </div>
+  -->
 
   <div id="thankyou" *ngIf="mailSent">
     <div id="thanks-headline">Vielen Dank für Dein Feedback</div>
@@ -70,10 +65,7 @@
       <br />
       <br />
       <br />
-      <app-lk-button
-        (click)="goBack()"
-        label="Schliessen und weiter"
-      ></app-lk-button>
+      <lk-button (click)="goBack()" label="Schliessen und weiter"></lk-button>
       <br />
     </div>
   </div>

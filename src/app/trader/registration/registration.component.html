@@ -1,103 +1,104 @@
-<div class="alert-warning">
-  Unsere Plattform befindet sich in der Pilotphase. Bisher können Kunden nur
-  Händler aus ausgewählten Städten finden.<br />
-  Wenn Du der erste sein willst, wenn wir in Deiner Stadt starten, kannst du
-  dich hier vorab registrieren.
-</div>
-
-<app-lk-page-title
-  *ngIf="registrationState === 'new'"
-  title="Anmeldung"
-  subtitle="Melde Dich kostenlos an um Dein Geschäft, Dein Restaurant oder Dein Café online zu präsentieren und Deinen Kunden zu zeigen, dass Du weiterhin für sie da bist.
-  "
-></app-lk-page-title>
-
-<app-lk-page-title
-  *ngIf="registrationState === 'edit'"
-  title="Bearbeiten"
-  subtitle="Aktualisiere Deine Daten
-  "
-></app-lk-page-title>
-
 <div class="registration-form">
+  <app-warning-box
+    content="Unsere Plattform befindet sich in der Pilotphase. Bisher können Kunden nur
+Händler aus ausgewählten Städten finden.
+Wenn Du der erste sein willst, wenn wir in Deiner Stadt starten, kannst du
+dich hier vorab registrieren."
+  >
+  </app-warning-box>
+
+  <app-lk-page-title
+    *ngIf="registrationState === 'new'"
+    title="Anmeldung"
+    subtitle="Melde Dich kostenlos an um Dein Geschäft, Dein Restaurant oder Dein Café online zu präsentieren und Deinen Kunden zu zeigen, dass Du weiterhin für sie da bist.
+  "
+  ></app-lk-page-title>
+
+  <app-lk-page-title
+    *ngIf="registrationState === 'edit'"
+    title="Bearbeiten"
+    subtitle="Aktualisiere Deine Daten
+  "
+  ></app-lk-page-title>
+
   <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
     <div class="registration-input">
-      <app-lk-input
+      <lk-input
         [warn]="businessname.touched && businessname.invalid"
         type="text"
         formControlName="businessname"
         placeholder="Firmenname*"
-      ></app-lk-input>
+      ></lk-input>
       <div class="warning" *ngIf="businessname.touched && businessname.invalid">
         Bitte gib Deinen Firmennamen ein
       </div>
     </div>
     <div class="registration-input">
-      <app-lk-input
+      <lk-input
         [warn]="ownerFirstname.touched && ownerFirstname.invalid"
         type="text"
         formControlName="ownerFirstname"
         placeholder="Vorname"
-      ></app-lk-input>
+      ></lk-input>
     </div>
     <div class="registration-input">
-      <app-lk-input
+      <lk-input
         [warn]="ownerLastname.touched && ownerLastname.invalid"
         type="text"
         formControlName="ownerLastname"
         placeholder="Nachname"
-      ></app-lk-input>
+      ></lk-input>
     </div>
     <div class="registration-input">
-      <app-lk-input
+      <lk-input
         [warn]="phone.touched && phone.invalid"
         type="tel"
         formControlName="phone"
         placeholder="Telefonnummer*"
-      ></app-lk-input>
+      ></lk-input>
       <div class="warning" *ngIf="phone.touched && phone.invalid">
         Bitte gib eine gültige Telefonnummer ein
       </div>
     </div>
     <div class="address">
       <div class="registration-input street">
-        <app-lk-input
+        <lk-input
           [warn]="street.touched && street.invalid"
           type="text"
           formControlName="street"
           placeholder="Straße*"
-        ></app-lk-input>
+        ></lk-input>
         <div class="warning" *ngIf="street.touched && street.invalid">
           Bitte gib eine Straße ein
         </div>
       </div>
       <div class="registration-input streetnumber">
-        <app-lk-input
+        <lk-input
           [warn]="streetnumber.touched && streetnumber.invalid"
           type="text"
           formControlName="streetnumber"
           placeholder="Nr.*"
-        ></app-lk-input>
+        ></lk-input>
       </div>
       <div class="registration-input postcode">
-        <app-lk-input
+        <lk-input
           [warn]="postcode.touched && postcode.invalid"
           type="number"
           formControlName="postcode"
           placeholder="Plz*"
-        ></app-lk-input>
+        ></lk-input>
         <div class="warning" *ngIf="postcode.touched && postcode.invalid">
           Format: 44135
         </div>
       </div>
       <div class="registration-input city">
-        <app-lk-input
+        <lk-input
           [warn]="city.touched && city.invalid"
           type="text"
           formControlName="city"
           placeholder="Stadt*"
         >
-        </app-lk-input>
+        </lk-input>
         <div class="warning" *ngIf="city.touched && city.invalid">
           Bitte gib eine Stadt ein
         </div>
@@ -107,20 +108,20 @@
     <ng-container *ngIf="registrationState === 'new'">
       <div class="subheadline">Deine Zugangsdaten</div>
       <div class="registration-input">
-        <app-lk-input
+        <lk-input
           [warn]="email.touched && email.invalid"
           type="email"
           formControlName="email"
           placeholder="Email*"
         >
-        </app-lk-input>
+        </lk-input>
         <div class="warning" *ngIf="email.touched && email.invalid">
           Bitte überprüfe die eingegebene Email-Adresse.
         </div>
       </div>
 
       <div class="registration-input">
-        <app-lk-input
+        <lk-input
           matInput
           #passwordWithValidation
           type="password"
@@ -128,10 +129,10 @@
           formControlName="password"
           [formControl]="passwordComponentWithValidation.passwordFormControl"
           placeholder="Passwort"
-        ></app-lk-input>
+        ></lk-input>
       </div>
       <div class="registration-input">
-        <app-lk-input
+        <lk-input
           [warn]="
             passwordRepeat.touched &&
             (passwordRepeat.invalid ||
@@ -140,7 +141,7 @@
           type="password"
           formControlName="passwordRepeat"
           placeholder="Passwort wiederholen*"
-        ></app-lk-input>
+        ></lk-input>
         <div
           class="warning"
           *ngIf="registrationForm.errors && registrationForm.errors.notSame"
@@ -199,27 +200,27 @@
 
     <div class="button-and-error">
       <ng-container *ngIf="registrationState === 'new'">
-        <app-lk-button
+        <lk-button
           [disabled]="!registrationForm.valid"
           type="submit"
           label="Registrieren"
-        ></app-lk-button>
+        ></lk-button>
       </ng-container>
       <ng-container *ngIf="registrationState === 'edit'">
         <div class="button-container">
           <div class="speichern">
-            <app-lk-button
+            <lk-button
               [disabled]="!registrationForm.valid"
               type="submit"
               label="Aktualisieren"
-            ></app-lk-button>
+            ></lk-button>
           </div>
           <div class="verwerfen">
-            <app-lk-button
+            <lk-button
               type="button"
               label="Zurück"
               (click)="verwerfen()"
-            ></app-lk-button>
+            ></lk-button>
           </div>
           <span class="success" *ngIf="saveSuccessful">
             Speichern erfolgreich
@@ -260,10 +261,6 @@
     Ich möchte mein Profil
     <a [routerLink]="" (click)="deleteProfile()">löschen</a>.
   </div>
-  <app-delete-user
-    *ngIf="delete"
-    (abortDelete)="abortDelete()"
-  ></app-delete-user>
   <br />
   <br />
 </div>

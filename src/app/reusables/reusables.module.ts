@@ -7,7 +7,6 @@ import { LkInputComponent } from './lk-input/lk-input.component';
 import { LkButtonComponent } from './lk-button/lk-button.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LkTextareaComponent } from './lk-textarea/lk-textarea.component';
-import { ImageCarouselComponent } from './image-carousel/image-carousel.component';
 import { Routes, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { LkPageTitleComponent } from './lk-page-title/lk-page-title.component';
@@ -18,8 +17,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { LkSelectComponent } from './lk-select/lk-select.component';
+import { WarningBoxComponent } from './warning-box/warning-box.component';
 import { NgxStarRatingModule } from 'ngx-star-rating';
 import { RatingStarComponent } from './rating-star/rating-star.component';
+import { LkContainerComponent } from './lk-container/lk-container.component';
 
 const routes: Routes = [];
 
@@ -30,13 +31,14 @@ const routes: Routes = [];
     LkInputComponent,
     LkButtonComponent,
     LkTextareaComponent,
-    ImageCarouselComponent,
     LkPageTitleComponent,
     LkCheckboxComponent,
     LkSelectComponent,
     ImageChooserComponent,
     FullscreenModalComponent,
+    WarningBoxComponent,
     RatingStarComponent,
+    LkContainerComponent,
   ],
   imports: [
     CommonModule,
@@ -60,9 +62,10 @@ const routes: Routes = [];
     LkCheckboxComponent,
     LkSelectComponent,
     ImageChooserComponent,
-    ImageCarouselComponent,
     FullscreenModalComponent,
+    WarningBoxComponent,
     RatingStarComponent,
+    LkContainerComponent,
   ],
 })
 export class ReusablesModule {}

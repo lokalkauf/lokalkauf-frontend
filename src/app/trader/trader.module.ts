@@ -15,6 +15,8 @@ import { LoginComponent } from './login/login.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 import { DeleteUserComponent } from './registration/delete-user/delete-user.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const routes: Routes = [
   { path: 'trader/profile', component: ProfileComponent },
@@ -43,6 +45,8 @@ const routes: Routes = [
     MatInputModule,
     MatIconModule,
     MatButtonModule,
+    MatTabsModule,
+    MatDialogModule,
     ReusablesModule,
     MatPasswordStrengthModule,
   ],

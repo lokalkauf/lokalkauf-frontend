@@ -5,22 +5,22 @@
     </h2>
     <form [formGroup]="passwordForm" (ngSubmit)="confirmPasswordReset()">
       <div>
-        <app-lk-input
+        <lk-input
           #passwordWithValidation
           type="password"
           formControlName="password"
           [placeholder]="'Neues Passwort eingeben'"
         >
-        </app-lk-input>
+        </lk-input>
       </div>
       <br />
       <div>
-        <app-lk-input
+        <lk-input
           type="password"
           formControlName="confirmPassword"
           [placeholder]="'Neues Passwort wiederholen'"
         >
-        </app-lk-input>
+        </lk-input>
       </div>
       <br />
       <mat-password-strength
@@ -41,16 +41,16 @@
       </mat-password-strength-info>
       <br />
       <div>
-        <app-lk-button
+        <lk-button
           [disabled]="!passwordForm.valid"
           type="submit"
           label="Passwort ändern"
-        ></app-lk-button>
+        ></lk-button>
       </div>
       <br />
       <div>
-        <app-lk-button routerLink="/trader/profile" label="Zurück zum Profil">
-        </app-lk-button>
+        <lk-button routerLink="/trader/profile" label="Zurück zum Profil">
+        </lk-button>
       </div>
     </form>
   </div>
@@ -60,8 +60,8 @@
     </h2>
     <br />
     <div>
-      <app-lk-button routerLink="/trader/login" label="Zurück zum Login">
-      </app-lk-button>
+      <lk-button routerLink="/trader/login" label="Zurück zum Login">
+      </lk-button>
     </div>
   </div>
   <div *ngIf="stage === 'RECOVER_EMAIL_COMPLETED'">
@@ -70,8 +70,8 @@
     </h2>
     <br />
     <div>
-      <app-lk-button routerLink="/trader/profile" label="Zurück zum Profil">
-      </app-lk-button>
+      <lk-button routerLink="/trader/profile" label="Zurück zum Profil">
+      </lk-button>
     </div>
   </div>
   <div *ngIf="stage === 'VERIFY_EMAIL_COMPLETED'">
@@ -80,8 +80,7 @@
     </h2>
     <br />
     <div>
-      <app-lk-button (click)="forceReload()" label="Zurück zum Profil">
-      </app-lk-button>
+      <lk-button (click)="forceReload()" label="Zurück zum Profil"> </lk-button>
     </div>
   </div>
   <div *ngIf="stage === 'INVALID_ACTION'">
@@ -90,8 +89,8 @@
     </h2>
     <br />
     <div>
-      <app-lk-button routerLink="/trader/profile" label="Zurück zum Profil">
-      </app-lk-button>
+      <lk-button routerLink="/trader/profile" label="Zurück zum Profil">
+      </lk-button>
     </div>
   </div>
 </div>

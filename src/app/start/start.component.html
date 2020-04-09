@@ -1,14 +1,62 @@
 <!-- <app-horizontal-scaling-bar [links]="links" (clickedLink)="consoleLog($event);">
 </app-horizontal-scaling-bar>-->
-<div class="start-logo-top">
-  <img src="/assets/lokalkaufTopx4-logo-shadow.png" />
+<div class="hero">
+  <div class="hero-search-container">
+    <lk-container>
+      <form (submit)="searchPlace()">
+        <lk-search-input
+          [formControl]="locationFormControl"
+          #searchInput
+        ></lk-search-input>
+        <lk-button type="submit" label="Händler suchen"></lk-button>
+      </form>
+    </lk-container>
+  </div>
 </div>
 
-<div class="home-start">
-  <img src="/assets/lokalkaufTopx4-text-shadow.png" />
-  <div class="intro-text">
+<lk-container>
+  <div class="intro">
+    <h1>Wir bringen Euch wieder zusammen!</h1>
+    <p>
+      Du kannst bei deinem Lieblingsladen, Restaurant oder Café nicht mehr vor
+      Ort einkaufen? Du bist ein Einzelhändler oder Gastronom und musstest
+      deinen Laden schließen? Wir helfen euch!
+    </p>
+    <lk-button
+      color="accent"
+      [routerLink]="'/trader/profile'"
+      label="Mein Händlerprofil"
+    ></lk-button>
+  </div>
+
+  <div class="divider-doubleheart">
+    <img src="../../assets/doubleheart.png" />
+  </div>
+
+  <div class="our-mission">
+    <h2>Unsere Mission</h2>
+    <p>
+      Wir wollen Höändler, Restaurants, Modemacher etc unterstützen, damit sie
+      weiterhin ihre Produkte zum Kunden bringen.est amet culpa ullamco Lorem
+      qui nostrud esse ipsum anim laboris occaecat mollit officia fugiat sint ex
+      dolore aliqua officia minim laborum occaecat
+    </p>
+  </div>
+</lk-container>
+
+<div class="user-voice">
+  <lk-container>
+    <img src="../../assets/user-voice-drinnen.png" />
+    <h2>
+      »Das Angebot finde ich toll, weil ich mein Geschäft am Laufen halten
+      kann.«
+    </h2>
+    <strong>Anja Bermbach – drinneN</strong>
+  </lk-container>
+</div>
+
+<!-- <div class="intro-text">
     <div id="backdrop-start"></div>
-    <div class="intro-text-box-headline">Willkommen bei lokalkauf</div>
     <div class="intro-text-box">
       Du kannst bei Deinem Lieblingsladen, Lieblingsrestaurant oder
       Lieblingscafé nicht mehr vor Ort einkaufen?
@@ -26,81 +74,55 @@
 
     <div id="start-input-container">
       <div class="start-input-center">
-        <app-lk-select
+        <lk-select
           #startTownList
           id="start-select"
           name="standort"
           [options]="standorte"
-          [placeholder]="standortPreselect"
+          [placeholder]="'Bitte wähle eine Stadt aus'"
         >
-        </app-lk-select>
+        </lk-select>
       </div>
 
       <div class="start-input-center">
-        <!--
-        <input type="hidden" id="start-input" placeholder="Coords" [(ngModel)]="coords" [value]="coovalue" />
-        <input id="plz-input" #plzInput type="text" name="coordbox" placeholder="PLZ" matInput [matAutocomplete]="auto"
-          (keyup)="search($event.target.value)" (focus)="focus()" *ngIf="!coovalue" />
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let option of suggestion" [value]="option.plz + ' ' + option.note"
-            (click)="setposition(option.geo_point_2d)">
-            {{ option.plz }} {{ option.note }}
-          </mat-option>
-        </mat-autocomplete>
-        <div id="start-long-lat" *ngIf="coovalue">
-          GPS-Umkreisermittlung: 5km
-        </div>
-        <app-lk-button id="start-button" (click)="action()" label="los" [disabled]="disabledLosButton">
-        </app-lk-button>
-        -->
-        <app-lk-button
-          id="start-button-intial-towns"
-          (click)="reducedAction(startTownList)"
-          label="Jetzt suchen!"
-        >
-        </app-lk-button>
+        <lk-button (click)="reducedAction(startTownList)" label="Jetzt suchen!">
+        </lk-button>
       </div>
-      <!--<div id="start-error" *ngIf="showError">
-        Bitte geben Sie eine Postleitzahl an oder aktivieren Sie Ihr GPS
-      </div>-->
     </div>
-  </div>
+    <div class="divider"></div>
 
-  <div class="divider"></div>
+    <div *ngIf="!isLoggedIn">
+      <div class="additional-intro-text">
+        Du bist Einzelhändler oder Gastronom? Dann melde Dich hier an:
+      </div>
+      <div>
+        <lk-button
+          color="accent"
+          [routerLink]="'/trader/login'"
+          label="Geschäftsprofil anlegen"
+        >
+        </lk-button>
+      </div>
+    </div>
 
-  <div *ngIf="!isLoggedIn">
+    <div *ngIf="isLoggedIn">
+      <div class="additional-intro-text">
+        Hier gehts zu deinem Profil:
+      </div>
+      <div>
+        <lk-button
+          color="accent"
+          [routerLink]="'/trader/profile'"
+          label="Mein Händlerprofil"
+        ></lk-button>
+      </div>
+    </div>
+
     <div class="additional-intro-text">
-      Du bist Einzelhändler oder Gastronom? Dann melde Dich hier an:
+      <div class="intro-text-hint">
+        Unsere Plattform befindet sich aktuell noch in der Entwicklung. Hast Du
+        noch
+        <a [routerLink]="'/feedback'">Ideen oder Feedback</a>?
+      </div>
     </div>
-    <div>
-      <app-lk-button
-        id="register-button"
-        (click)="router.navigateByUrl('/trader/login')"
-        label="Geschäftsprofil anlegen"
-      >
-      </app-lk-button>
-    </div>
-  </div>
-
-  <div *ngIf="isLoggedIn">
-    <div class="additional-intro-text">
-      Hier gehts zu deinem Profil:
-    </div>
-    <div>
-      <app-lk-button
-        id="register-button"
-        (click)="router.navigateByUrl('/trader/profile')"
-        label="Mein Händlerprofil"
-      >
-      </app-lk-button>
-    </div>
-  </div>
-
-  <div class="additional-intro-text">
-    <div class="intro-text-hint">
-      Unsere Plattform befindet sich aktuell noch in der Entwicklung. Hast Du
-      noch
-      <a [routerLink]="'/feedback'">Ideen oder Feedback</a>?
-    </div>
-  </div>
-</div>
+  </div> -->

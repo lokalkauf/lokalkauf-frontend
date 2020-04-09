@@ -1,5 +1,5 @@
-<div class="trader-detail" *ngIf="trader$ | async as trader">
-  <div class="trader-headline">{{ trader.businessname }}</div>
+<lk-container *ngIf="trader$ | async as trader">
+  <h1>{{ trader.businessname }}</h1>
   <div
     class="trader-description text"
     *ngIf="trader.description && !showMoreText"
@@ -25,9 +25,9 @@
       Weniger</span
     >
   </div>
-  <div class="text lightergreen">
-    Wir bieten:
-  </div>
+
+  <h3>Unser Angebot</h3>
+  ´
   <div class="text">
     <mat-icon
       class="inlinesymbol vertical-align-middle lightergreen"
@@ -52,9 +52,19 @@
     >
     <span> Abholung</span>
   </div>
-  <div class="carousel-container" *ngIf="traderImages$ | async as images">
-    <app-image-carousel [carouselSlides]="images"></app-image-carousel>
+
+  <div class="carousel">
+    <mat-carousel
+      *ngIf="traderImages$ | async as images"
+      [hideArrows]="false"
+      [hideIndicators]="false"
+      [proportion]="50"
+    >
+      <mat-carousel-slide *ngFor="let image of images" [image]="image">
+      </mat-carousel-slide>
+    </mat-carousel>
   </div>
+
   <app-trader-contact [trader]="trader"></app-trader-contact>
   <p class="trader-product-amount" *ngIf="(productAmount$ | async) > 0">
     <span
@@ -69,4 +79,4 @@
   <a [routerLink]="'/trader/' + trader.id + '/contact/'">
     So sind wir erreichbar
   </a-->
-</div>
+</lk-container>
