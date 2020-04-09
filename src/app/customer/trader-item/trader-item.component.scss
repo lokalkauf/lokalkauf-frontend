@@ -19,6 +19,11 @@ mat-card {
     margin-bottom: -16px;
     margin-right: 0px;
     object-fit: cover;
+
+    &.placeholder {
+      object-fit: scale-down;
+      background-color: #f0f0f0;
+    }
   }
 
   mat-card-header {
