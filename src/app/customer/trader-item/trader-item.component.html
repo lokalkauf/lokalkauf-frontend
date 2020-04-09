@@ -5,19 +5,15 @@
       *ngIf="thumbnail$ | async as thumbnail"
       [src]="thumbnail"
     />
-    <mat-card-content>
-      <div class="trader-item-content">
-        <div class="text">
-          <h3 class="headline">{{ (trader$ | async)?.businessname }}</h3>
-          <div class="address">
-            <!-- <div class="distance"><span class="highlight">1,8</span><br />km</div> -->
-            {{ (trader$ | async)?.street }}
-            {{ (trader$ | async)?.number }}
-            <br />{{ (trader$ | async)?.postcode }}
-            {{ (trader$ | async)?.city }}
-          </div>
-        </div>
-      </div>
-    </mat-card-content>
+    <mat-card-header>
+      <mat-card-title>{{ (trader$ | async)?.businessname }}</mat-card-title>
+      <mat-card-subtitle>
+        <!-- <div class="distance"><span class="highlight">1,8</span><br />km</div> -->
+        {{ (trader$ | async)?.street }}
+        {{ (trader$ | async)?.number }}
+        <br />{{ (trader$ | async)?.postcode }}
+        {{ (trader$ | async)?.city }}
+      </mat-card-subtitle>
+    </mat-card-header>
   </mat-card>
 </a>

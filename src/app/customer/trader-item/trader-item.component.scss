@@ -8,43 +8,33 @@ a {
 mat-card {
   display: flex;
   overflow: hidden;
-  align-items: center;
+  align-items: stretch;
 
   .trader-thumbnail {
     display: block;
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
     margin-left: -16px;
     margin-top: -16px;
     margin-bottom: -16px;
-    margin-right: 16px;
+    margin-right: 0px;
     object-fit: cover;
   }
 
-  .trader-item-content {
-    width: 100%;
-    display: flex;
+  mat-card-header {
+    flex-grow: 1;
 
-    .headline {
-      margin: 0.2rem 0;
-      margin-top: 0px;
+    mat-card-subtitle {
+      margin-bottom: 0;
+    }
+
+    mat-card-title {
+      font-family: Bitter;
+      color: $normalgreen;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-    }
-
-    .address {
       width: 100%;
-      font-size: 0.8rem;
-    }
-
-    .distance {
-      float: right;
-      text-align: center;
-    }
-
-    .highlight {
-      color: $normalgreen;
     }
   }
 }
