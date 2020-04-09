@@ -4,7 +4,7 @@
 $lk-primary: map-get($lk-theme, primary);
 $lk-accent: map-get($lk-theme, accent);
 
-$lightestgreen: mat-color($lk-primary, 100);
+$lightestgreen: mat-color($lk-primary, 50);
 $lightergreen: mat-color($lk-primary, 200);
 $normalgreen: mat-color($lk-primary, 500);
 $darkgreen: mat-color($lk-primary, 900);
