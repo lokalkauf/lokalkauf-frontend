@@ -1,5 +1,3 @@
-<!-- <app-horizontal-scaling-bar [links]="links" (clickedLink)="consoleLog($event);">
-</app-horizontal-scaling-bar>-->
 <div class="hero">
   <div class="start-logo-top">
     <img src="/assets/lokalkaufTopx4-logo-shadow.png" />
@@ -9,8 +7,48 @@
   </div>
 </div>
 
-<div class="home-start">
-  <div class="intro-text">
+<lk-container>
+  <div class="intro">
+    <h1>Wir bringen Euch wieder zusammen!</h1>
+    <p>
+      Du kannst bei deinem Lieblingsladen, Restaurant oder Café nicht mehr vor
+      Ort einkaufen? Du bist ein Einzelhändler oder Gastronom und musstest
+      deinen Laden schließen? Wir helfen euch!
+    </p>
+    <lk-button
+      color="accent"
+      [routerLink]="'/trader/profile'"
+      label="Mein Händlerprofil"
+    ></lk-button>
+  </div>
+
+  <div class="divider-doubleheart">
+    <img src="../../assets/doubleheart.png" />
+  </div>
+
+  <div class="our-mission">
+    <h2>Unsere Mission</h2>
+    <p>
+      Wir wollen Höändler, Restaurants, Modemacher etc unterstützen, damit sie
+      weiterhin ihre Produkte zum Kunden bringen.est amet culpa ullamco Lorem
+      qui nostrud esse ipsum anim laboris occaecat mollit officia fugiat sint ex
+      dolore aliqua officia minim laborum occaecat
+    </p>
+  </div>
+</lk-container>
+
+<div class="user-voice">
+  <lk-container>
+    <img src="../../assets/user-voice-drinnen.png" />
+    <h2>
+      »Das Angebot finde ich toll, weil ich mein Geschäft am Laufen halten
+      kann.«
+    </h2>
+    <strong>Anja Bermbach – drinneN</strong>
+  </lk-container>
+</div>
+
+<!-- <div class="intro-text">
     <div id="backdrop-start"></div>
     <div class="intro-text-box">
       Du kannst bei Deinem Lieblingsladen, Lieblingsrestaurant oder
@@ -25,10 +63,6 @@
     <div class="intro-text-box">
       Finde hier Deinen Lieblingsladen oder ein Restaurant um die Ecke und kauf
       lokal:
-
-      <!-- <br />
-      <button mat-flat-button color="primary">primary</button>
-      <button mat-flat-button color="accent">Accent</button> -->
     </div>
 
     <div id="start-input-container">
@@ -44,34 +78,9 @@
       </div>
 
       <div class="start-input-center">
-        <!--
-        <input type="hidden" id="start-input" placeholder="Coords" [(ngModel)]="coords" [value]="coovalue" />
-        <input id="plz-input" #plzInput type="text" name="coordbox" placeholder="PLZ" matInput [matAutocomplete]="auto"
-          (keyup)="search($event.target.value)" (focus)="focus()" *ngIf="!coovalue" />
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let option of suggestion" [value]="option.plz + ' ' + option.note"
-            (click)="setposition(option.geo_point_2d)">
-            {{ option.plz }} {{ option.note }}
-          </mat-option>
-        </mat-autocomplete>
-        <div id="start-long-lat" *ngIf="coovalue">
-          GPS-Umkreisermittlung: 5km
-        </div>
-        <lk-button id="start-button" (click)="action()" label="los" [disabled]="disabledLosButton">
-        </lk-button>
-        -->
         <lk-button (click)="reducedAction(startTownList)" label="Jetzt suchen!">
         </lk-button>
-        <!-- <lk-button
-          id="start-button-intial-towns"
-          (click)="reducedAction(startTownList)"
-          label="Jetzt suchen!"
-        >
-        </lk-button> -->
       </div>
-      <!--<div id="start-error" *ngIf="showError">
-        Bitte geben Sie eine Postleitzahl an oder aktivieren Sie Ihr GPS
-      </div>-->
     </div>
     <div class="divider"></div>
 
@@ -109,5 +118,4 @@
         <a [routerLink]="'/feedback'">Ideen oder Feedback</a>?
       </div>
     </div>
-  </div>
-</div>
+  </div> -->

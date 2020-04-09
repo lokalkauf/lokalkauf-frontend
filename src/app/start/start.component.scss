@@ -24,100 +24,38 @@
   }
 }
 
-.home-start {
-  max-width: 1024px;
-  margin: 16px auto;
+.intro {
   text-align: center;
-}
+  padding: 20px;
 
-.home-start > .intro-text > .intro-text-box-headline {
-  font-size: 1rem;
-  text-align: center;
-  margin-bottom: 1.4rem;
-  display: none;
-}
+  p {
+    margin-bottom: 40px;
+  }
 
-.home-start > .intro-text {
-  font-size: 0.8rem;
-  text-align: center;
-  padding: 1rem 30px;
-  line-height: 1.1rem;
-  min-height: 240px;
-}
-
-.additional-intro-text {
-  font-size: 0.8rem;
-  text-align: center;
-  padding: 1rem 2rem;
-  background-color: $slightesttranslucentwhite;
-  line-height: 1.1rem;
-
-  .intro-text-hint {
-    margin-top: 2rem;
-    font-size: 0.75rem;
-    text-align: center;
-    color: $errorcolor;
-
-    a {
-      color: $errorcolor;
-      text-decoration: underline;
-    }
+  lk-button {
+    width: 266px;
   }
 }
 
-.divider {
-  width: 7rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 1.5rem;
-  margin-bottom: 1.5rem;
-  border-bottom: 0.05rem solid $darkgreen;
-
-  @media screen and (min-width: 768px) {
-    width: 12rem;
-  }
-}
-
-.start-form {
-  width: 100%;
-  display: inline-grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 1fr;
-  grid-column-gap: 20px;
-  grid-row-gap: 0px;
-
-  margin-top: 30px;
-}
-
-#start-input-center {
+.divider-doubleheart {
+  position: relative;
   text-align: center;
+  margin-top: 50px;
 }
 
-#start-input-container {
-  margin-left: 1.2rem;
-  margin-right: 1.2rem;
-  margin-top: 1rem;
+.our-mission {
+  text-align: center;
+  padding: 35px 20px;
 }
 
-.start-input-center {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
+.user-voice {
+  text-align: center;
+  margin-top: 35px;
+  padding: 20px 35px 50px 35px;
+  background-color: $normalgreen;
+  color: #fff;
 
-#start-button {
-  float: right;
-}
-
-input {
-  box-sizing: border-box;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 100;
-  min-width: 4rem;
-  height: 2.4rem;
-  letter-spacing: 1.5px;
-  background-color: white;
-  padding-left: 1rem;
-  border: dotted 1px $lightergreen;
-  outline: none;
+  h2 {
+    color: #fff;
+  }
 }

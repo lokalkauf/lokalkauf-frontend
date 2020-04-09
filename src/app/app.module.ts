@@ -50,8 +50,7 @@ import { MatPasswordStrengthModule } from '@angular-material-extensions/password
 import { FaqComponent } from './faq/faq.component';
 import { StorageService } from './services/storage.service';
 
-import { ToolbarComponent } from './layout/toolbar/toolbar.component';
-import { SidenavComponent } from './layout/sidenav/sidenav.component';
+import { LkContainerComponent } from './reusables/lk-container/lk-container.component';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -74,8 +73,7 @@ const routes: Routes = [
     SpinnerComponent,
     StartComponent,
     FaqComponent,
-    ToolbarComponent,
-    SidenavComponent,
+    LkContainerComponent,
   ],
   imports: [
     BrowserModule,
