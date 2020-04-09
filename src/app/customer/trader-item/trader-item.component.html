@@ -2,9 +2,15 @@
   <mat-card>
     <img
       class="trader-thumbnail"
-      *ngIf="thumbnail$ | async as thumbnail"
+      *ngIf="thumbnail$ | async as thumbnail; else placeholder"
       [src]="thumbnail"
     />
+    <ng-template #placeholder>
+      <img
+        class="trader-thumbnail placeholder"
+        src="./assets/lokalkauf-pin.png"
+      />
+    </ng-template>
     <mat-card-header>
       <mat-card-title>{{ (trader$ | async)?.businessname }}</mat-card-title>
       <mat-card-subtitle>
