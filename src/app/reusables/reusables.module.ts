@@ -20,6 +20,7 @@ import { LkSelectComponent } from './lk-select/lk-select.component';
 import { WarningBoxComponent } from './warning-box/warning-box.component';
 import { NgxStarRatingModule } from 'ngx-star-rating';
 import { RatingStarComponent } from './rating-star/rating-star.component';
+import { LkContainerComponent } from './lk-container/lk-container.component';
 
 const routes: Routes = [];
 
@@ -37,6 +38,7 @@ const routes: Routes = [];
     FullscreenModalComponent,
     WarningBoxComponent,
     RatingStarComponent,
+    LkContainerComponent,
   ],
   imports: [
     CommonModule,
@@ -63,6 +65,7 @@ const routes: Routes = [];
     FullscreenModalComponent,
     WarningBoxComponent,
     RatingStarComponent,
+    LkContainerComponent,
   ],
 })
 export class ReusablesModule {}
