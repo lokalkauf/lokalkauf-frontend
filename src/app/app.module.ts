@@ -55,6 +55,7 @@ import { LabelPipe } from './pipes/label.pipe';
 import { TextService } from './services/text.service';
 import { MuiService } from './services/mui.service';
 import { PipesModule } from './pipes/pipes.modules';
+import { RedirectComponent } from './redirect/redirect.component';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -63,6 +64,11 @@ const routes: Routes = [
   { path: 'verify', component: VerifyComponent },
   { path: 'aboutus', component: AboutUsComponent },
   { path: 'faq', component: FaqComponent },
+  {
+    path: 'redirect',
+    component: RedirectComponent,
+    children: [{ path: '**', component: RedirectComponent }],
+  },
 ];
 
 @NgModule({
@@ -77,6 +83,7 @@ const routes: Routes = [
     StartComponent,
     FaqComponent,
     SearchInputComponent,
+    RedirectComponent,
   ],
   imports: [
     BrowserModule,
