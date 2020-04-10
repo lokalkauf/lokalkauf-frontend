@@ -152,13 +152,19 @@
     <button mat-icon-button class="close-btn" (click)="sidenav.toggle()">
       <mat-icon>close</mat-icon>
     </button>
-    <mat-nav-list>
+    <mat-nav-list (click)="sidenav.close()">
       <a mat-list-item (click)="navigateTraders()" routerLinkActive="active"
         >H&auml;ndlersuche
       </a>
-      <a mat-list-item [routerLink]="'/feedback'">Feedback</a>
-      <a mat-list-item [routerLink]="'/aboutus'"> Das sind wir </a>
-      <a mat-list-item [routerLink]="'/faq'"> Hilfe</a>
+      <a mat-list-item (click)="sidenav.close()" [routerLink]="'/feedback'"
+        >Feedback</a
+      >
+      <a mat-list-item (click)="sidenav.close()" [routerLink]="'/aboutus'">
+        Das sind wir
+      </a>
+      <a mat-list-item (click)="sidenav.close()" [routerLink]="'/faq'">
+        Hilfe</a
+      >
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
