@@ -67,8 +67,6 @@ export class StartComponent implements OnInit {
   showError: boolean;
 
   ngOnInit(): void {
-    // this.getUserLocation();
-
     const city = this.storageService.loadLocation();
     if (city) {
       this.preSelectedValue = city;
@@ -79,44 +77,44 @@ export class StartComponent implements OnInit {
     this.router.navigateByUrl('/trader/register/new');
   }
 
-  private getUserLocation() {
-    this.geo.getUserPosition().subscribe((ps) => {
-      if (ps != null) {
-        this.currentPosition = ps;
-        this.disabledLosButton = false;
+  // private getUserLocation() {
+  //   this.geo.getUserPosition().subscribe((ps) => {
+  //     if (ps != null) {
+  //       this.currentPosition = ps;
+  //       this.disabledLosButton = false;
 
-        this.geo
-          .getPostalAndCityByLocation(this.currentPosition)
-          .subscribe((p: any) => {
-            this.plz =
-              p.results[0].components.postcode +
-              ' ' +
-              p.results[0].components.city;
+  //       this.geo
+  //         .getPostalAndCityByLocation(this.currentPosition)
+  //         .subscribe((p: any) => {
+  //           this.plz =
+  //             p.results[0].components.postcode +
+  //             ' ' +
+  //             p.results[0].components.city;
 
-            // this.plzInput.nativeElement.value = this.plz;
-            // this.elRef.nativeElement.querySelector('#plz-input').value = this.plz;
-          });
-      } else {
-        this.disabledLosButton = true;
-      }
-    });
-  }
+  //           // this.plzInput.nativeElement.value = this.plz;
+  //           // this.elRef.nativeElement.querySelector('#plz-input').value = this.plz;
+  //         });
+  //     } else {
+  //       this.disabledLosButton = true;
+  //     }
+  //   });
+  // }
 
   focus() {
     const elem = this.plzInput.nativeElement;
     elem.scrollIntoView();
   }
 
-  action() {
-    if (this.currentPosition && this.currentPosition.length === 3) {
-      this.router.navigate([
-        '/localtraders',
-        this.currentPosition[0],
-        this.currentPosition[1],
-        this.currentPosition[2],
-      ]);
-    }
-  }
+  // action() {
+  //   if (this.currentPosition && this.currentPosition.length === 3) {
+  //     this.router.navigate([
+  //       '/localtraders',
+  //       this.currentPosition[0],
+  //       this.currentPosition[1],
+  //       this.currentPosition[2],
+  //     ]);
+  //   }
+  // }
 
   searchPlace() {
     const val = this.locationFormControl.value;

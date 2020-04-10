@@ -1,4 +1,4 @@
-import { Component, OnInit, forwardRef, ViewChild } from '@angular/core';
+import { Component, OnInit, forwardRef, ViewChild, Input } from '@angular/core';
 import {
   FormControl,
   NG_VALUE_ACCESSOR,
@@ -13,6 +13,7 @@ import {
   startWith,
 } from 'rxjs/operators';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { GeoService } from 'src/app/services/geo.service';
 
 export interface Value {
   display: string;
@@ -37,6 +38,8 @@ export interface Value {
 })
 export class SearchInputComponent implements OnInit, ControlValueAccessor {
   myControl = new FormControl();
+  @Input() placeholder = 'gib eine PLZ ein (oder aktiviere GPS)';
+
   standorte: Value[] = [
     {
       display: 'Brühl',
@@ -81,7 +84,7 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
   @ViewChild(MatAutocompleteTrigger, { read: MatAutocompleteTrigger })
   auto: MatAutocompleteTrigger;
 
-  constructor() {
+  constructor(private geo: GeoService) {
     this.filteredValues$ = this.myControl.valueChanges.pipe(
       startWith(''),
       map((value) => {
@@ -103,7 +106,9 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
     );
   }
 
-  ngOnInit(): void {}
+  async ngOnInit() {
+    await this.initUserLocation();
+  }
 
   onBlur() {
     this.blur$.next();
@@ -129,5 +134,18 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
   }
   setDisabledState?(isDisabled: boolean): void {
     isDisabled ? this.myControl.disable() : this.myControl.enable();
+  }
+
+  async initUserLocation() {
+    const currentPosition = await this.geo.getUserPosition().toPromise();
+
+    if (currentPosition && currentPosition.length > 1) {
+      const address = await this.geo.getPostalAndCityByLocation(
+        currentPosition
+      );
+
+      this.placeholder =
+        address.postalcode + ' ' + address.city + ' (mein Standort)';
+    }
   }
 }

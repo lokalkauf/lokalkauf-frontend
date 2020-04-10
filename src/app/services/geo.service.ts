@@ -12,6 +12,7 @@ import {
   GeoQuerySnapshot,
 } from 'geofirestore';
 import { firestore } from 'firebase';
+import { GeoAddress } from '../models/geoAddress';
 
 @Injectable({
   providedIn: 'root',
@@ -59,7 +60,7 @@ export class GeoService {
     return query.get();
   }
 
-  getUserPosition(): Observable<any> {
+  getUserPosition(): Observable<Array<number>> {
     return new Observable((observer) => {
       let currentPos = this.manuelUserPosition;
 
@@ -130,13 +131,25 @@ export class GeoService {
     //   }]
   }
 
-  getPostalAndCityByLocation(location: Array<number>) {
+  async getPostalAndCityByLocation(
+    location: Array<number>
+  ): Promise<GeoAddress> {
     const loc = encodeURIComponent(location[0] + ',' + location[1]);
     const url =
       'https://api.opencagedata.com/geocode/v1/json?key=8cf06bcf900d48fdb16f767a6a0e5cd8&q=' +
       loc +
       '&pretty=1&no_annotations=1';
 
-    return this.http.get(url);
+    const response: any = await this.http.get(url).toPromise();
+
+    if (response) {
+      return {
+        city: response.results[0].components.city,
+        postalcode: response.results[0].components.postcode,
+        coordinates: location,
+      };
+    }
+
+    return null;
   }
 }
