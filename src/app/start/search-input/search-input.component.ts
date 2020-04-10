@@ -11,6 +11,7 @@ import {
   filter,
   distinctUntilChanged,
   startWith,
+  flatMap,
 } from 'rxjs/operators';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { GeoService } from 'src/app/services/geo.service';
@@ -42,11 +43,11 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
 
   standorte: Value[] = [
     {
-      display: 'Brühl',
+      display: '50321 Brühl',
       location: { lat: '50.823525', lng: '6.897674', rad: 10 },
     },
     {
-      display: 'Wiesbaden',
+      display: '65183 Wiesbaden',
       location: { lat: '50.0833521', lng: '8.24145', rad: 10 },
     },
     {
@@ -62,7 +63,7 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
       location: { lat: '49.3518', lng: '7.1864', rad: 25 },
     },
     {
-      display: ' St. Wendel',
+      display: 'St. Wendel',
       location: { lat: '49.46667', lng: '7.166669', rad: 25 },
     },
     {
@@ -87,15 +88,15 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
   constructor(private geo: GeoService) {
     this.filteredValues$ = this.myControl.valueChanges.pipe(
       startWith(''),
-      map((value) => {
-        if (typeof value === 'string') {
+      flatMap(async (value) => {
+        if (!value) {
           return this.standorte.filter((standort) =>
             standort.display
               .toLocaleLowerCase()
               .includes(value.toLocaleLowerCase())
           );
         } else {
-          return [value];
+          return await this.findAddresses(value);
         }
       })
     );
@@ -147,5 +148,31 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
       this.placeholder =
         address.postalcode + ' ' + address.city + ' (mein Standort)';
     }
+  }
+
+  async findAddresses(plzORcity: string) {
+    console.log('search for: ' + plzORcity);
+    const addresses: any = await this.geo.findCoordinatesByAddress(plzORcity).toPromise();
+
+
+    const result = [];
+
+    if (addresses && addresses.records && addresses.records.length > 0) {
+
+      console.log(addresses.records);
+
+      for (const a of addresses.records as Array<any>) {
+        result.push({
+          display: a.fields.note,
+          location: { lat: a.fields.geo_point_2d[0], lng: a.fields.geo_point_2d[1], rad: 25 },
+        });
+      }
+    }
+
+    return result;
+    // return postal;
+    // .subscribe((d: any) => {
+    //   this.suggestion = d.records.map((m) => m.fields);
+    // });
   }
 }
