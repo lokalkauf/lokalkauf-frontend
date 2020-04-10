@@ -1,12 +1,18 @@
 <form>
-  <input
-    type="text"
-    [matAutocomplete]="auto"
-    [formControl]="myControl"
-    [placeholder]="placeholder"
-    (blur)="onBlur()"
-    (focus)="onFocus()"
-  />
+  <div class="input-and-spinner">
+    <input
+      *ngIf="placeholder$ | async as placeholder"
+      type="text"
+      [matAutocomplete]="auto"
+      [formControl]="myControl"
+      [placeholder]="placeholder"
+      (blur)="onBlur()"
+      (focus)="onFocus()"
+    />
+    <div class="spinner-container" *ngIf="isLoading === true">
+      <mat-spinner [diameter]="30"></mat-spinner>
+    </div>
+  </div>
 
   <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayWith">
     <mat-option

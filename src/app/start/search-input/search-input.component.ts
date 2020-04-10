@@ -12,6 +12,7 @@ import {
   distinctUntilChanged,
   startWith,
   flatMap,
+  switchMap,
 } from 'rxjs/operators';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { GeoService } from 'src/app/services/geo.service';
@@ -33,9 +34,6 @@ import { uiTexts } from 'src/app/services/uiTexts';
 })
 export class SearchInputComponent implements OnInit, ControlValueAccessor {
   myControl = new FormControl();
-  @Input() placeholder = this.textService.getText(
-    uiTexts.umkreissuche_userlocation_text
-  );
 
   standorte: Array<GeoAddress> = [
     {
@@ -89,10 +87,12 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
   ];
 
   filteredValues$: Observable<GeoAddress[]>;
-
   blur$ = new Subject();
-
   valueChanges$: Observable<GeoAddress>;
+  userGeoAddress$: Observable<GeoAddress>;
+  placeholder$: Observable<string>;
+
+  isLoading = false;
 
   @ViewChild(MatAutocompleteTrigger, { read: MatAutocompleteTrigger })
   auto: MatAutocompleteTrigger;
@@ -103,22 +103,35 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
   ) {
     this.filteredValues$ = this.myControl.valueChanges.pipe(
       startWith(''),
-      flatMap(async (value) => {
-        if (!value) {
-          return this.standorte;
-        } else {
-          return await this.findAddresses(value);
+      tap(() => (this.isLoading = true)),
+      switchMap((value) => {
+        if (typeof value !== 'string') {
+          return of(null);
         }
-      })
+        if (!value || value.length < 2) {
+          return of(this.standorte);
+        } else {
+          this.isLoading = true;
+          return this.findAddresses(value);
+        }
+      }),
+      tap(() => (this.isLoading = false))
     );
 
-    this.valueChanges$ = from(this.initUserLocation()).pipe(
+    this.userGeoAddress$ = this.geo
+      .getUserPosition()
+      .pipe(
+        flatMap((userPosition) =>
+          this.geo.getPostalAndCityByLocation(userPosition)
+        )
+      );
+
+    this.valueChanges$ = this.userGeoAddress$.pipe(
       flatMap((a) => {
         return concat(
           of(a),
           this.myControl.valueChanges.pipe(
             map((value) => {
-              console.log(value);
               if (!value) {
                 return a;
               }
@@ -132,6 +145,20 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
         );
       })
     );
+
+    this.placeholder$ = this.userGeoAddress$.pipe(
+      filter((userGeoAddress) => userGeoAddress != null),
+      map(
+        (userGeoAddress) =>
+          userGeoAddress.postalcode +
+          ' ' +
+          userGeoAddress.city +
+          this.textService.getText(uiTexts.umkreissuche_userlocation_gpsenabled)
+      ),
+      startWith(
+        this.textService.getText(uiTexts.umkreissuche_userlocation_text)
+      )
+    );
   }
 
   async ngOnInit() {}
@@ -141,7 +168,6 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
   }
 
   onFocus() {
-    console.log('focus');
     this.auto.openPanel();
   }
 
@@ -163,47 +189,20 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
     isDisabled ? this.myControl.disable() : this.myControl.enable();
   }
 
-  async initUserLocation(): Promise<GeoAddress> {
-    let address: GeoAddress;
-    const currentPosition = await this.geo.getUserPosition().toPromise();
+  findAddresses(plzORcity: string): Observable<GeoAddress[]> {
+    return this.geo.findCoordinatesByAddress(plzORcity).pipe(
+      map((addresses) => {
+        if (!(addresses && addresses.records && addresses.records.length > 0)) {
+          return [];
+        }
 
-    if (currentPosition && currentPosition.length > 1) {
-      address = await this.geo.getPostalAndCityByLocation(currentPosition);
-
-      this.placeholder =
-        address.postalcode +
-        ' ' +
-        address.city +
-        this.textService.getText(uiTexts.umkreissuche_userlocation_gpsenabled);
-    }
-
-    console.log('address: ');
-    console.log(address);
-
-    return address;
-  }
-
-  async findAddresses(plzORcity: string) {
-    console.log('search for: ' + plzORcity);
-    const addresses: any = await this.geo
-      .findCoordinatesByAddress(plzORcity)
-      .toPromise();
-
-    const result = [];
-
-    if (addresses && addresses.records && addresses.records.length > 0) {
-      console.log(addresses.records);
-
-      for (const a of addresses.records as Array<any>) {
-        result.push({
-          postalcode: a.fields.plz,
-          city: a.fields.note,
-          coordinates: a.fields.geo_point_2d,
+        return addresses.records.map((record) => ({
+          postalcode: record.fields.plz,
+          city: record.fields.note,
+          coordinates: record.fields.geo_point_2d,
           radius: 25,
-        });
-      }
-    }
-
-    return result;
+        }));
+      })
+    );
   }
 }

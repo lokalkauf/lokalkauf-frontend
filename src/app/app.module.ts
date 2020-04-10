@@ -13,6 +13,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Routes, RouterModule } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -41,17 +42,14 @@ import { VerifyComponent } from './verify/verify.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CommonModule } from '@angular/common';
 import { EMailService } from './services/email.service';
-import { SafePipe } from './pipes/safe.pipe';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SpinnerService } from './services/spinner.service';
-import { HttpCommunicationInterceptor } from './interceptors/http-communication.interceptor';
 import { ErrorDisplayComponent } from './error-display/error-display.component';
 import { AboutUsComponent } from './about-us/about-us.compontent';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 import { FaqComponent } from './faq/faq.component';
 import { StorageService } from './services/storage.service';
 import { SearchInputComponent } from './start/search-input/search-input.component';
-import { LabelPipe } from './pipes/label.pipe';
 import { TextService } from './services/text.service';
 import { MuiService } from './services/mui.service';
 import { PipesModule } from './pipes/pipes.modules';
@@ -101,6 +99,7 @@ const routes: Routes = [
     MatListModule,
     MatInputModule,
     MatButtonModule,
+    MatProgressSpinnerModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
@@ -130,11 +129,6 @@ const routes: Routes = [
     TextService,
     SpinnerService,
     StorageService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpCommunicationInterceptor,
-      multi: true,
-    },
     EMailService,
     ImageService,
   ],
