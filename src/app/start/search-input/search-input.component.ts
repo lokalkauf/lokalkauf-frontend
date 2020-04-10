@@ -16,6 +16,8 @@ import {
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { GeoService } from 'src/app/services/geo.service';
 import { GeoAddress } from 'src/app/models/geoAddress';
+import { TextService } from 'src/app/services/text.service';
+import { uiTexts } from 'src/app/services/uiTexts';
 
 @Component({
   selector: 'lk-search-input',
@@ -31,7 +33,9 @@ import { GeoAddress } from 'src/app/models/geoAddress';
 })
 export class SearchInputComponent implements OnInit, ControlValueAccessor {
   myControl = new FormControl();
-  @Input() placeholder = 'gib eine PLZ oder Ort ein (oder aktiviere GPS)';
+  @Input() placeholder = this.textService.getText(
+    uiTexts.umkreissuche_userlocation_text
+  );
 
   standorte: Array<GeoAddress> = [
     {
@@ -93,7 +97,10 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
   @ViewChild(MatAutocompleteTrigger, { read: MatAutocompleteTrigger })
   auto: MatAutocompleteTrigger;
 
-  constructor(private geo: GeoService) {
+  constructor(
+    private geo: GeoService,
+    private readonly textService: TextService
+  ) {
     this.filteredValues$ = this.myControl.valueChanges.pipe(
       startWith(''),
       flatMap(async (value) => {
@@ -167,7 +174,10 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
       address = await this.geo.getPostalAndCityByLocation(currentPosition);
 
       this.placeholder =
-        address.postalcode + ' ' + address.city + ' (mein Standort)';
+        address.postalcode +
+        ' ' +
+        address.city +
+        this.textService.getText(uiTexts.umkreissuche_userlocation_gpsenabled);
     }
 
     console.log('address: ');
