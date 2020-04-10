@@ -4,7 +4,7 @@ import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
 } from '@angular/forms';
-import { Observable, Subject, of, concat } from 'rxjs';
+import { Observable, Subject, of, concat, from } from 'rxjs';
 import {
   map,
   tap,
@@ -112,25 +112,20 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
       })
     );
 
-    this.valueChanges$ = of(this.initUserLocation()).pipe(
+    this.valueChanges$ = from(this.initUserLocation()).pipe(
       flatMap((a) => {
         return concat(
           of(a),
           this.myControl.valueChanges.pipe(
-            flatMap((value) => {
+            map((value) => {
               console.log(value);
-              if (typeof value === 'string') {
-                if (value === '') {
-                  return a;
-                }
-                return of(null);
-              }
-
               if (!value) {
                 return a;
               }
-
-              return of(value);
+              if (typeof value === 'string') {
+                return null;
+              }
+              return value;
             }),
             distinctUntilChanged()
           )
