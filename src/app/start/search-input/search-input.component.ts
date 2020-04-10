@@ -125,10 +125,12 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
                 }
                 return of(null);
               }
+
               if (!value) {
                 return a;
               }
-              return of(null);
+
+              return of(value);
             }),
             distinctUntilChanged()
           )

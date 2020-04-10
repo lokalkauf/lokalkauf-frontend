@@ -73,6 +73,7 @@ export class StartComponent implements OnInit {
 
   navigateToLocation() {
     let val = this.locationFormControl.value;
+    console.log(val);
 
     if (!val) {
       this.searchInput.nativeElement.getElementsByTagName('input')[0].focus();
