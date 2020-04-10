@@ -13,6 +13,8 @@ import {
   startWith,
   flatMap,
   switchMap,
+  debounce,
+  debounceTime,
 } from 'rxjs/operators';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { GeoService } from 'src/app/services/geo.service';
@@ -103,12 +105,13 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
   ) {
     this.filteredValues$ = this.myControl.valueChanges.pipe(
       startWith(''),
+      debounceTime(500),
       tap(() => (this.isLoading = true)),
       switchMap((value) => {
         if (typeof value !== 'string') {
           return of(null);
         }
-        if (!value || value.length < 2) {
+        if (!value || value.length < 3) {
           return of(this.standorte);
         } else {
           this.isLoading = true;
