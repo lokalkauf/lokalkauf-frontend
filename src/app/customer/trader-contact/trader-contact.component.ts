@@ -1,17 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { Trader } from '../../models/trader';
 import { EMail } from '../../models/email';
 import { EMailService } from '../../services/email.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TraderProfile } from '../../models/traderProfile';
-import { Observable } from 'rxjs';
-import { flatMap, map } from 'rxjs/operators';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { ErrorService } from 'src/app/services/error.service';
-import { StorageService } from 'src/app/services/storage.service';
+import { ErrorService } from '../../services/error.service';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-trader-contact',
@@ -25,7 +21,7 @@ export class TraderContactComponent implements OnInit {
   contactForm = new FormGroup({
     mail_message: new FormControl('', [Validators.required]),
     mail_contact: new FormControl('', [Validators.required]),
-    agbRead: new FormControl('', [Validators.requiredTrue]),
+    agbRead: new FormControl(false, [Validators.requiredTrue]),
   });
 
   get mail_contact() {

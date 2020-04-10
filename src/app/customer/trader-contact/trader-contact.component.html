@@ -45,8 +45,9 @@
         formControlName="mail_contact"
       ></lk-input
       ><br /><br />
-      <label for="agbread">
-        <input type="checkbox" id="agbread" formControlName="agbRead" />
+
+      <label>
+        <app-lk-checkbox formControlName="agbRead"></app-lk-checkbox>
         Ich bestätige die
         <a
           href="http://www.info.lokalkauf.org/agb"
@@ -64,21 +65,24 @@
         gelesen zu haben und bin einverstanden
       </label>
     </div>
-    <div class="contactButton">
-      <lk-button
-        [disabled]="!contactForm.valid"
-        type="submit"
-        label="Anfrage senden"
-      >
-      </lk-button>
+    <div class="contactButtons">
+      <div class="contactButton">
+        <lk-button
+          [disabled]="!contactForm.valid"
+          type="submit"
+          label="Anfrage senden"
+        >
+        </lk-button>
+      </div>
+      <div class="contactButton">
+        <lk-button
+          type="button"
+          (click)="navigateBackToOverview()"
+          label="zurück zur Händlerübersicht"
+        >
+        </lk-button>
+      </div>
     </div>
-    <br />
-    <lk-button
-      type="button"
-      (click)="navigateBackToOverview()"
-      label="zurück zur Händlerübersicht"
-    >
-    </lk-button>
     <br />
     <br />
   </form>

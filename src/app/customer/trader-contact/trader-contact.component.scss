@@ -1,16 +1,13 @@
+@import './../../../theme/variables.scss';
+
 .contactButtons {
   .contactButton {
     margin-top: 10px;
     margin-bottom: 10px;
-
-    button {
-      width: 80%;
-    }
   }
 }
 
 .trader-contact-adress {
-  font-size: 0.8rem;
   margin-top: 1.4rem;
 
   span {
@@ -20,8 +17,15 @@
 
 .contactformdescription {
   margin-top: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 532px;
 }
 
 a {
-  font-size: 0.8rem;
+  color: $darkgreen;
+}
+
+lk-button {
+  min-width: 266px;
 }

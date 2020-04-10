@@ -9,7 +9,7 @@ import { Link } from '../models/link';
 import { Router } from '@angular/router';
 import { debounce } from 'lodash';
 
-import { GeoService } from 'src/app/services/geo.service';
+import { GeoService } from '../services/geo.service';
 import { ScrollStrategy } from '@angular/cdk/overlay';
 import { UserService } from '../services/user.service';
 import { StorageService } from '../services/storage.service';

@@ -1,7 +1,6 @@
-import { Component, OnInit, forwardRef } from '@angular/core';
-import { ShoppingcartService } from 'src/app/services/shoppingcart.service';
-import { CartEntry } from 'src/app/models/cartEntry';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { ShoppingcartService } from '../../services/shoppingcart.service';
+import { CartEntry } from '../../models/cartEntry';
 
 @Component({
   selector: 'app-shoppingcart',

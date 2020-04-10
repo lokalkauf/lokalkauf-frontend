@@ -1,17 +1,9 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  ViewEncapsulation,
-} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
-import {
-  TraderProfile,
-  TraderProfileStatus,
-} from 'src/app/models/traderProfile';
-import { TraderService } from 'src/app/services/trader.service';
+import { UserService } from '../../services/user.service';
+import { TraderProfile, TraderProfileStatus } from '../../models/traderProfile';
+import { TraderService } from '../../services/trader.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteUserComponent } from './delete-user/delete-user.component';
 
@@ -147,7 +139,6 @@ export class RegistrationComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    traderService: TraderService,
     public dialog: MatDialog
   ) {
     if (router.url.match('new')) {

@@ -1,12 +1,12 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { UserService, LoggedInUserState } from 'src/app/services/user.service';
+import { UserService, LoggedInUserState } from '../../services/user.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ErrorService } from 'src/app/services/error.service';
-import { TraderProfileStatus } from 'src/app/models/traderProfile';
-import { ImageService } from 'src/app/services/image.service';
-import { ImageSource } from 'src/app/models/imageSource';
+import { ErrorService } from '../../services/error.service';
+import { TraderProfileStatus } from '../../models/traderProfile';
+import { ImageService } from '../../services/image.service';
+import { ImageSource } from '../../models/imageSource';
 import { filter } from 'rxjs/operators';
 
 @Component({
