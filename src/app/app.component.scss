@@ -20,8 +20,12 @@ mat-sidenav-content {
   width: 100%;
   margin: 0;
   padding: 0;
-  min-height: 100%;
+  height: calc(100vh - 64px);
   background-color: transparent;
+
+  @media screen and (max-width: 599px) {
+    height: calc(100vh - 56px);
+  }
 }
 
 mat-sidenav-container {
