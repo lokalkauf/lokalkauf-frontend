@@ -108,7 +108,7 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
         if (typeof value !== 'string') {
           return of(null);
         }
-        if (!value || value.length < 2) {
+        if (!value || value.length < 3) {
           return of(this.standorte);
         } else {
           this.isLoading = true;
