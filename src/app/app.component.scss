@@ -13,25 +13,13 @@ mat-toolbar-row {
   margin-right: auto;
 }
 
+mat-sidenav-container {
+  height: 100%;
+}
+
 mat-sidenav-content {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  height: calc(100vh - 64px);
-  background-color: transparent;
-
-  @media screen and (max-width: 599px) {
-    height: calc(100vh - 56px);
-  }
-}
-
-mat-sidenav-container {
-  overflow-y: scroll;
-  background-color: transparent;
-  flex-grow: 1;
 }
 
 mat-sidenav {
