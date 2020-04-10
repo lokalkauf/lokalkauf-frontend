@@ -36,10 +36,25 @@
   }
 }
 
-.divider-doubleheart {
+.doubleheart {
+  margin: 70px auto 16px auto;
+  width: 180px;
+  height: 130px;
   position: relative;
-  text-align: center;
-  margin-top: 50px;
+
+  img {
+    width: 80px;
+    position: absolute;
+
+    &:first-of-type {
+      left: 0px;
+    }
+
+    &:nth-of-type(2) {
+      top: 30px;
+      left: 100px;
+    }
+  }
 }
 
 .our-mission {

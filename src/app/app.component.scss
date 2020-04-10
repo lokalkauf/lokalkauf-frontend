@@ -47,10 +47,9 @@ button.mat-mini-fab.avatar {
 }
 
 .logo-link {
-  padding: 0 10px;
-
-  img:first-of-type {
-    margin-right: 5px;
+  padding: 0;
+  img {
+    height: 40px;
   }
 }
 
