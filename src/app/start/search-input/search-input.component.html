@@ -13,7 +13,7 @@
       *ngFor="let standort of filteredValues$ | async"
       [value]="standort"
     >
-      {{ standort.display }}
+      {{ standort.postalcode }} {{ standort.city }}
     </mat-option>
   </mat-autocomplete>
 </form>

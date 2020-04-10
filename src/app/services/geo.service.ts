@@ -147,6 +147,7 @@ export class GeoService {
         city: response.results[0].components.city,
         postalcode: response.results[0].components.postcode,
         coordinates: location,
+        radius: 0,
       };
     }
 

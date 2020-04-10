@@ -4,4 +4,5 @@ export class GeoAddress {
   postalcode: string;
   city: string;
   coordinates: number[];
+  radius: number;
 }

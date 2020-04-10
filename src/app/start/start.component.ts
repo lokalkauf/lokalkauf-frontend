@@ -57,78 +57,36 @@ export class StartComponent implements OnInit {
     public userService: UserService,
     private storageService: StorageService
   ) {
-    this.search = debounce(this.search, 2000);
+    // this.search = debounce(this.search, 2000);
     this.disabledLosButton = true;
     this.userService.isLoggedIn$.subscribe((loggedin) => {
       this.isLoggedIn = loggedin;
     });
   }
 
-  showError: boolean;
-
-  ngOnInit(): void {
-    const city = this.storageService.loadLocation();
-    if (city) {
-      this.preSelectedValue = city;
-    }
-  }
+  ngOnInit(): void {}
 
   registerTrader() {
     this.router.navigateByUrl('/trader/register/new');
   }
 
-  // private getUserLocation() {
-  //   this.geo.getUserPosition().subscribe((ps) => {
-  //     if (ps != null) {
-  //       this.currentPosition = ps;
-  //       this.disabledLosButton = false;
-
-  //       this.geo
-  //         .getPostalAndCityByLocation(this.currentPosition)
-  //         .subscribe((p: any) => {
-  //           this.plz =
-  //             p.results[0].components.postcode +
-  //             ' ' +
-  //             p.results[0].components.city;
-
-  //           // this.plzInput.nativeElement.value = this.plz;
-  //           // this.elRef.nativeElement.querySelector('#plz-input').value = this.plz;
-  //         });
-  //     } else {
-  //       this.disabledLosButton = true;
-  //     }
-  //   });
-  // }
-
-  focus() {
-    const elem = this.plzInput.nativeElement;
-    elem.scrollIntoView();
-  }
-
-  // action() {
-  //   if (this.currentPosition && this.currentPosition.length === 3) {
-  //     this.router.navigate([
-  //       '/localtraders',
-  //       this.currentPosition[0],
-  //       this.currentPosition[1],
-  //       this.currentPosition[2],
-  //     ]);
-  //   }
-  // }
-
-  searchPlace() {
+  navigateToLocation() {
     const val = this.locationFormControl.value;
+
+    console.log('value selected: ' + val);
+    console.log(val);
+
     if (!val) {
       this.searchInput.nativeElement.getElementsByTagName('input')[0].focus();
       return;
     }
     this.router.navigate([
       '/localtraders',
-      val.location.lat,
-      val.location.lng,
-      val.location.rad,
+      val.coordinates[0],
+      val.coordinates[1],
+      val.radius,
     ]);
-    this.storageService.saveLocation(val.location);
+    this.storageService.saveLocation(val);
   }
 
   setposition(position: Array<number>) {
@@ -137,9 +95,9 @@ export class StartComponent implements OnInit {
     this.disabledLosButton = false;
   }
 
-  search(searchtext) {
-    this.geo.findCoordinatesByAddress(searchtext).subscribe((d: any) => {
-      this.suggestion = d.records.map((m) => m.fields);
-    });
-  }
+  // search(searchtext) {
+  //   this.geo.findCoordinatesByAddress(searchtext).subscribe((d: any) => {
+  //     this.suggestion = d.records.map((m) => m.fields);
+  //   });
+  // }
 }

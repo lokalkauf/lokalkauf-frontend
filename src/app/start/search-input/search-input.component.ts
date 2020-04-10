@@ -15,15 +15,16 @@ import {
 } from 'rxjs/operators';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { GeoService } from 'src/app/services/geo.service';
+import { GeoAddress } from 'src/app/models/geoAddress';
 
-export interface Value {
-  display: string;
-  location: {
-    lat: string;
-    lng: string;
-    rad: number;
-  };
-}
+// export interface Value {
+//   display: string;
+//   location: {
+//     lat: string;
+//     lng: string;
+//     rad: number;
+//   };
+// }
 
 @Component({
   selector: 'lk-search-input',
@@ -39,48 +40,64 @@ export interface Value {
 })
 export class SearchInputComponent implements OnInit, ControlValueAccessor {
   myControl = new FormControl();
-  @Input() placeholder = 'gib eine PLZ ein (oder aktiviere GPS)';
+  @Input() placeholder = 'gib eine PLZ oder Ort ein (oder aktiviere GPS)';
 
-  standorte: Value[] = [
+  standorte: Array<GeoAddress> = [
     {
-      display: '50321 Brühl',
-      location: { lat: '50.823525', lng: '6.897674', rad: 10 },
+      postalcode: '50321',
+      city: 'Brühl',
+      coordinates: [50.823525, 6.897674],
+      radius: 10,
     },
     {
-      display: '65183 Wiesbaden',
-      location: { lat: '50.0833521', lng: '8.24145', rad: 10 },
+      postalcode: '65183',
+      city: 'Wiesbaden',
+      coordinates: [50.0833521, 8.24145],
+      radius: 10,
     },
     {
-      display: 'Regionalverband Saarbrücken',
-      location: { lat: '49.2789', lng: '6.9437', rad: 25 },
+      postalcode: '',
+      city: 'Regionalverband Saarbrücken',
+      coordinates: [49.2789, 6.9437],
+      radius: 25,
     },
     {
-      display: 'Saarpfalz-Kreis',
-      location: { lat: '49.1805', lng: '7.2194', rad: 25 },
+      postalcode: '',
+      city: 'Saarpfalz-Kreis',
+      coordinates: [49.1805, 7.2194],
+      radius: 25,
     },
     {
-      display: 'Neunkirchen',
-      location: { lat: '49.3518', lng: '7.1864', rad: 25 },
+      postalcode: '',
+      city: 'Neunkirchen',
+      coordinates: [49.3518, 7.1864],
+      radius: 25,
     },
     {
-      display: 'St. Wendel',
-      location: { lat: '49.46667', lng: '7.166669', rad: 25 },
+      postalcode: '',
+      city: 'St. Wendel',
+      coordinates: [49.46667, 7.166669],
+      radius: 25,
     },
     {
-      display: 'Saarlouis',
-      location: { lat: '49.3135', lng: '6.7523', rad: 25 },
+      postalcode: '',
+      city: 'Saarlouis',
+      coordinates: [49.3135, 6.7523],
+      radius: 25,
     },
     {
-      display: 'Merzig-Wadern',
-      location: { lat: '49.4572', lng: '6.6867', rad: 35 },
+      postalcode: '',
+      city: 'Merzig-Wadern',
+      coordinates: [49.4572, 6.6867],
+      radius: 35,
     },
   ];
 
-  filteredValues$: Observable<Value[]>;
+  filteredValues$: Observable<GeoAddress[]>;
 
   blur$ = new Subject();
 
-  valueChanges$: Observable<Value>;
+  valueChanges$: Observable<GeoAddress>;
 
   @ViewChild(MatAutocompleteTrigger, { read: MatAutocompleteTrigger })
   auto: MatAutocompleteTrigger;
@@ -90,11 +107,7 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
       startWith(''),
       flatMap(async (value) => {
         if (!value) {
-          return this.standorte.filter((standort) =>
-            standort.display
-              .toLocaleLowerCase()
-              .includes(value.toLocaleLowerCase())
-          );
+          return this.standorte;
         } else {
           return await this.findAddresses(value);
         }
@@ -120,13 +133,14 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
     this.auto.openPanel();
   }
 
-  displayWith(standort: any) {
-    return standort && standort.display;
+  displayWith(standort: GeoAddress) {
+    return standort && (standort.city || standort.postalcode);
   }
 
-  writeValue(obj: Value | string): void {
+  writeValue(obj: GeoAddress): void {
     this.myControl.setValue(obj);
   }
+
   registerOnChange(fn: any): void {
     this.valueChanges$.subscribe(fn);
   }
@@ -152,27 +166,25 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
 
   async findAddresses(plzORcity: string) {
     console.log('search for: ' + plzORcity);
-    const addresses: any = await this.geo.findCoordinatesByAddress(plzORcity).toPromise();
-
+    const addresses: any = await this.geo
+      .findCoordinatesByAddress(plzORcity)
+      .toPromise();
 
     const result = [];
 
     if (addresses && addresses.records && addresses.records.length > 0) {
-
       console.log(addresses.records);
 
       for (const a of addresses.records as Array<any>) {
         result.push({
-          display: a.fields.note,
-          location: { lat: a.fields.geo_point_2d[0], lng: a.fields.geo_point_2d[1], rad: 25 },
+          postalcode: a.fields.plz,
+          city: a.fields.note,
+          coordinates: a.fields.geo_point_2d,
+          radius: 25,
         });
       }
     }
 
     return result;
-    // return postal;
-    // .subscribe((d: any) => {
-    //   this.suggestion = d.records.map((m) => m.fields);
-    // });
   }
 }
