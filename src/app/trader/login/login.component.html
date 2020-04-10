@@ -1,21 +1,22 @@
 <lk-container>
-  <h1>Händler Login</h1>
+  <h1>{{ texts.haendlerlogin_title | text }}</h1>
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="login-inputs">
       <lk-input
         formControlName="email"
         name="login"
-        placeholder="Email"
+        [placeholder]="texts.email | text"
       ></lk-input>
       <lk-input
         formControlName="password"
         type="password"
         name="password"
-        placeholder="Passwort"
-      ></lk-input>
+        [placeholder]="texts.password | text"
+      >
+      </lk-input>
     </div>
 
-    <lk-button type="submit" label="Anmelden"></lk-button>
+    <lk-button type=" submit" [label]="texts.anmelden | text"> </lk-button>
 
     <div class="button-and-error">
       <div
@@ -52,10 +53,14 @@
   </form>
   <br />
   <div class="info">
-    Noch kein Konto? Dann gehts
-    <a routerLink="/trader/register/new">hier lang</a>
+    {{ texts.haendlerlogin_noch_kein_konto | text }}
+    <a routerLink="/trader/register/new">{{
+      texts.haendlerlogin_noch_kein_konto_linktext | text
+    }}</a>
     <br />
-    <a routerLink="/trader/password-reset">Passwort vergessen?</a>
+    <a routerLink="/trader/password-reset">{{
+      texts.haendlerlogin_passwort_vergessen | text
+    }}</a>
     <br />
     <br />
   </div>

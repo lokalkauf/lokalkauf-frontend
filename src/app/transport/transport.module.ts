@@ -5,6 +5,7 @@ import { TransportDetailComponent } from './transport-detail/transport-detail.co
 import { TransportItemComponent } from './transport-item/transport-item.component';
 import { TakeTransportComponent } from './take-transport/take-transport.component';
 import { TransportMainComponent } from './transport-main/transport-main.compontent';
+import { PipesModule } from '../pipes/pipes.modules';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,6 @@ import { TransportMainComponent } from './transport-main/transport-main.componte
     TakeTransportComponent,
     TransportMainComponent,
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, PipesModule],
 })
 export class TransportModule {}

@@ -17,6 +17,8 @@ import { MatPasswordStrengthModule } from '@angular-material-extensions/password
 import { DeleteUserComponent } from './registration/delete-user/delete-user.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
+import { LabelPipe } from '../pipes/label.pipe';
+import { PipesModule } from '../pipes/pipes.modules';
 
 const routes: Routes = [
   { path: 'trader/profile', component: ProfileComponent },
@@ -48,6 +50,7 @@ const routes: Routes = [
     MatTabsModule,
     MatDialogModule,
     ReusablesModule,
+    PipesModule,
     MatPasswordStrengthModule,
   ],
 })

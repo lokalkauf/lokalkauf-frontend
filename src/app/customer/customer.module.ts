@@ -23,6 +23,7 @@ import { TraderContactComponent } from './trader-contact/trader-contact.componen
 import { ReusablesModule } from '../reusables/reusables.module';
 import { InquiryConfirmationComponent } from './inquiry-confirmation/inquiry-confirmation.component';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
+import { PipesModule } from '../pipes/pipes.modules';
 
 const routes: Routes = [
   {
@@ -63,6 +64,7 @@ const routes: Routes = [
     MatInputModule,
     MatButtonModule,
     ReusablesModule,
+    PipesModule,
     MatCarouselModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,

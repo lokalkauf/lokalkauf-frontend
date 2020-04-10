@@ -51,6 +51,10 @@ import { MatPasswordStrengthModule } from '@angular-material-extensions/password
 import { FaqComponent } from './faq/faq.component';
 import { StorageService } from './services/storage.service';
 import { SearchInputComponent } from './start/search-input/search-input.component';
+import { LabelPipe } from './pipes/label.pipe';
+import { TextService } from './services/text.service';
+import { MuiService } from './services/mui.service';
+import { PipesModule } from './pipes/pipes.modules';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -69,7 +73,6 @@ const routes: Routes = [
     FeedbackComponent,
     VerifyComponent,
     SpinnerComponent,
-    SafePipe,
     SpinnerComponent,
     StartComponent,
     FaqComponent,
@@ -101,6 +104,7 @@ const routes: Routes = [
     TransportModule,
     RouterModule.forRoot(routes, { anchorScrolling: 'enabled' }),
     ReusablesModule,
+    PipesModule,
     FormsModule,
     ReactiveFormsModule,
     AngularFireAuthModule,
@@ -115,6 +119,8 @@ const routes: Routes = [
     ShoppingcartService,
     UserService,
     TraderService,
+    MuiService,
+    TextService,
     SpinnerService,
     StorageService,
     {
