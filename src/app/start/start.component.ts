@@ -90,6 +90,7 @@ export class StartComponent implements OnInit {
       val.coordinates[1],
       val.radius,
     ]);
+
     this.storageService.saveLocation(val);
   }
 }

@@ -107,9 +107,9 @@ export class TraderContactComponent implements OnInit {
     if (city) {
       this.router.navigate([
         '/localtraders',
-        city.lat,
-        city.lng,
-        city.rad ? city.rad : 10,
+        city.coordinates[0],
+        city.coordinates[1],
+        city.radius ? city.radius : 10,
       ]);
     } else {
       this.router.navigate(['/']);
