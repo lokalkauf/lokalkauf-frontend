@@ -1,20 +1,6 @@
 @import '../../theme/variables.scss';
 
-#feedback-overlay {
-  max-width: 1024px;
-  margin: 0 auto;
-  padding: 0 16px;
-  box-sizing: border-box;
-  background-color: $slighttranslucentwhite;
-}
-
-#feedback-inset {
-  h1 {
-    margin-bottom: 40px;
-  }
-}
-
-#thankyou {
+.thankyou {
   padding: 1.2rem;
   padding-top: 2.4rem;
 
@@ -24,42 +10,48 @@
     margin-right: auto;
   }
 
-  #shopping-thanks {
+  .shopping-thanks {
     text-align: center;
   }
 
-  #thanks-headline {
-    font-size: 1rem;
-    font-weight: 200;
+  .thanks-headline {
     text-align: center;
     color: $darkgreen;
     margin-top: 40px;
   }
 
-  #thanks-subheading {
+  .thanks-subheading {
     text-align: center;
-    font-size: 0.8rem;
     margin-top: 20px;
   }
 }
 
-#feedback-controls {
+.feedback-controls {
   margin-top: 1.2rem;
+
+  lk-button {
+    min-width: 130px;
+
+    @media screen and (min-width: 768px) {
+      min-width: 266px;
+    }
+  }
 }
 
-#feedback-absenden {
+.feedback-verwerfen {
   float: right;
 }
 
 .content {
-  margin: 1.2rem 0;
-  font-size: 0.8rem;
-  font-weight: 200;
+  margin-top: 1.2rem;
 }
 
 .feedback-error {
   margin: 1.2rem 0;
-  font-size: 0.8rem;
   color: $errorcolor;
   padding: 1.2rem;
+}
+
+a {
+  color: $appblack;
 }

@@ -1,8 +1,10 @@
-<div id="feedback-overlay">
-  <!--
-  <div id="feedback-inset" *ngIf="!mailSent">
+<lk-container>
+  <div id="feedback-inset" *ngIf="!mailSent" [formGroup]="feedbackForm">
     <h1>Deine Ideen sind uns wichtig</h1>
-    <lk-textarea [(ngModel)]="message" [placeholder]="'Deine Nachricht an uns'">
+    <lk-textarea
+      formControlName="message"
+      [placeholder]="'Deine Nachricht an uns'"
+    >
     </lk-textarea>
 
     <div class="content">
@@ -12,13 +14,13 @@
 
     <lk-input
       [type]="email"
-      [(ngModel)]="email"
+      formControlName="email"
       [placeholder]="'E-Mail Adresse'"
     ></lk-input>
 
     <div class="content">
-      <label for="agbread">
-        <input type="checkbox" id="agbread" [(ngModel)]="agb" />
+      <label>
+        <app-lk-checkbox formControlName="agbRead"></app-lk-checkbox>
         Ich bestätige die
         <a
           href="http://www.info.lokalkauf.org/agb"
@@ -37,26 +39,29 @@
       </label>
     </div>
 
-    <div id="feedback-controls">
+    <div class="feedback-controls">
       <lk-button
-        id="feedback-verwerfen"
+        class="feedback-absenden"
+        (click)="absenden()"
+        label="absenden"
+      >
+      </lk-button>
+      <lk-button
+        class="feedback-verwerfen"
         (click)="verwerfen()"
         label="verwerfen"
       ></lk-button>
-      <lk-button id="feedback-absenden" (click)="absenden()" label="absenden">
-      </lk-button>
     </div>
   </div>
   <div class="feedback-error" *ngIf="showError">
     Bitte gebe einen Nachrichtentext ein und ggf. eine gültige E-Mail-Adresse.
     <br />Bitte bestätige zudem die AGBs und Datenschutzbestimmungen.
   </div>
-  -->
 
-  <div id="thankyou" *ngIf="mailSent">
-    <div id="thanks-headline">Vielen Dank für Dein Feedback</div>
-    <div id="thanks-subheading">
-      Wir freuen uns über Deine Kommentare, Deine Anregungen, Dein Feedback,
+  <div class="thankyou" *ngIf="mailSent">
+    <div class="thanks-headline">Vielen Dank für Dein Feedback</div>
+    <div class="thanks-subheading">
+      Wir freuen uns über Deine Kommentare, Deine Anregungen, Dein Feedback,<br />
       Deine Ideen und sogar Deine Kritik.
       <br />
       <br />Wir versuchen so schnell wie möglich Dein Anliegen zu beantworten.
@@ -64,9 +69,9 @@
       <br />Dein lokalkauf-Team
       <br />
       <br />
-      <br />
-      <lk-button (click)="goBack()" label="Schliessen und weiter"></lk-button>
-      <br />
+      <div class="feedback-controls">
+        <lk-button (click)="goBack()" label="Schliessen und weiter"></lk-button>
+      </div>
     </div>
   </div>
-</div>
+</lk-container>

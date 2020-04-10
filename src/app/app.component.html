@@ -107,6 +107,7 @@
       <a mat-button (click)="navigateTraders()" routerLinkActive="active"
         >H&auml;ndlersuche
       </a>
+      <a mat-button [routerLink]="'/feedback'">Feedback</a>
       <a mat-button [routerLink]="'/aboutus'">Das sind wir</a>
       <a mat-button [routerLink]="'/faq'">Hilfe</a>
     </div>
@@ -155,6 +156,7 @@
       <a mat-list-item (click)="navigateTraders()" routerLinkActive="active"
         >H&auml;ndlersuche
       </a>
+      <a mat-list-item [routerLink]="'/feedback'">Feedback</a>
       <a mat-list-item [routerLink]="'/aboutus'"> Das sind wir </a>
       <a mat-list-item [routerLink]="'/faq'"> Hilfe</a>
     </mat-nav-list>
@@ -181,6 +183,7 @@
       >
         Datenschutzerklärung
       </a>
+      <a mat-list-item [routerLink]="'/feedback'">Feedback</a>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

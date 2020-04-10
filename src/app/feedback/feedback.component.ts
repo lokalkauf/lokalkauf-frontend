@@ -4,6 +4,7 @@ import * as EmailValidatorTS from 'email-validator';
 import { EMailService } from '../services/email.service';
 import { EMail } from '../models/email';
 import { ErrorService } from '../services/error.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-feedback',
@@ -11,9 +12,24 @@ import { ErrorService } from '../services/error.service';
   styleUrls: ['./feedback.component.scss'],
 })
 export class FeedbackComponent {
-  message: string;
-  email: string;
-  agb: boolean;
+  feedbackForm = new FormGroup({
+    message: new FormControl('', [Validators.required]),
+    email: new FormControl('', []),
+    agbRead: new FormControl('', [Validators.requiredTrue]),
+  });
+
+  get email() {
+    return this.feedbackForm.get('email');
+  }
+
+  get message() {
+    return this.feedbackForm.get('message');
+  }
+
+  get agbRead() {
+    return this.feedbackForm.get('agbRead');
+  }
+
   showError: boolean;
   mailSent = false;
 
@@ -32,17 +48,18 @@ export class FeedbackComponent {
   absenden() {
     if (
       this.message &&
-      this.agb &&
-      (!this.email || this.validMail(this.email))
+      this.message.value &&
+      this.agbRead.value &&
+      (!this.email || this.validMail(this.email.value))
     ) {
       try {
         this.mailService.send(
           {
-            fromName: this.email,
-            fromEMail: this.email,
+            fromName: this.email.value,
+            fromEMail: this.email.value,
             toEMail: 'info@lokalkauf.org',
             title: 'Feedbacknachricht',
-            message: this.message,
+            message: this.message.value,
           } as EMail,
           'feedback'
         );
