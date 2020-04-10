@@ -40,6 +40,7 @@ button.mat-mini-fab.avatar {
 
 .logo-link {
   padding: 0;
+
   img {
     height: 40px;
   }
@@ -63,7 +64,12 @@ button.mat-mini-fab.avatar {
 
   .mat-list-item {
     display: inline-block;
-    margin: 20px;
+    margin: 20px 10px;
+
+    @media screen and (min-width: 768px) {
+      margin: 20px;
+    }
+
     font-size: 0.7rem;
     color: #666;
     text-decoration: none;
