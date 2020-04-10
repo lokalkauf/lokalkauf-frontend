@@ -31,6 +31,11 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+export const sendGrid = functions.https.onCall(async (data, context) => {
+  // Dummy function to prevent deploymet error
+  return true;
+});
+
 export const sendMail = functions.https.onCall(async (data, context) => {
   console.log(data);
 
