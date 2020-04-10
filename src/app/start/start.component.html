@@ -1,5 +1,3 @@
-<!-- <app-horizontal-scaling-bar [links]="links" (clickedLink)="consoleLog($event);">
-</app-horizontal-scaling-bar>-->
 <div class="hero">
   <div class="hero-search-container">
     <lk-container>
@@ -8,7 +6,10 @@
           [formControl]="locationFormControl"
           #searchInput
         ></lk-search-input>
-        <lk-button type="submit" label="Händler suchen"></lk-button>
+        <lk-button
+          type="submit"
+          [label]="text.start_button_geschaeft_suchen | text"
+        ></lk-button>
       </form>
     </lk-container>
   </div>
@@ -16,17 +17,14 @@
 
 <lk-container>
   <div class="intro">
-    <h1>Wir bringen Euch wieder zusammen!</h1>
-    <p>
-      Du kannst bei deinem Lieblingsladen, Restaurant oder Café nicht mehr vor
-      Ort einkaufen? Du bist ein Einzelhändler oder Gastronom und musstest
-      deinen Laden schließen? Wir helfen euch!
-    </p>
+    <h1>{{ text.start_zusammen_headline | text }}</h1>
+    <p [innerHTML]="text.start_zusammen_text | text"></p>
     <lk-button
       color="accent"
       [routerLink]="'/trader/profile'"
-      label="Mein Händlerprofil"
-    ></lk-button>
+      [label]="text.start_button_haender_anmelden | text"
+    >
+    </lk-button>
   </div>
 
   <div class="doubleheart">
@@ -35,13 +33,8 @@
   </div>
 
   <div class="our-mission">
-    <h2>Unsere Mission</h2>
-    <p>
-      Wir wollen Händler, Restaurants, Modemacher etc unterstützen, damit sie
-      weiterhin ihre Produkte zum Kunden bringen.est amet culpa ullamco Lorem
-      qui nostrud esse ipsum anim laboris occaecat mollit officia fugiat sint ex
-      dolore aliqua officia minim laborum occaecat
-    </p>
+    <h2>{{ text.start_mission_headline | text }}</h2>
+    <p [innerHTML]="text.start_mission_text | text"></p>
   </div>
 </lk-container>
 
@@ -58,75 +51,3 @@
     <strong>Anja Bermbach – drinneN</strong>
   </lk-container>
 </div>
-
-<!-- <div class="intro-text">
-    <div id="backdrop-start"></div>
-    <div class="intro-text-box">
-      Du kannst bei Deinem Lieblingsladen, Lieblingsrestaurant oder
-      Lieblingscafé nicht mehr vor Ort einkaufen?
-      <br />
-      <br />Du bist ein Einzelhändler oder Gastronom und musstest deinen Laden
-      schließen?
-      <br />
-      <br />Wir bringen Euch wieder zusammen.
-    </div>
-    <div class="divider"></div>
-    <div class="intro-text-box">
-      Finde hier Deinen Lieblingsladen oder ein Restaurant um die Ecke und kauf
-      lokal:
-    </div>
-
-    <div id="start-input-container">
-      <div class="start-input-center">
-        <lk-select
-          #startTownList
-          id="start-select"
-          name="standort"
-          [options]="standorte"
-          [placeholder]="'Bitte wähle eine Stadt aus'"
-        >
-        </lk-select>
-      </div>
-
-      <div class="start-input-center">
-        <lk-button (click)="reducedAction(startTownList)" label="Jetzt suchen!">
-        </lk-button>
-      </div>
-    </div>
-    <div class="divider"></div>
-
-    <div *ngIf="!isLoggedIn">
-      <div class="additional-intro-text">
-        Du bist Einzelhändler oder Gastronom? Dann melde Dich hier an:
-      </div>
-      <div>
-        <lk-button
-          color="accent"
-          [routerLink]="'/trader/login'"
-          label="Geschäftsprofil anlegen"
-        >
-        </lk-button>
-      </div>
-    </div>
-
-    <div *ngIf="isLoggedIn">
-      <div class="additional-intro-text">
-        Hier gehts zu deinem Profil:
-      </div>
-      <div>
-        <lk-button
-          color="accent"
-          [routerLink]="'/trader/profile'"
-          label="Mein Händlerprofil"
-        ></lk-button>
-      </div>
-    </div>
-
-    <div class="additional-intro-text">
-      <div class="intro-text-hint">
-        Unsere Plattform befindet sich aktuell noch in der Entwicklung. Hast Du
-        noch
-        <a [routerLink]="'/feedback'">Ideen oder Feedback</a>?
-      </div>
-    </div>
-  </div> -->

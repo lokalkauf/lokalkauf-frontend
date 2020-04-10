@@ -16,6 +16,7 @@ import { StorageService } from '../services/storage.service';
 import { FormControl, Validators } from '@angular/forms';
 import { SearchInputComponent } from './search-input/search-input.component';
 import { GeoAddress } from '../models/geoAddress';
+import { uiTexts } from 'src/app/services/uiTexts';
 
 @Component({
   selector: 'app-start',
@@ -64,6 +65,8 @@ export class StartComponent implements OnInit {
       this.isLoggedIn = loggedin;
     });
   }
+
+  text = uiTexts;
 
   ngOnInit(): void {}
 
