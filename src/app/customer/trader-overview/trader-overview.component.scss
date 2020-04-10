@@ -65,3 +65,12 @@ app-warning-box {
 app-trader-item {
   margin-bottom: 16px;
 }
+
+.no-result-message {
+  display: block;
+  max-width: 400px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+}
