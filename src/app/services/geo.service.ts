@@ -63,11 +63,9 @@ export class GeoService {
   getUserPosition(): Observable<Array<number>> {
     return new Observable((observer) => {
       let currentPos = this.manuelUserPosition;
-
       if (currentPos && currentPos[0] === 0 && currentPos[1] === 0) {
         currentPos = null;
       }
-
       if (!currentPos && navigator && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -76,7 +74,7 @@ export class GeoService {
             observer.complete();
           },
           (error) => {
-            observer.next(currentPos);
+            observer.next([-1, -1]);
             observer.complete();
           }
         );
@@ -134,6 +132,10 @@ export class GeoService {
   async getPostalAndCityByLocation(
     location: Array<number>
   ): Promise<GeoAddress> {
+    if (location[0] === location[1] && location[0] === -1) {
+      return null;
+    }
+
     const loc = encodeURIComponent(location[0] + ',' + location[1]);
     const url =
       'https://api.opencagedata.com/geocode/v1/json?key=8cf06bcf900d48fdb16f767a6a0e5cd8&q=' +
@@ -141,7 +143,6 @@ export class GeoService {
       '&pretty=1&no_annotations=1';
 
     const response: any = await this.http.get(url).toPromise();
-
     if (response) {
       return {
         city: response.results[0].components.city,
