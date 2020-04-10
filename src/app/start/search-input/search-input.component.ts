@@ -102,6 +102,8 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
     private geo: GeoService,
     private readonly textService: TextService
   ) {
+    this.myControl.disable();
+
     this.filteredValues$ = this.myControl.valueChanges.pipe(
       startWith(''),
       debounceTime(500),
@@ -120,13 +122,12 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
       tap(() => (this.isLoading = false))
     );
 
-    this.userGeoAddress$ = this.geo
-      .getUserPosition()
-      .pipe(
-        flatMap((userPosition) =>
-          this.geo.getPostalAndCityByLocation(userPosition)
-        )
-      );
+    this.userGeoAddress$ = this.geo.getUserPosition().pipe(
+      filter((userPosition) => userPosition != null),
+      flatMap((userPosition) =>
+        this.geo.getPostalAndCityByLocation(userPosition)
+      )
+    );
 
     this.valueChanges$ = this.userGeoAddress$.pipe(
       flatMap((a) => {
@@ -178,6 +179,11 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(obj: GeoAddress): void {
+    console.log('write value...');
+    console.log(obj);
+
+    this.myControl.enable();
+
     this.myControl.setValue(obj);
   }
 
