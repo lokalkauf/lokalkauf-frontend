@@ -27,6 +27,8 @@ export class TraderOverviewComponent implements OnInit {
   storeTypes: Observable<LkSelectOptions[]>;
   storeTypePreselect: Observable<string>;
 
+  hasLocations = true;
+
   constructor(
     private route: ActivatedRoute,
     private geo: GeoService,
@@ -126,6 +128,7 @@ export class TraderOverviewComponent implements OnInit {
         });
       })
       .finally(() => {
+        this.hasLocations = this.locations && this.locations.length > 0;
         this.updateLocations(this.locations);
         this.spinnerService.hide();
       });

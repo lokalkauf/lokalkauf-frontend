@@ -10,7 +10,7 @@
   sich aktuell auf die Händler in ausgewählten Städten!"
   >
   </app-warning-box>
-  <div class="traders-overview-row" *ngIf="traders && traders.length">
+  <div class="traders-overview-row" *ngIf="hasLocations">
     <app-lk-page-title title="Alles aus Deiner Nähe"></app-lk-page-title>
     <div class="traders-input-center">
       <lk-select
@@ -37,7 +37,7 @@
       ></app-trader-item>
     </div>
   </div>
-  <div class="no-result-message">
+  <div class="no-result-message" *ngIf="!hasLocations">
     Leider wurden in deinem Umkreis keine Händler gefunden. Unsere Plattform
     befindet sich aktuell im Aufbau, so dass wir noch nicht in allen Regionen
     Deutschland vertreten sind.
