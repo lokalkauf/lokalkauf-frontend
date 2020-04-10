@@ -30,6 +30,8 @@ mat-card {
     &.placeholder {
       object-fit: scale-down;
       background-color: $lightestgreen;
+      padding: 16px;
+      box-sizing: border-box;
     }
   }
 

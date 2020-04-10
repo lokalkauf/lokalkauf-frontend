@@ -16,7 +16,7 @@ export class TraderItemComponent implements OnInit {
 
   productAmount$: Observable<number>;
 
-  trader$: Observable<Omit<TraderProfile, 'id'>>;
+  trader$: Observable<TraderProfile & { id: string }>;
 
   thumbnail$: Observable<string>;
 
@@ -29,7 +29,7 @@ export class TraderItemComponent implements OnInit {
   ngOnInit(): void {
     this.trader$ = this.db
       .collection('Traders')
-      .doc<Omit<TraderProfile, 'id'>>(this.trader.id)
+      .doc<TraderProfile>(this.trader.id)
       .valueChanges()
       .pipe(
         map((trader) => {
