@@ -5,4 +5,5 @@ export class GeoAddress {
   city: string;
   coordinates: number[];
   radius: number;
+  display?: string;
 }

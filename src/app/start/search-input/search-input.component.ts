@@ -4,7 +4,7 @@ import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
 } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, of, concat } from 'rxjs';
 import {
   map,
   tap,
@@ -16,15 +16,6 @@ import {
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { GeoService } from 'src/app/services/geo.service';
 import { GeoAddress } from 'src/app/models/geoAddress';
-
-// export interface Value {
-//   display: string;
-//   location: {
-//     lat: string;
-//     lng: string;
-//     rad: number;
-//   };
-// }
 
 @Component({
   selector: 'lk-search-input',
@@ -114,15 +105,32 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
       })
     );
 
-    this.valueChanges$ = this.myControl.valueChanges.pipe(
-      map((value) => (typeof value !== 'string' ? value : null)),
-      distinctUntilChanged()
+    this.valueChanges$ = of(this.initUserLocation()).pipe(
+      flatMap((a) => {
+        return concat(
+          of(a),
+          this.myControl.valueChanges.pipe(
+            flatMap((value) => {
+              console.log(value);
+              if (typeof value === 'string') {
+                if (value === '') {
+                  return a;
+                }
+                return of(null);
+              }
+              if (!value) {
+                return a;
+              }
+              return of(null);
+            }),
+            distinctUntilChanged()
+          )
+        );
+      })
     );
   }
 
-  async ngOnInit() {
-    await this.initUserLocation();
-  }
+  async ngOnInit() {}
 
   onBlur() {
     this.blur$.next();
@@ -133,8 +141,8 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
     this.auto.openPanel();
   }
 
-  displayWith(standort: GeoAddress) {
-    return standort && (standort.city || standort.postalcode);
+  displayWith(address: GeoAddress) {
+    return address ? address.postalcode + ' ' + address.city : '';
   }
 
   writeValue(obj: GeoAddress): void {
@@ -151,17 +159,21 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
     isDisabled ? this.myControl.disable() : this.myControl.enable();
   }
 
-  async initUserLocation() {
+  async initUserLocation(): Promise<GeoAddress> {
+    let address: GeoAddress;
     const currentPosition = await this.geo.getUserPosition().toPromise();
 
     if (currentPosition && currentPosition.length > 1) {
-      const address = await this.geo.getPostalAndCityByLocation(
-        currentPosition
-      );
+      address = await this.geo.getPostalAndCityByLocation(currentPosition);
 
       this.placeholder =
         address.postalcode + ' ' + address.city + ' (mein Standort)';
     }
+
+    console.log('address: ');
+    console.log(address);
+
+    return address;
   }
 
   async findAddresses(plzORcity: string) {

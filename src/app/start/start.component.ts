@@ -14,6 +14,8 @@ import { ScrollStrategy } from '@angular/cdk/overlay';
 import { UserService } from '../services/user.service';
 import { StorageService } from '../services/storage.service';
 import { FormControl, Validators } from '@angular/forms';
+import { SearchInputComponent } from './search-input/search-input.component';
+import { GeoAddress } from '../models/geoAddress';
 
 @Component({
   selector: 'app-start',
@@ -49,15 +51,14 @@ export class StartComponent implements OnInit {
 
   locationFormControl = new FormControl(null, [Validators.required]);
 
+  @ViewChild('myname', { read: SearchInputComponent }) searchInputComponent;
+
   @ViewChild('searchInput', { read: ElementRef }) searchInput: any;
-  @ViewChild('plzInput') plzInput: ElementRef;
   constructor(
     public router: Router,
-    private geo: GeoService,
     public userService: UserService,
     private storageService: StorageService
   ) {
-    // this.search = debounce(this.search, 2000);
     this.disabledLosButton = true;
     this.userService.isLoggedIn$.subscribe((loggedin) => {
       this.isLoggedIn = loggedin;
@@ -71,15 +72,17 @@ export class StartComponent implements OnInit {
   }
 
   navigateToLocation() {
-    const val = this.locationFormControl.value;
-
-    console.log('value selected: ' + val);
-    console.log(val);
+    let val = this.locationFormControl.value;
 
     if (!val) {
       this.searchInput.nativeElement.getElementsByTagName('input')[0].focus();
       return;
     }
+
+    if (val !== typeof GeoAddress && val.__zone_symbol__value) {
+      val = val.__zone_symbol__value;
+    }
+
     this.router.navigate([
       '/localtraders',
       val.coordinates[0],
@@ -88,16 +91,4 @@ export class StartComponent implements OnInit {
     ]);
     this.storageService.saveLocation(val);
   }
-
-  setposition(position: Array<number>) {
-    this.suggestion = null;
-    this.currentPosition = position;
-    this.disabledLosButton = false;
-  }
-
-  // search(searchtext) {
-  //   this.geo.findCoordinatesByAddress(searchtext).subscribe((d: any) => {
-  //     this.suggestion = d.records.map((m) => m.fields);
-  //   });
-  // }
 }
