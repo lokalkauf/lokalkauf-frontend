@@ -55,7 +55,8 @@ dich hier vorab registrieren."
         type="tel"
         formControlName="phone"
         placeholder="Telefonnummer*"
-      ></lk-input>
+      >
+      </lk-input>
       <div class="warning" *ngIf="phone.touched && phone.invalid">
         Bitte gib eine gültige Telefonnummer ein
       </div>
@@ -67,7 +68,8 @@ dich hier vorab registrieren."
           type="text"
           formControlName="street"
           placeholder="Straße*"
-        ></lk-input>
+        >
+        </lk-input>
         <div class="warning" *ngIf="street.touched && street.invalid">
           Bitte gib eine Straße ein
         </div>
@@ -178,7 +180,7 @@ dich hier vorab registrieren."
     <div class="agb">
       <label>
         <app-lk-checkbox formControlName="agbRead"></app-lk-checkbox>
-        <p>
+        <div>
           Mit meiner Anmeldung versichere ich, dass ich die
           <a
             href="http://www.info.lokalkauf.org/agb"
@@ -194,7 +196,7 @@ dich hier vorab registrieren."
             >Datenschutzrichtlinen</a
           >
           gelesen habe und damit einverstanden bin.
-        </p>
+        </div>
       </label>
     </div>
 

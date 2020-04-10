@@ -44,45 +44,61 @@
     <div>
       Schritt 2: Wähle maximal zwei Kategorien aus die für Geschäft zutreffen:
     </div>
-    <div class="dense" [formGroup]="storeFormGroup">
-      <label>
-        <app-lk-checkbox formControlName="gastronomie"> </app-lk-checkbox>
-        Gastronomie </label
-      ><br />
-      <label>
-        <app-lk-checkbox formControlName="lebensmittel"></app-lk-checkbox>
-        Lebensmittel </label
-      ><br />
-      <label>
-        <app-lk-checkbox formControlName="fashion"></app-lk-checkbox>
-        Fashion </label
-      ><br />
-      <label>
-        <app-lk-checkbox formControlName="buchhandlung"> </app-lk-checkbox>
-        Buchhandlung </label
-      ><br />
-      <label>
-        <app-lk-checkbox formControlName="homedecor"> </app-lk-checkbox>
-        Home&Decor </label
-      ><br />
-      <label>
-        <app-lk-checkbox formControlName="blumengarten"></app-lk-checkbox>
-        Blumen&Garten </label
-      ><br />
-      <label>
-        <app-lk-checkbox formControlName="handwerk"></app-lk-checkbox>
-        Handwerk </label
-      ><br />
-      <label>
-        <app-lk-checkbox formControlName="sonstiges"> </app-lk-checkbox>
-        Sonstige </label
-      ><br />
-      <div
-        class="warning"
-        *ngIf="storeFormGroup.errors && storeFormGroup.errors.storeCountError"
-      >
-        Bitte wähle mindestens eine und maximal zwei Optionen aus.
+    <ng-container [formGroup]="storeFormGroup">
+      <div class="dense">
+        <label>
+          <app-lk-checkbox formControlName="gastronomie"> </app-lk-checkbox>
+          Gastronomie
+        </label>
       </div>
+      <div class="dense">
+        <label>
+          <app-lk-checkbox formControlName="lebensmittel"></app-lk-checkbox>
+          Lebensmittel
+        </label>
+      </div>
+      <div class="dense">
+        <label>
+          <app-lk-checkbox formControlName="fashion"></app-lk-checkbox>
+          Fashion
+        </label>
+      </div>
+      <div class="dense">
+        <label>
+          <app-lk-checkbox formControlName="buchhandlung"> </app-lk-checkbox>
+          Buchhandlung
+        </label>
+      </div>
+      <div class="dense">
+        <label>
+          <app-lk-checkbox formControlName="homedecor"> </app-lk-checkbox>
+          Home&Decor
+        </label>
+      </div>
+      <div class="dense">
+        <label>
+          <app-lk-checkbox formControlName="blumengarten"></app-lk-checkbox>
+          Blumen&Garten
+        </label>
+      </div>
+      <div class="dense">
+        <label>
+          <app-lk-checkbox formControlName="handwerk"></app-lk-checkbox>
+          Handwerk
+        </label>
+      </div>
+      <div class="dense">
+        <label>
+          <app-lk-checkbox formControlName="sonstiges"> </app-lk-checkbox>
+          Sonstige
+        </label>
+      </div>
+    </ng-container>
+    <div
+      class="warning"
+      *ngIf="storeFormGroup.errors && storeFormGroup.errors.storeCountError"
+    >
+      Bitte wähle mindestens eine und maximal zwei Optionen aus.
     </div>
 
     <div>
