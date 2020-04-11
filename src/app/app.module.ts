@@ -45,7 +45,7 @@ import { EMailService } from './services/email.service';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SpinnerService } from './services/spinner.service';
 import { ErrorDisplayComponent } from './error-display/error-display.component';
-import { AboutUsComponent } from './about-us/about-us.compontent';
+import { AboutUsComponent } from './about-us/about-us.component';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 import { FaqComponent } from './faq/faq.component';
 import { StorageService } from './services/storage.service';
