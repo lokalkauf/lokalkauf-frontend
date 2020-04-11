@@ -31,7 +31,11 @@
       </lk-button>
     </div> -->
 
-    <lk-chip-list [items]="storeTypes" (lkChipListChange)="selChange($event)">
+    <lk-chip-list
+      [items]="storeTypes"
+      [selectedKey]="'1'"
+      (lkChipListChange)="selChange($event)"
+    >
     </lk-chip-list>
 
     <div class="traders-overview-content">
