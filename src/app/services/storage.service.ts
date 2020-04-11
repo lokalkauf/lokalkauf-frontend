@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GeoAddress } from '../models/geoAddress';
+import { LkSelectOptions } from '../reusables/lk-select/lk-select.component';
 
 @Injectable()
 export class StorageService {
@@ -9,6 +10,14 @@ export class StorageService {
 
   loadLocation(fromLocalStorage?: boolean): GeoAddress {
     return this.load('city', fromLocalStorage);
+  }
+
+  saveTraderFilter(filter: LkSelectOptions) {
+    this.save('trader-filter', filter);
+  }
+
+  loadTraderFilter(): LkSelectOptions {
+    return this.load('trader-filter');
   }
 
   private save<T>(key: string, item: T, toLocalStorage?: boolean) {
@@ -21,14 +30,23 @@ export class StorageService {
     }
   }
 
-  private load<T>(key: string, fromLocalStorage?: boolean): T {
-    const jsonItem =
+  private loadSimple(key: string, fromLocalStorage?: boolean) {
+    const storeItem =
       fromLocalStorage === true
         ? localStorage.getItem(key)
         : sessionStorage.getItem(key);
 
-    if (jsonItem) {
-      return JSON.parse(jsonItem) as T;
+    return storeItem ? storeItem : undefined;
+  }
+
+  private load<T>(key: string, fromLocalStorage?: boolean): T {
+    const storeItem =
+      fromLocalStorage === true
+        ? localStorage.getItem(key)
+        : sessionStorage.getItem(key);
+
+    if (storeItem) {
+      return JSON.parse(storeItem) as T;
     }
 
     return undefined;

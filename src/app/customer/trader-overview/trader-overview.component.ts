@@ -9,6 +9,7 @@ import { TraderService } from '../../services/trader.service';
 import { TraderProfile, TraderProfileStatus } from '../../models/traderProfile';
 import { SpinnerService } from '../../services/spinner.service';
 import { map, filter } from 'rxjs/operators';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-trader-overview',
@@ -23,7 +24,7 @@ export class TraderOverviewComponent implements OnInit {
   paramRadius: number;
   storeType: string;
   locations: Array<Location>;
-
+  selectedTrader: LkSelectOptions;
   storeTypes: Observable<LkSelectOptions[]>;
   storeTypePreselect: Observable<string>;
 
@@ -33,8 +34,14 @@ export class TraderOverviewComponent implements OnInit {
     private route: ActivatedRoute,
     private geo: GeoService,
     private traderService: TraderService,
-    private spinnerService: SpinnerService
+    private spinnerService: SpinnerService,
+    private readonly storageService: StorageService
   ) {
+    this.selectedTrader = this.storageService.loadTraderFilter();
+    if (this.selectedTrader) {
+      this.storeType = this.selectedTrader.value;
+    }
+
     this.storeTypePreselect = of('Nach was bist du auf der Suche?');
     this.storeTypes = of([
       {
@@ -138,6 +145,7 @@ export class TraderOverviewComponent implements OnInit {
     if (selEvent) {
       console.log(selEvent);
       this.storeType = selEvent.value;
+      this.storageService.saveTraderFilter(selEvent);
       this.updateLocations(this.locations);
     }
   }
@@ -158,7 +166,6 @@ export class TraderOverviewComponent implements OnInit {
       ids,
       TraderProfileStatus.PUBLIC
     );
-
     if (this.storeType && this.storeType !== 'alle') {
       const selectedStores = [];
       traderProfiles.filter((i) => {

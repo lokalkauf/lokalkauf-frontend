@@ -34,7 +34,7 @@
 
     <lk-chip-list
       [items]="storeTypes"
-      [selectedKey]="'1'"
+      [selectedKey]="selectedTrader ? selectedTrader.key : '1'"
       (lkChipListChange)="selChange($event)"
     >
     </lk-chip-list>
