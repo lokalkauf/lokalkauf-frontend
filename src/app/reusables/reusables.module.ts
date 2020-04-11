@@ -11,11 +11,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { LkPageTitleComponent } from './lk-page-title/lk-page-title.component';
 import { LkCheckboxComponent } from './lk-checkbox/lk-checkbox.component';
+import { LkChipListComponent } from './lk-chip-list/lk-chip-list.component';
 import { ImageChooserComponent } from './image-chooser/image-chooser.component';
 import { FullscreenModalComponent } from './fullscreen-modal/fullscreen-modal.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatChipsModule } from '@angular/material/chips';
 import { LkSelectComponent } from './lk-select/lk-select.component';
 import { WarningBoxComponent } from './warning-box/warning-box.component';
 import { NgxStarRatingModule } from 'ngx-star-rating';
@@ -39,6 +41,7 @@ const routes: Routes = [];
     WarningBoxComponent,
     RatingStarComponent,
     LkContainerComponent,
+    LkChipListComponent,
   ],
   imports: [
     CommonModule,
@@ -51,6 +54,7 @@ const routes: Routes = [];
     MatButtonModule,
     MatTooltipModule,
     NgxStarRatingModule,
+    MatChipsModule,
   ],
   exports: [
     MapComponent,
@@ -66,6 +70,7 @@ const routes: Routes = [];
     WarningBoxComponent,
     RatingStarComponent,
     LkContainerComponent,
+    LkChipListComponent,
   ],
 })
 export class ReusablesModule {}

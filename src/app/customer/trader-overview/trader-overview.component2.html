@@ -1,4 +1,4 @@
-<div class="traders-view-container">
+<lk-container>
   <!-- <div class="traders-map-row">
     <app-map
       class="tradersmap"
@@ -12,7 +12,7 @@
   </app-warning-box>
   <div class="traders-overview-row" *ngIf="hasLocations">
     <app-lk-page-title title="Alles aus Deiner Nähe"></app-lk-page-title>
-    <div class="traders-input-center">
+    <!-- <div class="traders-input-center">
       <lk-select
         #storeTypeList
         class="store-types"
@@ -29,7 +29,10 @@
         label="Jetzt filtern!"
       >
       </lk-button>
-    </div>
+    </div> -->
+
+    <lk-chip-list [items]="storeTypes"> </lk-chip-list>
+
     <div class="traders-overview-content">
       <app-trader-item
         *ngFor="let trader of traders"
@@ -42,4 +45,4 @@
     befindet sich aktuell im Aufbau, so dass wir noch nicht in allen Regionen
     Deutschland vertreten sind.
   </div>
-</div>
+</lk-container>
