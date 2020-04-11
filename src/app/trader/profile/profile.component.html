@@ -42,7 +42,8 @@
       Bitte wähle mindestens eine Option aus.
     </div>
     <div>
-      Schritt 2: Wähle maximal zwei Kategorien aus die für Geschäft zutreffen:
+      Schritt 2: Wähle maximal zwei Kategorien aus die für Dein Geschäft
+      zutreffen:
     </div>
     <ng-container [formGroup]="storeFormGroup">
       <div class="dense">
@@ -72,13 +73,13 @@
       <div class="dense">
         <label>
           <app-lk-checkbox formControlName="homedecor"> </app-lk-checkbox>
-          Home&Decor
+          Home & Decor
         </label>
       </div>
       <div class="dense">
         <label>
           <app-lk-checkbox formControlName="blumengarten"></app-lk-checkbox>
-          Blumen&Garten
+          Blumen & Garten
         </label>
       </div>
       <div class="dense">
@@ -112,13 +113,14 @@
       ></lk-textarea>
     </div>
     <div>
-      Schritt 4: Hat dein Geschäft eine eigene E-Mail Adresse?
+      Schritt 4: Hat Dein Geschäft eine eigene E-Mail Adresse?
     </div>
     <div>
       <lk-input placeholder="E-Mail" formControlName="storeEmail"></lk-input>
     </div>
     <div>
-      Schritt 5: Hast du eventuell eine Homepage? Dann trage es doch hier ein:
+      Schritt 5: Hast Du villeicht eine eigene Website? Dann trage es doch hier
+      ein:
     </div>
     <div>
       <lk-input
@@ -135,7 +137,7 @@
       <div>
         Schritt 6: Zu guter Letzt lade Bilder von Deinem Laden oder Deinem
         Angebot hoch (Du kannst maximal 3 Bilder hochladen und mit Klick auf das
-        Bildzeichen rechts das Bild markieren, dass du als Startbild setzen
+        Bildzeichen rechts das Bild markieren, dass Du als Startbild setzen
         möchtest):
       </div>
       <div *ngIf="images.length < 3">
@@ -154,7 +156,7 @@
         >
       </div>
       <div *ngIf="images.length > 0">
-        Folgende Bilder wurden deinem Profil zugeordnet:
+        Folgende Bilder wurden Deinem Profil zugeordnet:
       </div>
       <div class="image-list">
         <div

@@ -13,8 +13,8 @@ export const uiTexts = {
   start_zusammen_text:
     'Du kannst bei Deinem Lieblingsladen, Lieblings-Restaurant oder Café um die Ecke nicht mehr einkaufen? ' +
     '<br />Du bist ein lokaler Einzelhändler oder Gastronom und musstest Deinen Laden schließen?' +
-    '<br />Wir helfen euch!',
-  start_button_haender_anmelden: 'Mein Händlerprofil',
+    '<br />Wir helfen Euch!',
+  start_button_haender_anmelden: 'Geschäftsprofil anlegen',
   start_mission_headline: 'Unsere Mission',
   start_mission_text:
     'Wir vermissen es so sehr, zusammen essen zu gehen, zu reden sowie zu lachen und dann ab in die nächste ' +
