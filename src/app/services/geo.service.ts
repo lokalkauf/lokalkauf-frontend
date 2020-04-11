@@ -17,7 +17,6 @@ export class GeoService {
   locations: GeoCollectionReference;
   hits = new BehaviorSubject([]);
   urlEncoder = new HttpUrlEncodingCodec();
-  manuelUserPosition: Array<number>;
 
   constructor(db: AngularFirestore, private http: HttpClient) {
     this.geoFire = new GeoFirestore(db.firestore);
@@ -54,37 +53,18 @@ export class GeoService {
     return query.get();
   }
 
-  getUserPosition(): Observable<Array<number>> {
-    return new Observable((observer) => {
-      let currentPos = this.manuelUserPosition;
-      if (currentPos && currentPos[0] === 0 && currentPos[1] === 0) {
-        currentPos = null;
-      }
-      if (!currentPos && navigator && navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            currentPos = [position.coords.latitude, position.coords.longitude];
-            observer.next(currentPos);
-            observer.complete();
-          },
-          () => {
-            observer.next([-1, -1]);
-            observer.complete();
-          }
-        );
-      } else {
-        observer.next(currentPos);
-        observer.complete();
-      }
+  getUserPosition(): Promise<Array<number | undefined>> {
+    return new Promise((resolve) => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          resolve([position.coords.latitude, position.coords.longitude]);
+        },
+        (error) => {
+          console.log(error);
+          resolve(undefined);
+        }
+      );
     });
-  }
-
-  getManuellPosition() {
-    return this.manuelUserPosition;
-  }
-
-  setUserPosition(pos: Array<number>) {
-    this.manuelUserPosition = pos;
   }
 
   findCoordinatesByAddress(searchString: string): Observable<any> {

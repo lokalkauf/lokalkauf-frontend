@@ -52,8 +52,6 @@ export class StartComponent implements OnInit {
 
   locationFormControl = new FormControl(null, [Validators.required]);
 
-  @ViewChild('myname', { read: SearchInputComponent }) searchInputComponent;
-
   @ViewChild('searchInput', { read: ElementRef }) searchInput: any;
   constructor(
     public router: Router,
@@ -76,6 +74,8 @@ export class StartComponent implements OnInit {
 
   navigateToLocation() {
     const val = this.locationFormControl.value;
+
+    console.log(val);
 
     if (!val) {
       this.searchInput.nativeElement.getElementsByTagName('input')[0].focus();

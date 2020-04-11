@@ -35,6 +35,7 @@ import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
 import { IconOptions } from '@angular/material/icon';
 import { DOCUMENT } from '@angular/common';
 import { TraderItemComponent } from '../../customer/trader-item/trader-item.component';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-map',
@@ -90,7 +91,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   constructor(private geo: GeoService) {}
 
   ngAfterViewInit(): void {
-    this.geo.getUserPosition().subscribe((p) => {
+    from(this.geo.getUserPosition()).subscribe((p) => {
       if (p != null) {
         this.updateUserCircleMarker(latLng(p[0], p[1]));
         this.loadTraders(0.5);
