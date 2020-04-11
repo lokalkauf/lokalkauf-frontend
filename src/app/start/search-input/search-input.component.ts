@@ -112,7 +112,7 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
     private readonly textService: TextService
   ) {
     this.autocompleteValues$ = concat(
-      of(''),
+      of(this.standorte),
       this.myControl.valueChanges.pipe(
         debounceTime(500),
         tap(() => (this.isLoading = true)),
