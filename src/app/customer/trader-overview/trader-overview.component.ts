@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Location } from '../../models/location';
 import { ActivatedRoute } from '@angular/router';
 import { LkSelectOptions } from '../../reusables/lk-select/lk-select.component';
