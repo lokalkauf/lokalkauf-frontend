@@ -7,4 +7,39 @@
   color: $errorcolor;
   height: unset;
   min-height: unset;
+  font-size: 0.8rem;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+
+  mat-icon.close {
+    width: 24px;
+    margin-right: -15px;
+    margin-top: -15px;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  span {
+    text-align: justify;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  &.collapsed {
+    padding: 3px;
+
+    span {
+      display: none;
+    }
+
+    mat-icon.close {
+      display: none;
+    }
+
+    mat-icon.wrn {
+      font-size: 0.9rem;
+      padding: 7px 0 0 5px;
+    }
+  }
 }

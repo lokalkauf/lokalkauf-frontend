@@ -7,8 +7,20 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class LkWarningBoxComponent implements OnInit {
   @Input() content: string;
+  @Input() collapsed: boolean;
+  @Input() collapseTime = 0;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.collapseTime > 0) {
+      setTimeout(() => {
+        this.collapsed = true;
+      }, this.collapseTime);
+    }
+  }
+
+  toggle() {
+    this.collapsed = !this.collapsed;
+  }
 }
