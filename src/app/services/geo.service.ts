@@ -109,17 +109,20 @@ export class GeoService {
       return null;
     }
 
-    const loc = encodeURIComponent(location[0] + ',' + location[1]);
-    const url =
-      'https://api.opencagedata.com/geocode/v1/json?key=8cf06bcf900d48fdb16f767a6a0e5cd8&q=' +
-      loc +
-      '&pretty=1&no_annotations=1';
+    const response: any = await this.http
+      .get('https://nominatim.openstreetmap.org/reverse', {
+        params: {
+          lat: location[0].toString(),
+          lon: location[1].toString(),
+          format: 'json',
+        },
+      })
+      .toPromise();
 
-    const response: any = await this.http.get(url).toPromise();
     if (response) {
       return {
-        city: response.results[0].components.city,
-        postalcode: response.results[0].components.postcode,
+        city: response.address.city,
+        postalcode: response.address.postcode,
         coordinates: location,
         radius: 0,
       };

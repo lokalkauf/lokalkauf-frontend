@@ -116,7 +116,7 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
       this.myControl.valueChanges.pipe(
         debounceTime(500),
         tap(() => (this.isLoading = true)),
-        switchMap(this.computeCurrentAutocompleteValues.bind(this)),
+        switchMap((x) => this.computeCurrentAutocompleteValues(x)),
         tap(() => (this.isLoading = false))
       )
     );
@@ -136,16 +136,15 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
       concat(of(null), this.myControl.valueChanges),
       this.userGeoAddress$,
     ]).pipe(
-      map(this.computeCurrentGeoAdressValue.bind(this)),
-      distinctUntilChanged(),
-      tap(console.log)
+      map((x) => this.computeCurrentGeoAdressValue(x)),
+      distinctUntilChanged()
     );
 
     this.placeholder$ = concat(
       of(this.textService.getText(uiTexts.umkreissuche_userlocation_text)),
       this.userGeoAddress$.pipe(
         filter((userGeoAddress) => userGeoAddress != null),
-        map(this.geoAddressToPlaceholder.bind(this))
+        map((x) => this.geoAddressToPlaceholder(x))
       )
     );
   }
