@@ -1,16 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { HttpClient, HttpUrlEncodingCodec } from '@angular/common/http';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { BehaviorSubject, Observable } from 'rxjs';
-import {
-  GeoCollectionReference,
-  GeoFirestore,
-  GeoQuery,
-  GeoQuerySnapshot,
-} from 'geofirestore';
+import { GeoCollectionReference, GeoFirestore, GeoQuery } from 'geofirestore';
 import { firestore } from 'firebase';
 import { GeoAddress } from '../models/geoAddress';
 
@@ -25,7 +19,7 @@ export class GeoService {
   urlEncoder = new HttpUrlEncodingCodec();
   manuelUserPosition: Array<number>;
 
-  constructor(private db: AngularFirestore, private http: HttpClient) {
+  constructor(db: AngularFirestore, private http: HttpClient) {
     this.geoFire = new GeoFirestore(db.firestore);
     this.locations = this.geoFire.collection('locations');
   }
@@ -73,7 +67,7 @@ export class GeoService {
             observer.next(currentPos);
             observer.complete();
           },
-          (error) => {
+          () => {
             observer.next([-1, -1]);
             observer.complete();
           }
