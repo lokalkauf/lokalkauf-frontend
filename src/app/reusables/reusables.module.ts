@@ -19,7 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
 import { LkSelectComponent } from './lk-select/lk-select.component';
-import { WarningBoxComponent } from './warning-box/warning-box.component';
+import { LkWarningBoxComponent } from './lk-warning-box/lk-warning-box.component';
 import { NgxStarRatingModule } from 'ngx-star-rating';
 import { RatingStarComponent } from './rating-star/rating-star.component';
 import { LkContainerComponent } from './lk-container/lk-container.component';
@@ -38,7 +38,7 @@ const routes: Routes = [];
     LkSelectComponent,
     ImageChooserComponent,
     FullscreenModalComponent,
-    WarningBoxComponent,
+    LkWarningBoxComponent,
     RatingStarComponent,
     LkContainerComponent,
     LkChipListComponent,
@@ -67,7 +67,7 @@ const routes: Routes = [];
     LkSelectComponent,
     ImageChooserComponent,
     FullscreenModalComponent,
-    WarningBoxComponent,
+    LkWarningBoxComponent,
     RatingStarComponent,
     LkContainerComponent,
     LkChipListComponent,
