@@ -60,7 +60,6 @@ export class GeoService {
           resolve([position.coords.latitude, position.coords.longitude]);
         },
         (error) => {
-          console.log(error);
           resolve(undefined);
         }
       );
