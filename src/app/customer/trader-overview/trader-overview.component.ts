@@ -8,6 +8,7 @@ import { GeoService } from '../../services/geo.service';
 import { TraderService } from '../../services/trader.service';
 import { TraderProfile, TraderProfileStatus } from '../../models/traderProfile';
 import { SpinnerService } from '../../services/spinner.service';
+import { map, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-trader-overview',
@@ -131,6 +132,14 @@ export class TraderOverviewComponent implements OnInit {
         this.updateLocations(this.locations);
         this.spinnerService.hide();
       });
+  }
+
+  selChange(selEvent: LkSelectOptions) {
+    if (selEvent) {
+      console.log(selEvent);
+      this.storeType = selEvent.value;
+      this.updateLocations(this.locations);
+    }
   }
 
   async updateLocations(trlocaitons: Array<Location>) {

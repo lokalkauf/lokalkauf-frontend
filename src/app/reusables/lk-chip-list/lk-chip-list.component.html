@@ -2,7 +2,7 @@
   <mat-chip
     *ngFor="let item of items | async"
     [selected]="item.key === selectedKey"
-    (click)="select(item.key)"
+    (click)="select(item)"
   >
     {{ item.display }}
   </mat-chip>
