@@ -16,7 +16,7 @@
 
   <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayWith">
     <mat-option
-      *ngFor="let standort of filteredValues$ | async"
+      *ngFor="let standort of autocompleteValues$ | async"
       [value]="standort"
     >
       {{ standort.postalcode }} {{ standort.city }}

@@ -4,16 +4,25 @@ import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
 } from '@angular/forms';
-import { Observable, Subject, of, concat, from } from 'rxjs';
+import {
+  Observable,
+  Subject,
+  of,
+  concat,
+  from,
+  merge,
+  combineLatest,
+} from 'rxjs';
 import {
   map,
   tap,
   filter,
   distinctUntilChanged,
-  startWith,
   flatMap,
   switchMap,
   debounceTime,
+  startWith,
+  withLatestFrom,
 } from 'rxjs/operators';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { GeoService } from 'src/app/services/geo.service';
@@ -87,7 +96,7 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
     },
   ];
 
-  filteredValues$: Observable<GeoAddress[]>;
+  autocompleteValues$: Observable<GeoAddress[]>;
   blur$ = new Subject();
   valueChanges$: Observable<GeoAddress>;
   userGeoAddress$: Observable<GeoAddress>;
@@ -102,64 +111,39 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
     private geo: GeoService,
     private readonly textService: TextService
   ) {
-    this.myControl.disable();
-
-    this.filteredValues$ = this.myControl.valueChanges.pipe(
-      startWith(''),
-      debounceTime(500),
-      tap(() => (this.isLoading = true)),
-      switchMap((value) => {
-        if (typeof value !== 'string') {
-          return of(null);
-        }
-        if (!value || value.length < 3) {
-          return of(this.standorte);
-        } else {
-          this.isLoading = true;
-          return this.findAddresses(value);
-        }
-      }),
-      tap(() => (this.isLoading = false))
-    );
-
-    this.userGeoAddress$ = this.geo.getUserPosition().pipe(
-      filter((userPosition) => userPosition != null),
-      flatMap((userPosition) =>
-        this.geo.getPostalAndCityByLocation(userPosition)
+    this.autocompleteValues$ = concat(
+      of(''),
+      this.myControl.valueChanges.pipe(
+        debounceTime(500),
+        tap(() => (this.isLoading = true)),
+        switchMap(this.computeCurrentAutocompleteValues.bind(this)),
+        tap(() => (this.isLoading = false))
       )
     );
 
-    this.valueChanges$ = this.userGeoAddress$.pipe(
-      flatMap((a) => {
-        return concat(
-          of(a),
-          this.myControl.valueChanges.pipe(
-            map((value) => {
-              if (!value) {
-                return a;
-              }
-              if (typeof value === 'string') {
-                return null;
-              }
-              return value;
-            }),
-            distinctUntilChanged()
-          )
-        );
-      })
+    this.userGeoAddress$ = concat(
+      of(null),
+      from(this.geo.getUserPosition()).pipe(
+        flatMap((userPosition) =>
+          this.geo.getPostalAndCityByLocation(userPosition)
+        )
+      )
     );
 
-    this.placeholder$ = this.userGeoAddress$.pipe(
-      filter((userGeoAddress) => userGeoAddress != null),
-      map(
-        (userGeoAddress) =>
-          userGeoAddress.postalcode +
-          ' ' +
-          userGeoAddress.city +
-          this.textService.getText(uiTexts.umkreissuche_userlocation_gpsenabled)
-      ),
-      startWith(
-        this.textService.getText(uiTexts.umkreissuche_userlocation_text)
+    this.valueChanges$ = combineLatest([
+      concat(of(null), this.myControl.valueChanges),
+      this.userGeoAddress$,
+    ]).pipe(
+      map(this.computeCurrentGeoAdressValue.bind(this)),
+      distinctUntilChanged(),
+      tap(console.log)
+    );
+
+    this.placeholder$ = concat(
+      of(this.textService.getText(uiTexts.umkreissuche_userlocation_text)),
+      this.userGeoAddress$.pipe(
+        filter((userGeoAddress) => userGeoAddress != null),
+        map(this.geoAddressToPlaceholder.bind(this))
       )
     );
   }
@@ -179,11 +163,6 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(obj: GeoAddress): void {
-    console.log('write value...');
-    console.log(obj);
-
-    this.myControl.enable();
-
     this.myControl.setValue(obj);
   }
 
@@ -197,7 +176,7 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
     isDisabled ? this.myControl.disable() : this.myControl.enable();
   }
 
-  findAddresses(plzORcity: string): Observable<GeoAddress[]> {
+  private findAddresses(plzORcity: string): Observable<GeoAddress[]> {
     return this.geo.findCoordinatesByAddress(plzORcity).pipe(
       map((addresses) => {
         if (!(addresses && addresses.records && addresses.records.length > 0)) {
@@ -211,6 +190,42 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
           radius: 25,
         }));
       })
+    );
+  }
+
+  private computeCurrentAutocompleteValues(
+    inputValue: any
+  ): Observable<GeoAddress[]> {
+    if (typeof inputValue !== 'string') {
+      return of(null);
+    }
+    if (!inputValue || inputValue.length < 3) {
+      return of(this.standorte);
+    } else {
+      this.isLoading = true;
+      return this.findAddresses(inputValue);
+    }
+  }
+
+  private computeCurrentGeoAdressValue([inputValue, geoAddress]: [
+    any,
+    GeoAddress
+  ]): GeoAddress | null {
+    if (!inputValue) {
+      return geoAddress;
+    }
+    if (typeof inputValue === 'string') {
+      return null;
+    }
+    return inputValue;
+  }
+
+  private geoAddressToPlaceholder(geoAddress: GeoAddress) {
+    return (
+      geoAddress.postalcode +
+      ' ' +
+      geoAddress.city +
+      this.textService.getText(uiTexts.umkreissuche_userlocation_gpsenabled)
     );
   }
 }
