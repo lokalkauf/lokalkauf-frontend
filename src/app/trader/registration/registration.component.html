@@ -210,23 +210,15 @@ Dich hier vorab registrieren."
       </ng-container>
       <ng-container *ngIf="registrationState === 'edit'">
         <div class="button-container">
-          <div class="speichern">
-            <lk-button
-              [disabled]="!registrationForm.valid"
-              type="submit"
-              label="Aktualisieren"
-            ></lk-button>
+          <div class="cancel">
+            <lk-button type="button" label="Zurück" (click)="verwerfen()"></lk-button>
           </div>
-          <div class="verwerfen">
-            <lk-button
-              type="button"
-              label="Zurück"
-              (click)="verwerfen()"
-            ></lk-button>
+          <div class="save">
+            <lk-button [disabled]="!registrationForm.valid" type="submit" label="Aktualisieren"></lk-button>
           </div>
-          <span class="success" *ngIf="saveSuccessful">
-            Speichern erfolgreich
-          </span>
+        </div>
+        <div class="success" *ngIf="saveSuccessful">
+          Speichern erfolgreich
         </div>
       </ng-container>
       <div
