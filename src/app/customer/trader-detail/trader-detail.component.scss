@@ -29,10 +29,15 @@ lk-container {
   }
 
   .carousel {
-    width: calc(100% + 32px);
-    margin-left: -16px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    width: 600px;
+    margin: 20px auto;
+
+    @media screen and (max-width: 632px) {
+      width: calc(100% + 32px);
+      margin-left: -16px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
   }
 
   .symboltext {
