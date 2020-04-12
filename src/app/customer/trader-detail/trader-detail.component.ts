@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TraderProfile } from '../../models/traderProfile';
 import { Trader } from '../../models/trader';
 import { ImageService } from '../../services/image.service';
+import { Lightbox } from 'ngx-lightbox';
 
 @Component({
   selector: 'app-trader-detail',
@@ -18,11 +19,13 @@ export class TraderDetailComponent implements OnInit {
   traderImages$: Observable<string[]>;
 
   showMoreText = false;
+  private lightBoxItems = [];
 
   constructor(
     private db: AngularFirestore,
     private route: ActivatedRoute,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private lightbox: Lightbox
   ) {}
 
   ngOnInit(): void {
@@ -44,8 +47,21 @@ export class TraderDetailComponent implements OnInit {
 
     this.traderImages$ = this.route.params.pipe(
       flatMap(
-        async (params) =>
-          await this.imageService.getAllTraderImageUrls(params.id)
+        async (params) => {
+          const images = await this.imageService.getAllTraderImageUrls(
+            params.id
+          );
+
+          if (images && images.length > 0) {
+            images.forEach((i) =>
+              this.lightBoxItems.push({
+                src: i,
+              })
+            );
+          }
+          return images;
+        }
+
         // this.traderService.getTraderBusinessImageUrls(params.id)
       )
     );
@@ -74,5 +90,11 @@ export class TraderDetailComponent implements OnInit {
     } else {
       return inputText;
     }
+  }
+
+  openLightbox(index: number): void {
+    // open lightbox
+    console.log('ich war hier: ' + index);
+    this.lightbox.open(this.lightBoxItems, index);
   }
 }

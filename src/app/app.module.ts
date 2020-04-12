@@ -55,6 +55,7 @@ import { MuiService } from './services/mui.service';
 import { PipesModule } from './pipes/pipes.modules';
 import { RedirectComponent } from './redirect/redirect.component';
 import { PressComponent } from './press/press.component';
+import { LightboxModule } from 'ngx-lightbox';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -122,6 +123,7 @@ const routes: Routes = [
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: true,
     }),
+    LightboxModule,
   ],
   exports: [RouterModule],
   providers: [
