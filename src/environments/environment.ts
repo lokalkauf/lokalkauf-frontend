@@ -2,6 +2,8 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { COLLECTION_ENABLED } from '@angular/fire/analytics';
+
 export const environment = {
   production: false,
   firebase: {
@@ -11,6 +13,8 @@ export const environment = {
     projectId: 'lokalkauf-staging',
     storageBucket: 'lokalkauf-staging.appspot.com',
     // messagingSenderId: '464711391631',
+    appId: '1:464711391631:web:defbf4ea539d12b80d53fa',
+    measurementId: 'G-4MZVPHHSKR'
   },
 };
 
