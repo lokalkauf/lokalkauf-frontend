@@ -20,7 +20,7 @@ export class EMailService {
 
   constructor(private http: HttpClient) {}
 
-  send(formdata: EMail, mailType: string) {
+  send(formdata: EMail, templateVars: {}) {
     // TODO update if firebase function changes
 
     const data = {
@@ -29,11 +29,12 @@ export class EMailService {
       toEmail: formdata.toEMail,
       toName: formdata.toName,
       title: formdata.title,
-      message: formdata.message,
-      mailType,
+      templateId: formdata.tempalteId,
+      templateIdCopy: formdata.templateIdCopy,
+      teplateVars: templateVars,
     };
     try {
-      const sendMailFunction = functions().httpsCallable(`sendMail`);
+      const sendMailFunction = functions().httpsCallable(`sendGrid`);
       sendMailFunction.call('Send Mail', data);
     } catch (e) {
       console.error('Mail could not be send: ' + e);

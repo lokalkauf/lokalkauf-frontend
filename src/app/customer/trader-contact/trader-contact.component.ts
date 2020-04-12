@@ -85,13 +85,21 @@ export class TraderContactComponent implements OnInit {
       title: 'Jemand hat Dir eine Anfrage gestellt',
       toEMail: receiverEmail,
       toName: receiverName,
+      tempalteId: 'd-5a22167efb9e40558daaf9ccc39a843d',
+      templateIdCopy: 'd-168373d4387f494ea5f67c237dbe80a0',
+    };
+
+    const templateVars = {
+      trader_name: receiverName,
+      trader_message: this.mail_message.value,
+      contact_information: this.mail_contact.value,
     };
 
     console.log(email);
     // TODO finalize call for backend sending mail
 
     try {
-      await this.mailService.send(email, 'trader-contact');
+      await this.mailService.send(email, templateVars);
       this.router.navigate(['/contacted']);
     } catch (e) {
       this.errorService.publishByText(

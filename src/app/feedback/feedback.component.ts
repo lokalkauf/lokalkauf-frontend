@@ -59,9 +59,13 @@ export class FeedbackComponent {
             fromEMail: this.email.value,
             toEMail: 'info@lokalkauf.org',
             title: 'Feedbacknachricht',
-            message: this.message.value,
+            tempalteId: 'd-2156dd98911d4d7bae994c2974628ab9',
+            templateIdCopy: 'd-46206f6d5fd74e90af18c91cfe16893e',
           } as EMail,
-          'feedback'
+          {
+            feedback_mail: this.email.value,
+            feedback_message: this.message.value,
+          }
         );
         this.mailSent = true;
         this.showError = false;
