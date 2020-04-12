@@ -121,7 +121,7 @@ export class GeoService {
 
     if (response) {
       return {
-        city: response.address.city,
+        city: response.address.town,
         postalcode: response.address.postcode,
         coordinates: location,
         radius: 0,
