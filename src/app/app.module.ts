@@ -54,6 +54,8 @@ import { TextService } from './services/text.service';
 import { MuiService } from './services/mui.service';
 import { PipesModule } from './pipes/pipes.modules';
 import { RedirectComponent } from './redirect/redirect.component';
+import { AngularFireAnalyticsModule, ScreenTrackingService, CONFIG, COLLECTION_ENABLED } from '@angular/fire/analytics';
+import {NgcCookieConsentModule, NgcCookieConsentConfig} from 'ngx-cookieconsent';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -68,6 +70,36 @@ const routes: Routes = [
     children: [{ path: '**', component: RedirectComponent }],
   },
 ];
+
+const cookieConfig: NgcCookieConsentConfig = {
+  'cookie': {
+    'domain': 'tinesoft.github.io'
+  },
+  'position': 'bottom',
+  'theme': 'edgeless',
+  'palette': {
+    'popup': {
+      'background': '#000000',
+      'text': '#ffffff',
+      'link': '#ffffff'
+    },
+    'button': {
+      'background': '#55b435',
+      'text': '#000000',
+      'border': 'transparent'
+    }
+  },
+  'type': 'opt-in',
+  'content': {
+    'message': 'Erlaubst du uns Cookies zu nutzen, um lokalkauf zu verbessern?',
+    'allow': 'Ja, gerne!',
+    'deny': 'Nein, danke!',
+    'link': 'Datenschutzrichtilinie ansehen',
+    'href': 'https://www.info.lokalkauf.org/datenschutz',
+    'policy': 'Cookie Policy'
+  }
+}
+;
 
 @NgModule({
   declarations: [
@@ -119,6 +151,8 @@ const routes: Routes = [
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: true,
     }),
+    AngularFireAnalyticsModule,
+    NgcCookieConsentModule.forRoot(cookieConfig)
   ],
   exports: [RouterModule],
   providers: [
@@ -131,6 +165,13 @@ const routes: Routes = [
     StorageService,
     EMailService,
     ImageService,
+    ScreenTrackingService,
+    { provide: COLLECTION_ENABLED, useFactory: () => false },
+    { provide: CONFIG, useValue: {
+        send_page_view: true,
+        allow_ad_personalization_signals: false,
+        anonymize_ip: true}
+    }
   ],
   bootstrap: [AppComponent],
 })

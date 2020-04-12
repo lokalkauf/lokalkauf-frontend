@@ -17,6 +17,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { SearchInputComponent } from './search-input/search-input.component';
 import { GeoAddress } from '../models/geoAddress';
 import { uiTexts } from 'src/app/services/uiTexts';
+import { AngularFireAnalytics } from '@angular/fire/analytics';
 
 @Component({
   selector: 'app-start',
@@ -56,7 +57,8 @@ export class StartComponent implements OnInit {
   constructor(
     public router: Router,
     public userService: UserService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private analytics: AngularFireAnalytics
   ) {
     this.disabledLosButton = true;
     this.userService.isLoggedIn$.subscribe((loggedin) => {
@@ -90,5 +92,8 @@ export class StartComponent implements OnInit {
     ]);
 
     this.storageService.saveLocation(val);
+    this.analytics.logEvent('search', {search_postalcode: val.postalcode,
+                                       search_city: val.city,
+                                       search_radius: val.radius});
   }
 }
