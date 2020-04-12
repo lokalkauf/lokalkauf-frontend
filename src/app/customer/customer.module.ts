@@ -14,6 +14,7 @@ import { TraderMapComponent } from './trader-map/trader-map.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ShoppingcartItemComponent } from './shoppingcart-item/shoppingcart-item.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductService } from '../services/product.service';
@@ -63,6 +64,7 @@ const routes: Routes = [
     MatIconModule,
     MatInputModule,
     MatButtonModule,
+    FontAwesomeModule,
     ReusablesModule,
     PipesModule,
     MatCarouselModule.forRoot(),

@@ -10,6 +10,7 @@ import { TraderProfile, TraderProfileStatus } from '../../models/traderProfile';
 import { SpinnerService } from '../../services/spinner.service';
 import { map, filter } from 'rxjs/operators';
 import { StorageService } from 'src/app/services/storage.service';
+import { faFacebookF, faTwitter, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-trader-overview',
@@ -29,6 +30,9 @@ export class TraderOverviewComponent implements OnInit {
   storeTypePreselect: Observable<string>;
 
   hasLocations = true;
+  faFacebookF = faFacebookF;
+  faTwitter = faTwitter;
+  faWhatsapp = faWhatsapp;
 
   constructor(
     private route: ActivatedRoute,
