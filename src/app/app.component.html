@@ -109,6 +109,7 @@
       </a>
       <a mat-button [routerLink]="'/feedback'">Feedback</a>
       <a mat-button [routerLink]="'/aboutus'">Das sind wir</a>
+      <a mat-button [routerLink]="'/press'">Presse</a>
       <a mat-button [routerLink]="'/faq'">Hilfe</a>
     </div>
     <button mat-mini-fab class="avatar" [matMenuTriggerFor]="storeMenu">
@@ -161,6 +162,9 @@
       >
       <a mat-list-item (click)="sidenav.close()" [routerLink]="'/aboutus'">
         Das sind wir
+      </a>
+      <a mat-list-item (click)="sidenav.close()" [routerLink]="'/press'">
+        Presse über uns
       </a>
       <a mat-list-item (click)="sidenav.close()" [routerLink]="'/faq'">
         Hilfe</a

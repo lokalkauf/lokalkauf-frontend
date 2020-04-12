@@ -54,6 +54,7 @@ import { TextService } from './services/text.service';
 import { MuiService } from './services/mui.service';
 import { PipesModule } from './pipes/pipes.modules';
 import { RedirectComponent } from './redirect/redirect.component';
+import { PressComponent } from './press/press.component';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -62,6 +63,7 @@ const routes: Routes = [
   { path: 'verify', component: VerifyComponent },
   { path: 'aboutus', component: AboutUsComponent },
   { path: 'faq', component: FaqComponent },
+  { path: 'press', component: PressComponent },
   {
     path: 'redirect',
     component: RedirectComponent,
@@ -80,6 +82,7 @@ const routes: Routes = [
     SpinnerComponent,
     StartComponent,
     FaqComponent,
+    PressComponent,
     SearchInputComponent,
     RedirectComponent,
   ],
