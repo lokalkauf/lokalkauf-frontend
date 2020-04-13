@@ -74,10 +74,7 @@ export class TraderService {
       .update(partialTraderProfile);
 
     if (partialTraderProfile.postcode) {
-      await this.geo.createLocationByAddress(
-        traderId,
-        partialTraderProfile.postcode
-      );
+      await this.geo.createLocationByAddress(traderId, partialTraderProfile);
     }
   }
 

@@ -178,18 +178,12 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
   }
 
   private findAddresses(plzORcity: string): Observable<GeoAddress[]> {
-    return this.geo.findCoordinatesByAddress(plzORcity).pipe(
-      map((addresses) => {
-        if (!(addresses && addresses.records && addresses.records.length > 0)) {
-          return [];
-        }
-
-        return addresses.records.map((record) => ({
-          postalcode: record.fields.plz,
-          city: record.fields.note,
-          coordinates: record.fields.geo_point_2d,
-          radius: 25,
-        }));
+    return this.geo.findCoordinatesByPostalOrCity(plzORcity).pipe(
+      map((a: GeoAddress[]) => {
+        return a.map((adr) => {
+          adr.radius = 25;
+          return adr;
+        });
       })
     );
   }
