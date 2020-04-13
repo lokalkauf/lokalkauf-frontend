@@ -1,102 +1,3 @@
-<!-- <mat-sidenav-container #idenavContainer>
-  <mat-sidenav
-    #sidenav
-    position="end"
-    mode="over"
-    [(opened)]="opened"
-    (opened)="events.push('open!')"
-    (closed)="events.push('close!')"
-  >
-    <div id="sidenav-right">
-      <div id="close">
-        <mat-icon (click)="opened = false">close</mat-icon>
-      </div>
-      <div class="sidenav-right-item sitenav-right-item">&nbsp;</div>
-
-      <div
-        *ngIf="userService.isLoggedIn$ | async"
-        class="sidenav-right-item"
-        (click)="userService.logout()"
-      >
-        Ausloggen
-      </div>
-      <div class="sidenav-right-item" (click)="navigateTraders()">
-        H&auml;ndlersuche
-      </div>
-      <div
-        *ngIf="userService.isLoggedIn$ | async"
-        class="sidenav-right-item"
-        (click)="navigate('/trader/profile')"
-      >
-        Mein Händlerprofil
-      </div>
-      <div
-        *ngIf="(userService.isLoggedIn$ | async) === false"
-        class="sidenav-right-item"
-        (click)="navigate('/trader/login')"
-      >
-        Händler Login
-      </div>
-      <div class="sidenav-right-item" (click)="navigate('/aboutus')">
-        Das sind wir
-      </div>
-      <div class="sidenav-right-item separator">
-        &nbsp;
-      </div>
-      <div class="sidenav-right-item" (click)="navigate('/faq')">
-        Hilfe
-      </div>
-      <div class="sidenav-right-item">
-        <a
-          href="http://www.info.lokalkauf.org/impressum"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Impressum
-        </a>
-      </div>
-      <div class="sidenav-right-item">
-        <a
-          href="http://www.info.lokalkauf.org/agb"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          AGB
-        </a>
-      </div>
-      <div class="sidenav-right-item">
-        <a
-          href="http://www.info.lokalkauf.org/datenschutz"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Datenschutz-erklärung
-        </a>
-      </div>
-    </div>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <div
-      width="100%"
-      id="header"
-      [ngClass]="router.url === '/' ? 'start-header' : ''"
-    >
-      <div *ngIf="router.url !== '/'" id="logo" (click)="navigate('/')">
-        <img src="/assets/lokalkaufLogoApp.png" height="30" alt="" />
-      </div>
-      <div id="burger-menu">
-        <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
-      </div>
-    </div>
-    <div
-      id="main_body"
-      [ngClass]="router.url === '/' ? 'start-page' : 'app-content'"
-    >
-      <router-outlet></router-outlet>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container> -->
-
 <mat-toolbar color="default" class="fixed-header">
   <mat-toolbar-row>
     <a mat-button [routerLink]="'/'" class="logo-link">
@@ -169,6 +70,28 @@
       <a mat-list-item (click)="sidenav.close()" [routerLink]="'/faq'">
         Hilfe</a
       >
+      <mat-divider></mat-divider>
+      <a
+        mat-list-item
+        [routerLink]="'/trader/login'"
+        *ngIf="(userService.isLoggedIn$ | async) === false"
+      >
+        H&auml;ndler Login
+      </a>
+      <a
+        mat-list-item
+        *ngIf="userService.isLoggedIn$ | async"
+        [routerLink]="'/trader/profile'"
+      >
+        Mein Händlerprofil
+      </a>
+      <a
+        mat-list-item
+        *ngIf="userService.isLoggedIn$ | async"
+        (click)="userService.logout()"
+      >
+        Ausloggen
+      </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
