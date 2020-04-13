@@ -22,8 +22,13 @@
     <lk-button
       color="accent"
       [routerLink]="isLoggedIn ? ['/trader/profile'] : ['/trader/register/new']"
-      [label]="text.start_button_haender_anmelden | text"
-    ></lk-button>
+      [label]="
+        isLoggedIn
+          ? (text.start_button_haender_bearbeiten | text)
+          : (text.start_button_haender_anmelden | text)
+      "
+    >
+    </lk-button>
   </div>
 
   <div class="doubleheart">
