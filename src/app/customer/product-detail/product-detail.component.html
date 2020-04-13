@@ -1,17 +1,23 @@
 <div *ngIf="product$ | async as product" id="details">
   <mat-card>
-    <img mat-card [src]="product.image">
+    <img mat-card [src]="product.image" alt="" />
   </mat-card>
   <div>
-    <div id="product-detail-title">{{product.name}}</div>
+    <div id="product-detail-title">{{ product.name }}</div>
     <div *ngIf="product.description" id="description">
-      {{product.description}}
+      {{ product.description }}
     </div>
     <div id="product-detail-price">
-      {{product.price |  number:'1.2-2' }} &euro;
+      {{ product.price | number: '1.2-2' }} &euro;
     </div>
     <div id="product-detail-button">
-      <button mat-raised-button class="order-button" (click)="addToCart(product)">nehm ich</button>
-    </div>    
+      <button
+        mat-raised-button
+        class="order-button"
+        (click)="addToCart(product)"
+      >
+        nehm ich
+      </button>
+    </div>
   </div>
 </div>
