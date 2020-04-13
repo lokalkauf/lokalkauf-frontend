@@ -35,6 +35,7 @@ const routes: Routes = [
   { path: 'cart', component: ShoppingcartComponent },
   { path: 'localtraders/:lat/:lng/:rad', component: TraderOverviewComponent },
   { path: 'tradermap', component: TraderMapComponent },
+  { path: 'trader-detail-redirect/:id', component: TraderDetailComponent },
   { path: 'trader-detail/:id', component: TraderDetailComponent },
   { path: 'trader/:traderId/contact', component: TraderContactComponent },
   { path: 'contacted', component: InquiryConfirmationComponent },

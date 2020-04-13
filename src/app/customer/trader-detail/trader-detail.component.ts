@@ -74,6 +74,13 @@ export class TraderDetailComponent implements OnInit {
           .pipe(map((snap) => snap.size))
       )
     );
+    this.changeUrl();
+  }
+
+  changeUrl() {
+    // Change URL to /trader-detail/id. This is needed in case we were redirected
+    // form the function traderDetail
+    history.replaceState(null, '', '/trader-detail/' + this.route.snapshot.params.id);
   }
 
   getCorrectUrl(url?: string) {
