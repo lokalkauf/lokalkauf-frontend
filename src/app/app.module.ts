@@ -16,7 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, Router, Scroll } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
@@ -41,7 +41,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { VerifyComponent } from './verify/verify.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { CommonModule } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { EMailService } from './services/email.service';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SpinnerService } from './services/spinner.service';
@@ -57,6 +57,7 @@ import { PipesModule } from './pipes/pipes.modules';
 import { RedirectComponent } from './redirect/redirect.component';
 import { PressComponent } from './press/press.component';
 import { LightboxModule } from 'ngx-lightbox';
+import { filter } from 'rxjs/operators';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -114,7 +115,10 @@ const routes: Routes = [
     CustomerModule,
     TraderModule,
     TransportModule,
-    RouterModule.forRoot(routes, { anchorScrolling: 'enabled' }),
+    RouterModule.forRoot(routes, {
+      anchorScrolling: 'enabled',
+      scrollPositionRestoration: 'top',
+    }),
     ReusablesModule,
     PipesModule,
     FormsModule,
@@ -141,4 +145,23 @@ const routes: Routes = [
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(router: Router, viewportScroller: ViewportScroller) {
+    router.events
+      .pipe(filter((e: any): e is Scroll => e instanceof Scroll))
+      .subscribe((e) => {
+        if (e.position) {
+          // backward navigation
+          viewportScroller.scrollToPosition(e.position);
+        } else if (e.anchor) {
+          // anchor navigation
+          viewportScroller.scrollToAnchor(e.anchor);
+        } else {
+          // forward navigation
+          viewportScroller.scrollToPosition([0, 0]);
+          // damn it, but it works
+          document.querySelector('.mat-sidenav-content').scrollTop = 0;
+        }
+      });
+  }
+}

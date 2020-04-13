@@ -41,7 +41,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     MatFormFieldModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' }),
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,

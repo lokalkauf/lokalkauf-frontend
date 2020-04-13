@@ -21,10 +21,9 @@
     <p [innerHTML]="text.start_zusammen_text | text"></p>
     <lk-button
       color="accent"
-      [routerLink]="'/trader/profile'"
+      [routerLink]="isLoggedIn ? ['/trader/profile'] : ['/trader/register/new']"
       [label]="text.start_button_haender_anmelden | text"
-    >
-    </lk-button>
+    ></lk-button>
   </div>
 
   <div class="doubleheart">
