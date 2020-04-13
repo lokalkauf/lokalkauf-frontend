@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { StorageService } from 'src/app/services/storage.service';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-inquiry-confirmation',
@@ -17,9 +17,9 @@ export class InquiryConfirmationComponent implements OnInit {
     if (city) {
       this.router.navigate([
         '/localtraders',
-        city.lat,
-        city.lng,
-        city.rad ? city.rad : 10,
+        city.coordinates[0],
+        city.coordinates[1],
+        city.radius ? city.radius : 10,
       ]);
     } else {
       this.router.navigate(['/']);

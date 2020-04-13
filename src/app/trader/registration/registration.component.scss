@@ -1,9 +1,13 @@
-@import '../../../variables.scss';
+@import '../../../theme/variables.scss';
+
+lk-warning-box {
+  display: block;
+  margin-top: 20px;
+}
 
 .registration-head {
   text-align: center;
   margin-bottom: 2em;
-  font-size: 0.8rem;
 
   h2 {
     color: $lightergreen;
@@ -11,6 +15,11 @@
 }
 
 .registration-form {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+
   .registration-input {
     margin-bottom: 20px;
   }
@@ -51,23 +60,18 @@
   }
 
   .agb {
-    font-size: 0.7rem;
     margin-bottom: 20px;
 
     label {
       display: flex;
       align-items: center;
 
-      p {
+      div {
         display: block;
         flex: 1;
         margin-bottom: 0;
+        margin-top: 2px;
         margin-left: 5px;
-
-        a {
-          color: black;
-          text-decoration: underline;
-        }
       }
     }
   }
@@ -117,17 +121,21 @@
 
 .delete-profile {
   margin-top: 30px;
-  font-size: 0.8rem;
 }
 
 .button-container {
   width: 100%;
 }
 
-.speichern {
+.cancel {
   float: left;
 }
 
-.verwerfen {
+.save {
   float: right;
+}
+
+a {
+  color: $appblack;
+  text-decoration: underline;
 }

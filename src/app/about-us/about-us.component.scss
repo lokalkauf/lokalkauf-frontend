@@ -1,57 +1,20 @@
-#about-us-view-container {
-  height: 100%;
-  width: 100%;
-  display: table;
-}
+.about-us {
+  .about-us-image {
+    text-align: center;
 
-#about-us-box {
-  top: 4rem;
-  z-index: 0;
-  height: 50%;
-  position: absolute;
-
-  @media screen and (max-width: 767px) {
-    width: 100%;
-    left: 0;
-    right: 0;
+    img {
+      width: 100%;
+      max-width: 992px;
+    }
   }
 
-  @media screen and (min-width: 768px) {
-    width: 740px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  img {
-    width: 100%;
-  }
-
-  #about-us-content {
+  .about-us-content {
     text-align: justify;
+  }
+
+  .about-us-names {
+    text-align: center;
     font-size: 0.8rem;
-
-    @media screen and (max-width: 767px) {
-      padding: 0 30px;
-    }
-
-    #about-us-header {
-      padding: 1.4rem 0;
-      font-size: 1rem;
-      font-weight: 400;
-    }
-
-    .about-us-box {
-      max-width: 24rem;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .about-us-names {
-      width: 50%;
-      text-align: left;
-      float: left;
-      font-size: 0.7rem;
-      padding-bottom: 2rem;
-    }
+    margin-bottom: 40px;
   }
 }

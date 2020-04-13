@@ -1,211 +1,82 @@
-@import '../../variables.scss';
+@import '../../theme/variables.scss';
 
-.home-start {
-  width: calc(100%);
-  text-align: center;
-  margin-top: 10.4rem;
+.hero {
+  position: relative;
+  background-image: url('/assets/backpane-hipster.jpeg');
+  width: 100%;
+  height: 70vh;
+  background-size: cover;
+  background-position: 50% 20%;
 
-  @media screen and (min-width: 768px) {
-    width: 740px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 28.4rem;
+  .hero-search-container {
+    position: absolute;
+    bottom: 10%;
+    width: 100%;
+
+    lk-container {
+      text-align: center;
+
+      lk-button {
+        width: 266px;
+      }
+    }
   }
 }
 
-.start-logo-top {
-  position: absolute;
-  z-index: +1;
-  left: 24px;
-  width: 100%;
-  top: 16px;
+.intro {
+  text-align: center;
+  padding: 20px;
 
-  @media screen and (max-width: 767px) {
-    left: 30px;
-    width: calc(100% - 100px);
+  p {
+    margin-bottom: 40px;
   }
 
-  @media screen and (min-width: 768px) {
-    margin-left: auto;
-    margin-right: auto;
+  lk-button {
+    width: 266px;
   }
+}
+
+.doubleheart {
+  margin: 70px auto 16px auto;
+  width: 180px;
+  height: 130px;
+  position: relative;
 
   img {
-    @media screen and (max-width: 767px) {
-      width: 2rem;
+    width: 80px;
+    position: absolute;
+
+    &:first-of-type {
+      left: 0px;
     }
 
-    @media screen and (min-width: 768px) {
-      position: absolute;
-      left: calc(50% - 340px);
-      // top: 20px;
-    }
-  }
-}
-
-#backdrop-start {
-  background: no-repeat url('../../assets/backpane-hipster.png');
-  background-size: cover;
-  margin-top: -22px;
-  width: 100%;
-  height: 400px;
-  position: absolute;
-  z-index: -1;
-  top: 0;
-
-  @media screen and (max-width: 767px) {
-    left: 0;
-  }
-
-  @media screen and (min-width: 768px) {
-    width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  #backdrop-start {
-    height: 750px;
-  }
-}
-
-.home-start > img {
-  margin-bottom: 20px;
-}
-
-//.home-start > .intro-text {
-//margin-bottom: 1.4rem;
-//}
-
-.home-start > .intro-text > .intro-text-box-headline {
-  font-size: 1rem;
-  text-align: center;
-  margin-bottom: 1.4rem;
-  display: none;
-}
-
-.home-start > .intro-text {
-  font-size: 0.8rem;
-  text-align: center;
-  padding: 1rem 30px;
-  background-color: $slightesttranslucentwhite;
-  line-height: 1.1rem;
-  min-height: 240px;
-}
-
-.additional-intro-text {
-  font-size: 0.8rem;
-  text-align: center;
-  padding: 1rem 2rem;
-  background-color: $slightesttranslucentwhite;
-  line-height: 1.1rem;
-
-  .intro-text-hint {
-    margin-top: 2rem;
-    font-size: 0.75rem;
-    text-align: center;
-    color: $errorcolor;
-
-    a {
-      color: $errorcolor;
-      text-decoration: underline;
+    &:nth-of-type(2) {
+      top: 30px;
+      left: 100px;
     }
   }
 }
 
-.divider {
-  width: 7rem;
+.our-mission {
+  text-align: center;
+  padding: 35px 20px;
+}
+
+.user-voice {
+  text-align: center;
+  margin-top: 35px;
+  padding: 20px 35px 50px 35px;
+  background-color: $normalgreen;
+  color: #fff;
+
+  h2 {
+    color: #fff;
+  }
+}
+
+lk-search-input {
+  max-width: 400px;
+  display: block;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 1.5rem;
-  margin-bottom: 1.5rem;
-  border-bottom: 0.05rem solid $darkgreen;
-
-  @media screen and (min-width: 768px) {
-    width: 12rem;
-  }
-}
-
-.start-form {
-  width: 100%;
-  display: inline-grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 1fr;
-  grid-column-gap: 20px;
-  grid-row-gap: 0px;
-
-  margin-top: 30px;
-}
-
-#start-input-center {
-  text-align: center;
-}
-
-#start-input-container {
-  margin-left: 1.2rem;
-  margin-right: 1.2rem;
-  margin-top: 1rem;
-}
-
-#start-input,
-#plz-input {
-  float: left;
-}
-
-@media screen and (max-width: 368px) {
-  #start-input,
-  #plz-input {
-    width: 5rem;
-  }
-}
-
-@media screen and (min-width: 369px) {
-  #start-input,
-  #plz-input {
-    width: 8rem;
-  }
-}
-
-@media screen and (min-width: 490px) {
-  #start-input,
-  #plz-input {
-    width: 15rem;
-  }
-}
-
-.start-input-center {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
-#start-button {
-  float: right;
-}
-
-#start-error {
-  margin: 1.2rem 0;
-  float: left;
-  font-size: 0.8rem;
-  color: $errorcolor;
-}
-
-#start-long-lat {
-  float: left;
-  margin: 0.75rem 0;
-  font-size: 0.9rem;
-}
-
-input {
-  box-sizing: border-box;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 100;
-  min-width: 4rem;
-  height: 2.4rem;
-  letter-spacing: 1.5px;
-  background-color: white;
-  padding-left: 1rem;
-  border: dotted 1px $lightergreen;
-  outline: none;
 }

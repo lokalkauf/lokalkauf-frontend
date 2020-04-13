@@ -1,0 +1,42 @@
+/* You can add global styles to this file, and also import other style files */
+@import './lk-theme.scss';
+@import './variables.scss';
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Bitter, 'serif';
+  color: $normalgreen;
+  font-weight: 400;
+}
+
+h1 {
+  font-size: 1.6rem;
+}
+
+input {
+  font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.mat-card-header-text {
+  overflow: hidden;
+}

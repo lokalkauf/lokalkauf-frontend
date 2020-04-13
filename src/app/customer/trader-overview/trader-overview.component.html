@@ -1,14 +1,14 @@
-<div id="traders-view-container">
-  <div id="traders-map-row">
+<div class="traders-view-container">
+  <div class="traders-map-row">
     <app-map
-      id="tradersmap"
+      class="tradersmap"
       (locationsOnMap)="updateLocations($event)"
     ></app-map>
   </div>
 
-  <div id="traders-overview-row">
-    <div id="traders-overview-headline">Alles aus Deiner Nähe</div>
-    <div id="traders-overview-content">
+  <div class="traders-overview-row">
+    <app-lk-page-title title="Alles aus Deiner Nähe"></app-lk-page-title>
+    <div class="traders-overview-content">
       <app-trader-item
         *ngFor="let trader of traders"
         [trader]="trader"

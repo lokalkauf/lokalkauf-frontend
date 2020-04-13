@@ -1,17 +1,13 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { HttpClient, HttpUrlEncodingCodec } from '@angular/common/http';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { BehaviorSubject, Observable } from 'rxjs';
-import {
-  GeoCollectionReference,
-  GeoFirestore,
-  GeoQuery,
-  GeoQuerySnapshot,
-} from 'geofirestore';
+import { GeoCollectionReference, GeoFirestore, GeoQuery } from 'geofirestore';
 import { firestore } from 'firebase';
+import { GeoAddress } from '../models/geoAddress';
+import { TraderProfile } from '../models/traderProfile';
 
 @Injectable({
   providedIn: 'root',
@@ -22,9 +18,8 @@ export class GeoService {
   locations: GeoCollectionReference;
   hits = new BehaviorSubject([]);
   urlEncoder = new HttpUrlEncodingCodec();
-  manuelUserPosition: Array<number>;
 
-  constructor(private db: AngularFirestore, private http: HttpClient) {
+  constructor(db: AngularFirestore, private http: HttpClient) {
     this.geoFire = new GeoFirestore(db.firestore);
     this.locations = this.geoFire.collection('locations');
   }
@@ -40,13 +35,20 @@ export class GeoService {
       });
   }
 
-  async createLocationByAddress(traderId: string, address: string) {
-    const ll = await this.findCoordinatesByAddress(address)
-      .pipe(map((r) => r.records.map((m) => m.fields)))
-      .toPromise();
+  async createLocationByAddress(
+    traderId: string,
+    trader: Partial<TraderProfile>
+  ) {
+    const searchAddress = trader.postcode; // + ' ' + trader.city;
+    const addresses = await this.findCoordinatesByPostalOrCity(
+      searchAddress.trim()
+    ).toPromise();
+    // this.findCoordinatesByFullAddress(searchAddress);
+    // .pipe(map((r) => r.records.map((m) => m.fields)))
+    // .toPromise();
 
-    if (ll && ll.length > 0) {
-      return this.createLocation(traderId, ll[0].geo_point_2d);
+    if (addresses && addresses.length > 0) {
+      return this.createLocation(traderId, addresses[0].coordinates);
     }
   }
 
@@ -59,47 +61,43 @@ export class GeoService {
     return query.get();
   }
 
-  getUserPosition(): Observable<any> {
-    return new Observable((observer) => {
-      let currentPos = this.manuelUserPosition;
-
-      if (currentPos && currentPos[0] === 0 && currentPos[1] === 0) {
-        currentPos = null;
-      }
-
-      if (!currentPos && navigator && navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            currentPos = [position.coords.latitude, position.coords.longitude];
-            observer.next(currentPos);
-            observer.complete();
-          },
-          (error) => {
-            observer.next(currentPos);
-            observer.complete();
-          }
-        );
-      } else {
-        observer.next(currentPos);
-        observer.complete();
-      }
+  getUserPosition(): Promise<Array<number | undefined>> {
+    return new Promise((resolve) => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          resolve([position.coords.latitude, position.coords.longitude]);
+        },
+        (error) => {
+          resolve(undefined);
+        }
+      );
     });
   }
 
-  getManuellPosition() {
-    return this.manuelUserPosition;
-  }
+  findCoordinatesByPostalOrCity(
+    searchString: string
+  ): Observable<GeoAddress[]> {
+    return this.http
+      .get(
+        'https://public.opendatasoft.com/api/records/1.0/search/?dataset=postleitzahlen-deutschland&q=' +
+          encodeURIComponent(searchString) +
+          '&facet=note&facet=plz'
+      )
+      .pipe(
+        map((addresses: any) => {
+          if (
+            !(addresses && addresses.records && addresses.records.length > 0)
+          ) {
+            return [];
+          }
 
-  setUserPosition(pos: Array<number>) {
-    this.manuelUserPosition = pos;
-  }
-
-  findCoordinatesByAddress(searchString: string): Observable<any> {
-    return this.http.get(
-      'https://public.opendatasoft.com/api/records/1.0/search/?dataset=postleitzahlen-deutschland&q=' +
-        encodeURIComponent(searchString) +
-        '&facet=note&facet=plz'
-    );
+          return addresses.records.map((record) => ({
+            postalcode: record.fields.plz,
+            city: record.fields.note,
+            coordinates: record.fields.geo_point_2d,
+          }));
+        })
+      );
 
     // "records":[
     //   {
@@ -130,13 +128,85 @@ export class GeoService {
     //   }]
   }
 
-  getPostalAndCityByLocation(location: Array<number>) {
+  // nominatim service, be careful, 1 request per second is the limit
+  async findCoordinatesByFullAddress(address: string): Promise<GeoAddress> {
+    if (!address) {
+      return null;
+    }
+
+    const response: any = await this.http
+      .get('https://nominatim.openstreetmap.org/', {
+        params: {
+          addressdetails: '1',
+          format: 'json',
+          limit: '1',
+          q: encodeURIComponent(address.trim()),
+        },
+      })
+      .toPromise();
+
+    if (response && response.length > 0) {
+      const res = response[0];
+      return {
+        city: res.address.town ? res.address.town : res.address.city,
+        postalcode: res.address.postcode,
+        coordinates: [Number(res.lat), Number(res.lon)],
+        radius: 0,
+      };
+    }
+
+    return null;
+  }
+
+  async getPostalAndCityByLocation(
+    location: Array<number>
+  ): Promise<GeoAddress> {
+    if (location[0] === location[1] && location[0] === -1) {
+      return null;
+    }
+
     const loc = encodeURIComponent(location[0] + ',' + location[1]);
     const url =
       'https://api.opencagedata.com/geocode/v1/json?key=8cf06bcf900d48fdb16f767a6a0e5cd8&q=' +
       loc +
       '&pretty=1&no_annotations=1';
 
-    return this.http.get(url);
+    const response: any = await this.http.get(url).toPromise();
+
+    if (response) {
+      return {
+        city: response.results[0].components.town
+          ? response.results[0].components.town
+          : response.results[0].components.city
+          ? response.results[0].components.city
+          : response.results[0].components.village,
+        postalcode: response.results[0].components.postcode,
+        coordinates: location,
+        radius: 0,
+      };
+    }
+
+    // const response: any = await this.http
+    //   .get('https://nominatim.openstreetmap.org/reverse', {
+    //     params: {
+    //       lat: location[0].toString(),
+    //       lon: location[1].toString(),
+    //       format: 'json',
+    //     },
+    //   })
+    //   .toPromise();
+
+    // if (response) {
+    //   return {
+    //     city: response.address.town
+    //       ? response.address.town
+    //       : response.address.city,
+    //     postalcode: response.address.postcode,
+    //     coordinates: location,
+    //     radius: 0,
+    //   };
+    // }
+
+    return null;
   }
 }

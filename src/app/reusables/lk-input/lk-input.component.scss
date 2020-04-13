@@ -1,33 +1,35 @@
-@import '../../../variables.scss';
-
-input {
-  box-sizing: border-box;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 100;
-  min-width: 4rem;
-  height: 2.4rem;
-  letter-spacing: 1.5px;
-  background-color: white;
-  padding-left: 1rem;
-  border: dotted 1px $lightergreen;
+mat-form-field {
   width: 100%;
-  outline: none;
-
-  &.warn {
-    border: dotted 1px red;
-  }
 }
 
-input:focus {
-  background-color: #eee !important;
-}
+// input {
+//   box-sizing: border-box;
+//   border-radius: 20px;
+//   font-size: 0.8rem;
+//   font-weight: 100;
+//   min-width: 4rem;
+//   height: 2.4rem;
+//   letter-spacing: 1.5px;
+//   background-color: white;
+//   padding-left: 1rem;
+//   border: dotted 1px $lightergreen;
+//   width: 100%;
+//   outline: none;
 
-input[type='number'] {
-  -moz-appearance: textfield;
-}
+//   &.warn {
+//     border: dotted 1px red;
+//   }
+// }
 
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+// input:focus {
+//   background-color: #eee !important;
+// }
+
+// input[type='number'] {
+//   -moz-appearance: textfield;
+// }
+
+// input::-webkit-inner-spin-button {
+//   -webkit-appearance: none;
+//   margin: 0;
+// }

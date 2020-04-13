@@ -1,182 +1,83 @@
-@import '../variables.scss';
+@import '../theme/variables.scss';
 
-#header {
-  height: 50px;
-  margin-bottom: 30px;
-  padding-top: 20px;
-
-  div {
-    height: 50px;
-    display: inline-block;
-  }
-
-  #logo {
-    img {
-      width: auto;
-      height: 50px;
-      cursor: pointer;
-    }
-
-    display: block;
-    width: 33px;
-    float: left;
-    margin-right: 10px;
-    padding-left: 20px;
-  }
-
-  color: $lightestgreen;
-  font-family: Helvetica, Arial, sans-serif;
-
-  #name {
-    line-height: 60px;
-    font-size: 20pt;
-    letter-spacing: 3px;
-    display: inline-block;
-  }
-
-  #shopping-cart,
-  #burger-menu {
-    float: right;
-    width: 30px;
-    display: block;
-    margin-right: 20px;
-
-    .mat-icon {
-      line-height: 60px;
-      width: 30px;
-      height: 30px;
-      font-size: 30px;
-      font-weight: 100;
-      color: $lightestgrey;
-    }
-  }
-
-  #burger-menu {
-    cursor: pointer;
-    position: absolute;
-    left: calc(100% - 50px) !important;
-    z-index: 2;
-    top: 10px;
-  }
+.menu-spacer {
+  flex: 1 1 auto;
 }
 
-.mat-drawer-container {
+mat-toolbar {
+  background-color: #fff;
+  box-shadow: 2px 5px 15px 0px rgba(0, 0, 0, 0.1);
+}
+
+mat-toolbar-row {
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+mat-sidenav-container {
   height: 100%;
 }
 
-#sidenav-right,
-.sidenav-right-item,
-.sitenav-right-item-menu {
-  overflow: visible !important;
+mat-sidenav-content {
+  display: flex;
+  flex-direction: column;
 }
 
-.mat-drawer-inner-container,
-.mat-drawer-opened,
-.mat-drawer-opened > .mat-drawer-inner-container {
-  overflow: visible !important;
-  overflow-x: visible !important;
+mat-sidenav {
+  mat-nav-list {
+    margin-top: 60px;
+  }
+
+  .mat-list-item .mat-list-item-content {
+    justify-content: flex-end;
+  }
 }
 
-.sidenav-right-item.separator {
-  border-bottom: 0.05rem solid #52910f;
-  width: 80%;
+button.mat-mini-fab.avatar {
+  box-shadow: none;
+  background-color: #eee;
+  color: #888;
 }
 
-#sidenav-right {
-  width: 200px;
-  background-color: white;
-  height: 100%;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  overflow: visible !important;
+.logo-link {
+  padding: 0;
 
-  font-size: 0.9rem;
+  img {
+    height: 40px;
+  }
+}
 
-  -webkit-box-shadow: -8px 3px 20px 0px rgba(0, 0, 0, 0.16);
-  -moz-box-shadow: -8px 3px 20px 0px rgba(0, 0, 0, 0.16);
-  box-shadow: -8px 3px 20px 0px rgba(0, 0, 0, 0.16);
+.close-btn {
+  margin: 10px;
+  float: right;
+  background-color: none;
+}
 
-  #close {
-    position: relative;
-    top: 30px;
-    right: 0.8rem;
-    float: right;
-    width: 30px;
-    height: 30px;
+.main-content {
+  flex-grow: 1;
+  width: 100%;
+}
 
-    .mat-icon {
-      width: 30px;
-      height: 30px;
-      font-size: 30px;
-      color: $lightestgrey;
+.footer {
+  text-align: center;
+  width: 100%;
+  background-color: #f4f4f4;
+
+  .mat-list-item {
+    display: inline-block;
+    margin: 20px 10px;
+
+    @media screen and (min-width: 768px) {
+      margin: 20px;
     }
-  }
-}
 
-.sidenav-right-item,
-.sitenav-right-item-menu {
-  cursor: pointer;
-  padding-top: 0.3rem;
-  margin-left: 1rem;
-  cursor: pointer;
-
-  @media screen and (max-width: 768px) {
-    margin-bottom: 1.2rem;
-  }
-
-  a {
+    font-size: 0.7rem;
+    color: #666;
     text-decoration: none;
-    color: $appblack;
   }
-}
 
-.sitenav-right-item:hover {
-  color: $lightestgreen !important;
-}
-
-.sitenav-right-item-menu {
-  padding-top: 1.6rem;
-  margin-right: 1rem;
-}
-
-#main_body {
-  margin: 0 1.2rem;
-
-  @media screen and (min-width: 768px) {
-    height: calc(100% - 80px);
-  }
-}
-
-.start-page {
-  margin: 0 !important;
-}
-
-.start-header {
-  margin-bottom: 0 !important;
-
-  #burger-menu {
-    .mat-icon {
-      margin-top: 16px !important;
-      line-height: 30px !important;
-      color: $lightergreen !important;
-      background-color: $white-transparent-60;
-    }
-  }
-}
-
-.mat-drawer {
-  color: black;
-}
-
-.mat-drawer-container {
-  background-color: white;
-}
-
-.app-content {
-  @media screen and (min-width: 768px) {
-    width: 740px;
-    margin-left: auto !important;
-    margin-right: auto !important;
+  .mat-list-item:hover {
+    color: #00b900;
   }
 }

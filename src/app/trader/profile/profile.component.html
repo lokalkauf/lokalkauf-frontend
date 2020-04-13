@@ -1,7 +1,15 @@
-<div *ngIf="loggedInUserState$ | async as loggedInUserState">
+<div
+  class="profile-wrapper"
+  *ngIf="loggedInUserState$ | async as loggedInUserState"
+>
   <app-lk-page-title
     [title]="loggedInUserState.traderProfile.businessname"
   ></app-lk-page-title>
+  <!-- <mat-tab-group>
+    <mat-tab label="First"> Content 1 </mat-tab>
+    <mat-tab label="Second"> Content 2 </mat-tab>
+    <mat-tab label="Third"> Content 3 </mat-tab>
+  </mat-tab-group> -->
   <div *ngIf="!loggedInUserState.emailVerified" class="verify-mail-alert">
     Bitte bestätige deine Email-Adresse:
     {{ loggedInUserState.traderProfile.email }}<br />
@@ -34,47 +42,64 @@
       Bitte wähle mindestens eine Option aus.
     </div>
     <div>
-      Schritt 2: Wähle maximal zwei Kategorien aus die für Geschäft zutreffen:
+      Schritt 2: Wähle maximal zwei Kategorien aus die für Dein Geschäft
+      zutreffen:
     </div>
-    <div class="dense" [formGroup]="storeFormGroup">
-      <label>
-        <app-lk-checkbox formControlName="gastronomie"> </app-lk-checkbox>
-        Gastronomie </label
-      ><br />
-      <label>
-        <app-lk-checkbox formControlName="lebensmittel"></app-lk-checkbox>
-        Lebensmittel </label
-      ><br />
-      <label>
-        <app-lk-checkbox formControlName="fashion"></app-lk-checkbox>
-        Fashion </label
-      ><br />
-      <label>
-        <app-lk-checkbox formControlName="buchhandlung"> </app-lk-checkbox>
-        Buchhandlung </label
-      ><br />
-      <label>
-        <app-lk-checkbox formControlName="homedecor"> </app-lk-checkbox>
-        Home&Decor </label
-      ><br />
-      <label>
-        <app-lk-checkbox formControlName="blumengarten"></app-lk-checkbox>
-        Blumen&Garten </label
-      ><br />
-      <label>
-        <app-lk-checkbox formControlName="handwerk"></app-lk-checkbox>
-        Handwerk </label
-      ><br />
-      <label>
-        <app-lk-checkbox formControlName="sonstiges"> </app-lk-checkbox>
-        Sonstige </label
-      ><br />
-      <div
-        class="warning"
-        *ngIf="storeFormGroup.errors && storeFormGroup.errors.storeCountError"
-      >
-        Bitte wähle mindestens eine und maximal zwei Optionen aus.
+    <ng-container [formGroup]="storeFormGroup">
+      <div class="dense">
+        <label>
+          <app-lk-checkbox formControlName="gastronomie"> </app-lk-checkbox>
+          Gastronomie
+        </label>
       </div>
+      <div class="dense">
+        <label>
+          <app-lk-checkbox formControlName="lebensmittel"></app-lk-checkbox>
+          Lebensmittel
+        </label>
+      </div>
+      <div class="dense">
+        <label>
+          <app-lk-checkbox formControlName="fashion"></app-lk-checkbox>
+          Fashion
+        </label>
+      </div>
+      <div class="dense">
+        <label>
+          <app-lk-checkbox formControlName="buchhandlung"> </app-lk-checkbox>
+          Buchhandlung
+        </label>
+      </div>
+      <div class="dense">
+        <label>
+          <app-lk-checkbox formControlName="homedecor"> </app-lk-checkbox>
+          Home & Decor
+        </label>
+      </div>
+      <div class="dense">
+        <label>
+          <app-lk-checkbox formControlName="blumengarten"></app-lk-checkbox>
+          Blumen & Garten
+        </label>
+      </div>
+      <div class="dense">
+        <label>
+          <app-lk-checkbox formControlName="handwerk"></app-lk-checkbox>
+          Handwerk
+        </label>
+      </div>
+      <div class="dense">
+        <label>
+          <app-lk-checkbox formControlName="sonstiges"> </app-lk-checkbox>
+          Sonstige
+        </label>
+      </div>
+    </ng-container>
+    <div
+      class="warning"
+      *ngIf="storeFormGroup.errors && storeFormGroup.errors.storeCountError"
+    >
+      Bitte wähle mindestens eine und maximal zwei Optionen aus.
     </div>
 
     <div>
@@ -82,29 +107,27 @@
       Öffnungs-, Liefer- und Abholzeiten und was Du anbietest:
     </div>
     <div>
-      <app-lk-textarea
+      <lk-textarea
         placeholder="Beschreibungstext"
         formControlName="description"
-      ></app-lk-textarea>
+      ></lk-textarea>
     </div>
     <div>
-      Schritt 4: Hat dein Geschäft eine eigene E-Mail Adresse?
+      Schritt 4: Hat Dein Geschäft eine eigene E-Mail Adresse?
     </div>
     <div>
-      <app-lk-input
-        placeholder="E-Mail"
-        formControlName="storeEmail"
-      ></app-lk-input>
+      <lk-input placeholder="E-Mail" formControlName="storeEmail"></lk-input>
     </div>
     <div>
-      Schritt 5: Hast du eventuell eine Homepage? Dann trage es doch hier ein:
+      Schritt 5: Hast Du vielleicht eine eigene Website? Dann trage sie doch
+      hier ein:
     </div>
     <div>
-      <app-lk-input
+      <lk-input
         placeholder="Homepage"
         formControlName="homepage"
         pattern="https?://.+"
-      ></app-lk-input>
+      ></lk-input>
     </div>
     <div class="warning" *ngIf="homepage.invalid">
       Deine Homepage muss mit http:// oder https:// beginnen, damit sie
@@ -114,18 +137,18 @@
       <div>
         Schritt 6: Zu guter Letzt lade Bilder von Deinem Laden oder Deinem
         Angebot hoch (Du kannst maximal 3 Bilder hochladen und mit Klick auf das
-        Bildzeichen rechts das Bild markieren, dass du als Startbild setzen
+        Bildzeichen rechts das Bild markieren, dass Du als Startbild setzen
         möchtest):
       </div>
       <div *ngIf="images.length < 3">
         <app-image-chooser [formControl]="businessImage"></app-image-chooser>
-        <app-lk-button
+        <lk-button
           type="button"
           label="Bild hochladen"
           [disabled]="businessImage.value == null"
           (click)="uploadImage()"
         >
-        </app-lk-button
+        </lk-button
         ><span class="move-right" *ngIf="this.imageUploadState | async">
           Übertragung:
           {{ this.imageUploadState | async | number: '1.2-2' }}
@@ -133,7 +156,7 @@
         >
       </div>
       <div *ngIf="images.length > 0">
-        Folgende Bilder wurden deinem Profil zugeordnet:
+        Folgende Bilder wurden Deinem Profil zugeordnet:
       </div>
       <div class="image-list">
         <div
@@ -163,6 +186,7 @@
               (click)="setDefaultImage(image)"
               mat-mini-fab
               class="md-mini"
+              color="default"
               [ngClass]="
                 image.path === loggedInUserState.traderProfile.defaultImagePath
                   ? 'icn-success'
@@ -198,14 +222,14 @@
       <div class="success" *ngIf="saveSuccessful">
         Speichern erfolgreich
       </div>
-      <app-lk-button
+      <lk-button
         [disabled]="
           dataFormGroup.errors != null || storeFormGroup.errors != null
         "
         label="Profil speichern"
         (click)="updateProfile()"
       >
-      </app-lk-button>
+      </lk-button>
 
       <div>
         Meine Adressdaten

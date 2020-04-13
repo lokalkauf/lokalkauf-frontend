@@ -10,7 +10,11 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "rewrites": [
+      "rewrites": [
+      {
+	"source": "/trader-detail/**",
+        "function": "traderDetail"
+      },
       {
         "source": "**",
         "destination": "/index.html"
@@ -24,6 +28,7 @@
     "predeploy": [
       "npm --prefix \"$RESOURCE_DIR\" run lint",
       "npm --prefix \"$RESOURCE_DIR\" run build"
-    ]
+    ],
+    "source": "functions"
   }
 }

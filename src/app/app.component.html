@@ -1,107 +1,125 @@
-<mat-sidenav-container #idenavContainer>
-  <mat-sidenav
-    #sidenav
-    position="end"
-    mode="over"
-    [(opened)]="opened"
-    (opened)="events.push('open!')"
-    (closed)="events.push('close!')"
-  >
-    <div id="sidenav-right">
-      <div id="close">
-        <mat-icon (click)="opened = false">close</mat-icon>
-      </div>
-      <div class="sidenav-right-item sitenav-right-item">&nbsp;</div>
-      <!-- <div class="sidenav-right-item" (click)="navigate('/')">Startseite</div> -->
-      <div
+<mat-toolbar color="default" class="fixed-header">
+  <mat-toolbar-row>
+    <a mat-button [routerLink]="'/'" class="logo-link">
+      <img src="assets/lokalkauf-logo.svg" alt="lokalkauf" />
+    </a>
+    <span class="menu-spacer"></span>
+    <div fxHide.lt-sm>
+      <a mat-button (click)="navigateTraders()" routerLinkActive="active"
+        >H&auml;ndlersuche
+      </a>
+      <a mat-button [routerLink]="'/feedback'">Feedback</a>
+      <a mat-button [routerLink]="'/aboutus'">Das sind wir</a>
+      <a mat-button [routerLink]="'/press'">Presse</a>
+      <a mat-button [routerLink]="'/faq'">Hilfe</a>
+    </div>
+    <button mat-mini-fab class="avatar" [matMenuTriggerFor]="storeMenu">
+      <mat-icon>store</mat-icon>
+    </button>
+    <mat-menu #storeMenu="matMenu" class="mat-elevation-z0">
+      <button
+        mat-menu-item
+        [routerLink]="'/trader/login'"
+        *ngIf="(userService.isLoggedIn$ | async) === false"
+      >
+        H&auml;ndler Login
+      </button>
+      <button
+        mat-menu-item
         *ngIf="userService.isLoggedIn$ | async"
-        class="sidenav-right-item"
+        [routerLink]="'/trader/profile'"
+      >
+        Mein Händlerprofil
+      </button>
+      <button
+        mat-menu-item
+        *ngIf="userService.isLoggedIn$ | async"
         (click)="userService.logout()"
       >
         Ausloggen
-      </div>
-      <div class="sidenav-right-item" (click)="navigateTraders()">
-        H&auml;ndlersuche
-      </div>
-      <div
+      </button>
+    </mat-menu>
+    <button mat-icon-button (click)="sidenav.toggle()" fxHide.gt-xs>
+      <mat-icon>menu</mat-icon>
+    </button>
+  </mat-toolbar-row>
+
+  <!-- <mat-toolbar-row>
+      <span style="font-size: 12px;">SimpleCRM helps you easily manage your contacts</span>
+  </mat-toolbar-row> -->
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav position="end" mode="site" fixedInViewport>
+    <button mat-icon-button class="close-btn" (click)="sidenav.toggle()">
+      <mat-icon>close</mat-icon>
+    </button>
+    <mat-nav-list (click)="sidenav.close()">
+      <a mat-list-item (click)="navigateTraders()" routerLinkActive="active"
+        >H&auml;ndlersuche
+      </a>
+      <a mat-list-item (click)="sidenav.close()" [routerLink]="'/feedback'"
+        >Feedback</a
+      >
+      <a mat-list-item (click)="sidenav.close()" [routerLink]="'/aboutus'">
+        Das sind wir
+      </a>
+      <a mat-list-item (click)="sidenav.close()" [routerLink]="'/press'">
+        Presse über uns
+      </a>
+      <a mat-list-item (click)="sidenav.close()" [routerLink]="'/faq'">
+        Hilfe
+      </a>
+      <mat-divider></mat-divider>
+      <a
+        mat-list-item
+        [routerLink]="'/trader/login'"
+        *ngIf="(userService.isLoggedIn$ | async) === false"
+      >
+        H&auml;ndler Login
+      </a>
+      <a
+        mat-list-item
         *ngIf="userService.isLoggedIn$ | async"
-        class="sidenav-right-item"
-        (click)="navigate('/trader/profile')"
+        [routerLink]="'/trader/profile'"
       >
         Mein Händlerprofil
-      </div>
-      <div
-        *ngIf="(userService.isLoggedIn$ | async) === false"
-        class="sidenav-right-item"
-        (click)="navigate('/trader/login')"
+      </a>
+      <a
+        mat-list-item
+        *ngIf="userService.isLoggedIn$ | async"
+        (click)="userService.logout()"
       >
-        Händler Login
-      </div>
-      <!--<div class="sidenav-right-item" (click)="navigate('/transport')">Lieferant</div>
-      <div class="sidenav-right-item">Profil</div>
-      <div class="sidenav-right-item" (click)="navigate('/register')">Registrieren</div>
-      <div class="sidenav-right-item" (click)="navigate('/login')">Anmelden</div>-->
-      <div class="sidenav-right-item" (click)="navigate('/aboutus')">
-        Das sind wir
-      </div>
-      <div class="sidenav-right-item separator">
-        &nbsp;
-      </div>
-      <div class="sidenav-right-item" (click)="navigate('/faq')">
-        Hilfe
-      </div>
-      <div class="sidenav-right-item">
-        <a
-          href="http://www.info.lokalkauf.org/impressum"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Impressum
-        </a>
-      </div>
-      <div class="sidenav-right-item">
-        <a
-          href="http://www.info.lokalkauf.org/agb"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          AGB
-        </a>
-      </div>
-      <div class="sidenav-right-item">
-        <a
-          href="http://www.info.lokalkauf.org/datenschutz"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Datenschutz-erklärung
-        </a>
-      </div>
-    </div>
+        Ausloggen
+      </a>
+    </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <div
-      width="100%"
-      id="header"
-      [ngClass]="router.url === '/' ? 'start-header' : ''"
-    >
-      <div *ngIf="router.url !== '/'" id="logo" (click)="navigate('/')">
-        <img src="/assets/lokalkaufLogoApp.png" height="30" />
-      </div>
-      <div id="burger-menu">
-        <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
-      </div>
-      <!--<div *ngIf="router.url !== '/'" id="shopping-cart" (click)="navigate('/cart')">
-        <mat-icon>shopping_cart</mat-icon>
-      </div>-->
-    </div>
-    <div
-      id="main_body"
-      [ngClass]="router.url === '/' ? 'start-page' : 'app-content'"
-    >
+    <div class="main-content">
       <router-outlet></router-outlet>
+    </div>
+    <div class="footer">
+      <a
+        mat-list-item
+        href="http://www.info.lokalkauf.org/impressum"
+        target="_blank"
+      >
+        Impressum
+      </a>
+      <a mat-list-item href="http://www.info.lokalkauf.org/agb" target="_blank">
+        AGB
+      </a>
+      <a
+        mat-list-item
+        href="http://www.info.lokalkauf.org/datenschutz"
+        target="_blank"
+      >
+        Datenschutzerklärung
+      </a>
+      <a mat-list-item [routerLink]="'/feedback'">Feedback</a>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
 <app-spinner></app-spinner>
 <app-error-display></app-error-display>

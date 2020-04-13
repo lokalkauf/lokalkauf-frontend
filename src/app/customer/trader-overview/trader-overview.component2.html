@@ -1,39 +1,98 @@
-<div id="traders-view-container">
-  <!-- <div id="traders-map-row">
+<lk-container>
+  <!-- <div class="traders-map-row">
     <app-map
-      id="tradersmap"
+      class="tradersmap"
       (locationsOnMap)="updateLocations($event)"
     ></app-map>
   </div> -->
-  <div class="alert-warning" style="height: unset;">
-    Unsere Plattform befindet sich in der Testphase. Diese Testphase beschränkt
-    sich aktuell auf die Händler in ausgewählten Städten!
-  </div>
-  <div id="traders-overview-row">
-    <div id="traders-overview-headline">Alles aus Deiner Nähe</div>
-    <div class="traders-input-center">
-      <app-lk-select
+  <lk-warning-box
+    collapseTime="10000"
+    content="Unsere Plattform befindet sich in der Testphase. Diese Testphase beschränkt
+  sich aktuell auf die Geschäfte in ausgewählten Städten!"
+  >
+  </lk-warning-box>
+  <div class="traders-overview-row" *ngIf="hasLocations">
+    <app-lk-page-title title="Alles aus Deiner Nähe"></app-lk-page-title>
+    <!-- <div class="traders-input-center">
+      <lk-select
         #storeTypeList
-        id="store-types"
+        class="store-types"
         name="storeType"
         [options]="storeTypes"
         [placeholder]="storeTypePreselect"
       >
-      </app-lk-select>
+      </lk-select>
     </div>
     <div class="traders-input-center">
-      <app-lk-button
-        id="shop-types-button"
+      <lk-button
+        class="shop-types-button"
         (click)="reducedAction(storeTypeList)"
         label="Jetzt filtern!"
       >
-      </app-lk-button>
-    </div>
-    <div id="traders-overview-content">
+      </lk-button>
+    </div> -->
+
+    <lk-chip-list
+      [items]="storeTypes"
+      [selectedKey]="selectedTrader ? selectedTrader.key : '1'"
+      (lkChipListChange)="selChange($event)"
+    >
+    </lk-chip-list>
+
+    <div class="traders-overview-content">
       <app-trader-item
         *ngFor="let trader of traders"
         [trader]="trader"
       ></app-trader-item>
     </div>
   </div>
-</div>
+  <div class="no-result-message" *ngIf="!hasLocations">
+    Leider wurden in Deinem Umkreis keine Händler gefunden. Unsere Plattform
+    befindet sich aktuell im Aufbau, so dass wir noch nicht in allen Regionen
+    Deutschlands vertreten sind.
+    <br />
+    <br />Möchtest Du schnell und einfach helfen? Dann mache Deine Freunde,
+    Lieblingshändler und Lieblingsgastronomen auf lokalkauf aufmerksam und teile
+    unseren Link:
+    <br />
+    <br />
+    <div class="social-button-row">
+      <a
+        mat-fab
+        color="share-facebook"
+        href="https://www.facebook.com/sharer/sharer.php?u=https%3A//www.lokalkauf.org"
+        target="_blank"
+      >
+        <fa-icon
+          [icon]="faFacebookF"
+          size="lg"
+          [styles]="{'color': 'white'}"
+        ></fa-icon>
+      </a>
+      <a
+        mat-fab
+        color="share-twitter"
+        href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.lokalkauf.org&text=Bitte%20teilt%20lokalkauf%20an%20unsere%20Lieblingsh%C3%A4ndler%2C%20damit%20die%20ersten%20L%C3%A4den%20auch%20aus%20unserer%20Gegend%20gelistet%20werden!&hashtags=lokalkauf%20%23helfen%20%23einzelhandel%20%23wirvsvirushack&via=lokalkauf"
+        target="_blank"
+      >
+        <fa-icon
+          [icon]="faTwitter"
+          size="lg"
+          [styles]="{'color': 'white'}"
+        ></fa-icon>
+      </a>
+      <a
+        mat-fab
+        color="share-whatsapp"
+        href="https://api.whatsapp.com/send?phone=&text=Bitte%20teilt%20lokalkauf%20an%20unsere%20Lieblingsh%c3%a4ndler%2c%20damit%20die%20ersten%20L%c3%a4den%20auch%20aus%20unserer%20Gegend%20gelistet%20werden%21%20%23lokalkauf%20%23helfen%20%23einzelhandel%20%23wirvsvirushack%0d%0ahttps%3a%2f%2fwww.lokalkauf.org&source=&data=&app_absent="
+        target="_blank"
+      >
+        <fa-icon
+          [icon]="faWhatsapp"
+          size="lg"
+          [styles]="{'color': 'white'}"
+        ></fa-icon>
+      </a>
+    </div>
+  </div>
+</lk-container>

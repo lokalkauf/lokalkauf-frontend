@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
-import { ErrorService } from 'src/app/services/error.service';
+import { UserService } from '../services/user.service';
+import { ErrorService } from '../services/error.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MustMatch } from './must-match.validator';
 import { DOCUMENT } from '@angular/common';

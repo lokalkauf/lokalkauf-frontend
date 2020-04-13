@@ -1,28 +1,34 @@
-<div id="about-us-view-container">
-  <div id="about-us-box">
-    <img src="../../assets/about-us.jpg" />
-    <div id="about-us-content">
-      <div id="about-us-header">Das sind wir</div>
+<lk-container class="about-us">
+  <app-lk-page-title title="Das sind wir"></app-lk-page-title>
+
+  <div class="about-us-image">
+    <img src="../../assets/about-us.jpg" alt="Unser Team" />
+  </div>
+
+  <div class="about-us-content">
+    <p>
       Wir sind eine Gruppe von Developern, Wirtschaftsingenieuren, Projekt- und
       Innovationmanagern, die sich beim Hackathon der Bundesregierung
       #WirVsVirusHack gesucht und gefunden hat.
-      <br />
-      <br />Unsere Vision: Wir wollen eine gemeinnützige Plattform schaffen, die
-      den lokalen Einzelhandel durch die Coronakrise trägt.
-
-      <br />
-      <br />Händler sollen die Möglichkeit haben, ihre Produkte mit einfachen
-      Mitteln online zu präsentieren und zu verkaufen, ohne einen eigenen
-      Onlineshop kreieren zu müssen. <br />Gleichzeitig möchten wir mit
-      Menschen, die durch die Krise ihren Job verloren haben, sich Geld dazu
-      verdienen möchten oder auch einfach mit freiwilligen Helferlein ein
-      Lieferantennetzwerk aufbauen, durch das Produkte direkt zu jedem nachhause
-      kommen können. Um so schnell es geht Abhilfe zu schaffen, haben wir uns
-      dazu entschlossen nicht zu warten, sondern mit einer Basisversion zu
-      starten bis wir unsere komplette Idee online bringen können.
-      <br />
-      <br />Wir möchten Geschäfte so schnell wie möglich wieder mit Ihren Kunden
-      zusammenbringen zu können. Auf unserer Plattform findet Ihr alle Betriebe
+    </p>
+    <p>
+      Unsere Vision: Wir wollen eine gemeinnützige Plattform schaffen, die den
+      lokalen Einzelhandel durch die Coronakrise trägt.
+    </p>
+    <p>
+      Händler sollen die Möglichkeit haben, ihre Produkte mit einfachen Mitteln
+      online zu präsentieren und zu verkaufen, ohne einen eigenen Onlineshop
+      kreieren zu müssen. <br />Gleichzeitig möchten wir mit Menschen, die durch
+      die Krise ihren Job verloren haben, sich Geld dazu verdienen möchten oder
+      auch einfach mit freiwilligen Helferlein ein Lieferantennetzwerk aufbauen,
+      durch das Produkte direkt zu jedem nachhause kommen können. Um so schnell
+      es geht Abhilfe zu schaffen, haben wir uns dazu entschlossen nicht zu
+      warten, sondern mit einer Basisversion zu starten bis wir unsere komplette
+      Idee online bringen können.
+    </p>
+    <p>
+      Wir möchten Geschäfte so schnell wie möglich wieder mit Ihren Kunden
+      zusammenbringen zu können. Auf unserer Plattform findet Ihr alle Betriebe
       in Eurem Umkreis, bei denen Ihr etwas bestellen könnt. Und als Betrieb
       kannst Du Dich registrieren und beschreiben, was Du zu bieten hast. Für
       die Abholung, Lieferung und Bezahlung seid Ihr in der Basis-Version noch
@@ -34,20 +40,31 @@
       Neuigkeiten senden wir Dir per E-Mail. <br />Du möchtest uns ein Feedback
       geben oder hast Vorschläge, was wir noch verbessern können? Dann melde
       Dich bei uns und hilf uns dabei, lokalkauf weiterzuentwickeln.
-      <br />
-      <br />
-      <div class="about-us-box">
-        <div class="about-us-names">
-          Alexander Schieweck<br />Björn Merschmeier<br />Christian Aschoff<br />Friederike
-          Seidel<br />Kai Nitsch<br />Konstantin Bücheler<br />Ilja Leyberman
-        </div>
+    </p>
+  </div>
 
-        <div class="about-us-names">
-          Lukas Schmyrczyk<br />Maximilian Seidel<br />Mina Paulus<br />Patrick
-          Simmelbauer<br />Philipp Salinski<br />
-          Stefan Klement<br />Volkan Karakulak
-        </div>
-      </div>
+  <div
+    fxLayout="row"
+    fxLayoutAlign="center start"
+    fxLayout.xs="column"
+    fxLayoutAlign.xs="start center"
+    class="about-us-names"
+  >
+    <div fxFlex="50" fxLayout="row wrap" fxLayout.xs="column">
+      <div fxFlex="50">Alexander Schieweck</div>
+      <div fxFlex="50">Björn Merschmeier</div>
+      <div fxFlex="50">Christian Aschoff</div>
+      <div fxFlex="50">Friederike Seidel</div>
+      <div fxFlex="50">Kai Nitsch</div>
+      <div fxFlex="50">Konstantin Bücheler</div>
+      <div fxFlex="50">Ilja Leyberman</div>
+      <div fxFlex="50">Lukas Schmyrczyk</div>
+      <div fxFlex="50">Maximilian Seidel</div>
+      <div fxFlex="50">Mina Paulus</div>
+      <div fxFlex="50">Patrick Simmelbauer</div>
+      <div fxFlex="50">Philipp Salinski</div>
+      <div fxFlex="50">Stefan Klement</div>
+      <div fxFlex="50">Volkan Karakulak</div>
     </div>
   </div>
-</div>
+</lk-container>

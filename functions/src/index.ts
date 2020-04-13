@@ -1,135 +1,57 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-import * as nodemailer from 'nodemailer';
-import { google } from 'googleapis';
+//import * as nodemailer from 'nodemailer';
+//import { google } from 'googleapis';
+import * as sgMail from '@sendgrid/mail';
 
 admin.initializeApp();
 
 const MAX_NUMBER_OF_IMAGES = 6;
 
-/**
- * Here we're using Gmail to send
- */
+export const sendGrid = functions.https.onCall(async (data, context) => {
+  sgMail.setApiKey(functions.config().mail.sendgrid.api_key);
 
-const OAuth2 = google.auth.OAuth2;
-const clientID = functions.config().mail.oauth.client_id;
-const clientSecret = functions.config().mail.oauth.client_secret;
+  sgMail
+    .send({
+      from: 'lokalkauf < info@lokalkauf.org >',
+      to: data.toEmail,
+      subject: data.title,
+      templateId: data.templateId,
+      dynamicTemplateData: data.teplateVars,
+    })
+    .then(
+      (result) => {
+        console.log('Sent email');
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
 
-const oauth2Client = new OAuth2(
-  clientID, //client Id
-  clientSecret, // Client Secret
-  'https://developers.google.com/oauthplayground' // Redirect URL
-);
-
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    type: 'OAuth2',
-    user: 'info@lokalkauf.org',
-    clientId: clientID,
-    clientSecret: clientSecret,
-  },
-});
-
-export const sendMail = functions.https.onCall(async (data, context) => {
-  console.log(data);
-
-  const refreshToken = functions.config().mail.oauth.refresh_token;
-
-  oauth2Client.setCredentials({
-    refresh_token: refreshToken,
-  });
-
-  const tokens = await oauth2Client.refreshAccessToken();
-  const accessToken = tokens.credentials.access_token;
-
-  let htmlOutput = '';
-  let cpSubject = '';
-  if (data.mailType == 'feedback') {
-    htmlOutput = `<div style="text-align:center;">
-    <img src="https://lokalkauf-staging.web.app/assets/logo.png" style="width:300px;height:100px">
-        <h2>Bestätigung deiner Anfrage</h2>
-        <h4>Du hast eine Anfrage versendet:</h4>
-        <p>${data.message}</p>
-        <b>Folgende Kontaktinformationen wurden hinterlassen:</b>
-        <p>${data.fromEmail}</p>
-        <br>
-        <b> Dein LokalKauf Team </b>
-</div>`;
-    cpSubject = 'Kopie Deines Feedbacks';
-  } else if (data.mailType == 'trader-contact') {
-    htmlOutput = `<div style="text-align:center;">
-    <img src="https://lokalkauf-staging.web.app/assets/logo.png" style="width:300px;height:100px"/>
-          <h2>Neue Kundenanfrage</h2>
-          <h4>Du hast eine neue Anfrage</h4>
-          <p>${data.message}</p>
-          <b>Folgende Kontaktinformationen wurden hinterlassen:</b>
-          <p>${data.fromEmail}</p>
-          <br>
-          <b> Dein LokalKauf Team </b>
-          <br>
-          <img src="https://lokalkauf-staging.web.app/assets/thankyou-image.png"/>
-    </div>`;
-    cpSubject = 'Kopie Deiner Nachricht an das Geschäft: ' + data.toName;
-  }
-
-  const mailOptions = {
-    from: 'LokalKauf < info@lokalkauf.org >',
-    to: data.toEmail,
-    subject: data.title,
-    html: htmlOutput,
-    auth: {
-      accessToken: accessToken,
-    },
-  };
-
-  const cpMailOptions = {
-    from: 'LokalKauf < info@lokalkauf.org >',
-    to: data.fromEmail,
-    subject: cpSubject,
-    html:
-      `<h2>Hi, dies ist die Kopie Deiner Nachricht.</h2>
-           <hr>
-           <div style="background: lightgrey">` +
-      htmlOutput +
-      `</div>`,
-    auth: {
-      accessToken: accessToken,
-    },
-  };
-
-  let returnValue: object;
-  // returning result
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      returnValue = error;
-    } else {
-      transporter.sendMail(cpMailOptions, (cpError, cpInfo) => {
-        if (cpError) {
-          returnValue = cpError;
-        }
-      });
-    }
-    if (returnValue) {
-      return returnValue;
-    }
-    return 'Sended';
-  });
-  return;
+  sgMail
+    .send({
+      from: 'lokalkauf < info@lokalkauf.org >',
+      to: data.fromEmail,
+      subject: data.title,
+      templateId: data.templateIdCopy,
+      dynamicTemplateData: data.teplateVars,
+    })
+    .then(
+      (result) => {
+        console.log('Sent email');
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
 });
 
 export const sendCustomVerifyMail = functions.auth
   .user()
   .onCreate(async (user) => {
-    const refreshToken = functions.config().mail.oauth.refresh_token;
     const url = functions.config().app.url;
     const apiKey = functions.config().app.apikey;
 
-    oauth2Client.setCredentials({
-      refresh_token: refreshToken,
-    });
-    const tokens = await oauth2Client.refreshAccessToken();
-    const accessToken = tokens.credentials.access_token;
     let link = '';
     let parameter;
 
@@ -146,33 +68,26 @@ export const sendCustomVerifyMail = functions.auth
       apiKey +
       '&lang=de';
 
-    const message =
-      '<div style="text-align:center;">' +
-      '<img src="https://lokalkauf-staging.web.app/assets/logo.png" style="width:300px;height:100px"/>' +
-      '<h4>Lieber lokalkauf-Nutzer,</h4>' +
-      '<p>Vielen Dank, dass du dich für lokalkauf entschieden hast!</p>' +
-      '<p>Bitte klicke auf den folgenden Link, um die Registrierung abzuschließen: </p>' +
-      '<a href="' +
-      finalLink +
-      '">hier klicken</a>' +
-      '<p>Erst nach erfolgreicher Bestätigung, kannst du dein Profil bearbeiten.</p>' +
-      '<p>Viel Grüße,</p>' +
-      '<p>Dein lokalkauf-Team<p>';
+    sgMail.setApiKey(functions.config().mail.sendgrid.api_key);
 
-    const mailOptions = {
-      from: 'LokalKauf < info@lokalkauf.org >',
-      to: user.email,
-      subject: 'Bestätige deine E-Mail-Adresse für lokalkauf',
-      html: message,
-      auth: {
-        accessToken: accessToken,
-      },
-    };
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.log(error, info);
-      }
-    });
+    sgMail
+      .send({
+        from: 'lokalkauf < info@lokalkauf.org >',
+        to: user.email,
+        subject: 'Bestätige deine E-Mail-Adresse für lokalkauf',
+        templateId: 'd-e8b544e2d76242fdac65fafdae382e37',
+        dynamicTemplateData: {
+          verification_url: finalLink,
+        },
+      })
+      .then(
+        (result) => {
+          console.log('Sent email');
+        },
+        (err) => {
+          console.error(err);
+        }
+      );
   });
 
 export const checkFileNumberLimit = functions.storage
@@ -202,7 +117,7 @@ export const checkFileNumberLimit = functions.storage
 
 exports.deleteThumbnailsTriggeredByImageDeletion = functions.storage
   .object()
-  .onDelete(async (snapshot, context) => {
+  .onDelete(async (snapshot, _context) => {
     //console.log('#######');
     //console.log('#######' + snapshot.name);
 
@@ -265,7 +180,7 @@ export const deleteUser = functions.auth.user().onDelete(async (user) => {
 
 export const backupFirestoreDatabaseToStorage = functions.pubsub
   .schedule('every day 00:00')
-  .onRun(async (context) => {
+  .onRun(async (_context) => {
     const projectId = admin.app().options.projectId;
     const backupBucket = functions.config().app.backupbucket;
     const client = new admin.firestore.v1.FirestoreAdminClient();
@@ -287,3 +202,89 @@ export const backupFirestoreDatabaseToStorage = functions.pubsub
         throw new Error('Export operation failed');
       });
   });
+
+function buildHtmlWithTrader(traderId: string, trader: any, imgUrl: string) {
+  const url = functions.config().app.url;
+  const string =
+    '<!DOCTYPE html><head>' +
+    '<title>lokalkauf | ' +
+    trader.businessname +
+    '</title>' +
+    '<meta name="description" content="' +
+    trader.description +
+    '">' +
+    '<meta property="twitter:title" content="lokalkauf | ' +
+    trader.businessname +
+    '">' +
+    '<meta name="twitter:card" content="summary" />' +
+    '<meta name="twitter:description" content="' +
+    trader.description +
+    '" />' +
+    '<meta name="twitter:image" content="' +
+    imgUrl +
+    '" />' +
+    '<meta name="twitter:site" content="@loaklkauf" />' +
+    '<meta name="twitter:creator" content="@lokalkauf" />' +
+    '<meta property="og:title" content="lokalkauf | ' +
+    trader.businessname +
+    '">' +
+    '<meta property="og:image" itemprop="image" content="' +
+    imgUrl +
+    '" />' +
+    '<meta property="og:image:width" content="200" />' +
+    '<meta property="og:image:height" content="200" />' +
+    '<meta property="og:type" content="web app" />' +
+    '<meta property="og:description" content="' +
+    trader.description +
+    '" />' +
+    '<link rel="icon" href="https://lokalkauf-staging.web.app/assets/logo.png">' +
+    '</head><body>' +
+    '<script>window.location.replace("' +
+    url +
+    '/trader-detail-redirect/' +
+    traderId +
+    '");</script>' +
+    '</body></html>';
+  return string;
+}
+
+function getPathToThumbnail(path: string) {
+  const prefix = path.split('/').slice(0, -1).join('/');
+  const filename = path
+    .split('/')
+    .slice(-1)
+    .join()
+    .split('.')
+    .slice(0, -1)
+    .join('.');
+  const fileExtension = path
+    .split('/')
+    .slice(-1)
+    .join()
+    .split('.')
+    .slice(-1)
+    .join();
+  return prefix + '/thumbs/' + filename + '_200x200.' + fileExtension;
+}
+
+export const traderDetail = functions.https.onRequest(async (req, res) => {
+  const path = req.path.split('/');
+  const traderId = path[2];
+  const documentRef = admin.firestore().doc('Traders/' + traderId);
+  const trader = await documentRef
+    .get()
+    .then((snapshot: any) => {
+      return snapshot.data();
+    })
+    .catch((err: any) => {
+      console.log('Error getting documents', err);
+    });
+  const bucket = admin.storage().bucket();
+  const url =
+    (await 'https://firebasestorage.googleapis.com/v0/b/') +
+    bucket.name +
+    '/o/' +
+    encodeURIComponent(getPathToThumbnail(trader.defaultImagePath)) +
+    '?alt=media';
+  res.status(200).send(buildHtmlWithTrader(traderId, trader, url));
+});

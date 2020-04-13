@@ -1,0 +1,46 @@
+@import '../../../theme/variables.scss';
+
+.alert-warning {
+  background-color: rgb(255, 236, 236);
+  padding: 20px;
+  margin-bottom: 20px;
+  color: $errorcolor;
+  height: unset;
+  min-height: unset;
+  font-size: 0.8rem;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+
+  mat-icon.close {
+    width: 24px;
+    margin-right: -5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  span {
+    text-align: justify;
+    padding-left: 20px;
+    padding-right: 20px;
+    flex-grow: 1;
+  }
+
+  &.collapsed {
+    padding: 3px;
+
+    span {
+      display: none;
+    }
+
+    mat-icon.close {
+      display: none;
+    }
+
+    mat-icon.wrn {
+      font-size: 0.9rem;
+      padding: 7px 0 0 5px;
+    }
+  }
+}

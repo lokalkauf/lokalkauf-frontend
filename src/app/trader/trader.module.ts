@@ -15,6 +15,10 @@ import { LoginComponent } from './login/login.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 import { DeleteUserComponent } from './registration/delete-user/delete-user.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatDialogModule } from '@angular/material/dialog';
+import { LabelPipe } from '../pipes/label.pipe';
+import { PipesModule } from '../pipes/pipes.modules';
 
 const routes: Routes = [
   { path: 'trader/profile', component: ProfileComponent },
@@ -37,13 +41,16 @@ const routes: Routes = [
   imports: [
     CommonModule,
     MatFormFieldModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' }),
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
     MatIconModule,
     MatButtonModule,
+    MatTabsModule,
+    MatDialogModule,
     ReusablesModule,
+    PipesModule,
     MatPasswordStrengthModule,
   ],
 })

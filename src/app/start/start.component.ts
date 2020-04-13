@@ -4,20 +4,19 @@ import {
   InjectionToken,
   ElementRef,
   ViewChild,
-  ɵsetCurrentInjector,
 } from '@angular/core';
 import { Link } from '../models/link';
 import { Router } from '@angular/router';
-import { isNumber } from 'util';
 import { debounce } from 'lodash';
 
-import { GeoService } from 'src/app/services/geo.service';
-import { tap } from 'rxjs/operators';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { GeoService } from '../services/geo.service';
 import { ScrollStrategy } from '@angular/cdk/overlay';
 import { UserService } from '../services/user.service';
-import { LkSelectOptions } from '../reusables/lk-select/lk-select.component';
 import { StorageService } from '../services/storage.service';
+import { FormControl, Validators } from '@angular/forms';
+import { SearchInputComponent } from './search-input/search-input.component';
+import { GeoAddress } from '../models/geoAddress';
+import { uiTexts } from 'src/app/services/uiTexts';
 
 @Component({
   selector: 'app-start',
@@ -44,9 +43,6 @@ export class StartComponent implements OnInit {
   coords: string;
   suggestion: any;
 
-  standorte: Observable<LkSelectOptions[]>;
-  standortPreselect: Observable<string>;
-
   currentPosition: Array<number>;
   disabledLosButton: boolean;
 
@@ -54,138 +50,45 @@ export class StartComponent implements OnInit {
 
   preSelectedValue: any;
 
-  @ViewChild('plzInput') plzInput: ElementRef;
+  locationFormControl = new FormControl(null, [Validators.required]);
+
+  @ViewChild('searchInput', { read: ElementRef }) searchInput: any;
   constructor(
     public router: Router,
-    private geo: GeoService,
     public userService: UserService,
     private storageService: StorageService
   ) {
-    this.search = debounce(this.search, 2000);
     this.disabledLosButton = true;
     this.userService.isLoggedIn$.subscribe((loggedin) => {
       this.isLoggedIn = loggedin;
     });
-    this.standortPreselect = of('Bitte wähle eine Stadt aus');
-    this.standorte = of([
-      {
-        key: '1',
-        display: 'Brühl',
-        value: { lat: '50.823525', lng: '6.897674', rad: 10 },
-      },
-      {
-        key: '2',
-        display: 'Wiesbaden',
-        value: { lat: '50.0833521', lng: '8.24145', rad: 10 },
-      },
-      {
-        key: '3',
-        display: 'Regionalverband Saarbrücken',
-        value: { lat: '49.2789', lng: '6.9437', rad: 25 },
-      },
-      {
-        key: '4',
-        display: 'Saarpfalz-Kreis',
-        value: { lat: '49.1805', lng: '7.2194', rad: 25 },
-      },
-      {
-        key: '5',
-        display: 'Neunkirchen',
-        value: { lat: '49.3518', lng: '7.1864', rad: 25 },
-      },
-      {
-        key: '6',
-        display: ' St. Wendel',
-        value: { lat: '49.46667', lng: '7.166669', rad: 25 },
-      },
-      {
-        key: '7',
-        display: 'Saarlouis',
-        value: { lat: '49.3135', lng: '6.7523', rad: 25 },
-      },
-      {
-        key: '8',
-        display: 'Merzig-Wadern',
-        value: { lat: '49.4572', lng: '6.6867', rad: 35 },
-      },
-    ]);
   }
 
-  showError: boolean;
+  text = uiTexts;
 
-  ngOnInit(): void {
-    //    this.getUserLocation();
-
-    const city = this.storageService.loadLocation();
-    if (city) {
-      this.preSelectedValue = city;
-    }
-  }
+  ngOnInit(): void {}
 
   registerTrader() {
     this.router.navigateByUrl('/trader/register/new');
   }
 
-  private getUserLocation() {
-    this.geo.getUserPosition().subscribe((ps) => {
-      if (ps != null) {
-        this.currentPosition = ps;
-        this.disabledLosButton = false;
+  navigateToLocation() {
+    const val = this.locationFormControl.value;
 
-        this.geo
-          .getPostalAndCityByLocation(this.currentPosition)
-          .subscribe((p: any) => {
-            this.plz =
-              p.results[0].components.postcode +
-              ' ' +
-              p.results[0].components.city;
+    console.log(val);
 
-            // this.plzInput.nativeElement.value = this.plz;
-            // this.elRef.nativeElement.querySelector('#plz-input').value = this.plz;
-          });
-      } else {
-        this.disabledLosButton = true;
-      }
-    });
-  }
-
-  focus() {
-    const elem = this.plzInput.nativeElement;
-    elem.scrollIntoView();
-  }
-
-  action() {
-    if (this.currentPosition && this.currentPosition.length === 3) {
-      this.router.navigate([
-        '/localtraders',
-        this.currentPosition[0],
-        this.currentPosition[1],
-        this.currentPosition[2],
-      ]);
+    if (!val) {
+      this.searchInput.nativeElement.getElementsByTagName('input')[0].focus();
+      return;
     }
-  }
 
-  reducedAction(val: any) {
-    if (val.internalValue !== this.DEFAULT) {
-      this.router.navigate([
-        '/localtraders',
-        val.internalValue.lat,
-        val.internalValue.lng,
-        val.internalValue.rad,
-      ]);
-      this.storageService.saveLocation(val.internalValue);
-    }
-  }
+    this.router.navigate([
+      '/localtraders',
+      val.coordinates[0],
+      val.coordinates[1],
+      val.radius,
+    ]);
 
-  setposition(position: Array<number>) {
-    this.suggestion = null;
-    this.currentPosition = position;
-    this.disabledLosButton = false;
-  }
-
-  search(searchtext) {
-    this.geo.findCoordinatesByAddress(searchtext).subscribe((d: any) => {
-      this.suggestion = d.records.map((m) => m.fields);
-    });
+    this.storageService.saveLocation(val);
   }
 }

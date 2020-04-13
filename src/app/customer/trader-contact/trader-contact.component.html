@@ -5,26 +5,24 @@
   <div class="contactButtons">
     <div class="contactButton">
       <a [href]="'tel:' + trader.telephone">
-        <app-lk-button [label]="trader.telephone" [minSizePercent]="70">
-        </app-lk-button> </a
+        <lk-button [label]="trader.telephone" [minSizePercent]="70">
+        </lk-button> </a
       ><br />
     </div>
     <div *ngIf="!trader.storeEmail" class="contactButton">
       <a [href]="'mailto:' + trader.email">
-        <app-lk-button [label]="trader.email" [minSizePercent]="70">
-        </app-lk-button>
+        <lk-button [label]="trader.email" [minSizePercent]="70"> </lk-button>
       </a>
     </div>
     <div *ngIf="trader.storeEmail" class="contactButton">
       <a [href]="'mailto:' + trader.storeEmail">
-        <app-lk-button [label]="trader.storeEmail" [minSizePercent]="70">
-        </app-lk-button>
+        <lk-button [label]="trader.storeEmail" [minSizePercent]="70">
+        </lk-button>
       </a>
     </div>
     <div *ngIf="trader.homepage" class="contactButton">
       <a [href]="trader.homepage" target="_blank">
-        <app-lk-button [label]="trader.homepage" [minSizePercent]="70">
-        </app-lk-button>
+        <lk-button [label]="trader.homepage" [minSizePercent]="70"> </lk-button>
       </a>
     </div>
 
@@ -33,22 +31,23 @@
   <form [formGroup]="contactForm" (ngSubmit)="onSubmit(trader.businessname)">
     <div class="text contactformdescription">
       Oder über das Kontaktformular:<br />
-      <app-lk-textarea
+      <lk-textarea
         placeholder="Deine Nachricht an uns"
         formControlName="mail_message"
         type="mail_message"
       >
-      </app-lk-textarea
+      </lk-textarea
       ><br /><br />
       Wie dürfen wir Dich kontaktieren?<br />
-      <app-lk-input
+      <lk-input
         [warn]="mail_contact.touched && mail_contact.invalid"
         placeholder="E-Mail oder Telefonnummer*"
         formControlName="mail_contact"
-      ></app-lk-input
+      ></lk-input
       ><br /><br />
-      <label for="agbread">
-        <input type="checkbox" id="agbread" formControlName="agbRead" />
+
+      <label>
+        <app-lk-checkbox formControlName="agbRead"></app-lk-checkbox>
         Ich bestätige die
         <a
           href="http://www.info.lokalkauf.org/agb"
@@ -66,21 +65,24 @@
         gelesen zu haben und bin einverstanden
       </label>
     </div>
-    <div class="contactButton">
-      <app-lk-button
-        [disabled]="!contactForm.valid"
-        type="submit"
-        label="Anfrage senden"
-      >
-      </app-lk-button>
+    <div class="contactButtons">
+      <div class="contactButton">
+        <lk-button
+          [disabled]="!contactForm.valid"
+          type="submit"
+          label="Anfrage senden"
+        >
+        </lk-button>
+      </div>
+      <div class="contactButton">
+        <lk-button
+          type="button"
+          (click)="navigateBackToOverview()"
+          label="zurück zur Übersicht"
+        >
+        </lk-button>
+      </div>
     </div>
-    <br />
-    <app-lk-button
-      type="button"
-      (click)="navigateBackToOverview()"
-      label="zurück zur Händlerübersicht"
-    >
-    </app-lk-button>
     <br />
     <br />
   </form>

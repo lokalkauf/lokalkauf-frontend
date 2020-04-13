@@ -1,0 +1,11 @@
+<div
+  class="alert-warning"
+  (click)="toggle()"
+  [ngClass]="{ collapsed: collapsed }"
+>
+  <mat-icon class="wrn">warning</mat-icon>
+  <span>
+    {{ content }}
+  </span>
+  <mat-icon class="close">close</mat-icon>
+</div>

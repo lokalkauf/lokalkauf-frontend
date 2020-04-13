@@ -1,30 +1,6 @@
-@import '../../variables.scss';
+@import '../../theme/variables.scss';
 
-#feedback-overlay {
-  position: relative;
-  z-index: 100;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: $slighttranslucentwhite;
-}
-
-#feedback-inset {
-  padding: 0.4rem 0px;
-
-  h1 {
-    margin-bottom: 40px;
-  }
-
-  @media screen and (min-width: 768px) {
-    width: 740px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-#thankyou {
+.thankyou {
   padding: 1.2rem;
   padding-top: 2.4rem;
 
@@ -34,46 +10,48 @@
     margin-right: auto;
   }
 
-  #shopping-thanks {
+  .shopping-thanks {
     text-align: center;
   }
 
-  #thanks-headline {
-    font-size: 1rem;
-    font-weight: 200;
+  .thanks-headline {
     text-align: center;
     color: $darkgreen;
     margin-top: 40px;
   }
 
-  #thanks-subheading {
+  .thanks-subheading {
     text-align: center;
-    font-size: 0.8rem;
     margin-top: 20px;
   }
 }
 
-#feedback-controls {
+.feedback-controls {
   margin-top: 1.2rem;
+
+  lk-button {
+    min-width: 130px;
+
+    @media screen and (min-width: 768px) {
+      min-width: 266px;
+    }
+  }
 }
 
-#feedback-absenden {
+.feedback-verwerfen {
   float: right;
 }
 
-#feedback-verwerfen {
-  float: left;
-}
-
 .content {
-  margin: 1.2rem 0;
-  font-size: 0.8rem;
-  font-weight: 200;
+  margin-top: 1.2rem;
 }
 
 .feedback-error {
   margin: 1.2rem 0;
-  font-size: 0.8rem;
   color: $errorcolor;
   padding: 1.2rem;
+}
+
+a {
+  color: $appblack;
 }

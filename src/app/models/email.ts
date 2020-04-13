@@ -9,4 +9,6 @@ export class EMail {
   title: string;
   message: string;
   acceptedAgb: boolean;
+  tempalteId: string;
+  templateIdCopy: string;
 }

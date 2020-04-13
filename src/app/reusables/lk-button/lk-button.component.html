@@ -1,8 +1,12 @@
-<button
+<button mat-flat-button [type]="type" [disabled]="disabled" [color]="color">
+  {{ label }}
+</button>
+
+<!-- <button
   [disabled]="disabled"
   [type]="type"
   [style]="'min-width: ' + minSizePercent + '%;'"
   [class.warn]="warn"
 >
   {{ label }}
-</button>
+</button> -->

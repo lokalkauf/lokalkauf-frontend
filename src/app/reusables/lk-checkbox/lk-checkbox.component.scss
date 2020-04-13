@@ -1,4 +1,4 @@
-@import '../../../variables.scss';
+@import '../../../theme/variables.scss';
 
 input[type='checkbox'] {
   display: none;
@@ -13,7 +13,6 @@ input[type='checkbox'] + .checkbox {
 input[type='checkbox'] + .checkbox::before {
   width: 1.2rem;
   height: 1.2rem;
-  border-radius: 10px;
   border: 1px solid $lightergreen;
   background-color: #fff;
   display: block;

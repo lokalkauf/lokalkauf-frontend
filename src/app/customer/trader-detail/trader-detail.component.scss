@@ -1,13 +1,7 @@
-@import './../../../variables.scss';
+@import './../../../theme/variables.scss';
 
-.trader-detail {
+lk-container {
   text-align: center;
-  margin-bottom: 20px;
-
-  .trader-headline {
-    color: $lightestgreen;
-    font-size: 1.6rem;
-  }
 
   .trader-product-amount {
     font-size: 0.9rem;
@@ -15,6 +9,9 @@
 
   .trader-description {
     margin: 20px 0;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 532px;
   }
 
   .product-amount {
@@ -31,6 +28,18 @@
     box-shadow: 6px 6px 21px 0px rgba(0, 0, 0, 0.1);
   }
 
+  .carousel {
+    width: 600px;
+    margin: 20px auto;
+
+    @media screen and (max-width: 632px) {
+      width: calc(100% + 32px);
+      margin-left: -16px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+  }
+
   .symboltext {
     line-height: 30px;
     vertical-align: middle;
@@ -43,13 +52,4 @@
   .toggleDetails {
     color: $darkgreen;
   }
-}
-
-.carousel-container {
-  margin: 20px 0;
-}
-
-.carousel-inner {
-  max-width: 100%;
-  max-height: 100%;
 }

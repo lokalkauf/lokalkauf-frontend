@@ -1,4 +1,18 @@
-<input
+<mat-form-field>
+  <mat-label>{{ placeholder }}</mat-label>
+  <input
+    matInput
+    [type]="type"
+    [name]="name"
+    [pattern]="pattern"
+    [placeholder]="placeholder"
+    [(ngModel)]="value"
+    (blur)="onBlur()"
+  />
+  <!-- <mat-error *ngIf="value.invalid">erro: {{getErrorMessage()}}</mat-error> -->
+</mat-form-field>
+
+<!-- <input
   [type]="type"
   [placeholder]="placeholder"
   [name]="name"
@@ -7,4 +21,4 @@
   [ngClass]="{
     warn: warn
   }"
-/>
+/> -->

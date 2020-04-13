@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CartEntry } from 'src/app/models/cartEntry';
-import { ProductService } from 'src/app/services/product.service';
+import { CartEntry } from '../../models/cartEntry';
+import { ProductService } from '../../services/product.service';
 import { Observable } from 'rxjs';
-import { Product } from 'src/app/models/product';
+import { Product } from '../../models/product';
 import { tap } from 'rxjs/operators';
-import { ShoppingcartService } from 'src/app/services/shoppingcart.service';
+import { ShoppingcartService } from '../../services/shoppingcart.service';
 
 @Component({
   selector: 'app-shoppingcart-item',
