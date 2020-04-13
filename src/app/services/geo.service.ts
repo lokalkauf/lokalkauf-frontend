@@ -39,14 +39,7 @@ export class GeoService {
     traderId: string,
     trader: Partial<TraderProfile>
   ) {
-    const searchAddress =
-      trader.postcode +
-      ' ' +
-      trader.city +
-      ' ' +
-      trader.street +
-      ' ' +
-      trader.number;
+    const searchAddress = trader.postcode + ' ' + trader.city;
     const addresses = await this.findCoordinatesByFullAddress(searchAddress);
     // .pipe(map((r) => r.records.map((m) => m.fields)))
     // .toPromise();
@@ -144,7 +137,7 @@ export class GeoService {
           addressdetails: '1',
           format: 'json',
           limit: '1',
-          q: address,
+          q: address.trim(),
         },
       })
       .toPromise();
