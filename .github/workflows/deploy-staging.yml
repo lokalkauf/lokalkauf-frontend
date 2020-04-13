@@ -29,8 +29,7 @@ jobs:
       run: npm ci
 
     - name: Build Angular App
-    #  run: npm run build
-      run: ng build --outputHashing=all
+      run: npm run build
 
     - name: Build Functions
       run: npm run build
