@@ -31,7 +31,10 @@
     padding: 3px;
 
     span {
-      display: none;
+      overflow: hidden;
+      white-space: nowrap;
+      padding-top: 5px;
+      text-overflow: ellipsis;
     }
 
     mat-icon.close {
