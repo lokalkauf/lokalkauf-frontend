@@ -2,9 +2,9 @@
   class="profile-wrapper"
   *ngIf="loggedInUserState$ | async as loggedInUserState"
 >
-  <app-lk-page-title
+  <lk-page-title
     [title]="loggedInUserState.traderProfile.businessname"
-  ></app-lk-page-title>
+  ></lk-page-title>
   <!-- <mat-tab-group>
     <mat-tab label="First"> Content 1 </mat-tab>
     <mat-tab label="Second"> Content 2 </mat-tab>

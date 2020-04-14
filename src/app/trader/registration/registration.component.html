@@ -7,19 +7,19 @@ Dich hier vorab registrieren."
   >
   </lk-warning-box>
 
-  <app-lk-page-title
+  <lk-page-title
     *ngIf="registrationState === 'new'"
     title="Anmeldung"
     subtitle="Melde Dich kostenlos an um Dein Geschäft, Dein Restaurant oder Dein Café online zu präsentieren und Deinen Kunden zu zeigen, dass Du weiterhin für sie da bist.
   "
-  ></app-lk-page-title>
+  ></lk-page-title>
 
-  <app-lk-page-title
+  <lk-page-title
     *ngIf="registrationState === 'edit'"
     title="Bearbeiten"
     subtitle="Aktualisiere Deine Daten
   "
-  ></app-lk-page-title>
+  ></lk-page-title>
 
   <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
     <div class="registration-input">
@@ -211,10 +211,18 @@ Dich hier vorab registrieren."
       <ng-container *ngIf="registrationState === 'edit'">
         <div class="button-container">
           <div class="cancel">
-            <lk-button type="button" label="Zurück" (click)="verwerfen()"></lk-button>
+            <lk-button
+              type="button"
+              label="Zurück"
+              (click)="verwerfen()"
+            ></lk-button>
           </div>
           <div class="save">
-            <lk-button [disabled]="!registrationForm.valid" type="submit" label="Aktualisieren"></lk-button>
+            <lk-button
+              [disabled]="!registrationForm.valid"
+              type="submit"
+              label="Aktualisieren"
+            ></lk-button>
           </div>
         </div>
         <div class="success" *ngIf="saveSuccessful">

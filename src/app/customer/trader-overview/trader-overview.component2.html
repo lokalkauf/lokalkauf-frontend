@@ -12,26 +12,7 @@
   >
   </lk-warning-box>
   <div class="traders-overview-row" *ngIf="hasLocations">
-    <app-lk-page-title title="Alles aus Deiner Nähe"></app-lk-page-title>
-    <!-- <div class="traders-input-center">
-      <lk-select
-        #storeTypeList
-        class="store-types"
-        name="storeType"
-        [options]="storeTypes"
-        [placeholder]="storeTypePreselect"
-      >
-      </lk-select>
-    </div>
-    <div class="traders-input-center">
-      <lk-button
-        class="shop-types-button"
-        (click)="reducedAction(storeTypeList)"
-        label="Jetzt filtern!"
-      >
-      </lk-button>
-    </div> -->
-
+    <lk-page-title title="Alles aus Deiner Nähe"></lk-page-title>
     <lk-chip-list
       [items]="storeTypes"
       [selectedKey]="selectedTrader ? selectedTrader.key : '1'"
