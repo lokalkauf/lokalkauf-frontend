@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { HttpClient, HttpUrlEncodingCodec } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, timeout } from 'rxjs/operators';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 import { GeoCollectionReference, GeoFirestore, GeoQuery } from 'geofirestore';
@@ -39,16 +39,16 @@ export class GeoService {
     traderId: string,
     trader: Partial<TraderProfile>
   ) {
-    const searchAddress = trader.postcode; // + ' ' + trader.city;
-    const addresses = await this.findCoordinatesByPostalOrCity(
-      searchAddress.trim()
-    ).toPromise();
-    // this.findCoordinatesByFullAddress(searchAddress);
-    // .pipe(map((r) => r.records.map((m) => m.fields)))
-    // .toPromise();
+    const searchAddress = trader.postcode;
+    const addresses = await this.findCoordinatesByFullAddressWithFallback(
+      trader.postcode,
+      trader.city,
+      trader.street,
+      trader.number + ''
+    );
 
-    if (addresses && addresses.length > 0) {
-      return this.createLocation(traderId, addresses[0].coordinates);
+    if (addresses) {
+      return this.createLocation(traderId, addresses.coordinates);
     }
   }
 
@@ -128,6 +128,26 @@ export class GeoService {
     //   }]
   }
 
+  async findCoordinatesByFullAddressWithFallback(
+    postal: string,
+    city: string,
+    street: string,
+    streetnumber: string
+  ): Promise<GeoAddress> {
+    const streetcontent = (street ? street + ' ' + streetnumber : '').trim();
+    const postalcitycontent = (postal + ' ' + city).trim();
+    let searchFor = (postalcitycontent + ' ' + streetcontent).trim();
+    let result = await this.findCoordinatesByFullAddress(searchFor);
+
+    // fallback to postal and city only
+    if (!result && streetcontent) {
+      searchFor = postalcitycontent;
+      result = await this.findCoordinatesByFullAddress(searchFor);
+    }
+
+    return result;
+  }
+
   // nominatim service, be careful, 1 request per second is the limit
   async findCoordinatesByFullAddress(address: string): Promise<GeoAddress> {
     if (!address) {
@@ -135,14 +155,10 @@ export class GeoService {
     }
 
     const response: any = await this.http
-      .get('https://nominatim.openstreetmap.org/', {
-        params: {
-          addressdetails: '1',
-          format: 'json',
-          limit: '1',
-          q: encodeURIComponent(address.trim()),
-        },
-      })
+      .get(
+        'https://nominatim.openstreetmap.org/?addressdetails=1&format=json&limit=1&q=' +
+          encodeURIComponent(address.trim())
+      )
       .toPromise();
 
     if (response && response.length > 0) {
