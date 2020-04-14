@@ -166,6 +166,7 @@ Dich hier vorab registrieren."
       </mat-password-strength>
       <!--Password's strength info-->
       <mat-password-strength-info
+        *ngIf="password.touched"
         [passwordComponent]="passwordComponentWithValidation"
         lowerCaseCriteriaMsg="Kleinschreibung"
         upperCaseCriteriaMsg="Großschreibung"
