@@ -87,3 +87,14 @@ app-trader-item {
 .mat-share-whatsapp {
   background-color: #4fce5d;
 }
+
+.mat-share-instagram {
+  background: #d6249f;
+  background: radial-gradient(
+    circle at 30% 107%,
+    #fdf497 0%,
+    #fd5949 45%,
+    #d6249f 60%,
+    #285aeb 90%
+  );
+}

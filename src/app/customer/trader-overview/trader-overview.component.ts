@@ -10,7 +10,12 @@ import { TraderProfile, TraderProfileStatus } from '../../models/traderProfile';
 import { SpinnerService } from '../../services/spinner.service';
 import { map, filter } from 'rxjs/operators';
 import { StorageService } from 'src/app/services/storage.service';
-import { faFacebookF, faTwitter, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import {
+  faFacebookF,
+  faTwitter,
+  faWhatsapp,
+  faInstagram,
+} from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-trader-overview',
@@ -33,7 +38,7 @@ export class TraderOverviewComponent implements OnInit {
   faFacebookF = faFacebookF;
   faTwitter = faTwitter;
   faWhatsapp = faWhatsapp;
-
+  faInstagram = faInstagram;
   constructor(
     private route: ActivatedRoute,
     private geo: GeoService,
