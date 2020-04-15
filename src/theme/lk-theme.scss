@@ -6,7 +6,6 @@
 $lk-theme-primary: mat-palette($lk-colors-green);
 $lk-theme-accent: mat-palette($lk-colors-blue);
 $lk-theme-warn: mat-palette($mat-red);
-
 $lk-theme: mat-light-theme($lk-theme-primary, $lk-theme-accent, $lk-theme-warn);
 
 $lk-typography: mat-typography-config(
