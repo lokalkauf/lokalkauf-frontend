@@ -17,6 +17,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { SearchInputComponent } from './search-input/search-input.component';
 import { GeoAddress } from '../models/geoAddress';
 import { uiTexts } from 'src/app/services/uiTexts';
+import { TextService } from '../services/text.service';
 
 @Component({
   selector: 'app-start',
@@ -52,16 +53,32 @@ export class StartComponent implements OnInit {
 
   locationFormControl = new FormControl(null, [Validators.required]);
 
+  testimonials = [];
+
   @ViewChild('searchInput', { read: ElementRef }) searchInput: any;
   constructor(
     public router: Router,
     public userService: UserService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private textService: TextService
   ) {
     this.disabledLosButton = true;
     this.userService.isLoggedIn$.subscribe((loggedin) => {
       this.isLoggedIn = loggedin;
     });
+
+    this.testimonials = [
+      {
+        img: 'user-voice-casabiente.png',
+        text: textService.getText(uiTexts.testimonal_1_testimonial),
+        testee: textService.getText(uiTexts.testimonal_1_testee),
+      },
+      {
+        img: 'user-voice-duester.png',
+        text: textService.getText(uiTexts.testimonal_2_testimonial),
+        testee: textService.getText(uiTexts.testimonal_2_testee),
+      },
+    ];
   }
 
   text = uiTexts;

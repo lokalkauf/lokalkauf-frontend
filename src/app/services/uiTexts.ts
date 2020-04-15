@@ -26,6 +26,14 @@ export const uiTexts = {
     '<br />lokalkauf – kauft lokal' +
     '<br /><br />Wir wollen eine kostenlose Plattform schaffen, die den lokalen Einzelhandel und die Gastronomie ' +
     'mit den Bürgern digital verbindet und dabei nachhaltig unterstützt, die Coronakrise zu bewältigen',
+  testimonal_1_testee: 'Christiane Hesse – Casabiente, Wiesbaden',
+  testimonal_1_testimonial:
+    'Es gibt Berge, über die man hinüber muss, sonst geht der Weg nicht weiter (Ludwig Thoma) ' +
+    ' – Danke an lokalkauf für die großartige Unterstützung!',
+  testimonal_2_testee: 'Achim Düster, Düster Herrenmoden, Brühl',
+  testimonal_2_testimonial:
+    'Lokalkauf gefällt mir sehr gut. Vor allem die einfache Bedienung' +
+    ' für mich als Händler und für meine Kunden finde ich gelungen.',
 };
 
 export type TextValue =

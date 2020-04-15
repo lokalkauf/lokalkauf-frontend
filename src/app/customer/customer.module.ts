@@ -23,8 +23,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TraderContactComponent } from './trader-contact/trader-contact.component';
 import { ReusablesModule } from '../reusables/reusables.module';
 import { InquiryConfirmationComponent } from './inquiry-confirmation/inquiry-confirmation.component';
-import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { PipesModule } from '../pipes/pipes.modules';
+import { MatCarouselModule } from '@ngmodule/material-carousel';
 
 const routes: Routes = [
   {
@@ -69,8 +69,8 @@ const routes: Routes = [
     FontAwesomeModule,
     ReusablesModule,
     PipesModule,
-    MatCarouselModule.forRoot(),
     FormsModule,
+    MatCarouselModule,
     ReactiveFormsModule,
   ],
   exports: [ProductOverviewComponent, ProductItemComponent],

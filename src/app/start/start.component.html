@@ -44,14 +44,26 @@
 
 <div class="user-voice">
   <lk-container>
-    <img
-      src="../../assets/user-voice-drinnen.png"
-      alt="Anja Bermbach - drinneN"
-    />
-    <h2>
-      »Es gibt Berge, über die man hinüber muss, sonst geht der Weg nicht weiter
-      (Ludwig Thoma) – Danke an lokalkauf für die großartige Unterstützung!«
-    </h2>
-    <strong>Christiane Hesse – Casabiente aus Wiesbaden</strong>
+    <mat-carousel
+      [autoplay]="true"
+      slides="testimonials.length"
+      [maintainAspectRatio]="false"
+      [interval]="5000"
+      maxWidth="100%"
+    >
+      <mat-carousel-slide
+        *ngFor="let testimonial of testimonials"
+        [hideOverlay]="true"
+      >
+        <div>
+          <img
+            src="../../assets/{{ testimonial.img }}"
+            alt="{{ testimonial.testee }}"
+          />
+          <h2>»{{ testimonial.text }}«</h2>
+          <strong>{{ testimonial.testee }}</strong>
+        </div>
+      </mat-carousel-slide>
+    </mat-carousel>
   </lk-container>
 </div>

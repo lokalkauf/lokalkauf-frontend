@@ -69,6 +69,14 @@
   background-color: $normalgreen;
   color: #fff;
 
+  lk-container {
+    height: 300px;
+
+    @media screen and (max-width: 767px) {
+      height: 440px;
+    }
+  }
+
   h2 {
     color: #fff;
   }
@@ -79,4 +87,8 @@ lk-search-input {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+div .carousel[style] {
+  height: 100% !important;
 }
