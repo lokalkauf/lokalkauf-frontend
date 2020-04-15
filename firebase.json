@@ -12,8 +12,8 @@
     ],
     "rewrites": [
       {
-	      "source": "/sitemaps.xml",
-        "function": "serveIndex"
+	      "source": "/sitemaps/sitemaps.xml",
+        "function": "serveSitemapIndex"
       },
       {
 	      "source": "/sitemaps/trader**",
