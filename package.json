@@ -44,6 +44,7 @@
     "ngx-lightbox": "^2.1.2",
     "ngx-star-rating": "0.0.1",
     "nodemailer": "^6.4.6",
+    "point-in-polygon": "^1.0.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "uuid": "^7.0.2",
