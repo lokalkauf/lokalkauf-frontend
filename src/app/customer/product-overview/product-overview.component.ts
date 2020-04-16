@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, combineLatest } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Product } from '../../models/product';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-overview',

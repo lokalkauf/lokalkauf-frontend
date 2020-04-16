@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from '../../services/user.service';
+import { uiTexts } from './../../services/uiTexts';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ export class LoginComponent {
     password: new FormControl(''),
   });
 
+  texts = uiTexts;
   constructor(private user: UserService, private router: Router) {
     user.isLoggedIn$.subscribe(async (isLoggedIn) => {
       if (isLoggedIn) {

@@ -1,18 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, combineLatest, forkJoin } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Trader } from '../../models/trader';
-import { Location } from 'src/app/models/location';
+import { Observable, of } from 'rxjs';
+import { Location } from '../../models/location';
 import { ActivatedRoute } from '@angular/router';
-
+import { LkSelectOptions } from '../../reusables/lk-select/lk-select.component';
 import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
-import { GeoService } from 'src/app/services/geo.service';
-import { TraderService } from 'src/app/services/trader.service';
+import { GeoService } from '../../services/geo.service';
+import { TraderService } from '../../services/trader.service';
+import { TraderProfile, TraderProfileStatus } from '../../models/traderProfile';
+import { SpinnerService } from '../../services/spinner.service';
+import { map, filter } from 'rxjs/operators';
+import { StorageService } from 'src/app/services/storage.service';
 import {
-  TraderProfile,
-  TraderProfileStatus,
-} from 'src/app/models/traderProfile';
+  faFacebookF,
+  faTwitter,
+  faWhatsapp,
+  faInstagram,
+} from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-trader-overview',
@@ -25,15 +28,78 @@ export class TraderOverviewComponent implements OnInit {
   STATIC_LOCATION: number[] = [50.083352, 8.241451]; // 51.54136, 7.687467
   STATIC_RADIUS = 10;
   paramRadius: number;
-
+  storeType: string;
   locations: Array<Location>;
+  selectedTrader: LkSelectOptions;
+  storeTypes: Observable<LkSelectOptions[]>;
+  storeTypePreselect: Observable<string>;
 
+  hasLocations = true;
+  faFacebookF = faFacebookF;
+  faTwitter = faTwitter;
+  faWhatsapp = faWhatsapp;
+  faInstagram = faInstagram;
   constructor(
-    db: AngularFirestore,
     private route: ActivatedRoute,
     private geo: GeoService,
-    private traderService: TraderService
-  ) {}
+    private traderService: TraderService,
+    private spinnerService: SpinnerService,
+    private readonly storageService: StorageService
+  ) {
+    this.selectedTrader = this.storageService.loadTraderFilter();
+    if (this.selectedTrader) {
+      this.storeType = this.selectedTrader.value;
+    }
+
+    this.storeTypePreselect = of('Nach was bist du auf der Suche?');
+    this.storeTypes = of([
+      {
+        key: '1',
+        display: 'Alle',
+        value: 'alle',
+      },
+      {
+        key: '2',
+        display: 'Gastronomie',
+        value: 'gastronomie',
+      },
+      {
+        key: '3',
+        display: 'Lebensmittel',
+        value: 'lebensmittel',
+      },
+      {
+        key: '4',
+        display: 'Fashion',
+        value: 'fashion',
+      },
+      {
+        key: '5',
+        display: 'Buchhandlung',
+        value: 'buchhandlung',
+      },
+      {
+        key: '6',
+        display: 'Home & Decor',
+        value: 'homedecor',
+      },
+      {
+        key: '7',
+        display: 'Blumen & Garten',
+        value: 'blumengarten',
+      },
+      {
+        key: '8',
+        display: 'Handwerk',
+        value: 'handwerk',
+      },
+      {
+        key: '9',
+        display: 'Sonstiges',
+        value: 'sonstiges',
+      },
+    ]);
+  }
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -51,7 +117,15 @@ export class TraderOverviewComponent implements OnInit {
     });
   }
 
+  reducedAction(val: any) {
+    if (val.internalValue) {
+      this.storeType = val.intValue;
+      this.updateLocations(this.locations);
+    }
+  }
+
   loadTmpLocations(position: number[]) {
+    this.spinnerService.show();
     const radius = this.paramRadius ? this.paramRadius : this.STATIC_RADIUS;
     this.geo
       .getLocations(radius, position)
@@ -70,8 +144,19 @@ export class TraderOverviewComponent implements OnInit {
         });
       })
       .finally(() => {
+        this.hasLocations = this.locations && this.locations.length > 0;
         this.updateLocations(this.locations);
+        this.spinnerService.hide();
       });
+  }
+
+  selChange(selEvent: LkSelectOptions) {
+    if (selEvent) {
+      console.log(selEvent);
+      this.storeType = selEvent.value;
+      this.storageService.saveTraderFilter(selEvent);
+      this.updateLocations(this.locations);
+    }
   }
 
   async updateLocations(trlocaitons: Array<Location>) {
@@ -90,9 +175,20 @@ export class TraderOverviewComponent implements OnInit {
       ids,
       TraderProfileStatus.PUBLIC
     );
-
-    this.traders = traderProfiles.sort((traderA, traderB) =>
-      traderA.businessname.localeCompare(traderB.businessname)
-    );
+    if (this.storeType && this.storeType !== 'alle') {
+      const selectedStores = [];
+      traderProfiles.filter((i) => {
+        if (i.storeType && i.storeType[this.storeType]) {
+          selectedStores.push(i);
+        }
+      });
+      this.traders = selectedStores.sort((traderA, traderB) =>
+        traderA.businessname.localeCompare(traderB.businessname)
+      );
+    } else {
+      this.traders = traderProfiles.sort((traderA, traderB) =>
+        traderA.businessname.localeCompare(traderB.businessname)
+      );
+    }
   }
 }

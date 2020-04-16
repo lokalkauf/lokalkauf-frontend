@@ -1,21 +1,3 @@
-@import '../../../variables.scss';
-
-textarea {
-  box-sizing: border-box;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 100;
-  min-width: 4rem;
-  min-height: 8rem;
-  letter-spacing: 1.5px;
-  background-color: white;
-  padding: 1rem;
-  border: dotted 1px $lightergreen;
+mat-form-field {
   width: 100%;
-  outline: none;
-}
-
-textarea:focus {
-  border-style: dashed;
-  background-color: #f8f8f8;
 }

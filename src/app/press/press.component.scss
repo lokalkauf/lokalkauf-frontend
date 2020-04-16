@@ -1,0 +1,33 @@
+@import '../../theme/variables.scss';
+
+.presse-container {
+  display: flex;
+  min-height: 150px;
+  align-items: center;
+
+  flex-direction: column;
+
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+  }
+
+  .presse-image {
+    img {
+      @media screen and (min-width: 768px) {
+        width: 150px;
+      }
+    }
+  }
+
+  .presse-link {
+    padding: 0 20px 60px 20px;
+
+    @media screen and (min-width: 768px) {
+      padding: 0 20px 20px 20px;
+    }
+
+    a {
+      color: $darkgreen;
+    }
+  }
+}

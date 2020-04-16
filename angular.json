@@ -25,6 +25,7 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
+              "src/robots.txt",
               "src/assets",
               {
                 "glob": "**/*",
@@ -35,8 +36,9 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss",
-              "./node_modules/leaflet/dist/leaflet.css"
+              "src/theme/styles.scss",
+              "./node_modules/leaflet/dist/leaflet.css",
+              "./node_modules/ngx-lightbox/lightbox.css"
             ],
             "scripts": [],
             "serviceWorker": true,
@@ -67,7 +69,7 @@
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                  "maximumError": "100kb"
                 }
               ]
             }
@@ -99,12 +101,13 @@
             "karmaConfig": "karma.conf.js",
             "assets": [
               "src/favicon.ico",
+              "src/robots.txt",
               "src/assets",
               "src/manifest.webmanifest"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss"
+              "src/theme/styles.scss"
             ],
             "scripts": []
           }

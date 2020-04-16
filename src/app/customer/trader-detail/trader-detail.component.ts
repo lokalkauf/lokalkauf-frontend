@@ -1,18 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AngularFirestore, Reference } from '@angular/fire/firestore';
-import { Observable, from, Subscription, defer } from 'rxjs';
-import { flatMap, map, tap } from 'rxjs/operators';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CarouselEntry } from 'src/app/models/carouselEntry';
-import { Link } from 'src/app/models/link';
-import { TraderProfile } from 'src/app/models/traderProfile';
-import { Trader } from 'src/app/models/trader';
-import { EMail } from '../../models/email';
-import { EMailService } from '../../services/email.service';
-import { ErrorService } from 'src/app/services/error.service';
-import { AngularFireStorage } from '@angular/fire/storage';
-import { TraderService } from 'src/app/services/trader.service';
-import { ImageService } from 'src/app/services/image.service';
+import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { flatMap, map } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { TraderProfile } from '../../models/traderProfile';
+import { Trader } from '../../models/trader';
+import { ImageService } from '../../services/image.service';
+import { Lightbox } from 'ngx-lightbox';
 
 @Component({
   selector: 'app-trader-detail',
@@ -22,19 +16,16 @@ import { ImageService } from 'src/app/services/image.service';
 export class TraderDetailComponent implements OnInit {
   trader$: Observable<Omit<TraderProfile, 'id'>>;
   productAmount$: Observable<number>;
-  traderImages$: Observable<Array<CarouselEntry>>;
+  traderImages$: Observable<string[]>;
 
   showMoreText = false;
+  private lightBoxItems = [];
 
   constructor(
     private db: AngularFirestore,
     private route: ActivatedRoute,
-    private mailService: EMailService,
-    private router: Router,
-    private errorService: ErrorService,
-    private storage: AngularFireStorage,
-    private traderService: TraderService,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private lightbox: Lightbox
   ) {}
 
   ngOnInit(): void {
@@ -56,11 +47,23 @@ export class TraderDetailComponent implements OnInit {
 
     this.traderImages$ = this.route.params.pipe(
       flatMap(
-        async (params) =>
-          await this.imageService.getAllTraderImageUrls(params.id)
+        async (params) => {
+          const images = await this.imageService.getAllTraderImageUrls(
+            params.id
+          );
+
+          if (images && images.length > 0) {
+            images.forEach((i) =>
+              this.lightBoxItems.push({
+                src: i,
+              })
+            );
+          }
+          return images;
+        }
+
         // this.traderService.getTraderBusinessImageUrls(params.id)
-      ),
-      map((x) => x.map((y) => new CarouselEntry(y)))
+      )
     );
 
     this.productAmount$ = this.route.params.pipe(
@@ -71,6 +74,13 @@ export class TraderDetailComponent implements OnInit {
           .pipe(map((snap) => snap.size))
       )
     );
+    this.changeUrl();
+  }
+
+  changeUrl() {
+    // Change URL to /trader-detail/id. This is needed in case we were redirected
+    // form the function traderDetail
+    history.replaceState(null, '', '/trader-detail/' + this.route.snapshot.params.id);
   }
 
   getCorrectUrl(url?: string) {
@@ -87,5 +97,11 @@ export class TraderDetailComponent implements OnInit {
     } else {
       return inputText;
     }
+  }
+
+  openLightbox(index: number): void {
+    // open lightbox
+    console.log('ich war hier: ' + index);
+    this.lightbox.open(this.lightBoxItems, index);
   }
 }

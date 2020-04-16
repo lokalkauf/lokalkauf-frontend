@@ -15,7 +15,7 @@ import {
 import { fromEvent, Subject, merge } from 'rxjs';
 
 @Component({
-  selector: 'app-lk-textarea',
+  selector: 'lk-textarea',
   templateUrl: './lk-textarea.component.html',
   styleUrls: ['./lk-textarea.component.scss'],
   providers: [

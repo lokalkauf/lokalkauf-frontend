@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import loadImage from 'blueimp-load-image';
-import { ErrorService } from 'src/app/services/error.service';
+import { ErrorService } from '../../services/error.service';
 
 @Component({
   selector: 'app-image-chooser',

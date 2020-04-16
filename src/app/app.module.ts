@@ -8,12 +8,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, Router, Scroll } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
@@ -38,21 +41,24 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { VerifyComponent } from './verify/verify.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-
-import { CommonModule } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { EMailService } from './services/email.service';
-import { SafePipe } from './pipes/safe.pipe';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SpinnerService } from './services/spinner.service';
-import { HttpCommunicationInterceptor } from './interceptors/http-communication.interceptor';
 import { ErrorDisplayComponent } from './error-display/error-display.component';
-import { AboutUsComponent } from './about-us/about-us.compontent';
+import { AboutUsComponent } from './about-us/about-us.component';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 import { FaqComponent } from './faq/faq.component';
 import { StorageService } from './services/storage.service';
-
-import { ToolbarComponent } from './layout/toolbar/toolbar.component';
-import { SidenavComponent } from './layout/sidenav/sidenav.component';
+import { SearchInputComponent } from './start/search-input/search-input.component';
+import { TextService } from './services/text.service';
+import { MuiService } from './services/mui.service';
+import { PipesModule } from './pipes/pipes.modules';
+import { RedirectComponent } from './redirect/redirect.component';
+import { PressComponent } from './press/press.component';
+import { LightboxModule } from 'ngx-lightbox';
+import { filter } from 'rxjs/operators';
+import { MatCarouselModule } from '@ngmodule/material-carousel';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -61,6 +67,12 @@ const routes: Routes = [
   { path: 'verify', component: VerifyComponent },
   { path: 'aboutus', component: AboutUsComponent },
   { path: 'faq', component: FaqComponent },
+  { path: 'press', component: PressComponent },
+  {
+    path: 'redirect',
+    component: RedirectComponent,
+    children: [{ path: '**', component: RedirectComponent }],
+  },
 ];
 
 @NgModule({
@@ -71,12 +83,12 @@ const routes: Routes = [
     FeedbackComponent,
     VerifyComponent,
     SpinnerComponent,
-    SafePipe,
     SpinnerComponent,
     StartComponent,
     FaqComponent,
-    ToolbarComponent,
-    SidenavComponent,
+    PressComponent,
+    SearchInputComponent,
+    RedirectComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,7 +104,10 @@ const routes: Routes = [
     MatCardModule,
     MatMenuModule,
     MatListModule,
+    MatInputModule,
     MatButtonModule,
+    MatProgressSpinnerModule,
+    FontAwesomeModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
@@ -100,9 +115,14 @@ const routes: Routes = [
     AngularFireDatabaseModule,
     CustomerModule,
     TraderModule,
+    MatCarouselModule,
     TransportModule,
-    RouterModule.forRoot(routes, { anchorScrolling: 'enabled' }),
+    RouterModule.forRoot(routes, {
+      anchorScrolling: 'enabled',
+      scrollPositionRestoration: 'top',
+    }),
     ReusablesModule,
+    PipesModule,
     FormsModule,
     ReactiveFormsModule,
     AngularFireAuthModule,
@@ -111,22 +131,39 @@ const routes: Routes = [
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: true,
     }),
+    LightboxModule,
   ],
   exports: [RouterModule],
   providers: [
     ShoppingcartService,
     UserService,
     TraderService,
+    MuiService,
+    TextService,
     SpinnerService,
     StorageService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpCommunicationInterceptor,
-      multi: true,
-    },
     EMailService,
     ImageService,
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(router: Router, viewportScroller: ViewportScroller) {
+    router.events
+      .pipe(filter((e: any): e is Scroll => e instanceof Scroll))
+      .subscribe((e) => {
+        if (e.position) {
+          // backward navigation
+          viewportScroller.scrollToPosition(e.position);
+        } else if (e.anchor) {
+          // anchor navigation
+          viewportScroller.scrollToAnchor(e.anchor);
+        } else {
+          // forward navigation
+          viewportScroller.scrollToPosition([0, 0]);
+          // damn it, but it works
+          document.querySelector('.mat-sidenav-content').scrollTop = 0;
+        }
+      });
+  }
+}

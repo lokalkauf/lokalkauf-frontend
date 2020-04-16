@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-lk-page-title',
+  selector: 'lk-page-title',
   templateUrl: './lk-page-title.component.html',
   styleUrls: ['./lk-page-title.component.scss'],
 })

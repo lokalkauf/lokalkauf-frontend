@@ -1,22 +1,24 @@
-@import '../../../variables.scss';
+@import '../../../theme/variables.scss';
 
-#traders-view-container {
-  max-width: 1024px;
-  margin: 0 auto;
-  padding: 0 16px;
-  box-sizing: border-box;
+lk-warning-box {
+  display: block;
+  margin-top: 20px;
 }
 
-#traders-map-row {
+lk-navigation-chips {
+  display: block;
+}
+
+.traders-map-row {
   height: 50%;
   max-height: 26rem;
 }
 
-#traders-overview-row {
+.traders-overview-row {
   width: 100%;
 }
 
-#tradersmap {
+.tradersmap {
   top: 0rem;
   z-index: 0;
   height: 50%;
@@ -36,16 +38,63 @@
   }
 }
 
-#traders-overview-content {
+.traders-overview-content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   padding-top: 2rem;
-  display: grid;
-  grid-gap: 1.5rem;
-  background-color: white;
+  margin-bottom: 2rem;
   width: 100%;
+}
 
-  @media screen and (max-width: 767px) {
-    margin: 0px;
-    width: 100%;
-    margin-top: 20px;
-  }
+.traders-input-center {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.traders-input-center {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+app-trader-item {
+  margin-bottom: 16px;
+}
+
+.no-result-message {
+  display: block;
+  max-width: 400px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+}
+
+.social-button-row a {
+  margin: 8px;
+}
+
+.mat-share-facebook {
+  background-color: #3b5998;
+}
+
+.mat-share-twitter {
+  background-color: #00acee;
+}
+
+.mat-share-whatsapp {
+  background-color: #4fce5d;
+}
+
+.mat-share-instagram {
+  background: #d6249f;
+  background: radial-gradient(
+    circle at 30% 107%,
+    #fdf497 0%,
+    #fd5949 45%,
+    #d6249f 60%,
+    #285aeb 90%
+  );
 }

@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, HostBinding } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Trader } from '../../models/trader';
-import { Observable, of, from } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map, flatMap, distinctUntilChanged } from 'rxjs/operators';
-import { TraderProfile } from 'src/app/models/traderProfile';
-import { ImageService } from 'src/app/services/image.service';
+import { TraderProfile } from '../../models/traderProfile';
+import { ImageService } from '../../services/image.service';
 
 @Component({
   selector: 'app-trader-item',
@@ -16,7 +16,7 @@ export class TraderItemComponent implements OnInit {
 
   productAmount$: Observable<number>;
 
-  trader$: Observable<Omit<TraderProfile, 'id'>>;
+  trader$: Observable<TraderProfile & { id: string }>;
 
   thumbnail$: Observable<string>;
 
@@ -29,7 +29,7 @@ export class TraderItemComponent implements OnInit {
   ngOnInit(): void {
     this.trader$ = this.db
       .collection('Traders')
-      .doc<Omit<TraderProfile, 'id'>>(this.trader.id)
+      .doc<TraderProfile>(this.trader.id)
       .valueChanges()
       .pipe(
         map((trader) => {
@@ -50,7 +50,7 @@ export class TraderItemComponent implements OnInit {
                 await this.imageService.getImage(imagePath)
               )
             ).url
-          : './assets/lokalkauf-pin.png'
+          : null
       )
     );
   }

@@ -1,37 +1,11 @@
-@import '../../variables.scss';
+@import '../../theme/variables.scss';
 
-#faq-view-container {
+.faq-container {
   max-width: 1024px;
   margin: 0 auto;
   padding: 0 16px;
   box-sizing: border-box;
   text-align: justify;
-  font-size: 0.8rem;
-
-  h1,
-  h2 {
-    text-transform: uppercase;
-  }
-
-  h1,
-  h2,
-  h3 {
-    color: $darkgreen !important;
-  }
-
-  h1 {
-    margin-bottom: 2rem;
-  }
-
-  h2 {
-    margin-top: 3.3rem;
-    font-size: 1.1rem;
-  }
-
-  h3 {
-    margin-top: 1.2rem;
-    font-size: 1rem;
-  }
 
   a {
     cursor: pointer;

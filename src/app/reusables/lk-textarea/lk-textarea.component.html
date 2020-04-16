@@ -1,5 +1,16 @@
-<textarea
+<mat-form-field>
+  <mat-label>{{ placeholder }}</mat-label>
+  <textarea
+    matInput
+    [placeholder]="placeholder"
+    [(ngModel)]="value"
+    (blur)="onBlur()"
+    cdkTextareaAutosize
+  ></textarea>
+</mat-form-field>
+
+<!-- <textarea
   [placeholder]="placeholder"
   [(ngModel)]="value"
   (blur)="onBlur()"
-></textarea>
+></textarea> -->

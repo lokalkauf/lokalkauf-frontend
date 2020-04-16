@@ -12,17 +12,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Clone Repository 
-      uses: actions/checkout@master
+      uses: actions/checkout@v2
 
     - name: Setup Node.js
-      uses: actions/setup-node@master
+      uses: actions/setup-node@v1
       with:
         node-version: '12.x'
+
+    - name: Init. Node.js Cache
+      uses: actions/cache@v1
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
 
     - name: npm install
       run: npm ci
 
-    - name: Build Project 
+    - name: Build App 
       run: npm run build
 
     - name: Check Code Style

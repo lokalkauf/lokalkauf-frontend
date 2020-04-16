@@ -1,3 +1,5 @@
+@import '../theme/variables.scss';
+
 .menu-spacer {
   flex: 1 1 auto;
 }
@@ -13,20 +15,13 @@ mat-toolbar-row {
   margin-right: auto;
 }
 
+mat-sidenav-container {
+  height: 100%;
+}
+
 mat-sidenav-content {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
-  background-color: transparent;
-}
-
-mat-sidenav-container {
-  background-color: transparent;
-  flex-grow: 1;
 }
 
 mat-sidenav {
@@ -47,6 +42,10 @@ button.mat-mini-fab.avatar {
 
 .logo-link {
   padding: 0;
+
+  img {
+    height: 40px;
+  }
 }
 
 .close-btn {
@@ -67,195 +66,18 @@ button.mat-mini-fab.avatar {
 
   .mat-list-item {
     display: inline-block;
-    margin: 20px;
+    margin: 20px 10px;
+
+    @media screen and (min-width: 768px) {
+      margin: 20px;
+    }
+
     font-size: 0.7rem;
     color: #666;
     text-decoration: none;
   }
 
   .mat-list-item:hover {
-    color: #0f0;
+    color: #00b900;
   }
 }
-// @import '../variables.scss';
-
-// #header {
-//   height: 50px;
-//   margin-bottom: 30px;
-//   padding-top: 20px;
-
-//   div {
-//     height: 50px;
-//     display: inline-block;
-//   }
-
-//   #logo {
-//     img {
-//       width: auto;
-//       height: 50px;
-//       cursor: pointer;
-//     }
-
-//     display: block;
-//     width: 33px;
-//     float: left;
-//     margin-right: 10px;
-//     padding-left: 20px;
-//   }
-
-//   color: $lightestgreen;
-//   font-family: Helvetica, Arial, sans-serif;
-
-//   #name {
-//     line-height: 60px;
-//     font-size: 20pt;
-//     letter-spacing: 3px;
-//     display: inline-block;
-//   }
-
-//   #shopping-cart,
-//   #burger-menu {
-//     float: right;
-//     width: 30px;
-//     display: block;
-//     margin-right: 20px;
-
-//     .mat-icon {
-//       line-height: 60px;
-//       width: 30px;
-//       height: 30px;
-//       font-size: 30px;
-//       font-weight: 100;
-//       color: $lightestgrey;
-//     }
-//   }
-
-//   #burger-menu {
-//     cursor: pointer;
-//     position: absolute;
-//     left: calc(100% - 50px) !important;
-//     z-index: 2;
-//     top: 10px;
-//   }
-// }
-
-// .mat-drawer-container {
-//   height: 100%;
-// }
-
-// #sidenav-right,
-// .sidenav-right-item,
-// .sitenav-right-item-menu {
-//   overflow: visible !important;
-// }
-
-// .mat-drawer-inner-container,
-// .mat-drawer-opened,
-// .mat-drawer-opened > .mat-drawer-inner-container {
-//   overflow: visible !important;
-//   overflow-x: visible !important;
-// }
-
-// .sidenav-right-item.separator {
-//   border-bottom: 0.05rem solid #52910f;
-//   width: 80%;
-// }
-
-// #sidenav-right {
-//   width: 200px;
-//   background-color: white;
-//   height: 100%;
-//   top: 0;
-//   bottom: 0;
-//   right: 0;
-//   overflow: visible !important;
-
-//   font-size: 0.9rem;
-
-//   -webkit-box-shadow: -8px 3px 20px 0px rgba(0, 0, 0, 0.16);
-//   -moz-box-shadow: -8px 3px 20px 0px rgba(0, 0, 0, 0.16);
-//   box-shadow: -8px 3px 20px 0px rgba(0, 0, 0, 0.16);
-
-//   #close {
-//     position: relative;
-//     top: 30px;
-//     right: 0.8rem;
-//     float: right;
-//     width: 30px;
-//     height: 30px;
-
-//     .mat-icon {
-//       width: 30px;
-//       height: 30px;
-//       font-size: 30px;
-//       color: $lightestgrey;
-//     }
-//   }
-// }
-
-// .sidenav-right-item,
-// .sitenav-right-item-menu {
-//   cursor: pointer;
-//   padding-top: 0.3rem;
-//   margin-left: 1rem;
-//   cursor: pointer;
-
-//   @media screen and (max-width: 768px) {
-//     margin-bottom: 1.2rem;
-//   }
-
-//   a {
-//     text-decoration: none;
-//     color: $appblack;
-//   }
-// }
-
-// .sitenav-right-item:hover {
-//   color: $lightestgreen !important;
-// }
-
-// .sitenav-right-item-menu {
-//   padding-top: 1.6rem;
-//   margin-right: 1rem;
-// }
-
-// #main_body {
-//   margin: 0 1.2rem;
-
-//   @media screen and (min-width: 768px) {
-//     height: calc(100% - 80px);
-//   }
-// }
-
-// .start-page {
-//   margin: 0 !important;
-// }
-
-// .start-header {
-//   margin-bottom: 0 !important;
-
-//   #burger-menu {
-//     .mat-icon {
-//       margin-top: 16px !important;
-//       line-height: 30px !important;
-//       color: $lightergreen !important;
-//       background-color: $white-transparent-60;
-//     }
-//   }
-// }
-
-// .mat-drawer {
-//   color: black;
-// }
-
-// .mat-drawer-container {
-//   background-color: white;
-// }
-
-// .app-content {
-//   @media screen and (min-width: 768px) {
-//     width: 740px;
-//     margin-left: auto !important;
-//     margin-right: auto !important;
-//   }
-// }

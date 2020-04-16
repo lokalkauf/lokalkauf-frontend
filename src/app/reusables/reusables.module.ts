@@ -7,17 +7,22 @@ import { LkInputComponent } from './lk-input/lk-input.component';
 import { LkButtonComponent } from './lk-button/lk-button.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LkTextareaComponent } from './lk-textarea/lk-textarea.component';
-import { ImageCarouselComponent } from './image-carousel/image-carousel.component';
 import { Routes, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { LkPageTitleComponent } from './lk-page-title/lk-page-title.component';
 import { LkCheckboxComponent } from './lk-checkbox/lk-checkbox.component';
+import { LkChipListComponent } from './lk-chip-list/lk-chip-list.component';
 import { ImageChooserComponent } from './image-chooser/image-chooser.component';
 import { FullscreenModalComponent } from './fullscreen-modal/fullscreen-modal.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatChipsModule } from '@angular/material/chips';
 import { LkSelectComponent } from './lk-select/lk-select.component';
+import { LkWarningBoxComponent } from './lk-warning-box/lk-warning-box.component';
+import { NgxStarRatingModule } from 'ngx-star-rating';
+import { RatingStarComponent } from './rating-star/rating-star.component';
+import { LkContainerComponent } from './lk-container/lk-container.component';
 
 const routes: Routes = [];
 
@@ -28,12 +33,15 @@ const routes: Routes = [];
     LkInputComponent,
     LkButtonComponent,
     LkTextareaComponent,
-    ImageCarouselComponent,
     LkPageTitleComponent,
     LkCheckboxComponent,
     LkSelectComponent,
     ImageChooserComponent,
     FullscreenModalComponent,
+    LkWarningBoxComponent,
+    RatingStarComponent,
+    LkContainerComponent,
+    LkChipListComponent,
   ],
   imports: [
     CommonModule,
@@ -45,6 +53,8 @@ const routes: Routes = [];
     MatInputModule,
     MatButtonModule,
     MatTooltipModule,
+    NgxStarRatingModule,
+    MatChipsModule,
   ],
   exports: [
     MapComponent,
@@ -56,8 +66,11 @@ const routes: Routes = [];
     LkCheckboxComponent,
     LkSelectComponent,
     ImageChooserComponent,
-    ImageCarouselComponent,
     FullscreenModalComponent,
+    LkWarningBoxComponent,
+    RatingStarComponent,
+    LkContainerComponent,
+    LkChipListComponent,
   ],
 })
 export class ReusablesModule {}

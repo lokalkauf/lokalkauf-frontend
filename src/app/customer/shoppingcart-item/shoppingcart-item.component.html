@@ -3,7 +3,11 @@
   *ngIf="productDetails$ | async as productDetails"
 >
   <div class="image">
-    <img mat-card-avatar [src]="productDetails.image" alt="" />
+    <img
+      mat-card-avatar
+      [src]="productDetails.image"
+      [alt]="productDetails.name"
+    />
   </div>
   <div class="name-count">
     <div class="name">
