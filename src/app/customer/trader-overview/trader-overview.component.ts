@@ -10,6 +10,7 @@ import { TraderProfile, TraderProfileStatus } from '../../models/traderProfile';
 import { SpinnerService } from '../../services/spinner.service';
 import { map, filter } from 'rxjs/operators';
 import { StorageService } from 'src/app/services/storage.service';
+import { uiTexts } from 'src/app/services/uiTexts';
 import {
   faFacebookF,
   faTwitter,
@@ -39,6 +40,7 @@ export class TraderOverviewComponent implements OnInit {
   faTwitter = faTwitter;
   faWhatsapp = faWhatsapp;
   faInstagram = faInstagram;
+  text = uiTexts;
   constructor(
     private route: ActivatedRoute,
     private geo: GeoService,
