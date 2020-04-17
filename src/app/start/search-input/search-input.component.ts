@@ -124,9 +124,9 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
     this.userGeoAddress$ = concat(
       of(null),
       from(this.geo.getUserPosition()).pipe(
-        flatMap((userPosition) =>
+        flatMap(async (userPosition) =>
           userPosition
-            ? this.geo.getPostalAndCityByLocation(userPosition)
+            ? await this.geo.getPostalAndCityByLocation(userPosition)
             : of(null)
         )
       )

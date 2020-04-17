@@ -107,6 +107,24 @@ Dich hier vorab registrieren."
       </div>
     </div>
 
+    <lk-container class="map-confirmation">
+      <div class="warning">
+        <ng-container *ngIf="needConfirmation()">
+          Bitte bestätige, den auf der Karte angezeigten Standort.<br />
+          {{ location }}
+        </ng-container>
+      </div>
+      <img src="/assets/lokalkauf-pin.svg" class="confirmation-pin" />
+      <lk-map (positionChanged)="onMapMove($event)"> </lk-map>
+      <lk-button
+        [disabled]="!needConfirmation()"
+        color="accent"
+        (click)="confirmAddress()"
+      >
+        Standort bestätigen:
+      </lk-button>
+    </lk-container>
+
     <ng-container *ngIf="registrationState === 'new'">
       <div class="subheadline">Deine Zugangsdaten</div>
       <div class="registration-input">

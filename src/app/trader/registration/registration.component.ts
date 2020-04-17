@@ -50,6 +50,8 @@ export class RegistrationComponent implements OnInit {
   registrationState: RegistrationState;
   saveSuccessful = false;
   delete = false;
+  isAaddressConfirmed = false;
+  location: number[];
 
   ngOnInit(): void {
     window.scrollBy(0, 0);
@@ -267,7 +269,30 @@ export class RegistrationComponent implements OnInit {
     dialog.afterClosed().subscribe(() => console.log('closed'));
   }
 
+  confirmAddress() {
+    this.isAaddressConfirmed = true;
+  }
+
+  onMapMove(pos: any) {
+    console.log('position moved: ' + pos);
+    console.log(pos);
+    this.location = [pos.lat, pos.lng];
+  }
+
   verwerfen() {
     this.router.navigate(['/trader/profile']);
+  }
+
+  needConfirmation() {
+    return this.addressWasChanged(); // && !this.isAaddressConfirmed);
+  }
+
+  addressWasChanged() {
+    return (
+      this.city.dirty ||
+      this.postcode.dirty ||
+      this.street.dirty ||
+      this.streetnumber.dirty
+    );
   }
 }

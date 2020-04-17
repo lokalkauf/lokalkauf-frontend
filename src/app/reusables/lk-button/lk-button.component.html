@@ -1,12 +1,4 @@
 <button mat-flat-button [type]="type" [disabled]="disabled" [color]="color">
-  {{ label }}
+  <ng-container *ngIf="label">{{ label }}</ng-container>
+  <ng-content *ngIf="!label"></ng-content>
 </button>
-
-<!-- <button
-  [disabled]="disabled"
-  [type]="type"
-  [style]="'min-width: ' + minSizePercent + '%;'"
-  [class.warn]="warn"
->
-  {{ label }}
-</button> -->
