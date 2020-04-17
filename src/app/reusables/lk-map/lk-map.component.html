@@ -1,7 +1,8 @@
 <div
   class="lk-map"
   leaflet
-  (leafletMapReady)="onMapReady($event)"
+  (leafletMapMoveEnd)="updatedBounding($event)"
+  (leafletMapReady)="mapReady($event)"
   [leafletOptions]="options"
   [leafletLayers]="markers"
 ></div>

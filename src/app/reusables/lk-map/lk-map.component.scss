@@ -1,10 +1,5 @@
 @import '../../../theme/variables.scss';
 
-:host {
-  height: 100%;
-  width: 100%;
-}
-
 .lk-map {
   height: 100%;
   width: 100%;
@@ -12,4 +7,9 @@
 
 .my-pos-icon {
   background-color: $intensivered;
+}
+
+.leaflet-tile-pane {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
 }

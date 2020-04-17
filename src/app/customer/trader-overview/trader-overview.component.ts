@@ -17,6 +17,9 @@ import {
   faWhatsapp,
   faInstagram,
 } from '@fortawesome/free-brands-svg-icons';
+import { MapMarkerData } from 'src/app/models/mapMarkerData';
+import { MapPosition } from 'src/app/models/mapPosition';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-trader-overview',
@@ -30,10 +33,12 @@ export class TraderOverviewComponent implements OnInit {
   STATIC_RADIUS = 10;
   paramRadius: number;
   storeType: string;
-  locations: Array<Location>;
   selectedTrader: LkSelectOptions;
   storeTypes: Observable<LkSelectOptions[]>;
   storeTypePreselect: Observable<string>;
+  traderLocations: Array<MapMarkerData>;
+  currentLocation: MapPosition;
+  clickedTraderId: string;
 
   hasLocations = true;
   faFacebookF = faFacebookF;
@@ -41,6 +46,7 @@ export class TraderOverviewComponent implements OnInit {
   faWhatsapp = faWhatsapp;
   faInstagram = faInstagram;
   text = uiTexts;
+
   constructor(
     private route: ActivatedRoute,
     private geo: GeoService,
@@ -112,18 +118,16 @@ export class TraderOverviewComponent implements OnInit {
         ];
         // this.geo.setUserPosition(pos);
         this.paramRadius = Number.parseFloat(params.rad);
+        this.currentLocation = {
+          latitude: pos[0],
+          longitude: pos[1],
+          zoom: this.paramRadius,
+        };
         this.loadTmpLocations(pos);
       } catch {
         console.log('no location available');
       }
     });
-  }
-
-  reducedAction(val: any) {
-    if (val.internalValue) {
-      this.storeType = val.intValue;
-      this.updateLocations(this.locations);
-    }
   }
 
   loadTmpLocations(position: number[]) {
@@ -132,22 +136,21 @@ export class TraderOverviewComponent implements OnInit {
     this.geo
       .getLocations(radius, position)
       .then((value: GeoQuerySnapshot) => {
-        this.locations = new Array<Location>();
+        this.traderLocations = new Array<MapMarkerData>();
 
         value.forEach((loc: GeoFirestoreTypes.QueryDocumentSnapshot) => {
-          this.locations.push({
-            traderId: loc.id,
-            coordinates: [
-              loc.data().coordinates.latitude,
-              loc.data().coordinates.longitude,
-            ],
-            distance: loc.distance,
+          this.traderLocations.push({
+            additionalData: loc.id,
+            locationLatitude: loc.data().coordinates.latitude,
+            locationLongitude: loc.data().coordinates.longitude,
+            html: '',
           });
         });
       })
       .finally(() => {
-        this.hasLocations = this.locations && this.locations.length > 0;
-        this.updateLocations(this.locations);
+        this.hasLocations =
+          this.traderLocations && this.traderLocations.length > 0;
+        this.updateLocations(this.traderLocations);
         this.spinnerService.hide();
       });
   }
@@ -157,21 +160,21 @@ export class TraderOverviewComponent implements OnInit {
       console.log(selEvent);
       this.storeType = selEvent.value;
       this.storageService.saveTraderFilter(selEvent);
-      this.updateLocations(this.locations);
+      this.updateLocations(this.traderLocations);
     }
   }
 
-  async updateLocations(trlocaitons: Array<Location>) {
+  async updateLocations(trlocaitons: Array<MapMarkerData>) {
     if (!trlocaitons || trlocaitons.length < 1) {
       return;
     }
 
     const distinctLocations = trlocaitons.filter(
       (thing, i, arr) =>
-        arr.findIndex((t) => t.traderId === thing.traderId) === i
+        arr.findIndex((t) => t.additionalData === thing.additionalData) === i
     );
 
-    const ids = distinctLocations.map((l) => l.traderId);
+    const ids = distinctLocations.map((l) => l.additionalData);
 
     const traderProfiles = await this.traderService.getTraderProfiles(
       ids,
@@ -191,6 +194,17 @@ export class TraderOverviewComponent implements OnInit {
       this.traders = traderProfiles.sort((traderA, traderB) =>
         traderA.businessname.localeCompare(traderB.businessname)
       );
+    }
+  }
+
+  traderpinClicked(mapData: MapMarkerData) {
+    this.clickedTraderId = mapData.additionalData;
+    console.log(this.clickedTraderId);
+    const scrollToElement = document.getElementById(
+      'trader-' + mapData.additionalData
+    );
+    if (scrollToElement) {
+      scrollToElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
   }
 }

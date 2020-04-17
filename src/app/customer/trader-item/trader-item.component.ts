@@ -13,6 +13,7 @@ import { ImageService } from '../../services/image.service';
 })
 export class TraderItemComponent implements OnInit {
   @Input() trader: Trader;
+  @Input() showClickmeAnimation = true;
 
   productAmount$: Observable<number>;
 

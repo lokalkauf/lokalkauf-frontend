@@ -53,3 +53,42 @@ mat-card {
     }
   }
 }
+
+.active {
+  -moz-animation-duration: 5s;
+  -webkit-animation-duration: 5s;
+  animation-duration: 5s;
+  animation-name: blink;
+  -moz-animation-name: blink;
+  -webkit-animation-name: blink;
+}
+
+@keyframes blink {
+  0% {
+    background-color: white;
+  }
+
+  15% {
+    background-color: #ddd;
+  }
+
+  30% {
+    background-color: white;
+  }
+
+  /*45% {
+    background-color: #ddd;
+  }
+
+  60% {
+    background-color: white;
+  }
+
+  75% {
+    background-color: #ddd;
+  }
+
+  90% {
+    background-color: white;
+  }*/
+}

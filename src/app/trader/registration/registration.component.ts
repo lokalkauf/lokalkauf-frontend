@@ -66,13 +66,11 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
 
   @ViewChild(LkMapComponent) map: LkMapComponent;
 
-  async ngAfterViewInit() {
-    // this.updateMapLocation(await this.geo.getUserPosition());
-  }
+  async ngAfterViewInit() {}
 
   updateMapLocation(location: number[]) {
     console.log('update map location: ' + location);
-    this.map.setCenter(location);
+    this.map.flyTo({ latitude: location[0], longitude: location[1], zoom: 18 });
   }
 
   ngOnInit(): void {

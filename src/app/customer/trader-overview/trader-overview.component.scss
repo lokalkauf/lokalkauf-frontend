@@ -14,10 +14,6 @@ lk-navigation-chips {
   max-height: 26rem;
 }
 
-.traders-overview-row {
-  width: 100%;
-}
-
 .tradersmap {
   top: 0rem;
   z-index: 0;
@@ -105,4 +101,29 @@ app-trader-item {
   div {
     padding-top: 20px;
   }
+}
+
+.tradersmap {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+#map-overlay {
+  z-index: 2;
+  position: relative;
+  background-color: white;
+  margin-top: -20px;
+  border-radius: 20px 20px 0px 0px;
+  padding: 15px;
+  min-height: 30vh;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#map-underlay {
+  height: 70vh;
+  width: 100%;
+  position: sticky;
+  top: 0px;
+  z-index: 1;
 }

@@ -3,7 +3,7 @@
   name="scroller.{{ trader.id }}"
   *ngIf="trader$ | async as trader"
 >
-  <mat-card>
+  <mat-card [ngClass]="{ active: showClickmeAnimation }">
     <img
       class="trader-thumbnail"
       *ngIf="thumbnail$ | async as thumbnail; else placeholder"

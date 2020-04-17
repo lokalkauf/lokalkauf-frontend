@@ -1,17 +1,20 @@
 <lk-container>
-  <!-- <div class="traders-map-row">
-    <app-map
-      class="tradersmap"
-      (locationsOnMap)="updateLocations($event)"
-    ></app-map>
-  </div> -->
   <lk-warning-box
     collapseTime="10000"
     content="Unsere Plattform befindet sich in der Testphase. Diese Testphase beschränkt
   sich aktuell auf die Geschäfte in ausgewählten Städten!"
   >
   </lk-warning-box>
-  <div class="traders-overview-row" *ngIf="hasLocations">
+  <!--<div id="map-underlay">
+    <lk-map
+      class="tradersmap"
+      (locationsOnMap)="updateLocations($event)"
+      [traderLocations]="traderLocations"
+      [position]="currentLocation"
+      (markerClicked)="traderpinClicked($event)"
+    ></lk-map>
+  </div>-->
+  <div class="traders-overview-row" id="//map-overlay" *ngIf="hasLocations">
     <lk-page-title title="Alles aus Deiner Nähe"></lk-page-title>
     <lk-chip-list
       [items]="storeTypes"
@@ -24,6 +27,8 @@
       <app-trader-item
         *ngFor="let trader of traders"
         [trader]="trader"
+        [id]="'trader-' + trader.id"
+        [showClickmeAnimation]="clickedTraderId === trader.id"
       ></app-trader-item>
     </div>
   </div>
