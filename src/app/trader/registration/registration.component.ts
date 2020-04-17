@@ -303,11 +303,18 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   }
 
   openConfirmationMode() {
+    if (this.confirmedLocation) {
+      this.updateMapLocation(this.confirmedLocation);
+    } else {
+      this.geo.getUserPosition().then((p) => this.updateMapLocation(p));
+    }
+
     this.confirmAddressMode = true;
   }
 
   confirmAddress() {
     this.confirmAddressMode = false;
+    this.isAaddressConfirmed = true;
     this.confirmedLocation = this.mapLocation;
   }
 
@@ -326,7 +333,9 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   }
 
   needConfirmation() {
-    return this.addressWasChanged() || !this.confirmedLocation; // && !this.isAaddressConfirmed);
+    return this.isAaddressConfirmed
+      ? false
+      : this.addressWasChanged() || !this.confirmedLocation; // && !this.isAaddressConfirmed);
   }
 
   addressWasChanged() {

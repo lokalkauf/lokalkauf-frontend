@@ -109,9 +109,10 @@ Dich hier vorab registrieren."
 
     <lk-container class="map-confirmation">
       <div class="warning">
-        <ng-container *ngIf="needConfirmation()">
+        <ng-container *ngIf="needConfirmation() || confirmAddressMode">
           Bitte bestätige, den auf der Karte angezeigten Standort.<br />
-          {{ confirmedLocation }}
+          Positioniere die Karte so, dass das untere Ende des lokalkauf-Herzens
+          auf deinen Standort zeigt.
         </ng-container>
       </div>
       <div class="disabled-overlay" *ngIf="!confirmAddressMode">
@@ -260,7 +261,7 @@ Dich hier vorab registrieren."
           </div>
           <div class="save">
             <lk-button
-              [disabled]="!registrationForm.valid"
+              [disabled]="!registrationForm.valid || needConfirmation()"
               type="submit"
               label="Aktualisieren"
             ></lk-button>
