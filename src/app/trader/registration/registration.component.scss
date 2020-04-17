@@ -81,6 +81,37 @@ lk-warning-box {
       top: 180px;
       left: 50%;
       margin-left: -20px;
+      cursor: pointer;
+    }
+
+    .disabled-overlay {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 40px;
+      background-color: rgba(255, 255, 255, 0.5);
+      z-index: 5;
+
+      lk-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -100px;
+        margin-top: 0px;
+        width: 200px;
+      }
+    }
+
+    .control-btns {
+      position: absolute;
+      z-index: 5;
+      bottom: 10px;
+      left: 10px;
+
+      button {
+        margin-right: 10px;
+      }
     }
 
     lk-map {

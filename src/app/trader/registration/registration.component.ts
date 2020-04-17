@@ -55,11 +55,14 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
       },
     ]
   );
+
   registrationState: RegistrationState;
   saveSuccessful = false;
   delete = false;
   isAaddressConfirmed = false;
+  confirmAddressMode = false;
   confirmedLocation: number[];
+  mapLocation: number[];
 
   @ViewChild(LkMapComponent) map: LkMapComponent;
 
@@ -97,6 +100,8 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   }
 
   fillVal(user: TraderProfile) {
+    this.confirmedLocation = user.confirmedLocation;
+
     if (user.confirmedLocation) {
       this.updateMapLocation(user.confirmedLocation);
     } else {
@@ -297,14 +302,23 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
     dialog.afterClosed().subscribe(() => console.log('closed'));
   }
 
+  openConfirmationMode() {
+    this.confirmAddressMode = true;
+  }
+
   confirmAddress() {
-    this.isAaddressConfirmed = true;
+    this.confirmAddressMode = false;
+    this.confirmedLocation = this.mapLocation;
+  }
+
+  cancelAddressConfirmation() {
+    this.confirmAddressMode = false;
   }
 
   onMapMove(pos: any) {
     console.log('position moved: ' + pos);
     console.log(pos);
-    this.confirmedLocation = [pos.lat, pos.lng];
+    this.mapLocation = [pos.lat, pos.lng];
   }
 
   verwerfen() {
@@ -312,7 +326,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   }
 
   needConfirmation() {
-    return this.addressWasChanged(); // && !this.isAaddressConfirmed);
+    return this.addressWasChanged() || !this.confirmedLocation; // && !this.isAaddressConfirmed);
   }
 
   addressWasChanged() {

@@ -114,15 +114,37 @@ Dich hier vorab registrieren."
           {{ confirmedLocation }}
         </ng-container>
       </div>
-      <img src="/assets/lokalkauf-pin.svg" class="confirmation-pin" />
+      <div class="disabled-overlay" *ngIf="!confirmAddressMode">
+        <lk-button
+          [color]="needConfirmation() ? 'warn' : 'primary'"
+          (click)="openConfirmationMode()"
+        >
+          <ng-container *ngIf="!needConfirmation()"
+            >Standort ändern</ng-container
+          >
+          <ng-container *ngIf="needConfirmation()"
+            >Standort bestätigen</ng-container
+          >
+        </lk-button>
+      </div>
+      <img
+        *ngIf="confirmAddressMode"
+        src="/assets/lokalkauf-pin.svg"
+        class="confirmation-pin"
+      />
+      <div class="control-btns" *ngIf="confirmAddressMode">
+        <button
+          mat-mini-fab
+          color="default"
+          (click)="cancelAddressConfirmation()"
+        >
+          <mat-icon color="warn">cancel</mat-icon>
+        </button>
+        <button mat-mini-fab color="default" (click)="confirmAddress()">
+          <mat-icon color="primary">thumb_up_alt</mat-icon>
+        </button>
+      </div>
       <lk-map (positionChanged)="onMapMove($event)"> </lk-map>
-      <lk-button
-        [disabled]="!needConfirmation()"
-        color="accent"
-        (click)="confirmAddress()"
-      >
-        Standort bestätigen:
-      </lk-button>
     </lk-container>
 
     <ng-container *ngIf="registrationState === 'new'">
