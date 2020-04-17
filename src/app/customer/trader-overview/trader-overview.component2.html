@@ -87,5 +87,17 @@
         ></fa-icon>
       </a>
     </div>
+
+    <div class="haendler">
+      Du bist Händler? Dann sei der Erste in Deiner Stadt und melde Dich jetzt
+      an!
+      <div>
+        <lk-button
+          [routerLink]="['/trader/register/new']"
+          [label]="(text.start_button_haender_anmelden | text)"
+        >
+        </lk-button>
+      </div>
+    </div>
   </div>
 </lk-container>
