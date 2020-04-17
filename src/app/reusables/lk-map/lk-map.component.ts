@@ -4,6 +4,7 @@ import {
   AfterViewInit,
   Output,
   EventEmitter,
+  Input,
 } from '@angular/core';
 import {
   Map,
@@ -53,14 +54,14 @@ export class LkMapComponent implements OnInit, AfterViewInit {
   };
 
   markers = [
-    circleMarker(latLng(52.518623, 13.376198), {
-      color: '#000',
-      fillColor: '#0f0',
-      fillOpacity: 1,
-      opacity: 0.2,
-      weight: 25,
-      radius: 7,
-    }),
+    // circleMarker(latLng(52.518623, 13.376198), {
+    //   color: '#000',
+    //   fillColor: '#0f0',
+    //   fillOpacity: 1,
+    //   opacity: 0.2,
+    //   weight: 25,
+    //   radius: 7,
+    // }),
   ];
 
   constructor(private geo: GeoService) {}
@@ -78,4 +79,12 @@ export class LkMapComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {}
+
+  public setCenter(position: number[], zoom: number = 18) {
+    if (position) {
+      console.log('set center...' + position);
+
+      this.map.flyTo(latLng(position[0], position[1]), 18);
+    }
+  }
 }

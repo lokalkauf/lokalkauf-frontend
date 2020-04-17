@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  ViewChild,
+  AfterViewInit,
+} from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
@@ -6,6 +12,8 @@ import { TraderProfile, TraderProfileStatus } from '../../models/traderProfile';
 import { TraderService } from '../../services/trader.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteUserComponent } from './delete-user/delete-user.component';
+import { GeoService } from 'src/app/services/geo.service';
+import { LkMapComponent } from 'src/app/reusables/lk-map/lk-map.component';
 
 export enum RegistrationState {
   new = 'new',
@@ -18,7 +26,7 @@ export enum RegistrationState {
   styleUrls: ['./registration.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit, AfterViewInit {
   registrationForm = new FormGroup(
     {
       businessname: new FormControl('', [Validators.required]),
@@ -51,7 +59,18 @@ export class RegistrationComponent implements OnInit {
   saveSuccessful = false;
   delete = false;
   isAaddressConfirmed = false;
-  location: number[];
+  confirmedLocation: number[];
+
+  @ViewChild(LkMapComponent) map: LkMapComponent;
+
+  async ngAfterViewInit() {
+    // this.updateMapLocation(await this.geo.getUserPosition());
+  }
+
+  updateMapLocation(location: number[]) {
+    console.log('update map location: ' + location);
+    this.map.setCenter(location);
+  }
 
   ngOnInit(): void {
     window.scrollBy(0, 0);
@@ -78,6 +97,12 @@ export class RegistrationComponent implements OnInit {
   }
 
   fillVal(user: TraderProfile) {
+    if (user.confirmedLocation) {
+      this.updateMapLocation(user.confirmedLocation);
+    } else {
+      this.geo.getUserPosition().then((p) => this.updateMapLocation(p));
+    }
+
     this.registrationForm.patchValue({
       phone: user.telephone,
       ownerFirstname: user.ownerFirstname.toString(),
@@ -141,7 +166,8 @@ export class RegistrationComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private geo: GeoService
   ) {
     if (router.url.match('new')) {
       this.registrationState = RegistrationState.new;
@@ -182,6 +208,7 @@ export class RegistrationComponent implements OnInit {
       storeEmail: '',
       homepage: '',
       status: TraderProfileStatus.CREATED,
+      confirmedLocation: this.confirmedLocation,
       storeType: {
         gastronomie: false,
         lebensmittel: false,
@@ -203,6 +230,7 @@ export class RegistrationComponent implements OnInit {
       street: this.street.value,
       number: this.streetnumber.value,
       telephone: this.phone.value,
+      confirmedLocation: this.confirmedLocation,
     };
 
     try {
@@ -276,7 +304,7 @@ export class RegistrationComponent implements OnInit {
   onMapMove(pos: any) {
     console.log('position moved: ' + pos);
     console.log(pos);
-    this.location = [pos.lat, pos.lng];
+    this.confirmedLocation = [pos.lat, pos.lng];
   }
 
   verwerfen() {
