@@ -166,10 +166,12 @@ export class GeoService {
 
   async getPostalAndCityByLocation(
     location: Array<number>
-  ): Promise<GeoAddress> {
-    if (location[0] === location[1] && location[0] === -1) {
-      return null;
+  ): Promise<GeoAddress | undefined> {
+    if (!location || !location[0] || !location[1]) {
+      return undefined;
     }
+
+    // location = [52.2839641, 8.034344599999999];
 
     const items = await this.geoPostalcodes
       .near({
@@ -181,13 +183,15 @@ export class GeoService {
 
     // console.log('item: ' + items.size);
 
+    const locationInverted = location.reverse();
+
     if (items.size > 0) {
       for (const i of items.docs) {
         const data = i.data();
         const postalShape = JSON.parse(data.shape);
 
         const inside = insidepolygon(
-          location.reverse(),
+          locationInverted,
           postalShape.coordinates[0]
         );
 
@@ -207,6 +211,19 @@ export class GeoService {
           };
         }
       }
+
+      // fallback to the nearest center of a plz
+      // const sortedItems = items.docs.sort((a, b) => a.distance - b.distance);
+      const theNext = items.docs
+        .sort((a, b) => a.distance - b.distance)[0]
+        .data();
+
+      return {
+        city: theNext.city,
+        postalcode: theNext.postalcode,
+        coordinates: location,
+        radius: 0,
+      };
 
       //    var sortedItems = items.docs.sort((a,b) => a.distance - b.distance);
 
