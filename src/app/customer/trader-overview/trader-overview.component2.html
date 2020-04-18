@@ -11,7 +11,7 @@
   sich aktuell auf die Geschäfte in ausgewählten Städten!"
   >
   </lk-warning-box>
-  <div class="traders-overview-row" *ngIf="hasLocations">
+  <div class="traders-overview-row" *ngIf="(hasLocations$ | async) === true">
     <lk-page-title title="Alles aus Deiner Nähe"></lk-page-title>
     <lk-chip-list
       [items]="storeTypes"
@@ -27,7 +27,7 @@
       ></app-trader-item>
     </div>
   </div>
-  <div class="no-result-message" *ngIf="!hasLocations">
+  <div class="no-result-message" *ngIf="(hasLocations$ | async) === false">
     Leider wurden in Deinem Umkreis keine Händler gefunden. Unsere Plattform
     befindet sich aktuell im Aufbau, so dass wir noch nicht in allen Regionen
     Deutschlands vertreten sind.

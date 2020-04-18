@@ -35,7 +35,7 @@ export class TraderOverviewComponent implements OnInit {
   storeTypes: Observable<LkSelectOptions[]>;
   storeTypePreselect: Observable<string>;
 
-  hasLocations = true;
+  hasLocations$: Observable<boolean> = of(true);
   faFacebookF = faFacebookF;
   faTwitter = faTwitter;
   faWhatsapp = faWhatsapp;
@@ -146,7 +146,6 @@ export class TraderOverviewComponent implements OnInit {
         });
       })
       .finally(() => {
-        this.hasLocations = this.locations && this.locations.length > 0;
         this.updateLocations(this.locations);
         this.spinnerService.hide();
       });
@@ -163,6 +162,7 @@ export class TraderOverviewComponent implements OnInit {
 
   async updateLocations(trlocaitons: Array<Location>) {
     if (!trlocaitons || trlocaitons.length < 1) {
+      this.hasLocations$ = of(false);
       return;
     }
 
@@ -177,6 +177,9 @@ export class TraderOverviewComponent implements OnInit {
       ids,
       TraderProfileStatus.PUBLIC
     );
+
+    this.hasLocations$ = of(traderProfiles.length > 0);
+
     if (this.storeType && this.storeType !== 'alle') {
       const selectedStores = [];
       traderProfiles.filter((i) => {
