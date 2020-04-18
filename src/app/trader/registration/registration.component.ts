@@ -302,11 +302,19 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
     dialog.afterClosed().subscribe(() => console.log('closed'));
   }
 
-  openConfirmationMode() {
+  async openConfirmationMode() {
     if (this.confirmedLocation) {
       this.updateMapLocation(this.confirmedLocation);
     } else {
-      this.geo.getUserPosition().then((p) => this.updateMapLocation(p));
+      const foundLocation = await this.geo.findCoordinatesByFullAddress(
+        this.postcode.value,
+        this.city.value,
+        this.street.value,
+        this.streetnumber.value
+      );
+      if (foundLocation) {
+        this.updateMapLocation(foundLocation.coordinates);
+      }
     }
 
     this.confirmAddressMode = true;
