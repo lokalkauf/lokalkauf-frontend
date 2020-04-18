@@ -41,23 +41,6 @@ export class GeoService {
       });
   }
 
-  async createLocationByAddress(
-    traderId: string,
-    trader: Partial<TraderProfile>
-  ) {
-    const searchAddress = trader.postcode;
-    const addresses = await this.findCoordinatesByFullAddressWithFallback(
-      trader.postcode,
-      trader.city,
-      trader.street,
-      trader.number + ''
-    );
-
-    if (addresses) {
-      return this.createLocation(traderId, addresses.coordinates);
-    }
-  }
-
   getLocations(radius: number, coords: Array<number>) {
     const query: GeoQuery = this.locations.near({
       center: new firestore.GeoPoint(coords[0], coords[1]),
@@ -176,49 +159,38 @@ export class GeoService {
     return null;
   }
 
-  async findCoordinatesByFullAddressWithFallback(
+  // nominatim service, be careful, 1 request per second is the limit
+  async findCoordinatesByFullAddress(
     postal: string,
     city: string,
     street: string,
     streetnumber: string
   ): Promise<GeoAddress> {
-    const streetcontent = (street ? street + ' ' + streetnumber : '').trim();
-    const postalcitycontent = (postal + ' ' + city).trim();
-    let searchFor = (postalcitycontent + ' ' + streetcontent).trim();
-    let result = await this.findCoordinatesByFullAddress(searchFor);
-
-    // fallback to postal and city only
-    if (!result && streetcontent) {
-      searchFor = postalcitycontent;
-      result = await this.findCoordinatesByFullAddress(searchFor);
-    }
-
-    return result;
-  }
-
-  // nominatim service, be careful, 1 request per second is the limit
-  async findCoordinatesByFullAddress(address: string): Promise<GeoAddress> {
-    if (!address) {
-      return null;
-    }
-
     const response: any = await this.http
       .get(
-        'https://nominatim.openstreetmap.org/?addressdetails=1&format=json&limit=1&q=' +
-          encodeURIComponent(address.trim())
+        'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates',
+        {
+          params: {
+            Address: `${street} ${streetnumber}`,
+            City: city,
+            Postal: postal,
+            CountryCode: 'de',
+            f: 'pjson',
+          },
+        }
       )
       .toPromise();
 
-    if (response && response.length > 0) {
-      const res = response[0];
-      return {
-        city: res.address.town ? res.address.town : res.address.city,
-        postalcode: res.address.postcode,
-        coordinates: [Number(res.lat), Number(res.lon)],
-        radius: 0,
-      };
+    const candidate = response.candidates?.[0];
+    if (!candidate) {
+      return null;
     }
 
-    return null;
+    return {
+      city,
+      postalcode: postal,
+      coordinates: [candidate.location.y, candidate.location.x],
+      radius: 0,
+    };
   }
 }
