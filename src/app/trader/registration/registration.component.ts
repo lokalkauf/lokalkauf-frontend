@@ -212,6 +212,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
       email: this.email.value,
       storeEmail: '',
       homepage: '',
+      soMeShare: false,
       status: TraderProfileStatus.CREATED,
       confirmedLocation: this.confirmedLocation,
       storeType: {
