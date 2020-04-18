@@ -124,9 +124,9 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
     this.userGeoAddress$ = concat(
       of(null),
       from(this.geo.getUserPosition()).pipe(
-        flatMap(async (userPosition) =>
+        flatMap((userPosition) =>
           userPosition
-            ? await this.geo.getPostalAndCityByLocation(userPosition)
+            ? this.geo.getPostalAndCityByLocation(userPosition)
             : of(null)
         )
       )
@@ -144,6 +144,7 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
       of(this.textService.getText(uiTexts.umkreissuche_userlocation_text)),
       this.userGeoAddress$.pipe(
         filter((userGeoAddress) => userGeoAddress != null),
+        tap(console.log),
         map((x) => this.geoAddressToPlaceholder(x))
       )
     );
