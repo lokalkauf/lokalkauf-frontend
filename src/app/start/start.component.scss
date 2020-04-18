@@ -9,7 +9,9 @@
   @for $i from 1 through length($breakpoints-width) {
     $breakpoint-width: nth($breakpoints-width, $i);
     $breakpoint-height: nth($breakpoints-height, $i);
-    @media (min-width: #{$breakpoint-width}px), (min-height: #{$breakpoint-height}px) {
+
+    @media (min-width: #{$breakpoint-width}px),
+    (min-height: #{$breakpoint-height}px) {
       background-image: url($path + '.' + $breakpoint-width + '.' + $fileending);
 
       // media query source: https://medium.com/@micjamking/hd-retina-display-media-queries-b5562b5430d6
@@ -100,7 +102,7 @@
     height: 300px;
 
     @media screen and (max-width: 767px) {
-      height: 440px;
+      height: 450px;
     }
   }
 
