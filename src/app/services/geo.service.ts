@@ -12,6 +12,7 @@ import { GeoCollectionReference, GeoFirestore, GeoQuery } from 'geofirestore';
 import { firestore } from 'firebase';
 import { GeoAddress } from '../models/geoAddress';
 import { TraderProfile } from '../models/traderProfile';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,11 @@ export class GeoService {
   hits = new BehaviorSubject([]);
   urlEncoder = new HttpUrlEncodingCodec();
 
-  constructor(private db: AngularFirestore, private http: HttpClient) {
+  constructor(
+    private db: AngularFirestore,
+    private http: HttpClient,
+    private storage: StorageService
+  ) {
     this.geoFire = new GeoFirestore(db.firestore);
     this.locations = this.geoFire.collection('locations');
     this.geoPostalcodes = this.geoFire.collection('GeoData');
@@ -52,9 +57,18 @@ export class GeoService {
 
   getUserPosition(): Promise<Array<number | undefined>> {
     return new Promise((resolve) => {
+      const cachedPosition = this.storage.loadUserPosition();
+
+      if (cachedPosition) {
+        resolve(cachedPosition);
+        return;
+      }
+
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          resolve([position.coords.latitude, position.coords.longitude]);
+          const pos = [position.coords.latitude, position.coords.longitude];
+          this.storage.saveUserPosition(pos);
+          resolve(pos);
         },
         (error) => {
           resolve(undefined);
