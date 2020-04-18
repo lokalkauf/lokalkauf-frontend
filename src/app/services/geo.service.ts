@@ -112,56 +112,6 @@ export class GeoService {
         })
       )
     );
-
-    // return this.http
-    //   .get(
-    //     'https://public.opendatasoft.com/api/records/1.0/search/?dataset=postleitzahlen-deutschland&q=' +
-    //       encodeURIComponent(searchString) +
-    //       '&facet=note&facet=plz'
-    //   )
-    //   .pipe(
-    //     map((addresses: any) => {
-    //       if (
-    //         !(addresses && addresses.records && addresses.records.length > 0)
-    //       ) {
-    //         return [];
-    //       }
-
-    //       return addresses.records.map((record) => ({
-    //         postalcode: record.fields.plz,
-    //         city: record.fields.note,
-    //         coordinates: record.fields.geo_point_2d,
-    //       }));
-    //     })
-    //   );
-
-    // // "records":[
-    // //   {
-    // //     "datasetid":"postleitzahlen-deutschland",
-    // //     "recordid":"16a2fa27f5f8ac99ea043808ec16591ef21c6ee4",
-    // //     "fields": {
-    // //       "note":"Dortmund",
-    // //       "geo_shape": {
-    // //         "type":"Polygon",
-    // //         "coordinates":[
-    // //           [(too many elements to preview)]
-    // //         ]
-    // //       },
-    // //       "geo_point_2d":[
-    // //         51.51248317666277,
-    // //         7.374578158476884
-    // //       ],
-    // //       "plz":"44379"
-    // //     },
-    // //     "geometry": {
-    // //       "type":"Point",
-    // //       "coordinates":[
-    // //         7.374578158476884,
-    // //         51.51248317666277
-    // //       ]
-    // //     },
-    // //     "record_timestamp":"2017-03-25T06:26:36.889000+00:00"
-    // //   }]
   }
 
   async getPostalAndCityByLocation(
@@ -180,8 +130,6 @@ export class GeoService {
       })
       .limit(8)
       .get();
-
-    // console.log('item: ' + items.size);
 
     const locationInverted = location.reverse();
 
@@ -213,7 +161,6 @@ export class GeoService {
       }
 
       // fallback to the nearest center of a plz
-      // const sortedItems = items.docs.sort((a, b) => a.distance - b.distance);
       const theNext = items.docs
         .sort((a, b) => a.distance - b.distance)[0]
         .data();
@@ -224,36 +171,7 @@ export class GeoService {
         coordinates: location,
         radius: 0,
       };
-
-      //    var sortedItems = items.docs.sort((a,b) => a.distance - b.distance);
-
-      //    sortedItems.forEach(i => {
-      //                     console.log('ready: ' + i.id + ' distance: ' + i.distance);
-      //   });
-
-      //     console.log('MEIN ORT: ' + sortedItems[0].data().postalcode + ' ' +  sortedItems[0].data().city);
     }
-
-    // const loc = encodeURIComponent(location[0] + ',' + location[1]);
-    // const url =
-    //   'https://api.opencagedata.com/geocode/v1/json?key=8cf06bcf900d48fdb16f767a6a0e5cd8&q=' +
-    //   loc +
-    //   '&pretty=1&no_annotations=1';
-
-    // const response: any = await this.http.get(url).toPromise();
-
-    // if (response) {
-    //   return {
-    //     city: response.results[0].components.town
-    //       ? response.results[0].components.town
-    //       : response.results[0].components.city
-    //       ? response.results[0].components.city
-    //       : response.results[0].components.village,
-    //     postalcode: response.results[0].components.postcode,
-    //     coordinates: location,
-    //     radius: 0,
-    //   };
-    // }
 
     return null;
   }
