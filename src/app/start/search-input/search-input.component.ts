@@ -183,7 +183,7 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
     return this.geo.findCoordinatesByPostalOrCity(plzORcity).pipe(
       map((a: GeoAddress[]) => {
         return a.map((adr) => {
-          adr.radius = 25;
+          adr.radius = 10;
           return adr;
         });
       })
