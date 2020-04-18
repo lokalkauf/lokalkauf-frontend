@@ -130,7 +130,7 @@ const routes: Routes = [
     HttpClientModule,
     MatPasswordStrengthModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: true,
+      enabled: environment.production,
     }),
     LightboxModule,
   ],
