@@ -25,6 +25,7 @@ import { ReusablesModule } from '../reusables/reusables.module';
 import { InquiryConfirmationComponent } from './inquiry-confirmation/inquiry-confirmation.component';
 import { PipesModule } from '../pipes/pipes.modules';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
+import { Nl2BrPipeModule } from 'nl2br-pipe';
 
 const routes: Routes = [
   {
@@ -72,6 +73,7 @@ const routes: Routes = [
     FormsModule,
     MatCarouselModule,
     ReactiveFormsModule,
+    Nl2BrPipeModule,
   ],
   exports: [ProductOverviewComponent, ProductItemComponent],
   providers: [ProductService],

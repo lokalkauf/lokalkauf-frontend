@@ -1,72 +1,121 @@
 <div class="trader-contact-form" *ngIf="trader">
-  <div class="text lightergreen">
-    So sind wir erreichbar:
-  </div>
-  <div class="contactButtons">
-    <div class="contactButton">
-      <a [href]="'tel:' + trader.telephone">
-        <lk-button [label]="trader.telephone" [minSizePercent]="70">
-        </lk-button> </a
-      ><br />
-    </div>
-    <div *ngIf="!trader.storeEmail" class="contactButton">
-      <a [href]="'mailto:' + trader.email">
-        <lk-button [label]="trader.email" [minSizePercent]="70"> </lk-button>
-      </a>
-    </div>
-    <div *ngIf="trader.storeEmail" class="contactButton">
-      <a [href]="'mailto:' + trader.storeEmail">
-        <lk-button [label]="trader.storeEmail" [minSizePercent]="70">
-        </lk-button>
-      </a>
-    </div>
-    <div *ngIf="trader.homepage" class="contactButton">
-      <a [href]="trader.homepage" target="_blank" rel="noopener noreferrer">
-        <lk-button [label]="trader.homepage" [minSizePercent]="70"> </lk-button>
-      </a>
-    </div>
-
-    <div class="trader-contact-adress" [innerHtml]="getAdress()"></div>
-  </div>
-  <form [formGroup]="contactForm" (ngSubmit)="onSubmit(trader.businessname)">
-    <div class="text contactformdescription">
-      Oder über das Kontaktformular:<br />
-      <lk-textarea
-        placeholder="Deine Nachricht an uns"
-        formControlName="mail_message"
-        type="mail_message"
-      >
-      </lk-textarea
-      ><br /><br />
-      Wie dürfen wir Dich kontaktieren?<br />
-      <lk-input
-        [warn]="mail_contact.touched && mail_contact.invalid"
-        placeholder="E-Mail oder Telefonnummer*"
-        formControlName="mail_contact"
-      ></lk-input
-      ><br /><br />
-
-      <label>
-        <app-lk-checkbox formControlName="agbRead"></app-lk-checkbox>
-        Ich bestätige die
-        <a
-          href="http://www.info.lokalkauf.org/agb"
-          target="blank"
-          rel="noopener noreferrer"
-          >AGB</a
-        >
-        und
-        <a
-          href="http://www.info.lokalkauf.org/datenschutz"
-          target="blank"
-          rel="noopener noreferrer"
-          >Datenschutzbestimmungen</a
-        >
-        gelesen zu haben und bin einverstanden
-      </label>
-    </div>
+  <div class="contact-container">
     <div class="contactButtons">
-      <div class="contactButton">
+      <h3>Unser Angebot</h3>
+      <div class="contactButton floating">
+        <mat-icon
+          class="inlinesymbol vertical-align-middle"
+          *ngIf="trader.delivery"
+          >check</mat-icon
+        >
+        <mat-icon
+          class="inlinesymbol vertical-align-middle gray"
+          *ngIf="!trader.delivery"
+          >close</mat-icon
+        >
+        <div class="symboltext">
+          Lieferung
+        </div>
+      </div>
+      <div class="contactButton floating">
+        <mat-icon
+          class="inlinesymbol vertical-align-middle"
+          *ngIf="trader.pickup"
+          >check</mat-icon
+        >
+        <mat-icon
+          class="inlinesymbol vertical-align-middle"
+          *ngIf="!trader.pickup"
+          >close</mat-icon
+        >
+        <div class="symboltext">Abholung</div>
+      </div>
+    </div>
+
+    <div class="contactButtons">
+      <h3>Adresse</h3>
+      <div *ngIf="trader.city" class="contactButton">
+        <div [innerHTML]="getAdress()"></div>
+        <div class="contactButtons">
+          <div class="contactButton floating">
+            <mat-icon>place</mat-icon>
+            <a [href]="getTraderMapLink()" target="_blank">
+              In Maps anzeigen
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contactButtons">
+      <h3>Kontaktmöglichkeiten</h3>
+      <div class="contactButton floating">
+        <mat-icon>local_phone</mat-icon>
+        <a [href]="'tel:' + trader.telephone">
+          {{ trader.telephone }}
+        </a>
+      </div>
+
+      <div *ngIf="trader.storeEmail" class="contactButton floating">
+        <mat-icon>email</mat-icon>
+        <a [href]="'mailto:' + trader.storeEmail">
+          {{ trader.storeEmail }}
+        </a>
+      </div>
+
+      <div *ngIf="trader.homepage" class="contactButton floating">
+        <mat-icon>home</mat-icon>
+        <a [href]="trader.homepage" target="_blank">
+          {{ trader.homepage }}
+        </a>
+      </div>
+
+      <div class="contactButton floating contact-form-toggle-button">
+        <lk-button
+          (click)="toggleContactForm()"
+          [label]="'Händler direkt kontaktieren'"
+        ></lk-button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="contactFormVisible" class="contact-form">
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit(trader.businessname)">
+      <div class="text contactformdescription">
+        <lk-textarea
+          placeholder="Deine Nachricht an uns"
+          formControlName="mail_message"
+          type="mail_message"
+        >
+        </lk-textarea>
+        <lk-input
+          [warn]="mail_contact.touched && mail_contact.invalid"
+          placeholder="E-Mail oder Telefonnummer"
+          formControlName="mail_contact"
+        ></lk-input
+        ><br /><br />
+        <label>
+          <app-lk-checkbox formControlName="agbRead"></app-lk-checkbox>
+          <div class="agb-text">
+            Ich bestätige die
+            <a
+              href="http://www.info.lokalkauf.org/agb"
+              target="blank"
+              rel="noopener noreferrer"
+              >AGB</a
+            >
+            und
+            <a
+              href="http://www.info.lokalkauf.org/datenschutz"
+              target="blank"
+              rel="noopener noreferrer"
+              >Datenschutzbestimmungen</a
+            >
+            gelesen zu haben und bin einverstanden
+          </div>
+        </label>
+      </div>
+      <div class="contactButton send-request">
         <lk-button
           [disabled]="!contactForm.valid"
           type="submit"
@@ -74,16 +123,6 @@
         >
         </lk-button>
       </div>
-      <div class="contactButton">
-        <lk-button
-          type="button"
-          (click)="navigateBackToOverview()"
-          label="zurück zur Übersicht"
-        >
-        </lk-button>
-      </div>
-    </div>
-    <br />
-    <br />
-  </form>
+    </form>
+  </div>
 </div>

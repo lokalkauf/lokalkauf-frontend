@@ -11,6 +11,13 @@ body {
   margin: 0;
   font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
   background-color: $white !important;
+  -webkit-hyphens: auto;
+  -webkit-hyphenate-limit-chars: auto 3;
+  -webkit-hyphenate-limit-lines: 4;
+  -ms-hyphens: auto;
+  -ms-hyphenate-limit-chars: auto 3;
+  -ms-hyphenate-limit-lines: 4;
+  hyphens: auto;
 }
 
 h1,

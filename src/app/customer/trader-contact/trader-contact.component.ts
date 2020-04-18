@@ -8,6 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TraderProfile } from '../../models/traderProfile';
 import { ErrorService } from '../../services/error.service';
 import { StorageService } from '../../services/storage.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-trader-contact',
@@ -17,6 +18,8 @@ import { StorageService } from '../../services/storage.service';
 })
 export class TraderContactComponent implements OnInit {
   @Input() trader: TraderProfile;
+
+  contactFormVisible = false;
 
   contactForm = new FormGroup({
     mail_message: new FormControl('', [Validators.required]),
@@ -44,20 +47,33 @@ export class TraderContactComponent implements OnInit {
     return this.contactForm.get('agbRead');
   }
 
+  getTraderMapLink() {
+    if (this.trader.city) {
+      const url = `${this.trader.street}+${this.trader.number}%2C${this.trader.city}%2C+Deutschland`;
+      return `https://www.google.com/maps/search/?api=1&query=${url.replace(
+        ' ',
+        '%20'
+      )}`;
+    }
+  }
+
   getAdress() {
     // check for at least one mandantory field, if you visit the profile detail page at least once
     if (this.trader.city) {
-      return `<span>Adresse</span> <br />${this.trader.street} ${this.trader.number}
-      <br />${this.trader.postcode} ${this.trader.city}`;
+      return ` ${this.trader.street} ${this.trader.number}
+      <br />${this.trader.postcode} ${this.trader.city}
+      `;
     }
+  }
+  toggleContactForm() {
+    this.contactFormVisible = !this.contactFormVisible;
   }
 
   constructor(
     private router: Router,
     public location: Location,
     private mailService: EMailService,
-    private errorService: ErrorService,
-    private storageService: StorageService
+    private errorService: ErrorService
   ) {}
 
   ngOnInit(): void {}
@@ -107,20 +123,6 @@ export class TraderContactComponent implements OnInit {
         'Aufgrund eines Systemfehlers konnte die Nachricht an ' +
           'den Händler nicht verschickt werden. Bitte versuche es erneut oder kontaktiere den Support.'
       );
-    }
-  }
-
-  navigateBackToOverview() {
-    const city = this.storageService.loadLocation();
-    if (city) {
-      this.router.navigate([
-        '/localtraders',
-        city.coordinates[0],
-        city.coordinates[1],
-        city.radius ? city.radius : 10,
-      ]);
-    } else {
-      this.router.navigate(['/']);
     }
   }
 }

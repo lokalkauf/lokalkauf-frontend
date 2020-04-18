@@ -1,55 +1,42 @@
 <lk-container *ngIf="trader$ | async as trader">
-  <h1>{{ trader.businessname }}</h1>
+  <div class="floating-backbutton margin-boost">
+    <a (click)="navigateBackToOverview()" alt="zurück zur Übersicht">
+      <mat-icon class="inlinesymbol vertical-align-middle"
+        >chevron_left</mat-icon
+      >
+      <span class="symboltext">Zurück zur Händlersuche</span>
+    </a>
+  </div>
+
+  <div class="trader-title-wrapper">
+    <lk-page-title [title]="trader.businessname"></lk-page-title>
+  </div>
+
   <div
     class="trader-description text"
     *ngIf="trader.description && !showMoreText"
   >
-    {{ shortenText(trader.description) }}
-    <span
+    <span [innerHTML]="shortenText(trader.description) | nl2br: true"></span>...
+    <div
       *ngIf="trader.description.length > 200"
       (click)="showMoreText = true"
       class="toggleDetails"
-      >... Mehr lesen</span
     >
+      mehr lesen
+    </div>
   </div>
   <div
     class="trader-description text"
     *ngIf="trader.description && showMoreText"
   >
-    {{ trader.description }}
-    <span
+    <span [innerHTML]="trader.description | nl2br: true"></span>
+    <div
       *ngIf="trader.description.length > 200"
       (click)="showMoreText = false"
       class="toggleDetails"
     >
-      Weniger</span
-    >
-  </div>
-
-  <h3>Unser Angebot</h3>
-  <div class="text">
-    <mat-icon
-      class="inlinesymbol vertical-align-middle lightergreen"
-      *ngIf="trader.delivery"
-      >done</mat-icon
-    >
-    <mat-icon
-      class="inlinesymbol vertical-align-middle gray"
-      *ngIf="!trader.delivery"
-      >close</mat-icon
-    >
-    <span class="symboltext"> Lieferung</span><br />
-    <mat-icon
-      class="inlinesymbol vertical-align-middle lightergreen"
-      *ngIf="trader.pickup"
-      >done</mat-icon
-    >
-    <mat-icon
-      class="inlinesymbol vertical-align-middle gray"
-      *ngIf="!trader.pickup"
-      >close</mat-icon
-    >
-    <span> Abholung</span>
+      weniger
+    </div>
   </div>
 
   <div class="carousel">
@@ -78,9 +65,13 @@
     >
     Produkte
   </p>
-  <!-- app-product-overview [traderId]="trader.id"></app-product-overview>
 
-  <a [routerLink]="'/trader/' + trader.id + '/contact/'">
-    So sind wir erreichbar
-  </a-->
+  <div class="floating-backbutton margin-boost">
+    <a (click)="navigateBackToOverview()" alt="zurück zur Übersicht">
+      <mat-icon class="inlinesymbol vertical-align-middle"
+        >chevron_left</mat-icon
+      >
+      <span class="symboltext">Zurück zur Händlersuche</span>
+    </a>
+  </div>
 </lk-container>

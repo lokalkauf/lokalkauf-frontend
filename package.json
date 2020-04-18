@@ -71,6 +71,7 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
     "lint-staged": "^10.0.9",
+    "nl2br-pipe": "^1.2.3",
     "prettier": "^2.0.2",
     "protractor": "~5.4.3",
     "ts-node": "~8.3.0",
