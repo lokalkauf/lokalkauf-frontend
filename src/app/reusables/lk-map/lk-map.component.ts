@@ -40,9 +40,12 @@ export class LkMapComponent implements OnInit, AfterViewInit {
   @Output() mapInit = new EventEmitter<any>();
   locations: Array<Location> = new Array<Location>();
 
+  // esriTiles = 'https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_v2/VectorTileServer/tile/{z}/{x}/{y}.pbf';
+  defaultTiles = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+
   options = {
     layers: [
-      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      tileLayer(this.defaultTiles, {
         maxZoom: 18,
         attribution: 'Open Street Map',
       }),
@@ -52,7 +55,7 @@ export class LkMapComponent implements OnInit, AfterViewInit {
   };
 
   heartIconBig = icon({
-    iconUrl: '/assets/lokalkauf-pin.svg',
+    iconUrl: '/assets/lokalkauf-pin-blue-transparent.svg',
     iconSize: [30, 30],
     iconAnchor: [16, 25],
 
@@ -108,15 +111,16 @@ export class LkMapComponent implements OnInit, AfterViewInit {
     const id = uuid();
     marker(pos, { alt: id, icon: this.heartIconBig }).addTo(this.map);
 
-    console.log('return id: ' + id);
+    // console.log('return id: ' + id);
+
     return id;
   }
 
   public updateMarkerPosition(markerId: string, position: number[]) {
     const mrkr: Marker = this.findMarkerById(markerId);
 
-    console.log('updatePos: ' + markerId);
-    console.log(mrkr);
+    // console.log('updatePos: ' + markerId);
+    // console.log(mrkr);
 
     if (mrkr) {
       mrkr.setLatLng(this.creeateLatLng(position));
