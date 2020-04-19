@@ -185,7 +185,7 @@ export class GeoService {
     try {
       response = await this.http
         .get(
-          'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates',
+          'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates',
           {
             params: {
               Address: `${street} ${streetnumber}`,
@@ -202,7 +202,7 @@ export class GeoService {
       console.log(e);
     }
 
-    const candidate = response.candidates?.[0];
+    const candidate = response ? response.candidates?.[0] : null;
     if (!candidate) {
       return null;
     }
