@@ -5,8 +5,8 @@
       (locationsOnMap)="updateLocations($event)"
     ></app-map>
   </div> -->
-  <lk-warning-box collapseTime="10000" [content]="text.rote_infobox | text">
-  </lk-warning-box>
+  <!-- <lk-warning-box collapseTime="10000" [content]="text.rote_infobox | text">
+  </lk-warning-box> -->
   <div class="traders-overview-row" *ngIf="(hasLocations$ | async) === true">
     <lk-page-title title="Alles aus Deiner Nähe"></lk-page-title>
     <lk-chip-list

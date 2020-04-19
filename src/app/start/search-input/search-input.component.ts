@@ -48,57 +48,62 @@ type PlaceHolderAddress = GeoAddress & { display: string };
 export class SearchInputComponent implements OnInit, ControlValueAccessor {
   myControl = new FormControl();
 
-  standorte: Array<GeoAddress> = [];
-
-  //   {
-  //     postalcode: '50321',
-  //     city: 'Brühl',
-  //     coordinates: [50.823525, 6.897674],
-  //     radius: 10,
-  //   },
-  //   {
-  //     postalcode: '65183',
-  //     city: 'Wiesbaden',
-  //     coordinates: [50.0833521, 8.24145],
-  //     radius: 10,
-  //   },
-  //   {
-  //     postalcode: '',
-  //     city: 'Regionalverband Saarbrücken',
-  //     coordinates: [49.2789, 6.9437],
-  //     radius: 25,
-  //   },
-  //   {
-  //     postalcode: '',
-  //     city: 'Saarpfalz-Kreis',
-  //     coordinates: [49.1805, 7.2194],
-  //     radius: 25,
-  //   },
-  //   {
-  //     postalcode: '',
-  //     city: 'Neunkirchen',
-  //     coordinates: [49.3518, 7.1864],
-  //     radius: 25,
-  //   },
-  //   {
-  //     postalcode: '',
-  //     city: 'St. Wendel',
-  //     coordinates: [49.46667, 7.166669],
-  //     radius: 25,
-  //   },
-  //   {
-  //     postalcode: '',
-  //     city: 'Saarlouis',
-  //     coordinates: [49.3135, 6.7523],
-  //     radius: 25,
-  //   },
-  //   {
-  //     postalcode: '',
-  //     city: 'Merzig-Wadern',
-  //     coordinates: [49.4572, 6.6867],
-  //     radius: 35,
-  //   },
-  // ];
+  standorte: Array<GeoAddress> = [
+    {
+      postalcode: '',
+      city: 'Hannover',
+      coordinates: [52.382936, 9.738806],
+      radius: 25,
+    },
+    {
+      postalcode: '',
+      city: 'Wiesbaden',
+      coordinates: [50.0833521, 8.24145],
+      radius: 10,
+    },
+    {
+      postalcode: '',
+      city: 'Brühl',
+      coordinates: [50.823525, 6.897674],
+      radius: 10,
+    },
+    {
+      postalcode: '',
+      city: 'Regionalverband Saarbrücken',
+      coordinates: [49.2789, 6.9437],
+      radius: 25,
+    },
+    {
+      postalcode: '',
+      city: 'Saarpfalz-Kreis',
+      coordinates: [49.1805, 7.2194],
+      radius: 25,
+    },
+    {
+      postalcode: '',
+      city: 'Neunkirchen',
+      coordinates: [49.3518, 7.1864],
+      radius: 25,
+    },
+    {
+      postalcode: '',
+      city: 'St. Wendel',
+      coordinates: [49.46667, 7.166669],
+      radius: 25,
+    },
+    {
+      postalcode: '',
+      city: 'Saarlouis',
+      coordinates: [49.3135, 6.7523],
+      radius: 25,
+    },
+    {
+      postalcode: '',
+      city: 'Merzig-Wadern',
+      coordinates: [49.4572, 6.6867],
+      radius: 35,
+    },
+  ];
 
   autocompleteValues$: Observable<GeoAddress[]>;
   blur$ = new Subject();
