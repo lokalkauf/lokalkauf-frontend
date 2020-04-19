@@ -24,6 +24,7 @@ import { Location } from '../../models/location';
 import { GeoService } from '../../services/geo.service';
 import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
 import { from } from 'rxjs';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'lk-map',
@@ -35,6 +36,8 @@ export class LkMapComponent implements OnInit, AfterViewInit {
   radius: 0.5;
 
   @Output() positionChanged = new EventEmitter<any>();
+  @Output() mapMove = new EventEmitter<any>();
+  @Output() mapInit = new EventEmitter<any>();
   locations: Array<Location> = new Array<Location>();
 
   options = {
@@ -48,10 +51,15 @@ export class LkMapComponent implements OnInit, AfterViewInit {
     center: latLng(52.518623, 13.376198),
   };
 
-  lkIcon = {
-    iconUrl: '/assets/pin.png',
-    iconSize: [60, 68],
-  };
+  heartIconBig = icon({
+    iconUrl: '/assets/lokalkauf-pin.svg',
+    iconSize: [30, 30],
+    iconAnchor: [16, 25],
+
+    shadowUrl: '/assets/pin-shadow.png',
+    shadowSize: [30, 22],
+    shadowAnchor: [8, 18],
+  });
 
   markers = [
     // circleMarker(latLng(52.518623, 13.376198), {
@@ -76,6 +84,12 @@ export class LkMapComponent implements OnInit, AfterViewInit {
     this.map.on('moveend', (e: any) => {
       this.positionChanged.emit(self.map.getCenter());
     });
+
+    this.map.on('move', (e: any) => {
+      this.mapMove.emit(self.map.getCenter());
+    });
+
+    this.mapInit.emit();
   }
 
   ngOnInit(): void {}
@@ -86,5 +100,42 @@ export class LkMapComponent implements OnInit, AfterViewInit {
 
       this.map.flyTo(latLng(position[0], position[1]), 18);
     }
+  }
+
+  public addMarker(position?: number[]) {
+    const pos = position ? this.creeateLatLng(position) : this.map.getCenter();
+
+    const id = uuid();
+    marker(pos, { alt: id, icon: this.heartIconBig }).addTo(this.map);
+
+    console.log('return id: ' + id);
+    return id;
+  }
+
+  public updateMarkerPosition(markerId: string, position: number[]) {
+    const mrkr: Marker = this.findMarkerById(markerId);
+
+    console.log('updatePos: ' + markerId);
+    console.log(mrkr);
+
+    if (mrkr) {
+      mrkr.setLatLng(this.creeateLatLng(position));
+    }
+  }
+
+  private creeateLatLng(position: number[]) {
+    return latLng(position[0], position[1]);
+  }
+
+  private findMarkerById(id: string) {
+    let mrkr = null;
+    this.map.eachLayer((layer) => {
+      if (layer instanceof Marker) {
+        if (layer.options.alt === id) {
+          mrkr = layer;
+        }
+      }
+    });
+    return mrkr;
   }
 }

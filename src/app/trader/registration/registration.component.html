@@ -128,11 +128,11 @@ Dich hier vorab registrieren."
           >
         </lk-button>
       </div>
-      <img
+      <!-- <img
         *ngIf="confirmAddressMode"
         src="/assets/lokalkauf-pin.svg"
         class="confirmation-pin"
-      />
+      /> -->
       <div class="control-btns" *ngIf="confirmAddressMode">
         <button
           mat-mini-fab
@@ -145,7 +145,7 @@ Dich hier vorab registrieren."
           <mat-icon color="primary">thumb_up_alt</mat-icon>
         </button>
       </div>
-      <lk-map (positionChanged)="onMapMove($event)"> </lk-map>
+      <lk-map (mapMove)="onMapMove($event)"> </lk-map>
     </lk-container>
 
     <ng-container *ngIf="registrationState === 'new'">

@@ -27,45 +27,6 @@ export enum RegistrationState {
   encapsulation: ViewEncapsulation.None,
 })
 export class RegistrationComponent implements OnInit, AfterViewInit {
-  registrationForm = new FormGroup(
-    {
-      businessname: new FormControl('', [Validators.required]),
-      ownerFirstname: new FormControl(''),
-      ownerLastname: new FormControl(''),
-      phone: new FormControl('', [Validators.required]),
-      postcode: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(5),
-        Validators.minLength(5),
-      ]),
-      city: new FormControl('', [Validators.required]),
-      street: new FormControl('', [Validators.required]),
-      streetnumber: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.email]),
-      password: new FormControl('', [Validators.required]),
-      passwordRepeat: new FormControl('', [Validators.required]),
-      agbRead: new FormControl('', [Validators.requiredTrue]),
-    },
-    [
-      (formGroup) => {
-        return formGroup.get('password').value ===
-          formGroup.get('passwordRepeat').value
-          ? formGroup.get('email').errors
-          : { notSame: true };
-      },
-    ]
-  );
-
-  registrationState: RegistrationState;
-  saveSuccessful = false;
-  delete = false;
-  isAaddressConfirmed = false;
-  confirmAddressMode = false;
-  confirmedLocation: number[];
-  mapLocation: number[];
-
-  @ViewChild(LkMapComponent) map: LkMapComponent;
-
   get email() {
     return this.registrationForm.get('email');
   }
@@ -138,14 +99,49 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
       }
     }
   }
+  registrationForm = new FormGroup(
+    {
+      businessname: new FormControl('', [Validators.required]),
+      ownerFirstname: new FormControl(''),
+      ownerLastname: new FormControl(''),
+      phone: new FormControl('', [Validators.required]),
+      postcode: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(5),
+        Validators.minLength(5),
+      ]),
+      city: new FormControl('', [Validators.required]),
+      street: new FormControl('', [Validators.required]),
+      streetnumber: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.email]),
+      password: new FormControl('', [Validators.required]),
+      passwordRepeat: new FormControl('', [Validators.required]),
+      agbRead: new FormControl('', [Validators.requiredTrue]),
+    },
+    [
+      (formGroup) => {
+        return formGroup.get('password').value ===
+          formGroup.get('passwordRepeat').value
+          ? formGroup.get('email').errors
+          : { notSame: true };
+      },
+    ]
+  );
+
+  registrationState: RegistrationState;
+  saveSuccessful = false;
+  delete = false;
+  isAaddressConfirmed = false;
+  confirmAddressMode = false;
+  confirmedLocation: number[];
+  mapLocation: number[];
+
+  @ViewChild(LkMapComponent) map: LkMapComponent;
+
+  centerMarkrID: any;
 
   async ngAfterViewInit() {
-    // this.updateMapLocation(await this.geo.getUserPosition());
-  }
-
-  updateMapLocation(location: number[]) {
-    console.log('update map location: ' + location);
-    this.map.setCenter(location);
+    this.onMapInit();
   }
 
   ngOnInit(): void {
@@ -339,9 +335,17 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   }
 
   onMapMove(pos: any) {
-    console.log('position moved: ' + pos);
-    console.log(pos);
     this.mapLocation = [pos.lat, pos.lng];
+    this.map.updateMarkerPosition(this.centerMarkrID, this.mapLocation);
+  }
+
+  onMapInit() {
+    this.centerMarkrID = this.map.addMarker();
+  }
+
+  updateMapLocation(location: number[]) {
+    console.log('update map location: ' + location);
+    this.map.setCenter(location);
   }
 
   verwerfen() {
