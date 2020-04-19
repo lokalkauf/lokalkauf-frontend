@@ -180,20 +180,27 @@ export class GeoService {
     street: string,
     streetnumber: string
   ): Promise<GeoAddress> {
-    const response: any = await this.http
-      .get(
-        'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates',
-        {
-          params: {
-            Address: `${street} ${streetnumber}`,
-            City: city,
-            Postal: postal,
-            CountryCode: 'de',
-            f: 'pjson',
-          },
-        }
-      )
-      .toPromise();
+    let response: any = null;
+
+    try {
+      response = await this.http
+        .get(
+          'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates',
+          {
+            params: {
+              Address: `${street} ${streetnumber}`,
+              City: city,
+              Postal: postal,
+              CountryCode: 'de',
+              f: 'pjson',
+            },
+          }
+        )
+        .toPromise();
+    } catch (e) {
+      console.log('error while calling geocoding api');
+      console.log(e);
+    }
 
     const candidate = response.candidates?.[0];
     if (!candidate) {

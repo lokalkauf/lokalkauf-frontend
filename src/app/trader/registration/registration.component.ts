@@ -314,6 +314,12 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
 
       if (foundLocation) {
         this.updateMapLocation(foundLocation.coordinates);
+      } else {
+        this.updateMapLocation(
+          foundLocation.coordinates
+            ? foundLocation.coordinates
+            : await this.geo.getUserPosition()
+        );
       }
     } else if (this.confirmedLocation) {
       this.updateMapLocation(this.confirmedLocation);
