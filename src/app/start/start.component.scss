@@ -92,17 +92,9 @@
   padding: 35px 20px;
 
   .wirvsvirus {
-    display: flex;
-
-    justify-content: space-evenly;
-    flex-direction: row;
-
     @media screen and (max-width: 1086px) {
-      flex-direction: column;
-      align-items: center;
-
       img {
-        max-width: 100vw;
+        max-width: calc(100vw - 80px);
       }
     }
   }

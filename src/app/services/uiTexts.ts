@@ -27,7 +27,7 @@ export const uiTexts = {
     '<br />lokalkauf – kauft lokal' +
     '<br /><br />Wir wollen eine kostenlose Plattform schaffen, die den lokalen Einzelhandel und die Gastronomie ' +
     'mit den Bürgern digital verbindet und dabei nachhaltig unterstützt, die Coronakrise zu bewältigen',
-  start_wirvsvirus_headline: 'Offizielles Projekt',
+  start_wirvsvirus_headline: 'Im offiziellen Solution Enabler Programm von',
   testimonal_1_testee: 'Christiane Hesse – Casabiente, Wiesbaden',
   testimonal_1_testimonial:
     'Es gibt Berge, über die man hinüber muss, sonst geht der Weg nicht weiter (Ludwig Thoma) ' +
