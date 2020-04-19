@@ -66,60 +66,6 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
 
   @ViewChild(LkMapComponent) map: LkMapComponent;
 
-  async ngAfterViewInit() {
-    // this.updateMapLocation(await this.geo.getUserPosition());
-  }
-
-  updateMapLocation(location: number[]) {
-    console.log('update map location: ' + location);
-    this.map.setCenter(location);
-  }
-
-  ngOnInit(): void {
-    window.scrollBy(0, 0);
-    this.setConditionalValidators();
-  }
-
-  setConditionalValidators() {
-    const password = this.registrationForm.get('password');
-    const password2 = this.registrationForm.get('passwordRepeat');
-    const email = this.registrationForm.get('email');
-
-    if (this.registrationState === RegistrationState.edit) {
-      password.setValidators(null);
-      password2.setValidators(null);
-      email.setValidators(null);
-    } else {
-      password.setValidators([Validators.required]);
-      password2.setValidators([Validators.required]);
-      email.setValidators([Validators.required]);
-    }
-    password.updateValueAndValidity();
-    password2.updateValueAndValidity();
-    email.updateValueAndValidity();
-  }
-
-  fillVal(user: TraderProfile) {
-    this.confirmedLocation = user.confirmedLocation;
-
-    if (user.confirmedLocation) {
-      this.updateMapLocation(user.confirmedLocation);
-    } else {
-      this.geo.getUserPosition().then((p) => this.updateMapLocation(p));
-    }
-
-    this.registrationForm.patchValue({
-      phone: user.telephone,
-      ownerFirstname: user.ownerFirstname.toString(),
-      ownerLastname: user.ownerLastname.toString(),
-      postcode: user.postcode.toString(),
-      street: user.street,
-      streetnumber: user.number,
-      city: user.city,
-      businessname: user.businessname,
-    });
-  }
-
   get email() {
     return this.registrationForm.get('email');
   }
@@ -178,7 +124,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
       this.registrationState = RegistrationState.new;
       this.userService.isLoggedIn$.subscribe((isLoggedIn) => {
         if (isLoggedIn) {
-          router.navigateByUrl(`trader/profile`);
+          router.navigateByUrl(`trader/profile`, { skipLocationChange: true });
         }
       });
     } else {
@@ -191,6 +137,60 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
         });
       }
     }
+  }
+
+  async ngAfterViewInit() {
+    // this.updateMapLocation(await this.geo.getUserPosition());
+  }
+
+  updateMapLocation(location: number[]) {
+    console.log('update map location: ' + location);
+    this.map.setCenter(location);
+  }
+
+  ngOnInit(): void {
+    window.scrollBy(0, 0);
+    this.setConditionalValidators();
+  }
+
+  setConditionalValidators() {
+    const password = this.registrationForm.get('password');
+    const password2 = this.registrationForm.get('passwordRepeat');
+    const email = this.registrationForm.get('email');
+
+    if (this.registrationState === RegistrationState.edit) {
+      password.setValidators(null);
+      password2.setValidators(null);
+      email.setValidators(null);
+    } else {
+      password.setValidators([Validators.required]);
+      password2.setValidators([Validators.required]);
+      email.setValidators([Validators.required]);
+    }
+    password.updateValueAndValidity();
+    password2.updateValueAndValidity();
+    email.updateValueAndValidity();
+  }
+
+  fillVal(user: TraderProfile) {
+    this.confirmedLocation = user.confirmedLocation;
+
+    if (user.confirmedLocation) {
+      this.updateMapLocation(user.confirmedLocation);
+    } else {
+      this.geo.getUserPosition().then((p) => this.updateMapLocation(p));
+    }
+
+    this.registrationForm.patchValue({
+      phone: user.telephone,
+      ownerFirstname: user.ownerFirstname.toString(),
+      ownerLastname: user.ownerLastname.toString(),
+      postcode: user.postcode.toString(),
+      street: user.street,
+      streetnumber: user.number,
+      city: user.city,
+      businessname: user.businessname,
+    });
   }
 
   async onSubmit() {
