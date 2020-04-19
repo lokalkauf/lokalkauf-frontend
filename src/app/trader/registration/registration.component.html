@@ -1,10 +1,5 @@
 <div class="registration-form">
-  <lk-warning-box
-    content="Unsere Plattform befindet sich in der Pilotphase. Bisher können Kunden nur
-Geschäfte aus ausgewählten Städten finden.
-Wenn Du der erste sein willst, wenn wir in Deiner Stadt starten, kannst Du
-Dich hier vorab registrieren."
-  >
+  <lk-warning-box [content]="text.rote_infobox | text" collapseTime="10000">
   </lk-warning-box>
 
   <lk-page-title
@@ -264,7 +259,8 @@ Dich hier vorab registrieren."
               [disabled]="!registrationForm.valid || needConfirmation()"
               type="submit"
               label="Aktualisieren"
-            ></lk-button>
+            >
+            </lk-button>
           </div>
         </div>
         <div class="success" *ngIf="saveSuccessful">

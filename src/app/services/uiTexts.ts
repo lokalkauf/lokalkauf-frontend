@@ -6,6 +6,7 @@ export const uiTexts = {
   email: 'E-Mail',
   anmelden: 'Anmelden',
   password: { de: 'Passwort', en: 'Password' },
+  rote_infobox: 'Unsere Plattform befindet sich in der Pilotphase.',
   umkreissuche_userlocation_text: 'Deinen Wohnort finden / Postleitzahlsuche',
   umkreissuche_userlocation_gpsenabled: ' (mein Standort)',
   start_button_geschaeft_suchen: 'Geschäft suchen',
