@@ -29,6 +29,9 @@ import { GeoService } from 'src/app/services/geo.service';
 import { GeoAddress } from 'src/app/models/geoAddress';
 import { TextService } from 'src/app/services/text.service';
 import { uiTexts } from 'src/app/services/uiTexts';
+import { StorageService } from 'src/app/services/storage.service';
+
+type PlaceHolderAddress = GeoAddress & { display: string };
 
 @Component({
   selector: 'lk-search-input',
@@ -110,6 +113,7 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
 
   constructor(
     private geo: GeoService,
+    storageService: StorageService,
     private readonly textService: TextService
   ) {
     this.autocompleteValues$ = concat(
@@ -133,9 +137,16 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
       )
     );
 
+    const placeHolderAddress$ = combineLatest([
+      this.userGeoAddress$,
+      concat(of(null), of(storageService.loadLocation())) as Observable<
+        GeoAddress
+      >,
+    ]).pipe(map((x) => this.computePlaceHolderAddress(x)));
+
     this.valueChanges$ = combineLatest([
       concat(of(null), this.myControl.valueChanges),
-      this.userGeoAddress$,
+      placeHolderAddress$,
     ]).pipe(
       map((x) => this.computeCurrentGeoAdressValue(x)),
       distinctUntilChanged()
@@ -143,10 +154,9 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
 
     this.placeholder$ = concat(
       of(this.textService.getText(uiTexts.umkreissuche_userlocation_text)),
-      this.userGeoAddress$.pipe(
-        filter((userGeoAddress) => userGeoAddress != null),
-        tap(console.log),
-        map((x) => this.geoAddressToPlaceholder(x))
+      placeHolderAddress$.pipe(
+        filter((placeHolderAddress) => placeHolderAddress != null),
+        map((placeHolderAddress) => placeHolderAddress.display)
       )
     );
   }
@@ -204,25 +214,42 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  private computeCurrentGeoAdressValue([inputValue, geoAddress]: [
-    any,
+  private computePlaceHolderAddress([userGeoAddress, lastSearchAddress]: [
+    GeoAddress,
     GeoAddress
+  ]): PlaceHolderAddress | null {
+    if (lastSearchAddress) {
+      const postal = lastSearchAddress.postalcode;
+      const city = lastSearchAddress.city;
+      return {
+        ...lastSearchAddress,
+        display: `${postal} ${city}`,
+      };
+    }
+    if (userGeoAddress) {
+      const postal = userGeoAddress.postalcode;
+      const city = userGeoAddress.city;
+      const text = this.textService.getText(
+        uiTexts.umkreissuche_userlocation_gpsenabled
+      );
+      return {
+        ...userGeoAddress,
+        display: `${postal} ${city} ${text}`,
+      };
+    }
+    return null;
+  }
+
+  private computeCurrentGeoAdressValue([inputValue, placeHolderAddress]: [
+    any,
+    PlaceHolderAddress
   ]): GeoAddress | null {
     if (!inputValue) {
-      return geoAddress;
+      return placeHolderAddress;
     }
     if (typeof inputValue === 'string') {
       return null;
     }
     return inputValue;
-  }
-
-  private geoAddressToPlaceholder(geoAddress: GeoAddress) {
-    return (
-      geoAddress.postalcode +
-      ' ' +
-      geoAddress.city +
-      this.textService.getText(uiTexts.umkreissuche_userlocation_gpsenabled)
-    );
   }
 }
