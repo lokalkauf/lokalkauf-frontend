@@ -85,7 +85,7 @@ export class GeoService {
     }
 
     const isSearchPostal = !isNaN(Number(searchString.substring(0, 1)));
-    const search = searchString.toLowerCase();
+    const search = searchString.toLowerCase().trim();
     const arr = isSearchPostal ? 'd.postal_arr' : 'd.city_arr';
 
     return from(

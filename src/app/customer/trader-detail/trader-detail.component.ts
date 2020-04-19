@@ -93,7 +93,7 @@ export class TraderDetailComponent implements OnInit {
   getCorrectUrl(url?: string) {
     if (url) {
       const lowerurl = url.toLowerCase();
-      return !lowerurl.startsWith('http') ? 'http://' + lowerurl : lowerurl;
+      return !lowerurl.startsWith('http') ? 'https://' + lowerurl : lowerurl;
     }
     return url;
   }
