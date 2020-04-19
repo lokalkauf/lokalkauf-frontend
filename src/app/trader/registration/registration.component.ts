@@ -9,11 +9,11 @@ import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { TraderProfile, TraderProfileStatus } from '../../models/traderProfile';
-import { TraderService } from '../../services/trader.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteUserComponent } from './delete-user/delete-user.component';
 import { GeoService } from 'src/app/services/geo.service';
 import { LkMapComponent } from 'src/app/reusables/lk-map/lk-map.component';
+import { uiTexts } from 'src/app/services/uiTexts';
 
 export enum RegistrationState {
   new = 'new',
@@ -74,6 +74,8 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   get ownerLastname() {
     return this.registrationForm.get('ownerLastname');
   }
+
+  text = uiTexts;
 
   constructor(
     private userService: UserService,
