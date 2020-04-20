@@ -3,7 +3,7 @@ name: Staging Build & Deploy
 on:
   push:
     branches:
-    - incubator
+    - develop
 
 jobs:
   build-and-deploy:
