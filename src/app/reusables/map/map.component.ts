@@ -50,7 +50,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   locations: Array<Location> = new Array<Location>();
 
   mct = 'https://maps.omniscale.net/v2/{id}/style.grayscale/{z}/{x}/{y}.png';
-  tdefault = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  tdefault = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
   options = {
     layers: [

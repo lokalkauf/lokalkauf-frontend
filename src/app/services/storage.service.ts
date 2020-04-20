@@ -4,6 +4,14 @@ import { LkSelectOptions } from '../reusables/lk-select/lk-select.component';
 
 @Injectable()
 export class StorageService {
+  saveUserPosition(location: number[], toLocalStorage?: boolean) {
+    this.save('user-position', location, toLocalStorage);
+  }
+
+  loadUserPosition(fromLocalStorage?: boolean): number[] {
+    return this.load('user-position', fromLocalStorage);
+  }
+
   saveLocation(location: GeoAddress, toLocalStorage?: boolean) {
     this.save('city', location, toLocalStorage);
   }

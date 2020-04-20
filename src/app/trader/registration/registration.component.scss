@@ -31,7 +31,8 @@ lk-warning-box {
     grid-column-gap: 12px;
     grid-template-areas:
       'street street number'
-      'postcode city city';
+      'postcode city city'
+      'confirmaddress confirmaddress confirmaddress';
 
     .postcode {
       grid-area: postcode;
@@ -59,8 +60,76 @@ lk-warning-box {
     }
   }
 
+  .map-confirmation {
+    position: relative;
+    align-items: center;
+    text-align: center;
+    margin-left: -16px;
+    margin-right: -16px;
+    padding: 0;
+
+    div.warning {
+      display: inline-block;
+      margin-left: 20px;
+      height: 40px;
+    }
+
+    .confirmation-pin {
+      width: 40px;
+      position: absolute;
+      z-index: 3;
+      top: 180px;
+      left: 50%;
+      margin-left: -20px;
+      cursor: pointer;
+    }
+
+    .disabled-overlay {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 40px;
+      background-color: rgba(255, 255, 255, 0.5);
+      z-index: 5;
+
+      lk-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -100px;
+        margin-top: 0px;
+        width: 200px;
+      }
+    }
+
+    .control-btns {
+      position: absolute;
+      z-index: 5;
+      bottom: 10px;
+      left: 10px;
+
+      button {
+        margin-right: 10px;
+      }
+    }
+
+    lk-map {
+      position: relative;
+      z-index: 1;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      display: block;
+      height: 300px;
+      padding-left: -16px;
+      padding-right: -16px;
+      margin-left: -1;
+    }
+  }
+
   .agb {
-    margin-bottom: 20px;
+    margin-top: 35px;
+    margin-bottom: 35px;
 
     label {
       display: flex;

@@ -11,5 +11,8 @@ service cloud.firestore {
       allow read;
       allow write: if request.auth.uid == uid;
     }
+    match /GeoData/{multiSegment=**} {
+      allow read;
+    }
   }
 }

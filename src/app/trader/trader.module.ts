@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrdersComponent } from './orders/orders.component';
 import { CreateProductComponent } from './create-product/create-product.component';
@@ -29,6 +29,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     OrdersComponent,
     CreateProductComponent,

@@ -1,10 +1,36 @@
 @import './../../../theme/variables.scss';
 
+.left-block {
+  text-align: left;
+}
+
+.contact-container {
+  display: flex;
+
+  flex-direction: row;
+  justify-content: space-between;
+
+  @media screen and (max-width: 767px) {
+    flex-direction: column;
+  }
+}
+
 .contactButtons {
+  h3 {
+    margin-top: 46px;
+  }
+
   .contactButton {
     margin-top: 10px;
     margin-bottom: 10px;
+    width: 100%;
   }
+}
+
+.chevons {
+  position: absolute;
+  color: $darkgreen;
+  cursor: pointer;
 }
 
 .trader-contact-adress {
@@ -16,16 +42,55 @@
 }
 
 .contactformdescription {
-  margin-top: 40px;
+  margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
   max-width: 532px;
 }
 
 a {
-  color: $darkgreen;
+  text-decoration: underline;
+  color: $appblackGrey;
 }
 
-lk-button {
-  min-width: 266px;
+mat-icon {
+  color: $appblackGrey;
+}
+
+.mat-mini-fab {
+  transition: none !important;
+  box-shadow: none !important;
+  color: $white !important;
+  background-color: $normalgreen !important;
+}
+
+.floating {
+  display: flex;
+  align-items: center;
+
+  div,
+  a {
+    padding-left: 10px;
+  }
+}
+
+.send-request {
+  margin-top: 44px;
+  text-align: center;
+}
+
+label {
+  display: flex;
+}
+
+.contact-form-toggle-button {
+  padding-top: 20px;
+}
+
+.contact-form {
+  margin-left: 60px;
+
+  @media screen and (max-width: 632px) {
+    margin-left: 0px;
+  }
 }

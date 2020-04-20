@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import {
+  AngularFirestore,
+  DocumentData,
+  QueryDocumentSnapshot,
+} from '@angular/fire/firestore';
 import { HttpClient, HttpUrlEncodingCodec } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-
-import { BehaviorSubject, Observable } from 'rxjs';
+import { map, timeout, flatMap } from 'rxjs/operators';
+import insidepolygon from 'point-in-polygon';
+import { BehaviorSubject, Observable, of, from } from 'rxjs';
 import { GeoCollectionReference, GeoFirestore, GeoQuery } from 'geofirestore';
 import { firestore } from 'firebase';
 import { GeoAddress } from '../models/geoAddress';
 import { TraderProfile } from '../models/traderProfile';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,12 +21,18 @@ export class GeoService {
   dbRef: any;
   geoFire: GeoFirestore;
   locations: GeoCollectionReference;
+  geoPostalcodes: GeoCollectionReference;
   hits = new BehaviorSubject([]);
   urlEncoder = new HttpUrlEncodingCodec();
 
-  constructor(db: AngularFirestore, private http: HttpClient) {
+  constructor(
+    private db: AngularFirestore,
+    private http: HttpClient,
+    private storage: StorageService
+  ) {
     this.geoFire = new GeoFirestore(db.firestore);
     this.locations = this.geoFire.collection('locations');
+    this.geoPostalcodes = this.geoFire.collection('GeoData');
   }
 
   createLocation(traderId: string, coords: Array<number>) {
@@ -35,23 +46,6 @@ export class GeoService {
       });
   }
 
-  async createLocationByAddress(
-    traderId: string,
-    trader: Partial<TraderProfile>
-  ) {
-    const searchAddress = trader.postcode; // + ' ' + trader.city;
-    const addresses = await this.findCoordinatesByPostalOrCity(
-      searchAddress.trim()
-    ).toPromise();
-    // this.findCoordinatesByFullAddress(searchAddress);
-    // .pipe(map((r) => r.records.map((m) => m.fields)))
-    // .toPromise();
-
-    if (addresses && addresses.length > 0) {
-      return this.createLocation(traderId, addresses[0].coordinates);
-    }
-  }
-
   getLocations(radius: number, coords: Array<number>) {
     const query: GeoQuery = this.locations.near({
       center: new firestore.GeoPoint(coords[0], coords[1]),
@@ -63,9 +57,18 @@ export class GeoService {
 
   getUserPosition(): Promise<Array<number | undefined>> {
     return new Promise((resolve) => {
+      const cachedPosition = this.storage.loadUserPosition();
+
+      if (cachedPosition) {
+        resolve(cachedPosition);
+        return;
+      }
+
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          resolve([position.coords.latitude, position.coords.longitude]);
+          const pos = [position.coords.latitude, position.coords.longitude];
+          this.storage.saveUserPosition(pos);
+          resolve(pos);
         },
         (error) => {
           resolve(undefined);
@@ -77,136 +80,138 @@ export class GeoService {
   findCoordinatesByPostalOrCity(
     searchString: string
   ): Observable<GeoAddress[]> {
-    return this.http
-      .get(
-        'https://public.opendatasoft.com/api/records/1.0/search/?dataset=postleitzahlen-deutschland&q=' +
-          encodeURIComponent(searchString) +
-          '&facet=note&facet=plz'
-      )
-      .pipe(
-        map((addresses: any) => {
-          if (
-            !(addresses && addresses.records && addresses.records.length > 0)
-          ) {
-            return [];
-          }
-
-          return addresses.records.map((record) => ({
-            postalcode: record.fields.plz,
-            city: record.fields.note,
-            coordinates: record.fields.geo_point_2d,
-          }));
-        })
-      );
-
-    // "records":[
-    //   {
-    //     "datasetid":"postleitzahlen-deutschland",
-    //     "recordid":"16a2fa27f5f8ac99ea043808ec16591ef21c6ee4",
-    //     "fields": {
-    //       "note":"Dortmund",
-    //       "geo_shape": {
-    //         "type":"Polygon",
-    //         "coordinates":[
-    //           [(too many elements to preview)]
-    //         ]
-    //       },
-    //       "geo_point_2d":[
-    //         51.51248317666277,
-    //         7.374578158476884
-    //       ],
-    //       "plz":"44379"
-    //     },
-    //     "geometry": {
-    //       "type":"Point",
-    //       "coordinates":[
-    //         7.374578158476884,
-    //         51.51248317666277
-    //       ]
-    //     },
-    //     "record_timestamp":"2017-03-25T06:26:36.889000+00:00"
-    //   }]
-  }
-
-  // nominatim service, be careful, 1 request per second is the limit
-  async findCoordinatesByFullAddress(address: string): Promise<GeoAddress> {
-    if (!address) {
+    if (!searchString) {
       return null;
     }
 
-    const response: any = await this.http
-      .get('https://nominatim.openstreetmap.org/', {
-        params: {
-          addressdetails: '1',
-          format: 'json',
-          limit: '1',
-          q: encodeURIComponent(address.trim()),
-        },
-      })
-      .toPromise();
+    const isSearchPostal = !isNaN(Number(searchString.substring(0, 1)));
+    const search = searchString.toLowerCase().trim();
+    const arr = isSearchPostal ? 'd.postal_arr' : 'd.city_arr';
 
-    if (response && response.length > 0) {
-      const res = response[0];
-      return {
-        city: res.address.town ? res.address.town : res.address.city,
-        postalcode: res.address.postcode,
-        coordinates: [Number(res.lat), Number(res.lon)],
-        radius: 0,
-      };
-    }
-
-    return null;
+    return from(
+      this.db
+        .collection('GeoData')
+        .ref.orderBy('d.postalcode')
+        .where(arr, 'array-contains', search)
+        .get()
+    ).pipe(
+      map((a) =>
+        a.docs.map((d) => {
+          const data = d.data();
+          return {
+            city: data.d.city,
+            postalcode: data.d.postalcode,
+            coordinates: [
+              data.d.coordinates.latitude,
+              data.d.coordinates.longitude,
+            ],
+          } as GeoAddress;
+        })
+      )
+    );
   }
 
   async getPostalAndCityByLocation(
     location: Array<number>
-  ): Promise<GeoAddress> {
-    if (location[0] === location[1] && location[0] === -1) {
-      return null;
+  ): Promise<GeoAddress | undefined> {
+    if (!location || !location[0] || !location[1]) {
+      return undefined;
     }
 
-    const loc = encodeURIComponent(location[0] + ',' + location[1]);
-    const url =
-      'https://api.opencagedata.com/geocode/v1/json?key=8cf06bcf900d48fdb16f767a6a0e5cd8&q=' +
-      loc +
-      '&pretty=1&no_annotations=1';
+    // location = [52.2839641, 8.034344599999999];
 
-    const response: any = await this.http.get(url).toPromise();
+    const items = await this.geoPostalcodes
+      .near({
+        center: new firestore.GeoPoint(location[0], location[1]),
+        radius: 20,
+      })
+      .limit(8)
+      .get();
 
-    if (response) {
+    const locationInverted = location.reverse();
+
+    if (items.size > 0) {
+      for (const i of items.docs) {
+        const data = i.data();
+        const postalShape = JSON.parse(data.shape);
+
+        const inside = insidepolygon(
+          locationInverted,
+          postalShape.coordinates[0]
+        );
+
+        if (inside) {
+          // console.log(data.postalcode + ' ' + data.city + ' is in: ' + inside);
+          // console.log('coordinates: ' + data.coordinates);
+          // console.log(data.coordinates);
+
+          return {
+            city: data.city,
+            postalcode: data.postalcode,
+            coordinates: [
+              data.coordinates.latitude,
+              data.coordinates.longitude,
+            ],
+            radius: 0,
+          };
+        }
+      }
+
+      // fallback to the nearest center of a plz
+      const theNext = items.docs
+        .sort((a, b) => a.distance - b.distance)[0]
+        .data();
+
       return {
-        city: response.results[0].components.town
-          ? response.results[0].components.town
-          : response.results[0].components.city
-          ? response.results[0].components.city
-          : response.results[0].components.village,
-        postalcode: response.results[0].components.postcode,
+        city: theNext.city,
+        postalcode: theNext.postalcode,
         coordinates: location,
         radius: 0,
       };
     }
 
-    // const response: any = await this.http
-    //   .get('https://nominatim.openstreetmap.org/reverse', {
-    //     params: {
-    //       lat: location[0].toString(),
-    //       lon: location[1].toString(),
-    //       format: 'json',
-    //     },
-    //   })
-    //   .toPromise();
-
-    // if (response) {
-    //   return {
-    //     city: response.address.town
-    //       ? response.address.town
-    //       : response.address.city,
-    //     postalcode: response.address.postcode,
-    //     coordinates: location,
-    //     radius: 0,
-    //   };
-    // }
-
     return null;
+  }
+
+  // nominatim service, be careful, 1 request per second is the limit
+  async findCoordinatesByFullAddress(
+    postal: string,
+    city: string,
+    street: string,
+    streetnumber: string
+  ): Promise<GeoAddress> {
+    let response: any = null;
+
+    try {
+      response = await this.http
+        .get(
+          'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates',
+          {
+            params: {
+              Address: `${street} ${streetnumber}`,
+              City: city,
+              Postal: postal,
+              CountryCode: 'de',
+              f: 'pjson',
+            },
+          }
+        )
+        .toPromise();
+    } catch (e) {
+      console.log('error while calling geocoding api');
+      console.log(e);
+    }
+
+    const candidate = response ? response.candidates?.[0] : null;
+    if (!candidate) {
+      return null;
+    }
+
+    return {
+      city,
+      postalcode: postal,
+      coordinates: [candidate.location.y, candidate.location.x],
+      radius: 0,
+    };
   }
 }

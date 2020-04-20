@@ -5,33 +5,10 @@
       (locationsOnMap)="updateLocations($event)"
     ></app-map>
   </div> -->
-  <lk-warning-box
-    collapseTime="10000"
-    content="Unsere Plattform befindet sich in der Testphase. Diese Testphase beschränkt
-  sich aktuell auf die Geschäfte in ausgewählten Städten!"
-  >
-  </lk-warning-box>
-  <div class="traders-overview-row" *ngIf="hasLocations">
-    <app-lk-page-title title="Alles aus Deiner Nähe"></app-lk-page-title>
-    <!-- <div class="traders-input-center">
-      <lk-select
-        #storeTypeList
-        class="store-types"
-        name="storeType"
-        [options]="storeTypes"
-        [placeholder]="storeTypePreselect"
-      >
-      </lk-select>
-    </div>
-    <div class="traders-input-center">
-      <lk-button
-        class="shop-types-button"
-        (click)="reducedAction(storeTypeList)"
-        label="Jetzt filtern!"
-      >
-      </lk-button>
-    </div> -->
-
+  <!-- <lk-warning-box collapseTime="10000" [content]="text.rote_infobox | text">
+  </lk-warning-box> -->
+  <div class="traders-overview-row" *ngIf="(hasLocations$ | async) === true">
+    <lk-page-title title="Alles aus Deiner Nähe"></lk-page-title>
     <lk-chip-list
       [items]="storeTypes"
       [selectedKey]="selectedTrader ? selectedTrader.key : '1'"
@@ -46,7 +23,7 @@
       ></app-trader-item>
     </div>
   </div>
-  <div class="no-result-message" *ngIf="!hasLocations">
+  <div class="no-result-message" *ngIf="(hasLocations$ | async) === false">
     Leider wurden in Deinem Umkreis keine Händler gefunden. Unsere Plattform
     befindet sich aktuell im Aufbau, so dass wir noch nicht in allen Regionen
     Deutschlands vertreten sind.
@@ -83,6 +60,18 @@
       </a>
       <a
         mat-fab
+        color="share-instagram"
+        href="https://www.instagram.com/lokalkauf/"
+        target="_blank"
+      >
+        <fa-icon
+          [icon]="faInstagram"
+          size="lg"
+          [styles]="{'color': 'white'}"
+        ></fa-icon>
+      </a>
+      <a
+        mat-fab
         color="share-whatsapp"
         href="https://api.whatsapp.com/send?phone=&text=Bitte%20teilt%20lokalkauf%20an%20unsere%20Lieblingsh%c3%a4ndler%2c%20damit%20die%20ersten%20L%c3%a4den%20auch%20aus%20unserer%20Gegend%20gelistet%20werden%21%20%23lokalkauf%20%23helfen%20%23einzelhandel%20%23wirvsvirushack%0d%0ahttps%3a%2f%2fwww.lokalkauf.org&source=&data=&app_absent="
         target="_blank"
@@ -93,6 +82,18 @@
           [styles]="{'color': 'white'}"
         ></fa-icon>
       </a>
+    </div>
+
+    <div class="haendler">
+      Du bist Händler? Dann sei der Erste in Deiner Stadt und melde Dich jetzt
+      an!
+      <div>
+        <lk-button
+          [routerLink]="['/trader/register/new']"
+          [label]="(text.start_button_haender_anmelden | text)"
+        >
+        </lk-button>
+      </div>
     </div>
   </div>
 </lk-container>

@@ -30,10 +30,10 @@ jobs:
       run: npm ci
 
     - name: Build App
-      run: npm run build -- --prod
+      run: npm run build -- --configuration production
 
     - name: Deploy
-      uses: w9jds/firebase-action@master
+      uses: w9jds/firebase-action@v1.3.0
       with:
         args: deploy -P production --only hosting,storage,firestore:rules
       env:

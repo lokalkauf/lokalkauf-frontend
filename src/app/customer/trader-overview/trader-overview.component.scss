@@ -67,9 +67,7 @@ app-trader-item {
   display: block;
   max-width: 400px;
   text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 50px;
+  margin: 50px auto;
 }
 
 .social-button-row a {
@@ -86,4 +84,23 @@ app-trader-item {
 
 .mat-share-whatsapp {
   background-color: #4fce5d;
+}
+
+.mat-share-instagram {
+  background: #d6249f;
+  background: radial-gradient(
+    circle at 30% 107%,
+    #fdf497 0%,
+    #fd5949 45%,
+    #d6249f 60%,
+    #285aeb 90%
+  );
+}
+
+.haendler {
+  margin-top: 20px;
+
+  div {
+    padding-top: 20px;
+  }
 }

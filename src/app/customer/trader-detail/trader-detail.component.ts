@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TraderProfile } from '../../models/traderProfile';
 import { Trader } from '../../models/trader';
 import { ImageService } from '../../services/image.service';
 import { Lightbox } from 'ngx-lightbox';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-trader-detail',
@@ -25,7 +26,9 @@ export class TraderDetailComponent implements OnInit {
     private db: AngularFirestore,
     private route: ActivatedRoute,
     private imageService: ImageService,
-    private lightbox: Lightbox
+    private lightbox: Lightbox,
+    private router: Router,
+    private storageService: StorageService
   ) {}
 
   ngOnInit(): void {
@@ -80,13 +83,17 @@ export class TraderDetailComponent implements OnInit {
   changeUrl() {
     // Change URL to /trader-detail/id. This is needed in case we were redirected
     // form the function traderDetail
-    history.replaceState(null, '', '/trader-detail/' + this.route.snapshot.params.id);
+    history.replaceState(
+      null,
+      '',
+      '/trader-detail/' + this.route.snapshot.params.id
+    );
   }
 
   getCorrectUrl(url?: string) {
     if (url) {
       const lowerurl = url.toLowerCase();
-      return !lowerurl.startsWith('http') ? 'http://' + lowerurl : lowerurl;
+      return !lowerurl.startsWith('http') ? 'https://' + lowerurl : lowerurl;
     }
     return url;
   }
@@ -103,5 +110,19 @@ export class TraderDetailComponent implements OnInit {
     // open lightbox
     console.log('ich war hier: ' + index);
     this.lightbox.open(this.lightBoxItems, index);
+  }
+
+  navigateBackToOverview() {
+    const city = this.storageService.loadLocation();
+    if (city) {
+      this.router.navigate([
+        '/localtraders',
+        city.coordinates[0],
+        city.coordinates[1],
+        city.radius ? city.radius : 10,
+      ]);
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 }

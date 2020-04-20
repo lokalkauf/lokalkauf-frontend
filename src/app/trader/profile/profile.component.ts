@@ -2,7 +2,7 @@ import { Component, AfterViewInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserService, LoggedInUserState } from '../../services/user.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormControlName } from '@angular/forms';
 import { ErrorService } from '../../services/error.service';
 import { TraderProfileStatus } from '../../models/traderProfile';
 import { ImageService } from '../../services/image.service';
@@ -26,6 +26,7 @@ export class ProfileComponent implements AfterViewInit {
       storeEmail: new FormControl(''),
       homepage: new FormControl(''),
       public: new FormControl(true),
+      soMeShare: new FormControl(false),
     },
     (form) => {
       const pickup = form.get('pickup').value;
@@ -88,6 +89,10 @@ export class ProfileComponent implements AfterViewInit {
 
   get homepage() {
     return this.dataFormGroup.get('homepage');
+  }
+
+  get soMeShare() {
+    return this.dataFormGroup.get('soMeShare');
   }
 
   get public() {
@@ -169,6 +174,9 @@ export class ProfileComponent implements AfterViewInit {
         this.homepage.setValue(loggedInUser.traderProfile.homepage, {
           emitEvent: false,
         });
+        this.soMeShare.setValue(loggedInUser.traderProfile.soMeShare, {
+          emitEvent: false,
+        });
         this.gastronomie.setValue(
           loggedInUser.traderProfile.storeType.gastronomie,
           {
@@ -245,6 +253,7 @@ export class ProfileComponent implements AfterViewInit {
       pickup: this.pickup.value || null,
       storeEmail: this.storeEmail.value || null,
       homepage: this.homepage.value || null,
+      soMeShare: this.soMeShare.value || null,
       storeType: {
         gastronomie: this.gastronomie.value || null,
         lebensmittel: this.lebensmittel.value || null,

@@ -1,17 +1,20 @@
 @import './../../../theme/variables.scss';
 
-lk-container {
-  text-align: center;
+.trader-title-wrapper {
+  margin-top: 46px;
+}
 
+lk-container {
   .trader-product-amount {
     font-size: 0.9rem;
   }
 
   .trader-description {
-    margin: 20px 0;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 532px;
+    text-align: center;
+
+    @media screen and (max-width: 767px) {
+      text-align: justify;
+    }
   }
 
   .product-amount {
@@ -29,8 +32,9 @@ lk-container {
   }
 
   .carousel {
+    margin-top: 46px;
     width: 600px;
-    margin: 20px auto;
+    margin: 46px auto 20px auto;
 
     @media screen and (max-width: 632px) {
       width: calc(100% + 32px);
@@ -49,7 +53,49 @@ lk-container {
     vertical-align: middle;
   }
 
+  .horizontal-center {
+    text-align: center;
+    width: 100%;
+  }
+
   .toggleDetails {
     color: $darkgreen;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .normalgreen {
+    color: $normalgreen;
+  }
+
+  app-trader-contact {
+    display: block;
+  }
+
+  .mat-mini-fab {
+    transition: none !important;
+    box-shadow: none !important;
+    color: $white !important;
+    background-color: $normalgreen !important;
+  }
+
+  .floating-backbutton {
+    display: flex;
+    align-items: center;
+    color: $lightestgrey;
+
+    mat-icon,
+    span {
+      cursor: pointer;
+    }
+
+    span {
+      padding-left: 10px;
+    }
+  }
+
+  .margin-boost {
+    margin: 23px auto;
+    font-size: 14px;
   }
 }

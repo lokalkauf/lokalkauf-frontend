@@ -1,6 +1,6 @@
 # Lokalkauf - Frontend 
 
-[Lokalkauf](http://lokalkauf.org) is an easy to use online platform to set up local shops with an online shop, which allows them to supply their customers via a local delivery chain.
+[Lokalkauf](https://lokalkauf.org) is an easy to use online platform to set up local shops with an online shop, which allows them to supply their customers via a local delivery chain.
 This can keep businesses running, even in times of social distancing.
 
 Created during the [WirvsVirus Hackerthon](https://wirvsvirushackathon.org).
@@ -15,7 +15,7 @@ Run `npm install -g @angular/cli`
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `https://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 

@@ -1,11 +1,19 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  ViewChild,
+  AfterViewInit,
+} from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { TraderProfile, TraderProfileStatus } from '../../models/traderProfile';
-import { TraderService } from '../../services/trader.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteUserComponent } from './delete-user/delete-user.component';
+import { GeoService } from 'src/app/services/geo.service';
+import { LkMapComponent } from 'src/app/reusables/lk-map/lk-map.component';
+import { uiTexts } from 'src/app/services/uiTexts';
 
 export enum RegistrationState {
   new = 'new',
@@ -18,76 +26,7 @@ export enum RegistrationState {
   styleUrls: ['./registration.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class RegistrationComponent implements OnInit {
-  registrationForm = new FormGroup(
-    {
-      businessname: new FormControl('', [Validators.required]),
-      ownerFirstname: new FormControl(''),
-      ownerLastname: new FormControl(''),
-      phone: new FormControl('', [Validators.required]),
-      postcode: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(5),
-        Validators.minLength(5),
-      ]),
-      city: new FormControl('', [Validators.required]),
-      street: new FormControl('', [Validators.required]),
-      streetnumber: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.email]),
-      password: new FormControl('', [Validators.required]),
-      passwordRepeat: new FormControl('', [Validators.required]),
-      agbRead: new FormControl('', [Validators.requiredTrue]),
-    },
-    [
-      (formGroup) => {
-        return formGroup.get('password').value ===
-          formGroup.get('passwordRepeat').value
-          ? formGroup.get('email').errors
-          : { notSame: true };
-      },
-    ]
-  );
-  registrationState: RegistrationState;
-  saveSuccessful = false;
-  delete = false;
-
-  ngOnInit(): void {
-    window.scrollBy(0, 0);
-    this.setConditionalValidators();
-  }
-
-  setConditionalValidators() {
-    const password = this.registrationForm.get('password');
-    const password2 = this.registrationForm.get('passwordRepeat');
-    const email = this.registrationForm.get('email');
-
-    if (this.registrationState === RegistrationState.edit) {
-      password.setValidators(null);
-      password2.setValidators(null);
-      email.setValidators(null);
-    } else {
-      password.setValidators([Validators.required]);
-      password2.setValidators([Validators.required]);
-      email.setValidators([Validators.required]);
-    }
-    password.updateValueAndValidity();
-    password2.updateValueAndValidity();
-    email.updateValueAndValidity();
-  }
-
-  fillVal(user: TraderProfile) {
-    this.registrationForm.patchValue({
-      phone: user.telephone,
-      ownerFirstname: user.ownerFirstname.toString(),
-      ownerLastname: user.ownerLastname.toString(),
-      postcode: user.postcode.toString(),
-      street: user.street,
-      streetnumber: user.number,
-      city: user.city,
-      businessname: user.businessname,
-    });
-  }
-
+export class RegistrationComponent implements OnInit, AfterViewInit {
   get email() {
     return this.registrationForm.get('email');
   }
@@ -136,16 +75,19 @@ export class RegistrationComponent implements OnInit {
     return this.registrationForm.get('ownerLastname');
   }
 
+  text = uiTexts;
+
   constructor(
     private userService: UserService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private geo: GeoService
   ) {
     if (router.url.match('new')) {
       this.registrationState = RegistrationState.new;
       this.userService.isLoggedIn$.subscribe((isLoggedIn) => {
         if (isLoggedIn) {
-          router.navigateByUrl(`trader/profile`);
+          router.navigateByUrl(`trader/profile`, { skipLocationChange: true });
         }
       });
     } else {
@@ -158,6 +100,95 @@ export class RegistrationComponent implements OnInit {
         });
       }
     }
+  }
+  registrationForm = new FormGroup(
+    {
+      businessname: new FormControl('', [Validators.required]),
+      ownerFirstname: new FormControl(''),
+      ownerLastname: new FormControl(''),
+      phone: new FormControl('', [Validators.required]),
+      postcode: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(5),
+        Validators.minLength(5),
+      ]),
+      city: new FormControl('', [Validators.required]),
+      street: new FormControl('', [Validators.required]),
+      streetnumber: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.email]),
+      password: new FormControl('', [Validators.required]),
+      passwordRepeat: new FormControl('', [Validators.required]),
+      agbRead: new FormControl('', [Validators.requiredTrue]),
+    },
+    [
+      (formGroup) => {
+        return formGroup.get('password').value ===
+          formGroup.get('passwordRepeat').value
+          ? formGroup.get('email').errors
+          : { notSame: true };
+      },
+    ]
+  );
+
+  registrationState: RegistrationState;
+  saveSuccessful = false;
+  delete = false;
+  isAaddressConfirmed = false;
+  confirmAddressMode = false;
+  confirmedLocation: number[];
+  mapLocation: number[];
+
+  @ViewChild(LkMapComponent) map: LkMapComponent;
+
+  centerMarkrID: any;
+
+  async ngAfterViewInit() {
+    this.onMapInit();
+  }
+
+  ngOnInit(): void {
+    window.scrollBy(0, 0);
+    this.setConditionalValidators();
+  }
+
+  setConditionalValidators() {
+    const password = this.registrationForm.get('password');
+    const password2 = this.registrationForm.get('passwordRepeat');
+    const email = this.registrationForm.get('email');
+
+    if (this.registrationState === RegistrationState.edit) {
+      password.setValidators(null);
+      password2.setValidators(null);
+      email.setValidators(null);
+    } else {
+      password.setValidators([Validators.required]);
+      password2.setValidators([Validators.required]);
+      email.setValidators([Validators.required]);
+    }
+    password.updateValueAndValidity();
+    password2.updateValueAndValidity();
+    email.updateValueAndValidity();
+  }
+
+  fillVal(user: TraderProfile) {
+    this.confirmedLocation = user.confirmedLocation;
+
+    if (user.confirmedLocation) {
+      this.updateMapLocation(user.confirmedLocation);
+    } else {
+      this.geo.getUserPosition().then((p) => this.updateMapLocation(p));
+    }
+
+    this.registrationForm.patchValue({
+      phone: user.telephone,
+      ownerFirstname: user.ownerFirstname.toString(),
+      ownerLastname: user.ownerLastname.toString(),
+      postcode: user.postcode.toString(),
+      street: user.street,
+      streetnumber: user.number,
+      city: user.city,
+      businessname: user.businessname,
+    });
   }
 
   async onSubmit() {
@@ -179,7 +210,9 @@ export class RegistrationComponent implements OnInit {
       email: this.email.value,
       storeEmail: '',
       homepage: '',
+      soMeShare: false,
       status: TraderProfileStatus.CREATED,
+      confirmedLocation: this.confirmedLocation,
       storeType: {
         gastronomie: false,
         lebensmittel: false,
@@ -201,6 +234,7 @@ export class RegistrationComponent implements OnInit {
       street: this.street.value,
       number: this.streetnumber.value,
       telephone: this.phone.value,
+      confirmedLocation: this.confirmedLocation,
     };
 
     try {
@@ -267,7 +301,71 @@ export class RegistrationComponent implements OnInit {
     dialog.afterClosed().subscribe(() => console.log('closed'));
   }
 
+  async openConfirmationMode() {
+    if (this.addressWasChanged()) {
+      const foundLocation = await this.geo.findCoordinatesByFullAddress(
+        this.postcode.value,
+        this.city.value,
+        this.street.value,
+        this.streetnumber.value
+      );
+
+      if (foundLocation) {
+        this.updateMapLocation(foundLocation.coordinates);
+      } else {
+        this.updateMapLocation(
+          foundLocation.coordinates
+            ? foundLocation.coordinates
+            : await this.geo.getUserPosition()
+        );
+      }
+    } else if (this.confirmedLocation) {
+      this.updateMapLocation(this.confirmedLocation);
+    }
+
+    this.confirmAddressMode = true;
+  }
+
+  confirmAddress() {
+    this.confirmAddressMode = false;
+    this.isAaddressConfirmed = true;
+    this.confirmedLocation = this.mapLocation;
+  }
+
+  cancelAddressConfirmation() {
+    this.confirmAddressMode = false;
+  }
+
+  onMapMove(pos: any) {
+    this.mapLocation = [pos.lat, pos.lng];
+    this.map.updateMarkerPosition(this.centerMarkrID, this.mapLocation);
+  }
+
+  onMapInit() {
+    this.centerMarkrID = this.map.addMarker();
+  }
+
+  updateMapLocation(location: number[]) {
+    console.log('update map location: ' + location);
+    this.map.setCenter(location);
+  }
+
   verwerfen() {
     this.router.navigate(['/trader/profile']);
+  }
+
+  needConfirmation() {
+    return this.isAaddressConfirmed
+      ? false
+      : this.addressWasChanged() || !this.confirmedLocation; // && !this.isAaddressConfirmed);
+  }
+
+  addressWasChanged() {
+    return (
+      this.city.dirty ||
+      this.postcode.dirty ||
+      this.street.dirty ||
+      this.streetnumber.dirty
+    );
   }
 }

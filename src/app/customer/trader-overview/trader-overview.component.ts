@@ -10,7 +10,13 @@ import { TraderProfile, TraderProfileStatus } from '../../models/traderProfile';
 import { SpinnerService } from '../../services/spinner.service';
 import { map, filter } from 'rxjs/operators';
 import { StorageService } from 'src/app/services/storage.service';
-import { faFacebookF, faTwitter, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { uiTexts } from 'src/app/services/uiTexts';
+import {
+  faFacebookF,
+  faTwitter,
+  faWhatsapp,
+  faInstagram,
+} from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-trader-overview',
@@ -29,11 +35,12 @@ export class TraderOverviewComponent implements OnInit {
   storeTypes: Observable<LkSelectOptions[]>;
   storeTypePreselect: Observable<string>;
 
-  hasLocations = true;
+  hasLocations$: Observable<boolean> = of(true);
   faFacebookF = faFacebookF;
   faTwitter = faTwitter;
   faWhatsapp = faWhatsapp;
-
+  faInstagram = faInstagram;
+  text = uiTexts;
   constructor(
     private route: ActivatedRoute,
     private geo: GeoService,
@@ -139,7 +146,6 @@ export class TraderOverviewComponent implements OnInit {
         });
       })
       .finally(() => {
-        this.hasLocations = this.locations && this.locations.length > 0;
         this.updateLocations(this.locations);
         this.spinnerService.hide();
       });
@@ -156,6 +162,7 @@ export class TraderOverviewComponent implements OnInit {
 
   async updateLocations(trlocaitons: Array<Location>) {
     if (!trlocaitons || trlocaitons.length < 1) {
+      this.hasLocations$ = of(false);
       return;
     }
 
@@ -170,6 +177,9 @@ export class TraderOverviewComponent implements OnInit {
       ids,
       TraderProfileStatus.PUBLIC
     );
+
+    this.hasLocations$ = of(traderProfiles.length > 0);
+
     if (this.storeType && this.storeType !== 'alle') {
       const selectedStores = [];
       traderProfiles.filter((i) => {

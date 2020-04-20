@@ -1,25 +1,20 @@
 <div class="registration-form">
-  <lk-warning-box
-    content="Unsere Plattform befindet sich in der Pilotphase. Bisher können Kunden nur
-Geschäfte aus ausgewählten Städten finden.
-Wenn Du der erste sein willst, wenn wir in Deiner Stadt starten, kannst Du
-Dich hier vorab registrieren."
-  >
-  </lk-warning-box>
+  <!-- <lk-warning-box [content]="text.rote_infobox | text" collapseTime="10000">
+  </lk-warning-box> -->
 
-  <app-lk-page-title
+  <lk-page-title
     *ngIf="registrationState === 'new'"
     title="Anmeldung"
     subtitle="Melde Dich kostenlos an um Dein Geschäft, Dein Restaurant oder Dein Café online zu präsentieren und Deinen Kunden zu zeigen, dass Du weiterhin für sie da bist.
   "
-  ></app-lk-page-title>
+  ></lk-page-title>
 
-  <app-lk-page-title
+  <lk-page-title
     *ngIf="registrationState === 'edit'"
     title="Bearbeiten"
     subtitle="Aktualisiere Deine Daten
   "
-  ></app-lk-page-title>
+  ></lk-page-title>
 
   <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
     <div class="registration-input">
@@ -107,6 +102,47 @@ Dich hier vorab registrieren."
       </div>
     </div>
 
+    <lk-container class="map-confirmation">
+      <div class="warning">
+        <ng-container *ngIf="needConfirmation() || confirmAddressMode">
+          Bitte bestätige, den auf der Karte angezeigten Standort.<br />
+          Positioniere die Karte so, dass das untere Ende des lokalkauf-Herzens
+          auf deinen Standort zeigt.
+        </ng-container>
+      </div>
+      <div class="disabled-overlay" *ngIf="!confirmAddressMode">
+        <lk-button
+          [color]="needConfirmation() ? 'warn' : 'primary'"
+          (click)="openConfirmationMode()"
+        >
+          <ng-container *ngIf="!needConfirmation()"
+            >Standort ändern</ng-container
+          >
+          <ng-container *ngIf="needConfirmation()"
+            >Standort bestätigen</ng-container
+          >
+        </lk-button>
+      </div>
+      <!-- <img
+        *ngIf="confirmAddressMode"
+        src="/assets/lokalkauf-pin.svg"
+        class="confirmation-pin"
+      /> -->
+      <div class="control-btns" *ngIf="confirmAddressMode">
+        <button
+          mat-mini-fab
+          color="default"
+          (click)="cancelAddressConfirmation()"
+        >
+          <mat-icon color="warn">cancel</mat-icon>
+        </button>
+        <button mat-mini-fab color="default" (click)="confirmAddress()">
+          <mat-icon color="primary">thumb_up_alt</mat-icon>
+        </button>
+      </div>
+      <lk-map (mapMove)="onMapMove($event)"> </lk-map>
+    </lk-container>
+
     <ng-container *ngIf="registrationState === 'new'">
       <div class="subheadline">Deine Zugangsdaten</div>
       <div class="registration-input">
@@ -166,6 +202,7 @@ Dich hier vorab registrieren."
       </mat-password-strength>
       <!--Password's strength info-->
       <mat-password-strength-info
+        *ngIf="password.touched"
         [passwordComponent]="passwordComponentWithValidation"
         lowerCaseCriteriaMsg="Kleinschreibung"
         upperCaseCriteriaMsg="Großschreibung"
@@ -183,14 +220,14 @@ Dich hier vorab registrieren."
         <div>
           Mit meiner Anmeldung versichere ich, dass ich die
           <a
-            href="http://www.info.lokalkauf.org/agb"
+            href="https://www.info.lokalkauf.org/agb"
             target="_blank"
             rel="noopener noreferrer"
             >AGB</a
           >
           und die
           <a
-            href="http://www.info.lokalkauf.org/datenschutz"
+            href="https://www.info.lokalkauf.org/datenschutz"
             target="_blank"
             rel="noopener noreferrer"
             >Datenschutzrichtlinen</a
@@ -211,10 +248,19 @@ Dich hier vorab registrieren."
       <ng-container *ngIf="registrationState === 'edit'">
         <div class="button-container">
           <div class="cancel">
-            <lk-button type="button" label="Zurück" (click)="verwerfen()"></lk-button>
+            <lk-button
+              type="button"
+              label="Zurück"
+              (click)="verwerfen()"
+            ></lk-button>
           </div>
           <div class="save">
-            <lk-button [disabled]="!registrationForm.valid" type="submit" label="Aktualisieren"></lk-button>
+            <lk-button
+              [disabled]="!registrationForm.valid || needConfirmation()"
+              type="submit"
+              label="Aktualisieren"
+            >
+            </lk-button>
           </div>
         </div>
         <div class="success" *ngIf="saveSuccessful">

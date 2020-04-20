@@ -10,9 +10,21 @@
       "**/.*",
       "**/node_modules/**"
     ],
-      "rewrites": [
+    "rewrites": [
       {
-	"source": "/trader-detail/**",
+	      "source": "/sitemaps/sitemaps.xml",
+        "function": "serveSitemapIndex"
+      },
+      {
+	      "source": "/sitemaps/trader**",
+        "function": "serveTraderSitemap"
+      },
+      {
+	      "source": "/sitemaps/base**",
+        "function": "serveBaseSitemap"
+      },
+      {
+	      "source": "/trader-detail/**",
         "function": "traderDetail"
       },
       {

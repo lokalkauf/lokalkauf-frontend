@@ -70,7 +70,12 @@ export class UserService {
       traderProfile
     );
 
-    await this.geo.createLocationByAddress(credential.user.uid, traderProfile);
+    await this.geo.createLocation(
+      credential.user.uid,
+      traderProfile.confirmedLocation
+    );
+
+    // await this.geo.createLocationByAddress(credential.user.uid, traderProfile);
   }
 
   async getLoggedInUserStateOnce() {

@@ -25,6 +25,7 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
+              "src/robots.txt",
               "src/assets",
               {
                 "glob": "**/*",
@@ -39,11 +40,39 @@
               "./node_modules/leaflet/dist/leaflet.css",
               "./node_modules/ngx-lightbox/lightbox.css"
             ],
-            "scripts": [],
-            "serviceWorker": true,
-            "ngswConfigPath": "ngsw-config.json"
+            "scripts": []
           },
           "configurations": {
+            "staging": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.staging.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": true,
+              "extractCss": true,
+              "namedChunks": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "100kb"
+                }
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -70,7 +99,9 @@
                   "maximumWarning": "6kb",
                   "maximumError": "100kb"
                 }
-              ]
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
             }
           }
         },
@@ -100,6 +131,7 @@
             "karmaConfig": "karma.conf.js",
             "assets": [
               "src/favicon.ico",
+              "src/robots.txt",
               "src/assets",
               "src/manifest.webmanifest"
             ],

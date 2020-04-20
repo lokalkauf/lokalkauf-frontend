@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -58,6 +58,7 @@ import { RedirectComponent } from './redirect/redirect.component';
 import { PressComponent } from './press/press.component';
 import { LightboxModule } from 'ngx-lightbox';
 import { filter } from 'rxjs/operators';
+import { MatCarouselModule } from '@ngmodule/material-carousel';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -75,6 +76,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     AppComponent,
     AboutUsComponent,
@@ -114,6 +116,7 @@ const routes: Routes = [
     AngularFireDatabaseModule,
     CustomerModule,
     TraderModule,
+    MatCarouselModule,
     TransportModule,
     RouterModule.forRoot(routes, {
       anchorScrolling: 'enabled',
@@ -127,7 +130,7 @@ const routes: Routes = [
     HttpClientModule,
     MatPasswordStrengthModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: true,
+      enabled: environment.production,
     }),
     LightboxModule,
   ],

@@ -129,3 +129,11 @@ a {
   color: $appblack;
   text-decoration: underline;
 }
+
+label {
+  display: flex;
+}
+
+.lk-checkbox-label {
+  margin-top: 0px;
+}
