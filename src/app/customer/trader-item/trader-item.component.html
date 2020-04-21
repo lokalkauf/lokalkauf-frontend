@@ -20,7 +20,9 @@
     <mat-card-header>
       <mat-card-title>{{ trader.businessname }}</mat-card-title>
       <mat-card-subtitle>
-        <!-- <div class="distance"><span class="highlight">1,8</span><br />km</div> -->
+        <div class="distance">
+          <span class="highlight">{{ trader.currentDistance }}</span> km
+        </div>
         {{ trader.street }}
         {{ trader.number }}
         <br />{{ trader.postcode }}

@@ -27,6 +27,7 @@ export interface TraderProfile {
     handwerk: boolean;
     sonstiges: boolean;
   };
+  currentDistance?: number;
 }
 
 export enum TraderProfileStatus {

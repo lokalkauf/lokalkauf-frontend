@@ -132,11 +132,12 @@ export class TraderOverviewComponent implements OnInit {
     const radius = this.paramRadius ? this.paramRadius : this.STATIC_RADIUS;
     const data = {
       radius,
-      coords: position
+      coords: position,
     };
     const getTraders = functions().httpsCallable(`locationByDistance`);
 
-    getTraders.call('Get Traders', data)
+    getTraders
+      .call('Get Traders', data)
       .then((value) => {
         this.locations = new Array<Location>();
 
@@ -169,10 +170,12 @@ export class TraderOverviewComponent implements OnInit {
       return;
     }
 
-    const distinctLocations = trlocaitons.sort((a, b) => a.distance - b.distance).filter(
-      (thing, i, arr) =>
-        arr.findIndex((t) => t.traderId === thing.traderId) === i
-    );
+    const distinctLocations = trlocaitons
+      .sort((a, b) => a.distance - b.distance)
+      .filter(
+        (thing, i, arr) =>
+          arr.findIndex((t) => t.traderId === thing.traderId) === i
+      );
 
     const ids = distinctLocations.map((l) => l.traderId);
 
@@ -183,7 +186,7 @@ export class TraderOverviewComponent implements OnInit {
 
     const traderArray = traderProfiles as Array<any>;
 
-    for (const traderRow of traderArray) {
+    for (const traderRow of traderProfiles) {
       for (const distinctRow of distinctLocations) {
         if (distinctRow.traderId === traderRow.id) {
           traderRow.currentDistance = distinctRow.distance;
@@ -191,24 +194,23 @@ export class TraderOverviewComponent implements OnInit {
       }
     }
 
-    console.log(traderArray);
+    console.log(traderProfiles);
 
-
-    this.hasLocations$ = of(traderArray.length > 0);
+    this.hasLocations$ = of(traderProfiles.length > 0);
 
     if (this.storeType && this.storeType !== 'alle') {
       const selectedStores = [];
-      traderArray.filter((i) => {
+      traderProfiles.filter((i) => {
         if (i.storeType && i.storeType[this.storeType]) {
           selectedStores.push(i);
         }
       });
-      this.traders = selectedStores.sort((traderA, traderB) =>
-        traderA.currentDistance - traderB.currentDistance
+      this.traders = selectedStores.sort(
+        (traderA, traderB) => traderA.currentDistance - traderB.currentDistance
       );
     } else {
-      this.traders = traderArray.sort((traderA, traderB) =>
-        traderA.currentDistance - traderB.currentDistance
+      this.traders = traderProfiles.sort(
+        (traderA, traderB) => traderA.currentDistance - traderB.currentDistance
       );
     }
   }

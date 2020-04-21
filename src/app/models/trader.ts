@@ -6,4 +6,5 @@ export interface Trader {
   email: string;
   phone: string;
   products: string[];
+  currentDistance?: number;
 }
