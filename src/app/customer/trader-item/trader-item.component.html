@@ -19,10 +19,9 @@
     </ng-template>
     <mat-card-header>
       <mat-card-title>{{ trader.businessname }}</mat-card-title>
+      <span fxFlex></span>
+      <div>{{ trader.currentDistance }} km</div>
       <mat-card-subtitle>
-        <div class="distance">
-          <span class="highlight">{{ trader.currentDistance }}</span> km
-        </div>
         {{ trader.street }}
         {{ trader.number }}
         <br />{{ trader.postcode }}
