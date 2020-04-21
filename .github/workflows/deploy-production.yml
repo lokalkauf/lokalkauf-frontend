@@ -6,8 +6,8 @@ on:
     - master
 
 jobs:
-  build-and-deploy:
-    name: Build & Deploy
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
     - name: Clone Repository
@@ -29,8 +29,26 @@ jobs:
     - name: npm install
       run: npm ci
 
-    - name: Build App
+    - name: Build
       run: npm run build -- --configuration production
+
+    - uses: actions/upload-artifact@v1
+      with:
+        name: app
+        path: ./dist
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Clone Repository
+      uses: actions/checkout@v2
+
+    - uses: actions/download-artifact@v1
+      with:
+        name: app
+        path: ./dist
 
     - name: Deploy
       uses: w9jds/firebase-action@v1.3.0
