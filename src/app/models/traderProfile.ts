@@ -1,4 +1,5 @@
 export interface TraderProfile {
+  id?: string;
   businessname: string;
   ownerFirstname: string;
   ownerLastname: string;
