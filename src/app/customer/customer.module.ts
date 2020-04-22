@@ -10,7 +10,6 @@ import { ShoppingcartComponent } from './shoppingcart/shoppingcart.component';
 import { TraderOverviewComponent } from './trader-overview/trader-overview.component';
 import { TraderItemComponent } from './trader-item/trader-item.component';
 import { TraderDetailComponent } from './trader-detail/trader-detail.component';
-import { TraderMapComponent } from './trader-map/trader-map.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -35,7 +34,6 @@ const routes: Routes = [
   { path: 'buy/confirmation', component: BuyConfirmationComponent },
   { path: 'cart', component: ShoppingcartComponent },
   { path: 'localtraders/:lat/:lng/:rad', component: TraderOverviewComponent },
-  { path: 'tradermap', component: TraderMapComponent },
   { path: 'trader-detail-redirect/:id', component: TraderDetailComponent },
   { path: 'trader-detail/:id', component: TraderDetailComponent },
   { path: 'trader/:traderId/contact', component: TraderContactComponent },
@@ -54,7 +52,6 @@ const routes: Routes = [
     TraderOverviewComponent,
     TraderItemComponent,
     TraderDetailComponent,
-    TraderMapComponent,
     ShoppingcartItemComponent,
     TraderContactComponent,
     InquiryConfirmationComponent,

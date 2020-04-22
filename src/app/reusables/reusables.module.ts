@@ -1,6 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MapComponent } from './map/map.component';
 import { HorizontalScalingBarComponent } from './horizontal-scaling-bar/horizontal-scaling-bar.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LkInputComponent } from './lk-input/lk-input.component';
@@ -30,7 +29,6 @@ const routes: Routes = [];
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
-    MapComponent,
     HorizontalScalingBarComponent,
     LkInputComponent,
     LkButtonComponent,
@@ -60,7 +58,6 @@ const routes: Routes = [];
     MatChipsModule,
   ],
   exports: [
-    MapComponent,
     HorizontalScalingBarComponent,
     LkInputComponent,
     LkButtonComponent,
