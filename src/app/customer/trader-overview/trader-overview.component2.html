@@ -23,6 +23,17 @@
       ></app-trader-item>
     </div>
   </div>
+
+  <form [formGroup]="rangeGroup">
+    <lk-slider
+      [min]="10"
+      [max]="100"
+      formControlName="range"
+      (changeingEvent)="rangeChanging($event)"
+    ></lk-slider>
+    Aktueller Umkreis: {{rangeChanging$ | async}} km
+  </form>
+
   <div class="no-result-message" *ngIf="(hasLocations$ | async) === false">
     Leider wurden in Deinem Umkreis keine Händler gefunden. Unsere Plattform
     befindet sich aktuell im Aufbau, so dass wir noch nicht in allen Regionen

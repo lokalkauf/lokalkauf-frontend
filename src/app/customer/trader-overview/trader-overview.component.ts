@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
 import { Location } from '../../models/location';
 import { ActivatedRoute } from '@angular/router';
 import { LkSelectOptions } from '../../reusables/lk-select/lk-select.component';
@@ -18,6 +18,7 @@ import {
   faInstagram,
 } from '@fortawesome/free-brands-svg-icons';
 import { functions } from 'firebase';
+import { FormControlName, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-trader-overview',
@@ -42,6 +43,17 @@ export class TraderOverviewComponent implements OnInit {
   faWhatsapp = faWhatsapp;
   faInstagram = faInstagram;
   text = uiTexts;
+
+  rangeChanging$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+
+  get range() {
+    return this.rangeGroup.get('range');
+  }
+
+  rangeGroup = new FormGroup({
+    range: new FormControl(0),
+  });
+
   constructor(
     private route: ActivatedRoute,
     private geo: GeoService,
@@ -53,7 +65,6 @@ export class TraderOverviewComponent implements OnInit {
     if (this.selectedTrader) {
       this.storeType = this.selectedTrader.value;
     }
-
     this.storeTypePreselect = of('Nach was bist du auf der Suche?');
     this.storeTypes = of([
       {
@@ -102,6 +113,19 @@ export class TraderOverviewComponent implements OnInit {
         value: 'sonstiges',
       },
     ]);
+
+    this.rangeGroup.get('range').valueChanges.subscribe((value) => {
+      const location = this.storageService.loadLocation();
+      if (location && location.coordinates) {
+        this.paramRadius = value;
+        location.radius = value;
+        this.loadTmpLocations(location.coordinates);
+        this.storageService.saveLocation(location);
+      }
+    });
+  }
+  rangeChanging(val: number) {
+    this.rangeChanging$.next(val);
   }
 
   ngOnInit() {
@@ -113,6 +137,10 @@ export class TraderOverviewComponent implements OnInit {
         ];
         // this.geo.setUserPosition(pos);
         this.paramRadius = Number.parseFloat(params.rad);
+        this.rangeChanging(this.paramRadius);
+        this.rangeGroup
+          .get('range')
+          .setValue(this.paramRadius, { emitEvent: false, onlySelf: true });
         this.loadTmpLocations(pos);
       } catch {
         console.log('no location available');
