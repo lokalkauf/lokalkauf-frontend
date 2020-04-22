@@ -1,8 +1,8 @@
 name: Pull Request Check 
 
 on:
-  pull_request:
-    branches:
+  push:
+    branches-ignore:
     - master
     - develop
 
@@ -30,7 +30,7 @@ jobs:
     - name: npm install
       run: npm ci
 
-    - name: Build App 
+    - name: Build
       run: npm run build
 
     - name: Check Code Style

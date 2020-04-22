@@ -4,9 +4,9 @@
 	</a>
 </p>
 
-# Lokalkauf - Frontend
+# lokalkauf - Frontend
 
-[Lokalkauf](https://lokalkauf.org) is an easy to use online platform to set up local shops with an online shop, which allows them to supply their customers via a local delivery chain.
+[lokalkauf](https://lokalkauf.org) is an easy to use online platform to set up local shops with an online shop, which allows them to supply their customers via a local delivery chain.
 This can keep businesses running, even in times of social distancing.
 
 Created during the [WirvsVirus Hackerthon](https://wirvsvirushackathon.org).
