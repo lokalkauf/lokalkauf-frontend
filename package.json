@@ -2,12 +2,10 @@
   "name": "lokalkauf-frontend",
   "version": "0.0.1",
   "scripts": {
-    "ng": "ng",
     "start": "ng serve --ssl true",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "emulators:setup": "firebase setup:emulators:firestore",
+    "emulators": "firebase emulators:start",
+    "build": "ng build --prod"
   },
   "private": true,
   "dependencies": {
