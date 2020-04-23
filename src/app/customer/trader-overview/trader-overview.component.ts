@@ -17,6 +17,7 @@ import {
   faWhatsapp,
   faInstagram,
 } from '@fortawesome/free-brands-svg-icons';
+import { functions } from 'firebase';
 
 @Component({
   selector: 'app-trader-overview',
@@ -129,18 +130,21 @@ export class TraderOverviewComponent implements OnInit {
   loadTmpLocations(position: number[]) {
     this.spinnerService.show();
     const radius = this.paramRadius ? this.paramRadius : this.STATIC_RADIUS;
-    this.geo
-      .getLocations(radius, position)
-      .then((value: GeoQuerySnapshot) => {
+    const data = {
+      radius,
+      coords: position,
+    };
+    const getTraders = functions().httpsCallable(`locationByDistance`);
+
+    getTraders
+      .call('Get Traders', data)
+      .then((value) => {
         this.locations = new Array<Location>();
 
-        value.forEach((loc: GeoFirestoreTypes.QueryDocumentSnapshot) => {
+        value.data.forEach((loc: GeoFirestoreTypes.QueryDocumentSnapshot) => {
           this.locations.push({
             traderId: loc.id,
-            coordinates: [
-              loc.data().coordinates.latitude,
-              loc.data().coordinates.longitude,
-            ],
+            coordinates: [],
             distance: loc.distance,
           });
         });
@@ -166,10 +170,12 @@ export class TraderOverviewComponent implements OnInit {
       return;
     }
 
-    const distinctLocations = trlocaitons.filter(
-      (thing, i, arr) =>
-        arr.findIndex((t) => t.traderId === thing.traderId) === i
-    );
+    const distinctLocations = trlocaitons
+      .sort((a, b) => a.distance - b.distance)
+      .filter(
+        (thing, i, arr) =>
+          arr.findIndex((t) => t.traderId === thing.traderId) === i
+      );
 
     const ids = distinctLocations.map((l) => l.traderId);
 
@@ -177,6 +183,16 @@ export class TraderOverviewComponent implements OnInit {
       ids,
       TraderProfileStatus.PUBLIC
     );
+
+    const traderArray = traderProfiles as Array<any>;
+
+    for (const traderRow of traderProfiles) {
+      for (const distinctRow of distinctLocations) {
+        if (distinctRow.traderId === traderRow.id) {
+          traderRow.currentDistance = distinctRow.distance;
+        }
+      }
+    }
 
     this.hasLocations$ = of(traderProfiles.length > 0);
 
@@ -187,12 +203,12 @@ export class TraderOverviewComponent implements OnInit {
           selectedStores.push(i);
         }
       });
-      this.traders = selectedStores.sort((traderA, traderB) =>
-        traderA.businessname.localeCompare(traderB.businessname)
+      this.traders = selectedStores.sort(
+        (traderA, traderB) => traderA.currentDistance - traderB.currentDistance
       );
     } else {
-      this.traders = traderProfiles.sort((traderA, traderB) =>
-        traderA.businessname.localeCompare(traderB.businessname)
+      this.traders = traderProfiles.sort(
+        (traderA, traderB) => traderA.currentDistance - traderB.currentDistance
       );
     }
   }

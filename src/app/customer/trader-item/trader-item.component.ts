@@ -36,6 +36,7 @@ export class TraderItemComponent implements OnInit {
           return {
             ...trader,
             id: this.trader.id,
+            currentDistance: Number(this.trader.currentDistance.toFixed(2)),
           };
         })
       );

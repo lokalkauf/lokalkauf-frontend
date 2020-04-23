@@ -1,4 +1,5 @@
 export interface TraderProfile {
+  id?: string;
   businessname: string;
   ownerFirstname: string;
   ownerLastname: string;
@@ -27,6 +28,7 @@ export interface TraderProfile {
     handwerk: boolean;
     sonstiges: boolean;
   };
+  currentDistance?: number;
 }
 
 export enum TraderProfileStatus {
