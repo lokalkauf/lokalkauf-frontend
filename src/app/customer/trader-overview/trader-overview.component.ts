@@ -194,8 +194,6 @@ export class TraderOverviewComponent implements OnInit {
       }
     }
 
-    console.log(traderProfiles);
-
     this.hasLocations$ = of(traderProfiles.length > 0);
 
     if (this.storeType && this.storeType !== 'alle') {
