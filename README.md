@@ -41,3 +41,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 To deploy install firebase-tools `npm i -g firebase-tools` and login to your firebase account `firebase login`. Then you can deploy the app using `firebase deploy`.
 
+test
