@@ -12,19 +12,19 @@
     ],
     "rewrites": [
       {
-	      "source": "/sitemaps/sitemaps.xml",
+        "source": "/sitemaps/sitemaps.xml",
         "function": "serveSitemapIndex"
       },
       {
-	      "source": "/sitemaps/trader**",
+        "source": "/sitemaps/trader**",
         "function": "serveTraderSitemap"
       },
       {
-	      "source": "/sitemaps/base**",
+        "source": "/sitemaps/base**",
         "function": "serveBaseSitemap"
       },
       {
-	      "source": "/trader-detail/**",
+        "source": "/trader-detail/**",
         "function": "traderDetail"
       },
       {
@@ -35,5 +35,23 @@
   },
   "storage": {
     "rules": "storage.rules"
+  },
+  "functions": {
+    "predeploy": [
+      "npm --prefix \"$RESOURCE_DIR\" run lint",
+      "npm --prefix \"$RESOURCE_DIR\" run build"
+    ],
+    "source": "functions"
+  },
+  "emulators": {
+    "functions": {
+      "port": 5001
+    },
+    "firestore": {
+      "port": 8080
+    },
+    "hosting": {
+      "port": 5000
+    }
   }
 }
