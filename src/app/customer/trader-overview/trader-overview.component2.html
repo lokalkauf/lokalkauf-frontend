@@ -16,6 +16,18 @@
     >
     </lk-chip-list>
 
+    <div class="slider">
+      <form [formGroup]="rangeGroup">
+        <lk-slider
+          [min]="10"
+          [max]="100"
+          formControlName="range"
+          (changeingEvent)="rangeChanging($event)"
+        ></lk-slider>
+        Aktueller Umkreis: {{rangeChanging$ | async}} km
+      </form>
+    </div>
+
     <div class="traders-overview-content">
       <app-trader-item
         *ngFor="let trader of traders"
@@ -23,16 +35,17 @@
       ></app-trader-item>
     </div>
   </div>
-
-  <form [formGroup]="rangeGroup">
-    <lk-slider
-      [min]="10"
-      [max]="100"
-      formControlName="range"
-      (changeingEvent)="rangeChanging($event)"
-    ></lk-slider>
-    Aktueller Umkreis: {{rangeChanging$ | async}} km
-  </form>
+  <div class="slider" *ngIf="(hasLocations$ | async) === false">
+    <form [formGroup]="rangeGroup">
+      <lk-slider
+        [min]="10"
+        [max]="100"
+        formControlName="range"
+        (changeingEvent)="rangeChanging($event)"
+      ></lk-slider>
+      Aktueller Umkreis: {{rangeChanging$ | async}} km
+    </form>
+  </div>
 
   <div class="no-result-message" *ngIf="(hasLocations$ | async) === false">
     Leider wurden in Deinem Umkreis keine Händler gefunden. Unsere Plattform
