@@ -17,15 +17,19 @@
     </lk-chip-list>
 
     <div class="slider">
-      <form [formGroup]="rangeGroup">
-        <lk-slider
-          [min]="10"
-          [max]="100"
-          formControlName="range"
-          (changeingEvent)="rangeChanging($event)"
-        ></lk-slider>
-        Aktueller Umkreis: {{rangeChanging$ | async}} km
-      </form>
+      <div class="slider-form">
+        <form [formGroup]="rangeGroup">
+          <lk-slider
+            class="slider"
+            [min]="10"
+            [max]="100"
+            formControlName="range"
+            (changeingEvent)="rangeChanging($event)"
+          >
+          </lk-slider>
+        </form>
+      </div>
+      <div class="slider-info">{{rangeChanging$ | async}} km</div>
     </div>
 
     <div class="traders-overview-content">
@@ -37,13 +41,17 @@
   </div>
   <div class="slider" *ngIf="(hasLocations$ | async) === false">
     <form [formGroup]="rangeGroup">
-      <lk-slider
-        [min]="10"
-        [max]="100"
-        formControlName="range"
-        (changeingEvent)="rangeChanging($event)"
-      ></lk-slider>
-      Aktueller Umkreis: {{rangeChanging$ | async}} km
+      <div>
+        <lk-slider
+          class="slider"
+          [min]="10"
+          [max]="100"
+          formControlName="range"
+          (changeingEvent)="rangeChanging($event)"
+        >
+        </lk-slider>
+      </div>
+      <div>Aktueller Umkreis: {{rangeChanging$ | async}} km</div>
     </form>
   </div>
 
