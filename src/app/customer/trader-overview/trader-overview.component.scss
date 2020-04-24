@@ -1,4 +1,5 @@
 @import '../../../theme/variables.scss';
+@import '../../../theme/lk-theme.scss';
 
 lk-warning-box {
   display: block;
@@ -102,5 +103,24 @@ app-trader-item {
 
   div {
     padding-top: 20px;
+  }
+}
+
+.slider {
+  display: flex;
+  justify-content: space-between;
+
+  align-items: center;
+
+  .slider-form {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .slider-info {
+    width: 80px;
+    text-align: right;
+    margin-top: 20px;
+    margin-right: 6px;
   }
 }

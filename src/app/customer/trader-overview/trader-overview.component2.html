@@ -1,12 +1,4 @@
 <lk-container>
-  <!-- <div class="traders-map-row">
-    <app-map
-      class="tradersmap"
-      (locationsOnMap)="updateLocations($event)"
-    ></app-map>
-  </div> -->
-  <!-- <lk-warning-box collapseTime="10000" [content]="text.rote_infobox | text">
-  </lk-warning-box> -->
   <div class="traders-overview-row" *ngIf="(hasLocations$ | async) === true">
     <lk-page-title title="Alles aus Deiner Nähe"></lk-page-title>
     <lk-chip-list
@@ -16,6 +8,22 @@
     >
     </lk-chip-list>
 
+    <div class="slider">
+      <div class="slider-form">
+        <form [formGroup]="rangeGroup">
+          <lk-slider
+            class="slider"
+            [min]="10"
+            [max]="100"
+            formControlName="range"
+            (changingEvent)="rangeChanging($event)"
+          >
+          </lk-slider>
+        </form>
+      </div>
+      <div class="slider-info">{{rangeChanging$ | async}} km</div>
+    </div>
+
     <div class="traders-overview-content">
       <app-trader-item
         *ngFor="let trader of traders"
@@ -23,6 +31,22 @@
       ></app-trader-item>
     </div>
   </div>
+  <div class="slider" *ngIf="(hasLocations$ | async) === false">
+    <div class="slider-form">
+      <form [formGroup]="rangeGroup">
+        <lk-slider
+          class="slider"
+          [min]="10"
+          [max]="100"
+          formControlName="range"
+          (changingEvent)="rangeChanging($event)"
+        >
+        </lk-slider>
+      </form>
+    </div>
+    <div class="slider-info">{{rangeChanging$ | async}} km</div>
+  </div>
+
   <div class="no-result-message" *ngIf="(hasLocations$ | async) === false">
     Leider wurden in Deinem Umkreis keine Händler gefunden. Unsere Plattform
     befindet sich aktuell im Aufbau, so dass wir noch nicht in allen Regionen

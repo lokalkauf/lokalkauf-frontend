@@ -24,6 +24,8 @@ import { LkWarningBoxComponent } from './lk-warning-box/lk-warning-box.component
 import { NgxStarRatingModule } from 'ngx-star-rating';
 import { RatingStarComponent } from './rating-star/rating-star.component';
 import { LkContainerComponent } from './lk-container/lk-container.component';
+import { LkSliderComponent } from './lk-slider/lk-slider.component';
+import { MatSliderModule } from '@angular/material/slider';
 
 const routes: Routes = [];
 
@@ -45,6 +47,7 @@ const routes: Routes = [];
     LkContainerComponent,
     LkChipListComponent,
     LkMapComponent,
+    LkSliderComponent,
   ],
   imports: [
     CommonModule,
@@ -55,6 +58,7 @@ const routes: Routes = [];
     MatIconModule,
     MatInputModule,
     MatButtonModule,
+    MatSliderModule,
     MatTooltipModule,
     NgxStarRatingModule,
     MatChipsModule,
@@ -75,6 +79,7 @@ const routes: Routes = [];
     LkContainerComponent,
     LkChipListComponent,
     LkMapComponent,
+    LkSliderComponent,
   ],
 })
 export class ReusablesModule {}
