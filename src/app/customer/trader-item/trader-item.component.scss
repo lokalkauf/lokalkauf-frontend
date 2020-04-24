@@ -38,9 +38,23 @@ mat-card {
   mat-card-header {
     flex-grow: 1;
     overflow: hidden;
+    width: 100%;
 
     mat-card-subtitle {
       margin-bottom: 0;
+
+      display: flex;
+      justify-content: flex-end;
+
+      .distance {
+        flex-grow: 2;
+        text-align: right;
+        color: $appgrey;
+
+        @media only screen and (max-width: 480px) {
+          font-size: 12px;
+        }
+      }
     }
 
     mat-card-title {
