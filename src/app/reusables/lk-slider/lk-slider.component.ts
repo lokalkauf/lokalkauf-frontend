@@ -19,7 +19,7 @@ export class LkSliderComponent implements ControlValueAccessor {
   @Input() min: number;
   @Input() max: number;
   @Input() formatLabel: string;
-  @Output() changeingEvent: EventEmitter<number> = new EventEmitter<number>();
+  @Output() changingEvent: EventEmitter<number> = new EventEmitter<number>();
 
   constructor() {}
   // The internal data model
@@ -65,7 +65,7 @@ export class LkSliderComponent implements ControlValueAccessor {
     this.onTouchedCallback = fn;
   }
 
-  changeing(event: any) {
-    this.changeingEvent.emit(event.value);
+  changing(event: any) {
+    this.changingEvent.emit(event.value);
   }
 }
