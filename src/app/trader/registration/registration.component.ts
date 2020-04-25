@@ -195,6 +195,10 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
     const email = this.email.value;
     const password = this.password.value;
 
+    if (this.needConfirmation()) {
+      return;
+    }
+
     const traderProfilRegister: TraderProfile = {
       businessname: this.businessname.value,
       ownerFirstname: this.ownerFirstname.value,
