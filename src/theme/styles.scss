@@ -62,3 +62,10 @@ app-root {
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);
 }
+
+.cc-compliance {
+  align-self: flex-end;
+  @media only screen and (max-width: 480px) {
+    align-self: end;
+  }
+}
