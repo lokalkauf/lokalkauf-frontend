@@ -23,6 +23,7 @@ import { LkWarningBoxComponent } from './lk-warning-box/lk-warning-box.component
 import { NgxStarRatingModule } from 'ngx-star-rating';
 import { RatingStarComponent } from './rating-star/rating-star.component';
 import { LkContainerComponent } from './lk-container/lk-container.component';
+import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
 
 const routes: Routes = [];
 
@@ -56,6 +57,7 @@ const routes: Routes = [];
     MatTooltipModule,
     NgxStarRatingModule,
     MatChipsModule,
+    LeafletMarkerClusterModule,
   ],
   exports: [
     HorizontalScalingBarComponent,

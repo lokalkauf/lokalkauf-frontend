@@ -1,10 +1,10 @@
 <lk-container>
-  <!-- <div class="traders-map-row">
-    <app-map
-      class="tradersmap"
-      (locationsOnMap)="updateLocations($event)"
-    ></app-map>
-  </div> -->
+  <lk-map
+    class="tradersmap"
+    (locationsOnMap)="updateLocations($event)"
+    [markers]="tradersForMap"
+    [position]="mapPosition"
+  ></lk-map>
   <!-- <lk-warning-box collapseTime="10000" [content]="text.rote_infobox | text">
   </lk-warning-box> -->
   <div class="traders-overview-row" *ngIf="(hasLocations$ | async) === true">

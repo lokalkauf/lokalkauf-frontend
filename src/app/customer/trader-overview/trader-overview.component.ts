@@ -17,6 +17,8 @@ import {
   faWhatsapp,
   faInstagram,
 } from '@fortawesome/free-brands-svg-icons';
+import { MapMarkerData } from 'src/app/models/mapMarkerData';
+import { MapPosition } from 'src/app/models/mapPosition';
 
 @Component({
   selector: 'app-trader-overview',
@@ -25,6 +27,7 @@ import {
 })
 export class TraderOverviewComponent implements OnInit {
   traders: TraderProfile[] = [];
+  tradersForMap: Array<MapMarkerData> = new Array<MapMarkerData>();
 
   STATIC_LOCATION: number[] = [50.083352, 8.241451]; // 51.54136, 7.687467
   STATIC_RADIUS = 10;
@@ -41,6 +44,7 @@ export class TraderOverviewComponent implements OnInit {
   faWhatsapp = faWhatsapp;
   faInstagram = faInstagram;
   text = uiTexts;
+  mapPosition: MapPosition;
   constructor(
     private route: ActivatedRoute,
     private geo: GeoService,
@@ -113,6 +117,11 @@ export class TraderOverviewComponent implements OnInit {
         // this.geo.setUserPosition(pos);
         this.paramRadius = Number.parseFloat(params.rad);
         this.loadTmpLocations(pos);
+        this.mapPosition = {
+          latitude: pos[0],
+          longitude: pos[1],
+          zoom: 13,
+        };
       } catch {
         console.log('no location available');
       }
@@ -195,5 +204,14 @@ export class TraderOverviewComponent implements OnInit {
         traderA.businessname.localeCompare(traderB.businessname)
       );
     }
+
+    this.tradersForMap = this.traders.map((x) => {
+      return {
+        additionalData: x.email,
+        locationLatitude: x.confirmedLocation[0],
+        locationLongitude: x.confirmedLocation[1],
+        html: '',
+      };
+    });
   }
 }

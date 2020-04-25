@@ -5,31 +5,34 @@ import {
   Output,
   EventEmitter,
   Input,
+  ViewEncapsulation,
 } from '@angular/core';
 import {
   Map,
   tileLayer,
   latLng,
   marker,
-  CircleMarker,
-  circleMarker,
-  LatLng,
   Marker,
   layerGroup,
   icon,
-  popup,
+  LayerGroup,
 } from 'leaflet';
 
 import { Location } from '../../models/location';
 import { GeoService } from '../../services/geo.service';
-import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
-import { from } from 'rxjs';
 import { v4 as uuid } from 'uuid';
+import { MapMarkerData } from 'src/app/models/mapMarkerData';
+import * as L from 'leaflet';
+import { MapPosition } from 'src/app/models/mapPosition';
 
 @Component({
   selector: 'lk-map',
   templateUrl: './lk-map.component.html',
-  styleUrls: ['./lk-map.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  styleUrls: [
+    './lk-map.component.scss',
+    '../../../../node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css',
+  ],
 })
 export class LkMapComponent implements OnInit, AfterViewInit {
   map: Map;
@@ -38,7 +41,11 @@ export class LkMapComponent implements OnInit, AfterViewInit {
   @Output() positionChanged = new EventEmitter<any>();
   @Output() mapMove = new EventEmitter<any>();
   @Output() mapInit = new EventEmitter<any>();
+  @Output() markerClicked: EventEmitter<MapMarkerData> = new EventEmitter<
+    MapMarkerData
+  >();
   locations: Array<Location> = new Array<Location>();
+  markerLayerFromMapMarkerData: Array<Marker>;
 
   // esriTiles = 'https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_v2/VectorTileServer/tile/{z}/{x}/{y}.pbf';
   defaultTiles = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -63,17 +70,37 @@ export class LkMapComponent implements OnInit, AfterViewInit {
     shadowSize: [30, 22],
     shadowAnchor: [8, 18],
   });
+  updateMapWhenReady: MapPosition;
 
-  markers = [
-    // circleMarker(latLng(52.518623, 13.376198), {
-    //   color: '#000',
-    //   fillColor: '#0f0',
-    //   fillOpacity: 1,
-    //   opacity: 0.2,
-    //   weight: 25,
-    //   radius: 7,
-    // }),
-  ];
+  @Input('markers')
+  set editMarkers(markers: Array<MapMarkerData>) {
+    this.markerLayerFromMapMarkerData = new Array();
+
+    const markerIcon = icon({
+      iconUrl: '/assets/pin.png',
+      shadowUrl: '/assets/pin-shadow.png',
+
+      iconSize: [25, 29],
+      shadowSize: [25, 29],
+      iconAnchor: [16, 25],
+      shadowAnchor: [6, 26],
+    });
+
+    for (const oneMarker of markers) {
+      const thisMarker = L.marker(
+        latLng(oneMarker.locationLatitude, oneMarker.locationLongitude),
+        { icon: markerIcon }
+      ).addEventListener('click', () => {
+        this.markerClicked.emit(oneMarker);
+      });
+      this.markerLayerFromMapMarkerData.push(thisMarker);
+    }
+  }
+
+  @Input('position')
+  set updatePosition(position: MapPosition) {
+    this.flyTo(position);
+  }
 
   constructor(private geo: GeoService) {}
 
@@ -93,6 +120,16 @@ export class LkMapComponent implements OnInit, AfterViewInit {
     });
 
     this.mapInit.emit();
+
+    if (this.updateMapWhenReady) {
+      this.map.setView(
+        latLng(
+          this.updateMapWhenReady.latitude,
+          this.updateMapWhenReady.longitude
+        ),
+        this.updateMapWhenReady.zoom
+      );
+    }
   }
 
   ngOnInit(): void {}
@@ -106,12 +143,10 @@ export class LkMapComponent implements OnInit, AfterViewInit {
   }
 
   public addMarker(position?: number[]) {
-    const pos = position ? this.creeateLatLng(position) : this.map.getCenter();
+    const pos = position ? this.createLatLng(position) : this.map.getCenter();
 
     const id = uuid();
     marker(pos, { alt: id, icon: this.heartIconBig }).addTo(this.map);
-
-    // console.log('return id: ' + id);
 
     return id;
   }
@@ -119,15 +154,23 @@ export class LkMapComponent implements OnInit, AfterViewInit {
   public updateMarkerPosition(markerId: string, position: number[]) {
     const mrkr: Marker = this.findMarkerById(markerId);
 
-    // console.log('updatePos: ' + markerId);
-    // console.log(mrkr);
-
     if (mrkr) {
-      mrkr.setLatLng(this.creeateLatLng(position));
+      mrkr.setLatLng(this.createLatLng(position));
     }
   }
 
-  private creeateLatLng(position: number[]) {
+  flyTo(mapPosition: MapPosition) {
+    if (this.map) {
+      this.map.flyTo(
+        latLng(mapPosition.latitude, mapPosition.longitude),
+        mapPosition.zoom
+      );
+    } else {
+      this.updateMapWhenReady = mapPosition;
+    }
+  }
+
+  private createLatLng(position: number[]) {
     return latLng(position[0], position[1]);
   }
 
