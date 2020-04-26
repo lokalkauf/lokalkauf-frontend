@@ -1,0 +1,146 @@
+<form [formGroup]="dataFormGroup">
+  <h4>
+    Wähle aus was auf Deinen Betrieb zutrifft
+  </h4>
+  <div>
+    <label>
+      <app-lk-checkbox formControlName="delivery"> </app-lk-checkbox>
+      Wir liefern
+    </label>
+  </div>
+  <div>
+    <label>
+      <app-lk-checkbox formControlName="pickup"></app-lk-checkbox>
+      Abholung möglich
+    </label>
+  </div>
+  <div
+    class="warning"
+    *ngIf="dataFormGroup.errors && dataFormGroup.errors.notDeliveryAndPickup"
+  >
+    Bitte wähle mindestens eine Option aus.
+  </div>
+  <h4>
+    Wähle maximal zwei Kategorien aus die für Dein Geschäft zutreffen
+  </h4>
+  <ng-container [formGroup]="storeFormGroup">
+    <div>
+      <label>
+        <app-lk-checkbox formControlName="gastronomie"> </app-lk-checkbox>
+        Gastronomie
+      </label>
+    </div>
+    <div>
+      <label>
+        <app-lk-checkbox formControlName="lebensmittel"></app-lk-checkbox>
+        Lebensmittel
+      </label>
+    </div>
+    <div>
+      <label>
+        <app-lk-checkbox formControlName="fashion"></app-lk-checkbox>
+        Fashion
+      </label>
+    </div>
+    <div>
+      <label>
+        <app-lk-checkbox formControlName="buchhandlung"> </app-lk-checkbox>
+        Buchhandlung
+      </label>
+    </div>
+    <div>
+      <label>
+        <app-lk-checkbox formControlName="homedecor"> </app-lk-checkbox>
+        Home & Decor
+      </label>
+    </div>
+    <div>
+      <label>
+        <app-lk-checkbox formControlName="blumengarten"></app-lk-checkbox>
+        Blumen & Garten
+      </label>
+    </div>
+    <div>
+      <label>
+        <app-lk-checkbox formControlName="handwerk"></app-lk-checkbox>
+        Handwerk
+      </label>
+    </div>
+    <div>
+      <label>
+        <app-lk-checkbox formControlName="sonstiges"> </app-lk-checkbox>
+        Sonstige
+      </label>
+    </div>
+  </ng-container>
+  <div
+    class="warning"
+    *ngIf="storeFormGroup.errors && storeFormGroup.errors.storeCountError"
+  >
+    Bitte wähle mindestens eine und maximal zwei Optionen aus.
+  </div>
+
+  <h4>
+    Beschreibe Deinen Betrieb, erzähl etwas über Dich, Deine Öffnungs-, Liefer-
+    und Abholzeiten und was Du anbietest:
+  </h4>
+  <div>
+    <lk-textarea
+      placeholder="Beschreibungstext"
+      formControlName="description"
+    ></lk-textarea>
+  </div>
+  <h4>
+    Hat Dein Geschäft eine eigene E-Mail Adresse?
+  </h4>
+  <div>
+    <lk-input placeholder="E-Mail" formControlName="storeEmail"></lk-input>
+  </div>
+  <h4>
+    Hast Du vielleicht eine eigene Website? Dann trage sie doch hier ein:
+  </h4>
+  <div>
+    <lk-input
+      placeholder="Homepage"
+      formControlName="homepage"
+      pattern="https?://.+"
+    ></lk-input>
+  </div>
+  <div class="warning" *ngIf="homepage.invalid">
+    Deine Homepage muss mit http:// oder https:// beginnen, damit sie aufrufbar
+    ist.
+  </div>
+
+  <div class="buton-and-success">
+    <h4>
+      Dein Profil für die Kunden öffentlich verfügbar machen:
+    </h4>
+    <div>
+      <label>
+        <app-lk-checkbox formControlName="public"></app-lk-checkbox>
+        Profil ist öffentlich
+      </label>
+    </div>
+    <div>
+      <label>
+        <app-lk-checkbox formControlName="soMeShare"></app-lk-checkbox>
+        <span>
+          lokalkauf darf meine Bilder zu Werbezwecken auf Social Media Kanälen
+          in Verbindung mit lokalkauf verwenden - unter Nennung meines Ladens
+          und mit Link auf mein Social Media oder lokalkauf-Profil.
+        </span>
+      </label>
+    </div>
+
+    <br />
+    <div class="success" *ngIf="saveSuccessful">
+      Speichern erfolgreich
+    </div>
+    <lk-button
+      [disabled]="dataFormGroup.errors != null || storeFormGroup.errors != null"
+      label="Profil speichern"
+      (click)="updateProfile()"
+    >
+    </lk-button>
+  </div>
+</form>

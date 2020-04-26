@@ -1,15 +1,7 @@
-<div
-  class="profile-wrapper"
-  *ngIf="loggedInUserState$ | async as loggedInUserState"
->
+<lk-container *ngIf="loggedInUserState$ | async as loggedInUserState">
   <lk-page-title
     [title]="loggedInUserState.traderProfile.businessname"
   ></lk-page-title>
-  <!-- <mat-tab-group>
-    <mat-tab label="First"> Content 1 </mat-tab>
-    <mat-tab label="Second"> Content 2 </mat-tab>
-    <mat-tab label="Third"> Content 3 </mat-tab>
-  </mat-tab-group> -->
   <div *ngIf="!loggedInUserState.emailVerified" class="verify-mail-alert">
     Bitte bestätige deine Email-Adresse:
     {{ loggedInUserState.traderProfile.email }}<br />
@@ -19,234 +11,20 @@
     ><br /><br />
     {{ mailResendedMessage }}
   </div>
-  <form *ngIf="loggedInUserState.emailVerified" [formGroup]="dataFormGroup">
-    <div>
-      Schritt 1: Wähle aus was auf Deinen Betrieb zutrifft:
-    </div>
-    <div class="dense">
-      <label>
-        <app-lk-checkbox formControlName="delivery"> </app-lk-checkbox>
-        Wir liefern
-      </label>
-    </div>
-    <div class="dense">
-      <label>
-        <app-lk-checkbox formControlName="pickup"></app-lk-checkbox>
-        Abholung möglich
-      </label>
-    </div>
-    <div
-      class="warning"
-      *ngIf="dataFormGroup.errors && dataFormGroup.errors.notDeliveryAndPickup"
-    >
-      Bitte wähle mindestens eine Option aus.
-    </div>
-    <div>
-      Schritt 2: Wähle maximal zwei Kategorien aus die für Dein Geschäft
-      zutreffen:
-    </div>
-    <ng-container [formGroup]="storeFormGroup">
-      <div class="dense">
-        <label>
-          <app-lk-checkbox formControlName="gastronomie"> </app-lk-checkbox>
-          Gastronomie
-        </label>
-      </div>
-      <div class="dense">
-        <label>
-          <app-lk-checkbox formControlName="lebensmittel"></app-lk-checkbox>
-          Lebensmittel
-        </label>
-      </div>
-      <div class="dense">
-        <label>
-          <app-lk-checkbox formControlName="fashion"></app-lk-checkbox>
-          Fashion
-        </label>
-      </div>
-      <div class="dense">
-        <label>
-          <app-lk-checkbox formControlName="buchhandlung"> </app-lk-checkbox>
-          Buchhandlung
-        </label>
-      </div>
-      <div class="dense">
-        <label>
-          <app-lk-checkbox formControlName="homedecor"> </app-lk-checkbox>
-          Home & Decor
-        </label>
-      </div>
-      <div class="dense">
-        <label>
-          <app-lk-checkbox formControlName="blumengarten"></app-lk-checkbox>
-          Blumen & Garten
-        </label>
-      </div>
-      <div class="dense">
-        <label>
-          <app-lk-checkbox formControlName="handwerk"></app-lk-checkbox>
-          Handwerk
-        </label>
-      </div>
-      <div class="dense">
-        <label>
-          <app-lk-checkbox formControlName="sonstiges"> </app-lk-checkbox>
-          Sonstige
-        </label>
-      </div>
-    </ng-container>
-    <div
-      class="warning"
-      *ngIf="storeFormGroup.errors && storeFormGroup.errors.storeCountError"
-    >
-      Bitte wähle mindestens eine und maximal zwei Optionen aus.
-    </div>
-
-    <div>
-      Schritt 3: Beschreibe Deinen Betrieb, erzähl etwas über Dich, Deine
-      Öffnungs-, Liefer- und Abholzeiten und was Du anbietest:
-    </div>
-    <div>
-      <lk-textarea
-        placeholder="Beschreibungstext"
-        formControlName="description"
-      ></lk-textarea>
-    </div>
-    <div>
-      Schritt 4: Hat Dein Geschäft eine eigene E-Mail Adresse?
-    </div>
-    <div>
-      <lk-input placeholder="E-Mail" formControlName="storeEmail"></lk-input>
-    </div>
-    <div>
-      Schritt 5: Hast Du vielleicht eine eigene Website? Dann trage sie doch
-      hier ein:
-    </div>
-    <div>
-      <lk-input
-        placeholder="Homepage"
-        formControlName="homepage"
-        pattern="https?://.+"
-      ></lk-input>
-    </div>
-    <div class="warning" *ngIf="homepage.invalid">
-      Deine Homepage muss mit http:// oder https:// beginnen, damit sie
-      aufrufbar ist.
-    </div>
-    <div *ngIf="images">
-      <div>
-        Schritt 6: Zu guter Letzt lade Bilder von Deinem Laden oder Deinem
-        Angebot hoch (Du kannst maximal 3 Bilder hochladen und mit Klick auf das
-        Bildzeichen rechts das Bild markieren, das Du als Startbild setzen
-        möchtest):
-      </div>
-      <div *ngIf="images.length < 3">
-        <app-image-chooser [formControl]="businessImage"></app-image-chooser>
-        <lk-button
-          type="button"
-          label="Bild hochladen"
-          [disabled]="businessImage.value == null"
-          (click)="uploadImage()"
-        >
-        </lk-button
-        ><span class="move-right" *ngIf="this.imageUploadState | async">
-          Übertragung:
-          {{ this.imageUploadState | async | number: '1.2-2' }}
-          %</span
-        >
-      </div>
-      <div *ngIf="images.length > 0">
-        Folgende Bilder wurden Deinem Profil zugeordnet:
-      </div>
-      <div class="image-list">
-        <div
-          class="image-item"
-          *ngFor="let image of images"
-          [ngStyle]="{ 'background-image': 'url(' + image.url + ')' }"
-        >
-          <div class="btns">
-            <button
-              type="button"
-              (click)="
-                deleteImage(
-                  image,
-                  image.path ===
-                    loggedInUserState.traderProfile.defaultImagePath
-                )
-              "
-              mat-mini-fab
-              class="md-mini icn-danger"
-            >
-              <mat-icon class="cicon" title="Das Bild löschen.."
-                >delete</mat-icon
-              >
-            </button>
-            <button
-              type="button"
-              (click)="setDefaultImage(image)"
-              mat-mini-fab
-              class="md-mini"
-              color="default"
-              [ngClass]="
-                image.path === loggedInUserState.traderProfile.defaultImagePath
-                  ? 'icn-success'
-                  : 'icn-disabled'
-              "
-            >
-              <mat-icon
-                class="cicon"
-                title="Dieses Bild in der Übersicht anzeigen"
-                >photo_library</mat-icon
-              >
-            </button>
-            <!-- <button mat-fab class="md-mini icn-disabled">
-              <mat-icon>photo_library</mat-icon>
-            </button>             -->
-          </div>
-        </div>
-      </div>
-      <div class="dense">
-        <label>
-          <app-lk-checkbox formControlName="soMeShare"></app-lk-checkbox>
-          <div class="lk-checkbox-label">
-            lokalkauf darf meine Bilder zu Werbezwecken auf Social Media Kanälen
-            in Verbindung mit lokalkauf verwenden - unter Nennung meines Ladens
-            und mit Link auf mein Social Media oder lokalkauf-Profil.
-          </div>
-        </label>
-      </div>
-    </div>
-
-    <div class="buton-and-success">
-      <div>
-        Schritt 7: Dein Profil für die Kunden öffentlich verfügbar machen:
-      </div>
-      <div class="dense">
-        <label>
-          <app-lk-checkbox formControlName="public"></app-lk-checkbox>
-          Profil ist öffentlich
-        </label>
-      </div>
-
-      <br />
-      <div class="success" *ngIf="saveSuccessful">
-        Speichern erfolgreich
-      </div>
-      <lk-button
-        [disabled]="
-          dataFormGroup.errors != null || storeFormGroup.errors != null
-        "
-        label="Profil speichern"
-        (click)="updateProfile()"
-      >
-      </lk-button>
-
-      <div>
+  <mat-tab-group *ngIf="loggedInUserState.emailVerified">
+    <mat-tab label="Angebot">
+      <lk-offer [loggedInUserState]="loggedInUserState"></lk-offer>
+    </mat-tab>
+    <mat-tab label="Bilder">
+      <lk-image-upload
+        [loggedInUserState]="loggedInUserState"
+      ></lk-image-upload>
+    </mat-tab>
+    <mat-tab label="Allgemein">
+      <p>
         Meine Adressdaten
         <a [routerLink]="['/trader/register/edit']">bearbeiten</a>
-      </div>
-    </div>
-  </form>
-  <br />
-  <br />
-</div>
+      </p>
+    </mat-tab>
+  </mat-tab-group>
+</lk-container>

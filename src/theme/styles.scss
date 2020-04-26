@@ -62,3 +62,13 @@ app-root {
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);
 }
+
+a {
+  text-decoration: underline;
+  color: inherit;
+}
+
+a:visited {
+  text-decoration: underline;
+  color: inherit;
+}
