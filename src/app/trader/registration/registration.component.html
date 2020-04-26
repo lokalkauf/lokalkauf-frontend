@@ -123,7 +123,6 @@
           >
         </lk-button>
       </div>
-
       <div class="control-btns" *ngIf="confirmAddressMode">
         <button
           mat-mini-fab
@@ -183,13 +182,6 @@
           Die eingegebenen Passwörter stimmen nicht überein.
         </div>
       </div>
-
-      <!--      <mat-error *ngIf="passwordComponentWithValidation.passwordFormControl.hasError('required')">-->
-      <!--        Passwort ist notwendig!-->
-      <!--      </mat-error>-->
-      <!--      <mat-error *ngIf="passwordComponentWithValidation.passwordFormControl.hasError('pattern')">-->
-      <!--        Passwort ist nicht valide!-->
-      <!--      </mat-error>-->
 
       <mat-password-strength
         #passwordComponentWithValidation
@@ -291,7 +283,6 @@
       >
         <span>Das gewählte Passwort ist zu schwach.</span>
       </div>
-
       <div
         class="error-flat"
         *ngIf="
