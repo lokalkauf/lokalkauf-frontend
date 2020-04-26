@@ -11,7 +11,7 @@
     ><br /><br />
     {{ mailResendedMessage }}
   </div>
-  <mat-tab-group>
+  <mat-tab-group *ngIf="loggedInUserState.emailVerified">
     <mat-tab label="Angebot">
       <lk-offer [loggedInUserState]="loggedInUserState"></lk-offer>
     </mat-tab>
@@ -27,6 +27,4 @@
       </p>
     </mat-tab>
   </mat-tab-group>
-  <br />
-  <br />
 </lk-container>
