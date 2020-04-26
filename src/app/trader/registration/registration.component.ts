@@ -20,6 +20,13 @@ export enum RegistrationState {
   edit = 'edit',
 }
 
+interface AdditionalValidationElements {
+  confirmCoordinates: boolean;
+}
+interface AdditionalValidation {
+  errors: AdditionalValidationElements;
+}
+
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -74,6 +81,10 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   get ownerLastname() {
     return this.registrationForm.get('ownerLastname');
   }
+
+  additionalValidation: AdditionalValidation = {
+    errors: { confirmCoordinates: false },
+  };
 
   text = uiTexts;
 
@@ -195,6 +206,10 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
     const email = this.email.value;
     const password = this.password.value;
 
+    if (this.additionalValidationErrors()) {
+      return;
+    }
+
     const traderProfilRegister: TraderProfile = {
       businessname: this.businessname.value,
       ownerFirstname: this.ownerFirstname.value,
@@ -278,6 +293,11 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
     }
   }
 
+  additionalValidationErrors(): boolean {
+    this.additionalValidation.errors.confirmCoordinates = this.needConfirmation();
+    return this.additionalValidation.errors.confirmCoordinates;
+  }
+
   firstPasswordError() {
     return (
       (this.firstOrSecondPasswordChanged() && this.password.invalid) ||
@@ -330,6 +350,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
     this.confirmAddressMode = false;
     this.isAaddressConfirmed = true;
     this.confirmedLocation = this.mapLocation;
+    this.additionalValidationErrors();
   }
 
   cancelAddressConfirmation() {
