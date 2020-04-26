@@ -123,11 +123,7 @@
           >
         </lk-button>
       </div>
-      <!-- <img
-        *ngIf="confirmAddressMode"
-        src="/assets/lokalkauf-pin.svg"
-        class="confirmation-pin"
-      /> -->
+
       <div class="control-btns" *ngIf="confirmAddressMode">
         <button
           mat-mini-fab
@@ -294,6 +290,19 @@
         *ngIf="registrationForm.errors && registrationForm.errors.weakPassword"
       >
         <span>Das gewählte Passwort ist zu schwach.</span>
+      </div>
+
+      <div
+        class="error-flat"
+        *ngIf="
+          additionalValidation.errors &&
+          additionalValidation.errors.confirmCoordinates
+        "
+      >
+        <span
+          >Bitte bestätige Deinen Standort auf der Karte mit
+          <mat-icon color="primary">thumb_up_alt</mat-icon>.</span
+        >
       </div>
     </div>
   </form>
