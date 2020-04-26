@@ -146,7 +146,7 @@ lk-warning-box {
   }
 
   .subheadline {
-    font-size: 0.8rem;
+    font-size: 1rem;
     margin-left: 0.2rem;
     margin-top: 0.8rem;
     margin-bottom: 0.8rem;
@@ -172,11 +172,16 @@ lk-warning-box {
       border: 1px solid darkred;
       border-radius: 15px;
     }
+
+    .error-flat {
+      color: $errorcolor;
+      margin-left: 20px;
+    }
   }
 
   .warning {
     color: $errorcolor;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     margin-top: 1px;
     text-align: center;
   }
