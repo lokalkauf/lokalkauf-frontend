@@ -46,6 +46,18 @@ lk-navigation-chips {
   padding-top: 2rem;
   margin-bottom: 2rem;
   width: 100%;
+
+  @media screen and (min-width: 1040px) {
+    align-items: flex-start;
+    flex-flow: row wrap;
+    justify-content: space-between;
+
+    &::after {
+      content: '';
+      flex-basis: auto;
+      flex: auto;
+    }
+  }
 }
 
 .traders-input-center {
@@ -62,6 +74,12 @@ lk-navigation-chips {
 
 app-trader-item {
   margin-bottom: 16px;
+
+  @media screen and (min-width: 1040px) {
+    margin-bottom: 32px;
+    margin-left: 12px;
+    margin-right: 12px;
+  }
 }
 
 .no-result-message {
