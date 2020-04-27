@@ -95,8 +95,8 @@ export class GeoService {
         .where(arr, 'array-contains', search)
         .get()
     ).pipe(
-      map((a) =>
-        a.docs.map((d) => {
+      map((a) => {
+        const all = a.docs.map((d) => {
           const data = d.data();
           return {
             city: data.d.city,
@@ -106,8 +106,20 @@ export class GeoService {
               data.d.coordinates.longitude,
             ],
           } as GeoAddress;
-        })
-      )
+        });
+
+        // add whole city
+        if (!isSearchPostal && all && all.length > 0) {
+          all.unshift({
+            city: all[0].city + '',
+            postalcode: '',
+            coordinates: all[0].coordinates,
+            radius: 25,
+          } as GeoAddress);
+        }
+
+        return all;
+      })
     );
   }
 
