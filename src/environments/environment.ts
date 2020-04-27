@@ -5,12 +5,15 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: 'AIzaSyDWKZmGX7RaxDfv8_s_mqA_Ct9iFSP2GiM',
-    // authDomain: 'lokalkauf-staging.firebaseapp.com',
-    databaseURL: 'https://lokalkauf-staging.firebaseio.com',
-    projectId: 'lokalkauf-staging',
-    storageBucket: 'lokalkauf-staging.appspot.com',
-    // messagingSenderId: '464711391631',
+    projectId: 'lokalkauf-security-testing',
+    appId: '1:1056653798296:web:dec81d3506bd353c41d9ed',
+    databaseURL: 'https://lokalkauf-security-testing.firebaseio.com',
+    storageBucket: 'lokalkauf-security-testing.appspot.com',
+    locationId: 'europe-west',
+    apiKey: 'AIzaSyBb_aChDOeE6L2vYyzluSgtDlQY04vlB00',
+    authDomain: 'lokalkauf-security-testing.firebaseapp.com',
+    messagingSenderId: '1056653798296',
+    measurementId: 'G-C5Q2KM9D7G',
   },
 };
 
