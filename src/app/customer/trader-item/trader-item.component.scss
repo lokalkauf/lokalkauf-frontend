@@ -26,6 +26,7 @@ mat-card {
     display: block;
     padding-left: 0px;
     padding-right: 0px;
+    height: calc(100% - 32px);
   }
 
   .trader-thumbnail {
@@ -74,13 +75,19 @@ mat-card {
         display: block;
       }
 
-      .distance {
+      .distance-small {
         flex-grow: 2;
         text-align: right;
         color: $appgrey;
 
         @media only screen and (max-width: 480px) {
           font-size: 12px;
+        }
+
+        visibility: hidden;
+
+        @media screen and (max-width: 1039px) {
+          visibility: visible;
         }
       }
     }
@@ -95,7 +102,22 @@ mat-card {
 
       @media screen and (min-width: 1040px) {
         padding-top: 16px;
+        text-overflow: unset;
+        white-space: unset !important;
       }
     }
+  }
+}
+
+.distance-large {
+  display: none;
+
+  @media screen and (min-width: 1040px) {
+    position: relative;
+    top: -34px;
+    display: block;
+    margin-right: 16px;
+    margin-left: 16px;
+    text-align: right;
   }
 }

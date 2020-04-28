@@ -48,7 +48,7 @@ lk-navigation-chips {
   width: 100%;
 
   @media screen and (min-width: 1040px) {
-    align-items: flex-start;
+    align-items: stretch;
     flex-flow: row wrap;
     justify-content: space-between;
 
@@ -124,11 +124,31 @@ app-trader-item {
   }
 }
 
+.trader-chips-container {
+  @media screen and (min-width: 1040px) {
+    display: flex;
+    justify-content: center;
+
+    .trader-chips {
+      max-width: 640px;
+      align-items: center;
+
+      div.mat-chip-list-wrapper {
+        justify-content: center;
+      }
+    }
+  }
+}
+
 .slider {
   display: flex;
   justify-content: space-between;
 
   align-items: center;
+
+  @media screen and (min-width: 1040px) {
+    max-width: 640px;
+  }
 
   .slider-form {
     width: 100%;
@@ -140,5 +160,44 @@ app-trader-item {
     text-align: right;
     margin-top: 20px;
     margin-right: 6px;
+  }
+}
+
+lk-container {
+  .trader-overview-town {
+    text-align: center;
+  }
+
+  .floating-backbutton {
+    display: flex;
+    align-items: center;
+    color: $lightestgrey;
+
+    mat-icon {
+      vertical-align: middle;
+    }
+
+    mat-icon,
+    span {
+      cursor: pointer;
+    }
+
+    span {
+      padding-left: 10px;
+    }
+
+    .symboltext {
+      line-height: 30px;
+      vertical-align: middle;
+    }
+  }
+
+  .margin-boost {
+    margin: 23px auto;
+    font-size: 14px;
+  }
+
+  .navigate-back {
+    text-decoration: none;
   }
 }

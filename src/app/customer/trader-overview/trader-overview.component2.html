@@ -1,27 +1,44 @@
 <lk-container>
+  <div class="floating-backbutton margin-boost">
+    <a class="navigate-back" [routerLink]="'/'" alt="zurück zur Übersicht">
+      <mat-icon class="inlinesymbol vertical-align-middle"
+        >chevron_left</mat-icon
+      >
+      <span class="symboltext">Zurück zur Startseite</span>
+    </a>
+  </div>
+
+  <div class="trader-overview-town">
+    {{currentLocation}}
+  </div>
+
   <div class="traders-overview-row" *ngIf="(hasLocations$ | async) === true">
     <lk-page-title title="Alles aus Deiner Nähe"></lk-page-title>
-    <lk-chip-list
-      [items]="storeTypes"
-      [selectedKey]="selectedTrader ? selectedTrader.key : '1'"
-      (lkChipListChange)="setStoreType($event)"
-    >
-    </lk-chip-list>
+    <div class="trader-chips-container">
+      <div class="trader-chips">
+        <lk-chip-list
+          [items]="storeTypes"
+          [selectedKey]="selectedTraderCategory ? selectedTraderCategory.key : '1'"
+          (lkChipListChange)="setStoreType($event)"
+        >
+        </lk-chip-list>
 
-    <div class="slider">
-      <div class="slider-form">
-        <form [formGroup]="rangeGroup">
-          <lk-slider
-            class="slider"
-            [min]="10"
-            [max]="100"
-            formControlName="range"
-            (changingEvent)="setRange($event)"
-          >
-          </lk-slider>
-        </form>
+        <div class="slider">
+          <div class="slider-form">
+            <form [formGroup]="rangeGroup">
+              <lk-slider
+                class="slider"
+                [min]="10"
+                [max]="100"
+                formControlName="range"
+                (changingEvent)="setRange($event)"
+              >
+              </lk-slider>
+            </form>
+          </div>
+          <div class="slider-info">{{rangeChanging$ | async}} km</div>
+        </div>
       </div>
-      <div class="slider-info">{{rangeChanging$ | async}} km</div>
     </div>
 
     <div class="traders-overview-content">

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, of, BehaviorSubject } from 'rxjs';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
 import { Location } from '../../models/location';
 import { ActivatedRoute } from '@angular/router';
 import { LkSelectOptions } from '../../reusables/lk-select/lk-select.component';
@@ -22,6 +22,7 @@ import { SpinnerService } from 'src/app/services/spinner.service';
   selector: 'app-trader-overview',
   templateUrl: './trader-overview.component2.html',
   styleUrls: ['./trader-overview.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class TraderOverviewComponent implements OnInit {
   traders: TraderProfile[] = [];
@@ -76,8 +77,9 @@ export class TraderOverviewComponent implements OnInit {
   paramRadius: number;
   storeType: string;
   locations: Array<Location>;
-  selectedTrader: LkSelectOptions;
+  selectedTraderCategory: LkSelectOptions;
   storeTypes: Observable<LkSelectOptions[]>;
+  currentLocation: string;
 
   hasLocations$: Observable<boolean> = of(true);
   faFacebookF = faFacebookF;
@@ -108,15 +110,16 @@ export class TraderOverviewComponent implements OnInit {
     private spinnerService: SpinnerService
   ) {
     this.storeTypes = of(this.STORE_TYPES);
-    this.selectedTrader = this.storageService.loadTraderFilter();
-    if (this.selectedTrader) {
-      this.storeType = this.selectedTrader.value;
-    }
   }
 
   ngOnInit() {
-    // on radius changed
-    this.rangeGroup.get('range').valueChanges.subscribe((value: any) => {
+
+    this.selectedTraderCategory = this.storageService.loadTraderFilter();
+    if (this.selectedTraderCategory) {
+      this.storeType = this.selectedTraderCategory.value;
+    }
+
+    this.rangeGroup.get('range').valueChanges.subscribe((value) => {
       const location = this.storageService.loadLocation();
 
       if (location && location.coordinates) {
@@ -148,6 +151,7 @@ export class TraderOverviewComponent implements OnInit {
       }
     });
   }
+
 
   // the locations of the Traders are loaded here
   loadLocations() {
