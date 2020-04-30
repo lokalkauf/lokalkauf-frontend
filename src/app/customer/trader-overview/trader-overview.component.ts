@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
+import { Observable, of, Subject, BehaviorSubject, from } from 'rxjs';
 import { Location } from '../../models/location';
 import { ActivatedRoute } from '@angular/router';
 import { LkSelectOptions } from '../../reusables/lk-select/lk-select.component';
@@ -9,8 +9,8 @@ import { TraderService } from '../../services/trader.service';
 import { TraderProfile, TraderProfileStatus } from '../../models/traderProfile';
 import { SpinnerService } from '../../services/spinner.service';
 import { map, filter } from 'rxjs/operators';
-import { StorageService } from 'src/app/services/storage.service';
-import { uiTexts } from 'src/app/services/uiTexts';
+import { StorageService } from '../../services/storage.service';
+import { uiTexts } from '../../services/uiTexts';
 import {
   faFacebookF,
   faTwitter,
@@ -19,7 +19,9 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import { functions } from 'firebase';
 import { FormControlName, FormControl, FormGroup } from '@angular/forms';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from '../../services/user.service';
+import { LocationService } from '../../services/location.service';
+import { ImageService } from 'src/app/services/image.service';
 
 @Component({
   selector: 'app-trader-overview',
@@ -47,6 +49,8 @@ export class TraderOverviewComponent implements OnInit {
 
   rangeChanging$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
+  userPosition: number[];
+
   get range() {
     return this.rangeGroup.get('range');
   }
@@ -61,13 +65,18 @@ export class TraderOverviewComponent implements OnInit {
     private traderService: TraderService,
     private spinnerService: SpinnerService,
     private readonly storageService: StorageService,
-    public userService: UserService
+    public userService: UserService,
+    private locationService: LocationService,
+    private imageService: ImageService
   ) {
     this.selectedTrader = this.storageService.loadTraderFilter();
+
     if (this.selectedTrader) {
       this.storeType = this.selectedTrader.value;
     }
+
     this.storeTypePreselect = of('Nach was bist du auf der Suche?');
+
     this.storeTypes = of([
       {
         key: '1',
@@ -121,125 +130,158 @@ export class TraderOverviewComponent implements OnInit {
       if (location && location.coordinates) {
         this.paramRadius = value;
         location.radius = value;
-        this.loadTmpLocations(location.coordinates);
+        // this.loadTmpLocations(location.coordinates);
         this.storageService.saveLocation(location);
       }
     });
-  }
-  rangeChanging(val: number) {
-    this.rangeChanging$.next(val);
   }
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
       try {
-        const pos = [
+        this.userPosition = [
           Number.parseFloat(params.lat),
           Number.parseFloat(params.lng),
         ];
         // this.geo.setUserPosition(pos);
         this.paramRadius = Number.parseFloat(params.rad);
-        this.rangeChanging(this.paramRadius);
+        this.setRange(this.paramRadius);
         this.rangeGroup
           .get('range')
           .setValue(this.paramRadius, { emitEvent: false, onlySelf: true });
-        this.loadTmpLocations(pos);
+        // this.loadTmpLocations(pos);
+        this.loadLocations();
       } catch {
         console.log('no location available');
       }
     });
   }
 
-  reducedAction(val: any) {
-    if (val.internalValue) {
-      this.storeType = val.intValue;
-      this.updateLocations(this.locations);
-    }
-  }
+  loadLocations() {
+    this.locationService
+      .nearBy(this.paramRadius, this.userPosition, this.getCategoryFilter())
+      .then((result: any) => {
+        this.locations = result.data.locations;
+        console.log('locations received: ' + this.locations);
 
-  loadTmpLocations(position: number[]) {
-    this.spinnerService.show();
-    const radius = this.paramRadius ? this.paramRadius : this.STATIC_RADIUS;
-    const data = {
-      radius,
-      coords: position,
-    };
-    const getTraders = functions().httpsCallable(`locationByDistance`);
+        this.hasLocations$ = of(!!this.locations && this.locations.length > 0);
 
-    getTraders
-      .call('Get Traders', data)
-      .then((value) => {
-        this.locations = new Array<Location>();
+        if (this.locations) {
+          this.locations.forEach(async (l: any) => {
+            // load thumbnails...
+            l.thumbnailURL = await await this.imageService.getThumbnailUrl(
+              l.defaultImagePath
+            );
 
-        value.data.forEach((loc: GeoFirestoreTypes.QueryDocumentSnapshot) => {
-          this.locations.push({
-            traderId: loc.id,
-            coordinates: [],
-            distance: loc.distance,
+            if (!l.thumbnailURL) {
+              l.thumbnailURL = '/assets/lokalkauf-pin.svg';
+            }
           });
-        });
+        }
       })
-      .finally(() => {
-        this.updateLocations(this.locations);
-        this.spinnerService.hide();
+      .catch((e) => {
+        console.log('error: ' + e);
       });
   }
 
-  selChange(selEvent: LkSelectOptions) {
+  setRange(val: number) {
+    this.rangeChanging$.next(val);
+
+    this.loadLocations();
+  }
+
+  setStoreType(selEvent: LkSelectOptions) {
     if (selEvent) {
       console.log(selEvent);
       this.storeType = selEvent.value;
       this.storageService.saveTraderFilter(selEvent);
-      this.updateLocations(this.locations);
+
+      this.loadLocations();
+      // this.updateLocations(this.locations);
     }
   }
 
-  async updateLocations(trlocaitons: Array<Location>) {
-    if (!trlocaitons || trlocaitons.length < 1) {
-      this.hasLocations$ = of(false);
-      return;
-    }
-
-    const distinctLocations = trlocaitons
-      .sort((a, b) => a.distance - b.distance)
-      .filter(
-        (thing, i, arr) =>
-          arr.findIndex((t) => t.traderId === thing.traderId) === i
-      );
-
-    const ids = distinctLocations.map((l) => l.traderId);
-
-    const traderProfiles = await this.traderService.getTraderProfiles(
-      ids,
-      TraderProfileStatus.PUBLIC
-    );
-
-    const traderArray = traderProfiles as Array<any>;
-
-    for (const traderRow of traderProfiles) {
-      for (const distinctRow of distinctLocations) {
-        if (distinctRow.traderId === traderRow.id) {
-          traderRow.currentDistance = distinctRow.distance;
-        }
-      }
-    }
-
-    this.hasLocations$ = of(traderProfiles.length > 0);
-
-    if (this.storeType && this.storeType !== 'alle') {
-      const selectedStores = [];
-      traderProfiles.filter((i) => {
-        if (i.storeType && i.storeType[this.storeType]) {
-          selectedStores.push(i);
-        }
-      });
-      this.traders = selectedStores.sort(
-        (traderA, traderB) => traderA.currentDistance - traderB.currentDistance
-      );
-    } else {
-      this.traders = traderProfiles.sort(
-        (traderA, traderB) => traderA.currentDistance - traderB.currentDistance
-      );
-    }
+  getCategoryFilter() {
+    return {
+      categories:
+        !this.storeType || this.storeType === 'alle' ? [] : [this.storeType],
+    };
   }
+
+  // loadTmpLocations(position: number[]) {
+  //   this.spinnerService.show();
+  //   const radius = this.paramRadius ? this.paramRadius : this.STATIC_RADIUS;
+  //   const data = {
+  //     radius,
+  //     coords: position,
+  //   };
+  //   const getTraders = functions().httpsCallable(`locationByDistance`);
+
+  //   getTraders
+  //     .call('Get Traders', data)
+  //     .then((value) => {
+  //       this.locations = new Array<Location>();
+
+  //       value.data.forEach((loc: GeoFirestoreTypes.QueryDocumentSnapshot) => {
+  //         this.locations.push({
+  //           traderId: loc.id,
+  //           coordinates: [],
+  //           distance: loc.distance,
+  //         });
+  //       });
+  //     })
+  //     .finally(() => {
+  //       this.updateLocations(this.locations);
+  //       this.spinnerService.hide();
+  //     });
+  // }
+
+  // async updateLocations(trlocaitons: Array<Location>) {
+  //   if (!trlocaitons || trlocaitons.length < 1) {
+  //     this.hasLocations$ = of(false);
+  //     return;
+  //   }
+
+  //   const distinctLocations = trlocaitons
+  //     .sort((a, b) => a.distance - b.distance)
+  //     .filter(
+  //       (thing, i, arr) =>
+  //         arr.findIndex((t) => t.traderId === thing.traderId) === i
+  //     );
+
+  //   const ids = distinctLocations.map((l) => l.traderId);
+
+  //   const traderProfiles = await this.traderService.getTraderProfiles(
+  //     ids,
+  //     TraderProfileStatus.PUBLIC
+  //   );
+
+  //   const traderArray = traderProfiles as Array<any>;
+
+  //   for (const traderRow of traderProfiles) {
+  //     for (const distinctRow of distinctLocations) {
+  //       if (distinctRow.traderId === traderRow.id) {
+  //         traderRow.currentDistance = distinctRow.distance;
+  //       }
+  //     }
+  //   }
+
+  //   this.hasLocations$ = of(traderProfiles.length > 0);
+
+  //   if (this.storeType && this.storeType !== 'alle') {
+  //     const selectedStores = [];
+  //     traderProfiles.filter((i) => {
+  //       if (i.storeType && i.storeType[this.storeType]) {
+  //         selectedStores.push(i);
+  //       }
+  //     });
+  //     this.traders = selectedStores.sort(
+  //       (traderA, traderB) => traderA.currentDistance - traderB.currentDistance
+  //     );
+  //   } else {
+  //     this.traders = traderProfiles.sort(
+  //       (traderA, traderB) => traderA.currentDistance - traderB.currentDistance
+  //     );
+  //   }
+  // }
 }

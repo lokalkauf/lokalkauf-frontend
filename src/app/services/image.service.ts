@@ -9,6 +9,23 @@ import { ImageSource } from '../models/imageSource';
 export class ImageService {
   constructor(private storage: AngularFireStorage) {}
 
+  async getThumbnailUrl(imagePath, size = '200x200'): Promise<string> {
+    if (!imagePath) {
+      return null;
+    }
+
+    const foldername = imagePath.substring(0, imagePath.lastIndexOf('/') + 1);
+    const filenameWithoutExt = imagePath.substring(
+      imagePath.lastIndexOf('/'),
+      imagePath.lastIndexOf('.')
+    );
+    const ext = imagePath.split('.').pop();
+    const thumbnailPath =
+      foldername + 'thumbs' + filenameWithoutExt + '_' + size + '.' + ext;
+
+    return await this.storage.storage.ref(thumbnailPath).getDownloadURL();
+  }
+
   async getThumbnail(
     image: ImageSource,
     size = '200x200'

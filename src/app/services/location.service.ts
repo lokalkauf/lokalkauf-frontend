@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { functions } from 'firebase';
+import { Location } from '../models/location';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +12,9 @@ export class LocationService {
     radius: number,
     coordinates: number[],
 
-    paging = { desc: false, pageIndex: 0, pageSize: 150 },
-    filter?: { categories: string[] }
-  ) {
+    filter?: { categories: string[] },
+    paging = { desc: false, pageIndex: 0, pageSize: 150 }
+  ): Promise<Location[]> {
     return await functions()
       .httpsCallable(`locationByDistance`)
       .call('Get Locatons', {
