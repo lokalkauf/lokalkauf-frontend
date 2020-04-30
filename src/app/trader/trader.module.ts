@@ -19,6 +19,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LabelPipe } from '../pipes/label.pipe';
 import { PipesModule } from '../pipes/pipes.modules';
+import { ImageUploadComponent } from './profile/image-upload/image-upload.component';
+import { OfferComponent } from './profile/offer/offer.component';
 
 const routes: Routes = [
   { path: 'trader/profile', component: ProfileComponent },
@@ -38,6 +40,8 @@ const routes: Routes = [
     LoginComponent,
     PasswordResetComponent,
     DeleteUserComponent,
+    ImageUploadComponent,
+    OfferComponent,
   ],
   imports: [
     CommonModule,

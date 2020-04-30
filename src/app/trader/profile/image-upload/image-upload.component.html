@@ -1,0 +1,67 @@
+<div *ngIf="images">
+  <h4>
+    Lade Bilder von Deinem Laden oder Deinem Angebot hoch
+  </h4>
+  <p>
+    Du kannst maximal 3 Bilder hochladen und mit Klick auf das Bildzeichen
+    rechts das Bild markieren, das Du als Startbild setzen möchtest
+  </p>
+  <div *ngIf="images.length < 3">
+    <app-image-chooser [formControl]="businessImage"></app-image-chooser>
+    <lk-button
+      type="button"
+      label="Bild hochladen"
+      [disabled]="businessImage.value == null"
+      (click)="uploadImage()"
+    >
+    </lk-button
+    ><span class="move-right" *ngIf="this.imageUploadState | async">
+      Übertragung:
+      {{ this.imageUploadState | async | number: '1.2-2' }}
+      %</span
+    >
+  </div>
+  <p *ngIf="images.length > 0">
+    Folgende Bilder wurden Deinem Profil zugeordnet:
+  </p>
+  <div class="image-list">
+    <div
+      class="image-item"
+      *ngFor="let image of images"
+      [ngStyle]="{ 'background-image': 'url(' + image.url + ')' }"
+    >
+      <div class="btns">
+        <button
+          type="button"
+          (click)="
+            deleteImage(
+              image,
+              image.path === loggedInUserState.traderProfile.defaultImagePath
+            )
+          "
+          color="default"
+          mat-mini-fab
+          class="md-mini icn-danger"
+        >
+          <mat-icon class="cicon" title="Das Bild löschen..">delete</mat-icon>
+        </button>
+        <button
+          type="button"
+          (click)="setDefaultImage(image)"
+          mat-mini-fab
+          class="md-mini"
+          color="default"
+          [ngClass]="
+            image.path === loggedInUserState.traderProfile.defaultImagePath
+              ? 'icn-success'
+              : 'icn-disabled'
+          "
+        >
+          <mat-icon class="cicon" title="Dieses Bild in der Übersicht anzeigen"
+            >photo_library</mat-icon
+          >
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

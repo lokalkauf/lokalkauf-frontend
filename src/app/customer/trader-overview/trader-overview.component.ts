@@ -19,6 +19,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import { functions } from 'firebase';
 import { FormControlName, FormControl, FormGroup } from '@angular/forms';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-trader-overview',
@@ -59,7 +60,8 @@ export class TraderOverviewComponent implements OnInit {
     private geo: GeoService,
     private traderService: TraderService,
     private spinnerService: SpinnerService,
-    private readonly storageService: StorageService
+    private readonly storageService: StorageService,
+    public userService: UserService
   ) {
     this.selectedTrader = this.storageService.loadTraderFilter();
     if (this.selectedTrader) {

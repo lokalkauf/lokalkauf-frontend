@@ -108,7 +108,7 @@
       </a>
     </div>
 
-    <div class="haendler">
+    <div class="haendler" *ngIf="(userService.isLoggedIn$ | async) === (false)">
       Du bist Händler? Dann sei der Erste in Deiner Stadt und melde Dich jetzt
       an!
       <div>

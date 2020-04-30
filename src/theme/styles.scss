@@ -63,9 +63,20 @@ app-root {
   filter: grayscale(100%);
 }
 
+
 .cc-compliance {
   align-self: flex-end;
   @media only screen and (max-width: 480px) {
     align-self: end;
   }
+}
+
+a {
+  text-decoration: underline;
+  color: inherit;
+}
+
+a:visited {
+  text-decoration: underline;
+  color: inherit;
 }

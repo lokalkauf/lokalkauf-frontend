@@ -1,0 +1,62 @@
+@import '../../../../theme/variables.scss';
+
+.move-right {
+  margin-left: 1rem;
+}
+
+.image-list {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-gap: 1.5rem;
+  margin-bottom: 20px;
+  margin-top: 10px;
+
+  .image-item {
+    margin: 0px;
+    background-size: cover;
+    border: dotted 1px $lightergreen;
+    border-radius: 10px;
+    position: relative;
+
+    &::before {
+      content: '';
+      padding-bottom: 100%;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .btns {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      text-align: center;
+
+      button {
+        margin-left: 10px;
+        margin-right: 10px;
+        font-size: 0.8rem;
+      }
+    }
+
+    .icn-success {
+      color: rgb(27, 176, 27);
+    }
+
+    .icn-danger {
+      color: rgb(191, 61, 31);
+    }
+
+    .icn-disabled {
+      color: rgb(138, 138, 138);
+    }
+
+    .cicon {
+      font-size: 20px;
+      height: 20px;
+      width: 20px;
+      line-height: 20px;
+    }
+  }
+}

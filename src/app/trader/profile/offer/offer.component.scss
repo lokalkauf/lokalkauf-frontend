@@ -1,0 +1,25 @@
+@import '../../../../theme/variables.scss';
+
+.warning {
+  color: $errorcolor;
+  font-size: 0.7rem;
+  margin-top: 1px;
+  text-align: center;
+}
+
+.button-and-success {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.success {
+  margin-top: 0px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  color: $darkgreen;
+}
+
+label {
+  display: flex;
+}
