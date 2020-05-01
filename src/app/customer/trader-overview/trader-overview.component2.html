@@ -4,7 +4,7 @@
     <lk-chip-list
       [items]="storeTypes"
       [selectedKey]="selectedTrader ? selectedTrader.key : '1'"
-      (lkChipListChange)="selChange($event)"
+      (lkChipListChange)="setStoreType($event)"
     >
     </lk-chip-list>
 
@@ -16,7 +16,7 @@
             [min]="10"
             [max]="100"
             formControlName="range"
-            (changingEvent)="rangeChanging($event)"
+            (changingEvent)="setRange($event)"
           >
           </lk-slider>
         </form>
@@ -26,8 +26,8 @@
 
     <div class="traders-overview-content">
       <app-trader-item
-        *ngFor="let trader of traders"
-        [trader]="trader"
+        *ngFor="let location of locations"
+        [trader]="location"
       ></app-trader-item>
     </div>
   </div>
@@ -39,7 +39,7 @@
           [min]="10"
           [max]="100"
           formControlName="range"
-          (changingEvent)="rangeChanging($event)"
+          (changingEvent)="setRange($event)"
         >
         </lk-slider>
       </form>

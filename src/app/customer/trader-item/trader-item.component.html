@@ -1,22 +1,10 @@
-<a
-  [routerLink]="'/trader-detail/' + trader.id"
-  name="scroller.{{ trader.id }}"
-  *ngIf="trader$ | async as trader"
->
+<a [routerLink]="'/trader-detail/' + trader.id" name="scroller.{{ trader.id }}">
   <mat-card>
     <img
-      class="trader-thumbnail"
-      *ngIf="thumbnail$ | async as thumbnail; else placeholder"
-      [src]="thumbnail"
+      class="trader-thumbnail placeholder"
+      [src]="trader.thumbnailURL"
       [alt]="trader.businessname"
     />
-    <ng-template #placeholder>
-      <img
-        class="trader-thumbnail placeholder"
-        src="./assets/lokalkauf-pin.svg"
-        [alt]="trader.businessname"
-      />
-    </ng-template>
     <mat-card-header>
       <mat-card-title>{{ trader.businessname }}</mat-card-title>
       <mat-card-subtitle>
@@ -26,9 +14,7 @@
           <br />{{ trader.postcode }}
           {{ trader.city }}
         </div>
-        <div class="distance">
-          {{ trader.currentDistance | number: '1.2-2' }} km
-        </div>
+        <div class="distance">{{ trader.distance | number: '1.2-2' }} km</div>
       </mat-card-subtitle>
     </mat-card-header>
   </mat-card>
