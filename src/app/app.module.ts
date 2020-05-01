@@ -59,8 +59,6 @@ import { PressComponent } from './press/press.component';
 import { LightboxModule } from 'ngx-lightbox';
 import { filter } from 'rxjs/operators';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
-import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
-import { AnalyticsModule } from './analytics/analytics.module';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -69,7 +67,14 @@ const routes: Routes = [
   { path: 'verify', component: VerifyComponent },
   { path: 'aboutus', component: AboutUsComponent },
   { path: 'faq', component: FaqComponent },
-  { path: 'press', loadChildren: () => AnalyticsModule },
+  { path: 'press', component: PressComponent },
+  {
+    path: 'analytics',
+    loadChildren: () =>
+      import('./analytics-module/analytics-module.module').then(
+        (m) => m.AnalyticsModuleModule
+      ),
+  },
   {
     path: 'redirect',
     component: RedirectComponent,
