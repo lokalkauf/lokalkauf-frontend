@@ -5,23 +5,16 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: 'AIzaSyBb_aChDOeE6L2vYyzluSgtDlQY04vlB00',
-    databaseURL: 'https://lokalkauf-security-testing.firebaseio.com',
-    projectId: 'lokalkauf-security-testing',
-    storageBucket: 'lokalkauf-security-testing.appspot.com',
+    // apiKey: 'AIzaSyBb_aChDOeE6L2vYyzluSgtDlQY04vlB00',
+    // databaseURL: 'https://lokalkauf-security-testing.firebaseio.com',
+    // projectId: 'lokalkauf-security-testing',
+    // storageBucket: 'lokalkauf-security-testing.appspot.com'
 
-    // apiKey: 'AIzaSyDWKZmGX7RaxDfv8_s_mqA_Ct9iFSP2GiM',
-    // // authDomain: 'lokalkauf-staging.firebaseapp.com',
-    // databaseURL: 'https://lokalkauf-staging.firebaseio.com',
-    // projectId: 'lokalkauf-staging',
-    // storageBucket: 'lokalkauf-staging.appspot.com',
-    // // messagingSenderId: '464711391631',
+    apiKey: 'AIzaSyDWKZmGX7RaxDfv8_s_mqA_Ct9iFSP2GiM',
+    databaseURL: 'https://lokalkauf-staging.firebaseio.com',
+    projectId: 'lokalkauf-staging',
+    storageBucket: 'lokalkauf-staging.appspot.com',
   },
-
-  apiKey: 'AIzaSyBb_aChDOeE6L2vYyzluSgtDlQY04vlB00',
-  databaseURL: 'https://lokalkauf-security-testing.firebaseio.com',
-  projectId: 'lokalkauf-security-testing',
-  storageBucket: 'lokalkauf-security-testing.appspot.com',
 };
 
 /*
