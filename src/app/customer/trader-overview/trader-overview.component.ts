@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of, Subject, BehaviorSubject, from } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { Location } from '../../models/location';
 import { ActivatedRoute } from '@angular/router';
 import { LkSelectOptions } from '../../reusables/lk-select/lk-select.component';
-import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
-import { GeoService } from '../../services/geo.service';
-import { TraderService } from '../../services/trader.service';
-import { TraderProfile, TraderProfileStatus } from '../../models/traderProfile';
-import { SpinnerService } from '../../services/spinner.service';
-import { map, filter } from 'rxjs/operators';
+import { TraderProfile } from '../../models/traderProfile';
 import { StorageService } from '../../services/storage.service';
 import { uiTexts } from '../../services/uiTexts';
 import {
@@ -17,8 +12,7 @@ import {
   faWhatsapp,
   faInstagram,
 } from '@fortawesome/free-brands-svg-icons';
-import { functions } from 'firebase';
-import { FormControlName, FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { LocationService } from '../../services/location.service';
 import { ImageService } from 'src/app/services/image.service';
@@ -31,14 +25,58 @@ import { ImageService } from 'src/app/services/image.service';
 export class TraderOverviewComponent implements OnInit {
   traders: TraderProfile[] = [];
 
-  STATIC_LOCATION: number[] = [50.083352, 8.241451]; // 51.54136, 7.687467
-  STATIC_RADIUS = 10;
+  STORE_TYPES = [
+    {
+      key: '1',
+      display: 'Alle',
+      value: 'alle',
+    },
+    {
+      key: '2',
+      display: 'Gastronomie',
+      value: 'gastronomie',
+    },
+    {
+      key: '3',
+      display: 'Lebensmittel',
+      value: 'lebensmittel',
+    },
+    {
+      key: '4',
+      display: 'Fashion',
+      value: 'fashion',
+    },
+    {
+      key: '5',
+      display: 'Buchhandlung',
+      value: 'buchhandlung',
+    },
+    {
+      key: '6',
+      display: 'Home & Decor',
+      value: 'homedecor',
+    },
+    {
+      key: '7',
+      display: 'Blumen & Garten',
+      value: 'blumengarten',
+    },
+    {
+      key: '8',
+      display: 'Handwerk',
+      value: 'handwerk',
+    },
+    {
+      key: '9',
+      display: 'Sonstiges',
+      value: 'sonstiges',
+    },
+  ];
   paramRadius: number;
   storeType: string;
   locations: Array<Location>;
   selectedTrader: LkSelectOptions;
   storeTypes: Observable<LkSelectOptions[]>;
-  storeTypePreselect: Observable<string>;
 
   hasLocations$: Observable<boolean> = of(true);
   faFacebookF = faFacebookF;
@@ -50,6 +88,7 @@ export class TraderOverviewComponent implements OnInit {
   rangeChanging$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   userPosition: number[];
+  hasInitLocations: boolean;
 
   get range() {
     return this.rangeGroup.get('range');
@@ -61,114 +100,83 @@ export class TraderOverviewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private geo: GeoService,
-    private traderService: TraderService,
-    private spinnerService: SpinnerService,
-    private readonly storageService: StorageService,
+    public readonly storageService: StorageService,
     public userService: UserService,
     private locationService: LocationService,
     private imageService: ImageService
   ) {
+    this.storeTypes = of(this.STORE_TYPES);
     this.selectedTrader = this.storageService.loadTraderFilter();
-
     if (this.selectedTrader) {
       this.storeType = this.selectedTrader.value;
     }
-
-    this.storeTypePreselect = of('Nach was bist du auf der Suche?');
-
-    this.storeTypes = of([
-      {
-        key: '1',
-        display: 'Alle',
-        value: 'alle',
-      },
-      {
-        key: '2',
-        display: 'Gastronomie',
-        value: 'gastronomie',
-      },
-      {
-        key: '3',
-        display: 'Lebensmittel',
-        value: 'lebensmittel',
-      },
-      {
-        key: '4',
-        display: 'Fashion',
-        value: 'fashion',
-      },
-      {
-        key: '5',
-        display: 'Buchhandlung',
-        value: 'buchhandlung',
-      },
-      {
-        key: '6',
-        display: 'Home & Decor',
-        value: 'homedecor',
-      },
-      {
-        key: '7',
-        display: 'Blumen & Garten',
-        value: 'blumengarten',
-      },
-      {
-        key: '8',
-        display: 'Handwerk',
-        value: 'handwerk',
-      },
-      {
-        key: '9',
-        display: 'Sonstiges',
-        value: 'sonstiges',
-      },
-    ]);
-
-    this.rangeGroup.get('range').valueChanges.subscribe((value) => {
-      const location = this.storageService.loadLocation();
-      if (location && location.coordinates) {
-        this.paramRadius = value;
-        location.radius = value;
-        // this.loadTmpLocations(location.coordinates);
-        this.storageService.saveLocation(location);
-      }
-    });
   }
 
   ngOnInit() {
+    // on radius changed
+    this.rangeGroup.get('range').valueChanges.subscribe((value: any) => {
+      const location = this.storageService.loadLocation();
+
+      if (location && location.coordinates) {
+        this.paramRadius = value;
+        location.radius = value;
+
+        this.storageService.saveLocation(location);
+
+        this.loadLocations();
+      }
+    });
+
     this.route.params.subscribe((params) => {
       try {
         this.userPosition = [
           Number.parseFloat(params.lat),
           Number.parseFloat(params.lng),
         ];
-        // this.geo.setUserPosition(pos);
+
         this.paramRadius = Number.parseFloat(params.rad);
         this.setRange(this.paramRadius);
         this.rangeGroup
           .get('range')
           .setValue(this.paramRadius, { emitEvent: false, onlySelf: true });
-        // this.loadTmpLocations(pos);
-        this.loadLocations();
+
+        this.initLocations();
       } catch {
         console.log('no location available');
       }
     });
   }
 
+  // the locations of the Traders are loaded here
   loadLocations() {
+    const filter = this.getCategoryFilter();
+
+    // if the initial call has no results,
+    // and a category from Session Storage
+    // is isn't equals 'all', then try again with the
+    // category 'all' to repeat the initial search process.
+    if (!this.hasInitLocations && this.storeType !== 'alle') {
+      this.selectedTrader = this.STORE_TYPES[0];
+      this.setStoreType(this.STORE_TYPES[0]);
+      return;
+    }
+
     this.locationService
-      .nearBy(this.paramRadius, this.userPosition, this.getCategoryFilter())
+      .nearBy(this.paramRadius, this.userPosition, filter)
       .then((result: any) => {
         this.locations = result.data.locations;
         console.log('locations received: ' + this.locations);
 
-        this.hasLocations$ = of(!!this.locations && this.locations.length > 0);
+        if (this.locations && this.locations.length > 0) {
+          // set hasLocations and hasinitialLocations to true, to hide the 'No results found' view
+          this.hasLocations$ = of(true);
+          this.hasInitLocations = true;
 
-        if (this.locations) {
+          // load thumbnails.
+          // TODO: it makes no sense to load the thumbnailurl dynamically
+          // from the DB. The public thumbnailURL should already be stored in the locations.
+          // This should be refactored in one of the next iterations!
           this.locations.forEach(async (l: any) => {
-            // load thumbnails...
             l.thumbnailURL = await await this.imageService.getThumbnailUrl(
               l.defaultImagePath
             );
@@ -184,10 +192,29 @@ export class TraderOverviewComponent implements OnInit {
       });
   }
 
+  // Initially the counters of the available locations are loaded.
+  // this minimizes the initial transfer of data. The initial call of the locations
+  // is mainly used to display the "No results found" view.
+  initLocations() {
+    this.locationService
+      .countNearBy(this.paramRadius, this.userPosition)
+      .then((res) => {
+        console.log(res);
+        this.hasInitLocations = res && res.totalItems > 0;
+
+        this.hasLocations$ = of(this.hasInitLocations);
+
+        if (this.hasInitLocations) {
+          this.loadLocations();
+        }
+      })
+      .catch((e) => {
+        console.log('error while init locations: ' + e);
+      });
+  }
+
   setRange(val: number) {
     this.rangeChanging$.next(val);
-
-    this.loadLocations();
   }
 
   setStoreType(selEvent: LkSelectOptions) {
@@ -197,7 +224,6 @@ export class TraderOverviewComponent implements OnInit {
       this.storageService.saveTraderFilter(selEvent);
 
       this.loadLocations();
-      // this.updateLocations(this.locations);
     }
   }
 
@@ -207,81 +233,4 @@ export class TraderOverviewComponent implements OnInit {
         !this.storeType || this.storeType === 'alle' ? [] : [this.storeType],
     };
   }
-
-  // loadTmpLocations(position: number[]) {
-  //   this.spinnerService.show();
-  //   const radius = this.paramRadius ? this.paramRadius : this.STATIC_RADIUS;
-  //   const data = {
-  //     radius,
-  //     coords: position,
-  //   };
-  //   const getTraders = functions().httpsCallable(`locationByDistance`);
-
-  //   getTraders
-  //     .call('Get Traders', data)
-  //     .then((value) => {
-  //       this.locations = new Array<Location>();
-
-  //       value.data.forEach((loc: GeoFirestoreTypes.QueryDocumentSnapshot) => {
-  //         this.locations.push({
-  //           traderId: loc.id,
-  //           coordinates: [],
-  //           distance: loc.distance,
-  //         });
-  //       });
-  //     })
-  //     .finally(() => {
-  //       this.updateLocations(this.locations);
-  //       this.spinnerService.hide();
-  //     });
-  // }
-
-  // async updateLocations(trlocaitons: Array<Location>) {
-  //   if (!trlocaitons || trlocaitons.length < 1) {
-  //     this.hasLocations$ = of(false);
-  //     return;
-  //   }
-
-  //   const distinctLocations = trlocaitons
-  //     .sort((a, b) => a.distance - b.distance)
-  //     .filter(
-  //       (thing, i, arr) =>
-  //         arr.findIndex((t) => t.traderId === thing.traderId) === i
-  //     );
-
-  //   const ids = distinctLocations.map((l) => l.traderId);
-
-  //   const traderProfiles = await this.traderService.getTraderProfiles(
-  //     ids,
-  //     TraderProfileStatus.PUBLIC
-  //   );
-
-  //   const traderArray = traderProfiles as Array<any>;
-
-  //   for (const traderRow of traderProfiles) {
-  //     for (const distinctRow of distinctLocations) {
-  //       if (distinctRow.traderId === traderRow.id) {
-  //         traderRow.currentDistance = distinctRow.distance;
-  //       }
-  //     }
-  //   }
-
-  //   this.hasLocations$ = of(traderProfiles.length > 0);
-
-  //   if (this.storeType && this.storeType !== 'alle') {
-  //     const selectedStores = [];
-  //     traderProfiles.filter((i) => {
-  //       if (i.storeType && i.storeType[this.storeType]) {
-  //         selectedStores.push(i);
-  //       }
-  //     });
-  //     this.traders = selectedStores.sort(
-  //       (traderA, traderB) => traderA.currentDistance - traderB.currentDistance
-  //     );
-  //   } else {
-  //     this.traders = traderProfiles.sort(
-  //       (traderA, traderB) => traderA.currentDistance - traderB.currentDistance
-  //     );
-  //   }
-  // }
 }
