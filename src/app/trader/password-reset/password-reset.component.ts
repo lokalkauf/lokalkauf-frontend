@@ -23,7 +23,6 @@ export class PasswordResetComponent {
       await this.user.sendPasswordResetEmail(email);
       this.emailSent = true;
     } catch (e) {
-      console.log(e);
       switch (e.code) {
         case 'auth/invalid-email':
           this.passwordResetForm.setErrors({

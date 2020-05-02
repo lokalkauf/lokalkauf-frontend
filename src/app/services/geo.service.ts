@@ -41,9 +41,7 @@ export class GeoService {
       .set({
         coordinates: new firestore.GeoPoint(coords[0], coords[1]),
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch((e) => {});
   }
 
   getLocations(radius: number, coords: Array<number>) {
@@ -153,10 +151,6 @@ export class GeoService {
         );
 
         if (inside) {
-          // console.log(data.postalcode + ' ' + data.city + ' is in: ' + inside);
-          // console.log('coordinates: ' + data.coordinates);
-          // console.log(data.coordinates);
-
           return {
             city: data.city,
             postalcode: data.postalcode,
@@ -209,10 +203,7 @@ export class GeoService {
           }
         )
         .toPromise();
-    } catch (e) {
-      console.log('error while calling geocoding api');
-      console.log(e);
-    }
+    } catch (e) {}
 
     const candidate = response ? response.candidates?.[0] : null;
     if (!candidate) {

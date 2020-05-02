@@ -99,8 +99,6 @@ export class LkMapComponent implements OnInit, AfterViewInit {
 
   public setCenter(position: number[], zoom: number = 18) {
     if (position) {
-      console.log('set center...' + position);
-
       this.map.flyTo(latLng(position[0], position[1]), 18);
     }
   }
@@ -110,17 +108,11 @@ export class LkMapComponent implements OnInit, AfterViewInit {
 
     const id = uuid();
     marker(pos, { alt: id, icon: this.heartIconBig }).addTo(this.map);
-
-    // console.log('return id: ' + id);
-
     return id;
   }
 
   public updateMarkerPosition(markerId: string, position: number[]) {
     const mrkr: Marker = this.findMarkerById(markerId);
-
-    // console.log('updatePos: ' + markerId);
-    // console.log(mrkr);
 
     if (mrkr) {
       mrkr.setLatLng(this.creeateLatLng(position));
