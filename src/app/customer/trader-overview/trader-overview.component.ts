@@ -113,7 +113,6 @@ export class TraderOverviewComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.selectedTraderCategory = this.storageService.loadTraderFilter();
     if (this.selectedTraderCategory) {
       this.storeType = this.selectedTraderCategory.value;
@@ -152,7 +151,6 @@ export class TraderOverviewComponent implements OnInit {
     });
   }
 
-
   // the locations of the Traders are loaded here
   loadLocations() {
     this.spinnerService.show();
@@ -163,7 +161,7 @@ export class TraderOverviewComponent implements OnInit {
     // is isn't equals 'all', then try again with the
     // category 'all' to repeat the initial search process.
     if (!this.hasInitLocations && this.storeType !== 'alle') {
-      this.selectedTrader = this.STORE_TYPES[0];
+      this.selectedTraderCategory = this.STORE_TYPES[0];
       this.setStoreType(this.STORE_TYPES[0]);
       return;
     }
