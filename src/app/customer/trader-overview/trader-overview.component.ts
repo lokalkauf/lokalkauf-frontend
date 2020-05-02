@@ -110,6 +110,10 @@ export class TraderOverviewComponent implements OnInit {
     private spinnerService: SpinnerService
   ) {
     this.storeTypes = of(this.STORE_TYPES);
+    const currentLocation = this.storageService.loadLocation();
+    if (currentLocation && currentLocation.city) {
+      this.currentLocation = currentLocation.city;
+    }
   }
 
   ngOnInit() {
