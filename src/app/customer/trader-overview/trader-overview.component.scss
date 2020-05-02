@@ -163,6 +163,14 @@ app-trader-item {
   }
 }
 
+.slider-single {
+  width: auto;
+
+  @media screen and (min-width: 1040px) {
+    width: 640px;
+  }
+}
+
 lk-container {
   .trader-overview-town {
     text-align: center;
