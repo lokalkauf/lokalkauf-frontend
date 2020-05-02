@@ -4,7 +4,7 @@
   "scripts": {
     "start": "ng serve --ssl true",
     "emulators:setup": "firebase setup:emulators:firestore",
-    "emulators": "firebase emulators:start",
+    "emulators": "firebase emulators:start --only=hosting,firestore",
     "build": "ng build --prod"
   },
   "private": true,
