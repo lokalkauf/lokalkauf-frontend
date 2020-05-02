@@ -1,7 +1,10 @@
 <a [routerLink]="'/trader-detail/' + trader.id" name="scroller.{{ trader.id }}">
   <mat-card>
     <img
-      class="trader-thumbnail placeholder"
+      class="trader-thumbnail"
+      [ngClass]="{
+        placeholder: trader.thumbnailURL.indexOf('lokalkauf-pin') > -1
+      }"
       [src]="trader.thumbnailURL"
       [alt]="trader.businessname"
     />
