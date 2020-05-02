@@ -3,7 +3,10 @@
     <img
       class="trader-thumbnail"
       [ngClass]="{
-        placeholder: trader.thumbnailURL.indexOf('lokalkauf-pin') > -1
+        placeholder:
+          trader &&
+          trader.thumbnailURL &&
+          trader.thumbnailURL.indexOf('lokalkauf-pin') > -1
       }"
       [src]="trader.thumbnailURL"
       [alt]="trader.businessname"
