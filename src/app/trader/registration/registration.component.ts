@@ -14,6 +14,7 @@ import { DeleteUserComponent } from './delete-user/delete-user.component';
 import { GeoService } from 'src/app/services/geo.service';
 import { LkMapComponent } from 'src/app/reusables/lk-map/lk-map.component';
 import { uiTexts } from 'src/app/services/uiTexts';
+import { BehaviorSubject } from 'rxjs';
 
 export enum RegistrationState {
   new = 'new',
@@ -34,6 +35,7 @@ interface AdditionalValidation {
   encapsulation: ViewEncapsulation.None,
 })
 export class RegistrationComponent implements OnInit, AfterViewInit {
+  //#region props
   get email() {
     return this.registrationForm.get('email');
   }
@@ -81,6 +83,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   get ownerLastname() {
     return this.registrationForm.get('ownerLastname');
   }
+  //#endregion
 
   additionalValidation: AdditionalValidation = {
     errors: { confirmCoordinates: false },
@@ -147,6 +150,9 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   confirmAddressMode = false;
   confirmedLocation: number[];
   mapLocation: number[];
+  confirmedAddress: string;
+
+  needsConfirmationObs: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   @ViewChild(LkMapComponent) map: LkMapComponent;
 
@@ -159,6 +165,9 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     window.scrollBy(0, 0);
     this.setConditionalValidators();
+    this.registrationForm.valueChanges.subscribe(() => {
+      this.checkAdressChange();
+    });
   }
 
   setConditionalValidators() {
@@ -199,6 +208,11 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
       city: user.city,
       businessname: user.businessname,
     });
+
+    if (this.confirmedLocation) {
+      this.confirmedAddress = this.addressHash();
+    }
+    this.checkAdressChange();
   }
 
   async onSubmit() {
@@ -333,7 +347,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
         this.updateMapLocation(foundLocation.coordinates);
       } else {
         this.updateMapLocation(
-          foundLocation.coordinates
+          foundLocation
             ? foundLocation.coordinates
             : await this.geo.getUserPosition()
         );
@@ -341,7 +355,6 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
     } else if (this.confirmedLocation) {
       this.updateMapLocation(this.confirmedLocation);
     }
-
     this.confirmAddressMode = true;
   }
 
@@ -349,6 +362,8 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
     this.confirmAddressMode = false;
     this.isAaddressConfirmed = true;
     this.confirmedLocation = this.mapLocation;
+    this.confirmedAddress = this.addressHash();
+    this.checkAdressChange();
     this.additionalValidationErrors();
   }
 
@@ -363,10 +378,10 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
 
   onMapInit() {
     this.centerMarkrID = this.map.addMarker();
+    this.addressWasChanged();
   }
 
   updateMapLocation(location: number[]) {
-    console.log('update map location: ' + location);
     this.map.setCenter(location);
   }
 
@@ -375,17 +390,29 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   }
 
   needConfirmation() {
-    return this.isAaddressConfirmed
+    const confirm = this.isAaddressConfirmed
       ? false
-      : this.addressWasChanged() || !this.confirmedLocation; // && !this.isAaddressConfirmed);
+      : this.addressWasChanged() || !this.confirmedLocation;
+    return confirm;
   }
 
   addressWasChanged() {
+    return this.addressHash() !== this.confirmedAddress;
+  }
+
+  addressHash(): string {
     return (
-      this.city.dirty ||
-      this.postcode.dirty ||
-      this.street.dirty ||
-      this.streetnumber.dirty
+      this.city.value +
+      ':' +
+      this.postcode.value +
+      ':' +
+      this.street.value +
+      ':' +
+      this.streetnumber.value
     );
+  }
+
+  checkAdressChange() {
+    this.needsConfirmationObs.next(this.addressWasChanged());
   }
 }
