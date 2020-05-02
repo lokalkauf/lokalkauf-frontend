@@ -16,6 +16,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { LocationService } from '../../services/location.service';
 import { ImageService } from 'src/app/services/image.service';
+import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({
   selector: 'app-trader-overview',
@@ -103,7 +104,8 @@ export class TraderOverviewComponent implements OnInit {
     public readonly storageService: StorageService,
     public userService: UserService,
     private locationService: LocationService,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private spinnerService: SpinnerService
   ) {
     this.storeTypes = of(this.STORE_TYPES);
     this.selectedTrader = this.storageService.loadTraderFilter();
@@ -149,6 +151,7 @@ export class TraderOverviewComponent implements OnInit {
 
   // the locations of the Traders are loaded here
   loadLocations() {
+    this.spinnerService.show();
     const filter = this.getCategoryFilter();
 
     // if the initial call has no results,
@@ -165,7 +168,6 @@ export class TraderOverviewComponent implements OnInit {
       .nearBy(this.paramRadius, this.userPosition, filter)
       .then((result: any) => {
         this.locations = result.data.locations;
-        console.log('locations received: ' + this.locations);
 
         if (this.locations && this.locations.length > 0) {
           // set hasLocations and hasinitialLocations to true, to hide the 'No results found' view
@@ -189,6 +191,9 @@ export class TraderOverviewComponent implements OnInit {
       })
       .catch((e) => {
         console.log('error: ' + e);
+      })
+      .finally(() => {
+        this.spinnerService.hide();
       });
   }
 
@@ -196,10 +201,10 @@ export class TraderOverviewComponent implements OnInit {
   // this minimizes the initial transfer of data. The initial call of the locations
   // is mainly used to display the "No results found" view.
   initLocations() {
+    this.spinnerService.show();
     this.locationService
       .countNearBy(this.paramRadius, this.userPosition)
       .then((res) => {
-        console.log(res);
         this.hasInitLocations = res && res.totalItems > 0;
 
         this.hasLocations$ = of(this.hasInitLocations);
@@ -210,6 +215,9 @@ export class TraderOverviewComponent implements OnInit {
       })
       .catch((e) => {
         console.log('error while init locations: ' + e);
+      })
+      .finally(() => {
+        this.spinnerService.hide();
       });
   }
 
@@ -219,7 +227,6 @@ export class TraderOverviewComponent implements OnInit {
 
   setStoreType(selEvent: LkSelectOptions) {
     if (selEvent) {
-      console.log(selEvent);
       this.storeType = selEvent.value;
       this.storageService.saveTraderFilter(selEvent);
 
