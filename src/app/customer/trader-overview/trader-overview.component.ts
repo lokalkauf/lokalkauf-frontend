@@ -122,8 +122,8 @@ export class TraderOverviewComponent implements OnInit {
       const location = this.storageService.loadLocation();
 
       if (location && location.coordinates) {
-        this.paramRadius = value;
-        location.radius = value;
+        this.paramRadius = this.sanitizeRadius(value);
+        location.radius = this.sanitizeRadius(value);
 
         this.storageService.saveLocation(location);
 
@@ -138,7 +138,7 @@ export class TraderOverviewComponent implements OnInit {
           Number.parseFloat(params.lng),
         ];
 
-        this.paramRadius = Number.parseFloat(params.rad);
+        this.paramRadius = this.sanitizeRadius(Number.parseFloat(params.rad));
         this.setRange(this.paramRadius);
         this.rangeGroup
           .get('range')
@@ -241,5 +241,15 @@ export class TraderOverviewComponent implements OnInit {
       categories:
         !this.storeType || this.storeType === 'alle' ? [] : [this.storeType],
     };
+  }
+
+  sanitizeRadius(rad: number): number {
+    if (!rad || rad < 5) {
+      return 5;
+    }
+    if (rad > 100) {
+      return 100;
+    }
+    return rad;
   }
 }
