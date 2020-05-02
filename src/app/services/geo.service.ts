@@ -108,14 +108,19 @@ export class GeoService {
           } as GeoAddress;
         });
 
-        // add whole city
+        // add whole cities
         if (!isSearchPostal && all && all.length > 0) {
-          all.unshift({
-            city: all[0].city + '',
-            postalcode: '',
-            coordinates: all[0].coordinates,
-            radius: 25,
-          } as GeoAddress);
+          const uniqueCities = this.distinctArray(all, 'city');
+          if (uniqueCities) {
+            uniqueCities.forEach((c) => {
+              all.unshift({
+                city: c.city + '',
+                postalcode: '',
+                coordinates: all.find((ct) => ct.city === c.city).coordinates,
+                radius: 25,
+              } as GeoAddress);
+            });
+          }
         }
 
         return all;
@@ -164,7 +169,7 @@ export class GeoService {
               data.coordinates.latitude,
               data.coordinates.longitude,
             ],
-            radius: 0,
+            radius: 10,
           };
         }
       }
@@ -178,7 +183,7 @@ export class GeoService {
         city: theNext.city,
         postalcode: theNext.postalcode,
         coordinates: location,
-        radius: 0,
+        radius: 10,
       };
     }
 
@@ -225,5 +230,19 @@ export class GeoService {
       coordinates: [candidate.location.y, candidate.location.x],
       radius: 0,
     };
+  }
+
+  distinctArray<T>(array: T[], propertyName: string) {
+    if (array && array.length > 0) {
+      return array.filter((item, i, arr) => {
+        return (
+          arr.indexOf(
+            arr.find((t) => t[propertyName] === item[propertyName])
+          ) === i
+        );
+      });
+    }
+
+    return array;
   }
 }
