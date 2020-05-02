@@ -108,7 +108,6 @@ export class TraderDetailComponent implements OnInit {
 
   openLightbox(index: number): void {
     // open lightbox
-    console.log('ich war hier: ' + index);
     this.lightbox.open(this.lightBoxItems, index);
   }
 

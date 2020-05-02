@@ -80,7 +80,6 @@ export class VerifyComponent implements OnInit {
       this.verifiedActionCode = actionCode;
       this.stage = VerifyComponentStage.RESET_PASSWORD_VERIFIED;
     } catch (error) {
-      console.log(error);
       this.stage = VerifyComponentStage.INVALID_ACTION;
       this.errorService.publishByText(
         'Deine Passwort-Änderungsanfrage ist ungültig.',
@@ -97,7 +96,6 @@ export class VerifyComponent implements OnInit {
       );
       this.stage = VerifyComponentStage.RESET_PASSWORD_COMPLETED;
     } catch (error) {
-      console.log(error);
       this.stage = VerifyComponentStage.INVALID_ACTION;
       this.errorService.publishByText(
         'Dein neues Passwort konnte nicht gespeichert werden.',
@@ -111,7 +109,6 @@ export class VerifyComponent implements OnInit {
       await this.user.revokeEmailChange(actionCode);
       this.stage = VerifyComponentStage.RECOVER_EMAIL_COMPLETED;
     } catch (error) {
-      console.log(error);
       this.stage = VerifyComponentStage.INVALID_ACTION;
       this.errorService.publishByText(
         'E-Mail konnte nicht wiederhergestellt werden',
@@ -125,7 +122,6 @@ export class VerifyComponent implements OnInit {
       await this.user.verifyEmail(actionCode);
       this.stage = VerifyComponentStage.VERIFY_EMAIL_COMPLETED;
     } catch (error) {
-      console.log(error);
       this.stage = VerifyComponentStage.INVALID_ACTION;
       this.errorService.publishByText(
         'E-Mail konnte nicht verifiziert werden',

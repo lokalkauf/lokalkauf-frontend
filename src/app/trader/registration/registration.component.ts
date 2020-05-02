@@ -152,7 +152,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   mapLocation: number[];
   confirmedAddress: string;
 
-  needsConfirmationObs: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  needsConfirmation$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   @ViewChild(LkMapComponent) map: LkMapComponent;
 
@@ -413,6 +413,6 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   }
 
   checkAdressChange() {
-    this.needsConfirmationObs.next(this.addressWasChanged());
+    this.needsConfirmation$.next(this.addressWasChanged());
   }
 }

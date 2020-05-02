@@ -110,6 +110,10 @@ export class TraderOverviewComponent implements OnInit {
     private spinnerService: SpinnerService
   ) {
     this.storeTypes = of(this.STORE_TYPES);
+    const currentLocation = this.storageService.loadLocation();
+    if (currentLocation && currentLocation.city) {
+      this.currentLocation = currentLocation.city;
+    }
   }
 
   ngOnInit() {
@@ -145,9 +149,7 @@ export class TraderOverviewComponent implements OnInit {
           .setValue(this.paramRadius, { emitEvent: false, onlySelf: true });
 
         this.initLocations();
-      } catch {
-        console.log('no location available');
-      }
+      } catch {}
     });
   }
 
@@ -191,9 +193,7 @@ export class TraderOverviewComponent implements OnInit {
           });
         }
       })
-      .catch((e) => {
-        console.log('error: ' + e);
-      })
+      .catch((e) => {})
       .finally(() => {
         this.spinnerService.hide();
       });
@@ -215,9 +215,7 @@ export class TraderOverviewComponent implements OnInit {
           this.loadLocations();
         }
       })
-      .catch((e) => {
-        console.log('error while init locations: ' + e);
-      })
+      .catch((e) => {})
       .finally(() => {
         this.spinnerService.hide();
       });

@@ -48,20 +48,25 @@
       ></app-trader-item>
     </div>
   </div>
-  <div class="slider" *ngIf="(hasLocations$ | async) === false">
-    <div class="slider-form">
-      <form [formGroup]="rangeGroup">
-        <lk-slider
-          class="slider"
-          [min]="5"
-          [max]="100"
-          formControlName="range"
-          (changingEvent)="setRange($event)"
-        >
-        </lk-slider>
-      </form>
+
+  <div class="traders-overview-row" *ngIf="(hasLocations$ | async) === false">
+    <div class="trader-chips-container">
+      <div class="slider slider-single">
+        <div class="slider-form">
+          <form [formGroup]="rangeGroup">
+            <lk-slider
+              class="slider"
+              [min]="5"
+              [max]="100"
+              formControlName="range"
+              (changingEvent)="setRange($event)"
+            >
+            </lk-slider>
+          </form>
+        </div>
+        <div class="slider-info">{{rangeChanging$ | async}} km</div>
+      </div>
     </div>
-    <div class="slider-info">{{rangeChanging$ | async}} km</div>
   </div>
 
   <div class="no-result-message" *ngIf="(hasLocations$ | async) === false">

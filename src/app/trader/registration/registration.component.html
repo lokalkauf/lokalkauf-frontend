@@ -64,7 +64,6 @@
             type="text"
             formControlName="street"
             placeholder="Straße*"
-            [disabled]="confirmAddressMode"
           >
           </lk-input>
           <div class="warning" *ngIf="street.touched && street.invalid">
@@ -106,7 +105,7 @@
     </fieldset>
     <lk-container class="map-confirmation">
       <div class="warning">
-        <ng-container *ngIf="needsConfirmationObs | async">
+        <ng-container *ngIf="needsConfirmation$ | async">
           Bitte bestätige, den auf der Karte angezeigten Standort.<br />
           Positioniere die Karte so, dass das untere Ende des lokalkauf-Herzens
           auf deinen Standort zeigt.
@@ -114,13 +113,13 @@
       </div>
       <div class="disabled-overlay" *ngIf="!confirmAddressMode">
         <lk-button
-          [color]="(needsConfirmationObs | async) ? 'warn' : 'primary'"
+          [color]="(needsConfirmation$ | async) ? 'warn' : 'primary'"
           (click)="openConfirmationMode()"
         >
-          <ng-container *ngIf="(needsConfirmationObs | async) === false"
+          <ng-container *ngIf="(needsConfirmation$ | async) === false"
             >Standort ändern</ng-container
           >
-          <ng-container *ngIf="needsConfirmationObs | async"
+          <ng-container *ngIf="needsConfirmation$ | async"
             >Standort bestätigen</ng-container
           >
         </lk-button>
@@ -247,7 +246,7 @@
           <div class="save">
             <lk-button
               [disabled]="
-                !registrationForm.valid || (needsConfirmationObs | async)
+                !registrationForm.valid || (needsConfirmation$ | async)
               "
               type="submit"
               label="Aktualisieren"
