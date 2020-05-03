@@ -148,6 +148,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   delete = false;
   isAaddressConfirmed = false;
   confirmAddressMode = false;
+  startAddressConfirmation = false;
   confirmedLocation: number[];
   mapLocation: number[];
   confirmedAddress: string;
@@ -355,7 +356,8 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
     } else if (this.confirmedLocation) {
       this.updateMapLocation(this.confirmedLocation);
     }
-    this.confirmAddressMode = true;
+
+    this.startAddressConfirmation = true;
   }
 
   confirmAddress() {
@@ -374,6 +376,13 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   onMapMove(pos: any) {
     this.mapLocation = [pos.lat, pos.lng];
     this.map.updateMarkerPosition(this.centerMarkrID, this.mapLocation);
+  }
+
+  onMapFlyEnd(pos: any) {
+    if (this.startAddressConfirmation) {
+      this.startAddressConfirmation = false;
+      this.confirmAddressMode = true;
+    }
   }
 
   onMapInit() {

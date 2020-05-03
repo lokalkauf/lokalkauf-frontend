@@ -81,7 +81,7 @@
         <div class="registration-input postcode">
           <lk-input
             [warn]="postcode.touched && postcode.invalid"
-            type="number"
+            type="text"
             formControlName="postcode"
             placeholder="Plz*"
           ></lk-input>
@@ -113,6 +113,7 @@
       </div>
       <div class="disabled-overlay" *ngIf="!confirmAddressMode">
         <lk-button
+          *ngIf="!startAddressConfirmation"
           [color]="(needsConfirmation$ | async) ? 'warn' : 'primary'"
           (click)="openConfirmationMode()"
         >
@@ -136,7 +137,8 @@
           <mat-icon color="primary">thumb_up_alt</mat-icon>
         </button>
       </div>
-      <lk-map (mapMove)="onMapMove($event)"> </lk-map>
+      <lk-map (mapMove)="onMapMove($event)" (flyEnd)="onMapFlyEnd($event)">
+      </lk-map>
     </lk-container>
 
     <ng-container *ngIf="registrationState === 'new'">
