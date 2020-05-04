@@ -1,8 +1,8 @@
 name: Pull Request Check 
 
 on:
-  push:
-    branches-ignore:
+  pull_request:
+    branches:
     - master
     - develop
 
