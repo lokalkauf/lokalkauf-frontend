@@ -12,8 +12,9 @@ export const uiTexts = {
   start_button_geschaeft_suchen: 'Geschäft suchen',
   start_zusammen_headline: 'Wir bringen Euch wieder zusammen!',
   start_zusammen_text:
-    'Du kannst bei Deinem Lieblingsladen, Lieblings-Restaurant oder Café um die Ecke nicht mehr einkaufen? ' +
-    '<br />Du bist ein lokaler Einzelhändler oder Gastronom und musstest Deinen Laden schließen?' +
+    'Du möchtest lieber bei Deinem Lieblingsladen oder Lieblingsrestaurant um die Ecke ' +
+    'bestellen oder Dich beliefern lassen und damit lokale Geschäfte unterstützen?' +
+    '<br /><br />Du bist ein lokaler Einzelhändler oder Gastronom und möchtest online mehr Kunden erreichen?' +
     '<br />Wir helfen Euch!',
   start_button_haender_anmelden: 'Geschäftsprofil anlegen',
   start_button_haender_bearbeiten: 'Geschäftsprofil bearbeiten',
