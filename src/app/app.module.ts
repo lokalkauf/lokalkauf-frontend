@@ -59,6 +59,7 @@ import { PressComponent } from './press/press.component';
 import { LightboxModule } from 'ngx-lightbox';
 import { filter } from 'rxjs/operators';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
+import { DeviceDetectorModule } from 'ngx-device-detector';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -134,6 +135,7 @@ const routes: Routes = [
       registrationStrategy: 'registerImmediately',
     }),
     LightboxModule,
+    DeviceDetectorModule.forRoot(),
   ],
   exports: [RouterModule],
   providers: [

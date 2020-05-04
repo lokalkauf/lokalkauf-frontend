@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
 import { Location } from '../../models/location';
 import { ActivatedRoute } from '@angular/router';
@@ -107,7 +108,8 @@ export class TraderOverviewComponent implements OnInit {
     public userService: UserService,
     private locationService: LocationService,
     private imageService: ImageService,
-    private spinnerService: SpinnerService
+    private spinnerService: SpinnerService,
+    public device: DeviceDetectorService
   ) {
     this.storeTypes = of(this.STORE_TYPES);
     const currentLocation = this.storageService.loadLocation();
