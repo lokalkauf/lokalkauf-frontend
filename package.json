@@ -2,12 +2,10 @@
   "name": "lokalkauf-frontend",
   "version": "0.0.1",
   "scripts": {
-    "ng": "ng",
     "start": "ng serve --ssl true",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "emulators:setup": "firebase setup:emulators:firestore",
+    "emulators": "firebase emulators:start --only=hosting,firestore",
+    "build": "ng build --prod"
   },
   "private": true,
   "dependencies": {
@@ -41,9 +39,10 @@
     "geofirestore": "^3.4.1",
     "googleapis": "^48.0.0",
     "leaflet": "^1.6.0",
-    "nl2br-pipe": "^1.2.3",
+    "ngx-device-detector": "^1.4.2",
     "ngx-lightbox": "^2.1.2",
     "ngx-star-rating": "0.0.1",
+    "nl2br-pipe": "^1.2.3",
     "nodemailer": "^6.4.6",
     "point-in-polygon": "^1.0.1",
     "rxjs": "~6.5.4",

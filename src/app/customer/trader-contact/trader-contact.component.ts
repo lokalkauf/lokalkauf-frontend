@@ -110,8 +110,6 @@ export class TraderContactComponent implements OnInit {
       trader_message: this.mail_message.value,
       contact_information: this.mail_contact.value,
     };
-
-    console.log(email);
     // TODO finalize call for backend sending mail
 
     try {

@@ -26,6 +26,7 @@ import { InquiryConfirmationComponent } from './inquiry-confirmation/inquiry-con
 import { PipesModule } from '../pipes/pipes.modules';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
+import { MatSliderModule } from '@angular/material/slider';
 
 const routes: Routes = [
   {
@@ -67,6 +68,7 @@ const routes: Routes = [
     MatIconModule,
     MatInputModule,
     MatButtonModule,
+    MatSliderModule,
     FontAwesomeModule,
     ReusablesModule,
     PipesModule,

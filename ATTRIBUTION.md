@@ -2,7 +2,7 @@
 
 ## angular
 
-Copyright (c) 2010-2020 Google LLC. http://angular.io/license
+Copyright (c) 2010-2020 Google LLC. [http://angular.io/license](http://angular.io/license)
 
 ## @angular-material-extensions/password-strength
 

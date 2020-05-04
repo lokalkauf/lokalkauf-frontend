@@ -1,6 +1,10 @@
 <lk-container *ngIf="trader$ | async as trader">
   <div class="floating-backbutton margin-boost">
-    <a (click)="navigateBackToOverview()" alt="zurück zur Übersicht">
+    <a
+      class="navigate-back"
+      (click)="navigateBackToOverview()"
+      alt="zurück zur Übersicht"
+    >
       <mat-icon class="inlinesymbol vertical-align-middle"
         >chevron_left</mat-icon
       >
@@ -67,7 +71,11 @@
   </p>
 
   <div class="floating-backbutton margin-boost">
-    <a (click)="navigateBackToOverview()" alt="zurück zur Übersicht">
+    <a
+      class="navigate-back"
+      (click)="navigateBackToOverview()"
+      alt="zurück zur Übersicht"
+    >
       <mat-icon class="inlinesymbol vertical-align-middle"
         >chevron_left</mat-icon
       >

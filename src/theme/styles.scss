@@ -47,6 +47,14 @@ app-root {
 
 .mat-card-header-text {
   overflow: hidden;
+  width: 100%;
+  margin-left: 32px !important;
+
+  @media screen and (min-width: 1040px) {
+    overflow: unset;
+    width: calc(100% - 32px);
+    margin-left: 16px !important;
+  }
 }
 
 .mat-drawer-container {
@@ -60,4 +68,14 @@ app-root {
 .leaflet-tile-pane {
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);
+}
+
+a {
+  text-decoration: underline;
+  color: inherit;
+}
+
+a:visited {
+  text-decoration: underline;
+  color: inherit;
 }

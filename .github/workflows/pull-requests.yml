@@ -4,7 +4,7 @@ on:
   pull_request:
     branches:
     - master
-    - incubator
+    - develop
 
 jobs:
   build:
@@ -30,7 +30,7 @@ jobs:
     - name: npm install
       run: npm ci
 
-    - name: Build App 
+    - name: Build
       run: npm run build
 
     - name: Check Code Style

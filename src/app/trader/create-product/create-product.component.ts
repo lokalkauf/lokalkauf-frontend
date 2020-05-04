@@ -60,7 +60,6 @@ export class CreateProductComponent {
     const filePath = `${this.traderId}/${uuid()}-${file}`;
     const task = this.storage.upload(filePath, file);
     this.uploadState = task.percentageChanges();
-    console.log(task);
     await task.then(async (snapshot) => {
       this.uploadedImage = await snapshot.ref.getDownloadURL();
       this.uploadState = null;

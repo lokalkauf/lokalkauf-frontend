@@ -8,6 +8,12 @@ a {
 :host {
   display: block;
   width: 100%;
+
+  @media screen and (min-width: 1040px) {
+    display: inline-block;
+    width: 224px;
+    margin-bottom: 24px;
+  }
 }
 
 mat-card {
@@ -16,6 +22,13 @@ mat-card {
   align-items: stretch;
   max-width: 100%;
 
+  @media screen and (min-width: 1040px) {
+    display: block;
+    padding-left: 0px;
+    padding-right: 0px;
+    height: calc(100% - 32px);
+  }
+
   .trader-thumbnail {
     display: block;
     width: 110px;
@@ -23,9 +36,17 @@ mat-card {
     margin-left: -16px;
     margin-top: -16px;
     margin-bottom: -16px;
-    margin-right: 0px;
+    margin-right: -16px;
     object-fit: cover;
     flex-shrink: 0;
+
+    @media screen and (min-width: 1040px) {
+      width: 100%;
+      height: 224px;
+      margin-bottom: 0px;
+      margin-left: 0px;
+      margin-right: 0px;
+    }
 
     &.placeholder {
       object-fit: scale-down;
@@ -38,9 +59,37 @@ mat-card {
   mat-card-header {
     flex-grow: 1;
     overflow: hidden;
+    width: 100%;
+
+    @media screen and (min-width: 1040px) {
+      display: block;
+    }
 
     mat-card-subtitle {
       margin-bottom: 0;
+
+      display: flex;
+      justify-content: flex-end;
+
+      @media screen and (min-width: 1040px) {
+        display: block;
+      }
+
+      .distance-small {
+        flex-grow: 2;
+        text-align: right;
+        color: $appgrey;
+
+        @media only screen and (max-width: 480px) {
+          font-size: 12px;
+        }
+
+        visibility: hidden;
+
+        @media screen and (max-width: 1039px) {
+          visibility: visible;
+        }
+      }
     }
 
     mat-card-title {
@@ -50,6 +99,25 @@ mat-card {
       text-overflow: ellipsis;
       white-space: nowrap;
       width: 100%;
+
+      @media screen and (min-width: 1040px) {
+        padding-top: 16px;
+        text-overflow: unset;
+        white-space: unset !important;
+      }
     }
+  }
+}
+
+.distance-large {
+  display: none;
+
+  @media screen and (min-width: 1040px) {
+    position: relative;
+    top: -34px;
+    display: block;
+    margin-right: 16px;
+    margin-left: 16px;
+    text-align: right;
   }
 }

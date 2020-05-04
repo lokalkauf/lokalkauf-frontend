@@ -5,42 +5,59 @@
   },
   "hosting": {
     "public": "dist/lokalkauf-frontend",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
-	      "source": "/sitemaps/sitemaps.xml",
+        "source": "/sitemaps/sitemaps.xml",
         "function": "serveSitemapIndex"
       },
       {
-	      "source": "/sitemaps/trader**",
+        "source": "/sitemaps/trader**",
         "function": "serveTraderSitemap"
       },
       {
-	      "source": "/sitemaps/base**",
+        "source": "/sitemaps/base**",
         "function": "serveBaseSitemap"
       },
       {
-	      "source": "/trader-detail/**",
+        "source": "/trader-detail/**",
         "function": "traderDetail"
       },
       {
         "source": "**",
         "destination": "/index.html"
       }
+    ],
+    "headers": [
+      {
+        "source": "/{,index.html}",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "/ngsw.json",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          }
+        ]
+      }
     ]
   },
   "storage": {
     "rules": "storage.rules"
   },
-  "functions": {
-    "predeploy": [
-      "npm --prefix \"$RESOURCE_DIR\" run lint",
-      "npm --prefix \"$RESOURCE_DIR\" run build"
-    ],
-    "source": "functions"
+  "emulators": {
+    "firestore": {
+      "port": 8080
+    },
+    "hosting": {
+      "port": 5000
+    }
   }
 }
