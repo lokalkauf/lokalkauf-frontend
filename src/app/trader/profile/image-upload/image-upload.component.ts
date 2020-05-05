@@ -5,6 +5,8 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ImageService } from 'src/app/services/image.service';
 import { ErrorService } from 'src/app/services/error.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import { BrowserService } from 'src/app/services/browser.service';
 
 @Component({
   selector: 'lk-image-upload',
@@ -18,11 +20,18 @@ export class ImageUploadComponent implements OnInit {
   businessImage = new FormControl();
   imageUploadState?: Observable<number>;
 
+  isBrowserSupported: boolean;
+  browserName: string;
+
   constructor(
     private user: UserService,
     private imageService: ImageService,
-    private errorService: ErrorService
-  ) {}
+    private errorService: ErrorService,
+    private browserService: BrowserService
+  ) {
+    this.isBrowserSupported = browserService.isBrowserSupported();
+    this.browserName = browserService.getCurrentBrowser();
+  }
 
   ngOnInit(): void {
     this.loadImages();

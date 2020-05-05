@@ -9,7 +9,7 @@ import { map, timeout, flatMap } from 'rxjs/operators';
 import insidepolygon from 'point-in-polygon';
 import { BehaviorSubject, Observable, of, from } from 'rxjs';
 import { GeoCollectionReference, GeoFirestore, GeoQuery } from 'geofirestore';
-import { firestore } from 'firebase';
+import { firestore } from 'firebase/app';
 import { GeoAddress } from '../models/geoAddress';
 import { TraderProfile } from '../models/traderProfile';
 import { StorageService } from './storage.service';

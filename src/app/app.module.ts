@@ -60,6 +60,7 @@ import { LightboxModule } from 'ngx-lightbox';
 import { filter } from 'rxjs/operators';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { DeviceDetectorModule } from 'ngx-device-detector';
+import { BrowserService } from './services/browser.service';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -148,6 +149,7 @@ const routes: Routes = [
     StorageService,
     EMailService,
     ImageService,
+    BrowserService,
   ],
   bootstrap: [AppComponent],
 })

@@ -79,3 +79,7 @@ Copyright (c) 2010-2016 Robert Kieffer and other contributors. Licensed under th
 ## zone.js
 
 Copyright (c) 2010-2020 Google LLC. Licensed under the [MIT](https://github.com/angular/angular/blob/master/LICENSE) License
+
+## ngx-device-detector
+
+Copyright (c) 2016 Ahsan Ayaz. Licensed under [MIT](https://github.com/KoderLabs/ngx-device-detector/blob/master/LICENSE) License

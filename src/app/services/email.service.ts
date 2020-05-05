@@ -6,7 +6,8 @@ import {
 } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { EMail } from '../models/email';
-import { functions } from 'firebase';
+import * as firebase from 'firebase/app';
+import 'firebase/functions';
 
 @Injectable({
   providedIn: 'root',
@@ -34,7 +35,7 @@ export class EMailService {
       teplateVars: templateVars,
     };
     try {
-      const sendMailFunction = functions().httpsCallable(`sendGrid`);
+      const sendMailFunction = firebase.functions().httpsCallable(`sendGrid`);
       sendMailFunction.call('Send Mail', data);
     } catch (e) {
       console.error('Mail could not be send: ' + e);
