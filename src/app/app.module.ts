@@ -59,6 +59,14 @@ import { PressComponent } from './press/press.component';
 import { LightboxModule } from 'ngx-lightbox';
 import { filter } from 'rxjs/operators';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
+import {
+  AngularFireAnalyticsModule,
+  CONFIG,
+  COLLECTION_ENABLED,
+  DEBUG_MODE,
+  ScreenTrackingService,
+  UserTrackingService,
+} from '@angular/fire/analytics';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -68,13 +76,6 @@ const routes: Routes = [
   { path: 'aboutus', component: AboutUsComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'press', component: PressComponent },
-  {
-    path: 'analytics',
-    loadChildren: () =>
-      import('./analytics-module/analytics-module.module').then(
-        (m) => m.AnalyticsModuleModule
-      ),
-  },
   {
     path: 'redirect',
     component: RedirectComponent,
@@ -140,6 +141,7 @@ const routes: Routes = [
       enabled: environment.production,
     }),
     LightboxModule,
+    AngularFireAnalyticsModule,
   ],
   exports: [RouterModule],
   providers: [
@@ -152,6 +154,16 @@ const routes: Routes = [
     StorageService,
     EMailService,
     ImageService,
+    {
+      provide: CONFIG,
+      useValue: {
+        anonymize_ip: true,
+      },
+    },
+    { provide: COLLECTION_ENABLED, useValue: false },
+    { provide: DEBUG_MODE, useValue: true },
+    ScreenTrackingService,
+    UserTrackingService,
   ],
   bootstrap: [AppComponent],
 })

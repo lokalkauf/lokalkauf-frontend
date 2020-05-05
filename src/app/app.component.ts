@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { UserService } from './services/user.service';
 import { StorageService } from './services/storage.service';
+import { AngularFireAnalytics } from '@angular/fire/analytics';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +17,15 @@ export class AppComponent {
   constructor(
     public router: Router,
     public userService: UserService,
-    private storageService: StorageService
-  ) {}
+    private storageService: StorageService,
+    analytics: AngularFireAnalytics
+  ) {
+
+    const cookie = true;
+    if (cookie) {
+      analytics.setAnalyticsCollectionEnabled(true);
+    }
+  }
 
   navigate(route: string) {
     this.opened = false;
