@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NgcCookieConsentService } from 'ngx-cookieconsent/service';
+import { NgcCookieConsentService } from 'ngx-cookieconsent';
 import { UserService } from './services/user.service';
 import { StorageService } from './services/storage.service';
 import { AngularFireAnalytics } from '@angular/fire/analytics';
