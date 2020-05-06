@@ -80,9 +80,10 @@ const cookieConfig: NgcCookieConsentConfig = {
     },
   },
   theme: 'classic',
-  type: 'info',
+  type: 'opt-in',
   content: {
-    dismiss: 'Alles klar!',
+    allow: 'Zulassen',
+    deny: 'Ablehnen',
     link: 'mehr erfahren',
     message: `<i class="fas fa-cookie-bite"></i><h1>Wir lieben Cookies!</h1>Diese Website verwendet Cookies - das bedeutet,
       dass Dein Besuch auf dieser Website Krümel hinterlässt, die für uns informationen bereitstellen. Cool?`,

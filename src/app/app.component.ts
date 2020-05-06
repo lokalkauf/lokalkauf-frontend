@@ -19,7 +19,11 @@ export class AppComponent implements OnInit, OnDestroy {
     public userService: UserService,
     private storageService: StorageService,
     private ccService: NgcCookieConsentService
-  ) {}
+  ) {
+    ccService.statusChange$.subscribe((x) => {
+      console.log(x.status);
+    });
+  }
 
   ngOnDestroy(): void {
     // throw new Error("Method not implemented.");
