@@ -4,6 +4,9 @@ import { map } from 'rxjs/operators';
 import { NgcCookieConsentService } from 'ngx-cookieconsent';
 import { UserService } from './services/user.service';
 import { StorageService } from './services/storage.service';
+import { AngularFireAnalytics } from '@angular/fire/analytics';
+import { CookieService } from 'ngx-cookie-service';
+import { Subject, interval } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -18,18 +21,28 @@ export class AppComponent implements OnInit, OnDestroy {
     public router: Router,
     public userService: UserService,
     private storageService: StorageService,
-    private ccService: NgcCookieConsentService
+    private ccService: NgcCookieConsentService,
+    private cookieService: CookieService,
+    private analytics: AngularFireAnalytics
   ) {
     ccService.statusChange$.subscribe((x) => {
       console.log(x.status);
     });
   }
 
+  // this.cookieService.set('GAEnabled', 'true'); --> Has to be set to work with Analytics
+  // Some Observable for Cookies has to be created!
+
   ngOnDestroy(): void {
     // throw new Error("Method not implemented.");
   }
+
+  // this.cookieService.set('GAEnabled', 'true'); --> Has to be set to work with Analytics
+  // Some Observable for Cookies has to be created!
   ngOnInit(): void {
-    // throw new Error("Method not implemented.");
+    if (this.cookieService.get('GAEnabled') === 'true') {
+      this.analytics.setAnalyticsCollectionEnabled(true);
+    }
   }
 
   navigate(route: string) {
