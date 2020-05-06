@@ -67,6 +67,7 @@ import {
   ScreenTrackingService,
   UserTrackingService,
 } from '@angular/fire/analytics';
+import { CookieService } from 'ngx-cookie-service';
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -154,6 +155,7 @@ const routes: Routes = [
     StorageService,
     EMailService,
     ImageService,
+    CookieService,
     {
       provide: CONFIG,
       useValue: {

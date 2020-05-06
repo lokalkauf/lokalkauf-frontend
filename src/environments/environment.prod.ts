@@ -1,11 +1,14 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: 'AIzaSyBPUxq7muZ6N09BQfoRpTpVZUceki0mmTo',
-    // authDomain: '<your-project-authdomain>',
-    databaseURL: 'https://lokalkauf-271814.firebaseio.com',
     projectId: 'lokalkauf-271814',
+    appId: '1:167060133004:web:86bdd7f131e56c9fb897a9',
+    databaseURL: 'https://lokalkauf-271814.firebaseio.com',
     storageBucket: 'lokalkauf-271814.appspot.com',
-    // messagingSenderId: '<your-messaging-sender-id>'
+    locationId: 'europe-west',
+    apiKey: 'AIzaSyBPUxq7muZ6N09BQfoRpTpVZUceki0mmTo',
+    authDomain: 'lokalkauf-271814.firebaseapp.com',
+    messagingSenderId: '167060133004',
+    measurementId: 'G-WJ6XGZ3RP5',
   },
 };
