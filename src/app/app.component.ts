@@ -1,12 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
-import { NgcCookieConsentService } from 'ngx-cookieconsent';
+import { NgcCookieConsentService } from 'ngx-cookieconsent/service';
 import { UserService } from './services/user.service';
 import { StorageService } from './services/storage.service';
 import { AngularFireAnalytics } from '@angular/fire/analytics';
 import { CookieService } from 'ngx-cookie-service';
-import { Subject, interval } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -30,7 +28,9 @@ export class AppComponent implements OnInit, OnDestroy {
       if (x.status === 'allow') {
         this.cookieService.set('GAEnabled', 'true');
         this.analytics.setAnalyticsCollectionEnabled(true);
-        this.analytics.logEvent('Set GAEnabled Cookie - Start with Google Analytics');
+        this.analytics.logEvent(
+          'Set GAEnabled Cookie - Start with Google Analytics'
+        );
       }
     });
   }
@@ -42,8 +42,9 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (this.cookieService.get('GAEnabled') === 'true') {
       this.analytics.setAnalyticsCollectionEnabled(true);
-      this.analytics.logEvent('GAEnabled Cookie already true - Start with Google Analytics');
-
+      this.analytics.logEvent(
+        'GAEnabled Cookie already true - Start with Google Analytics'
+      );
     }
   }
 
