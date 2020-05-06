@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { NgcCookieConsentService } from 'ngx-cookieconsent';
 import { UserService } from './services/user.service';
 import { StorageService } from './services/storage.service';
 
@@ -9,15 +10,27 @@ import { StorageService } from './services/storage.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
   events: string[] = [];
   opened: boolean;
 
   constructor(
     public router: Router,
     public userService: UserService,
-    private storageService: StorageService
-  ) {}
+    private storageService: StorageService,
+    private ccService: NgcCookieConsentService
+  ) {
+    ccService.statusChange$.subscribe((x) => {
+      console.log(x.status);
+    });
+  }
+
+  ngOnDestroy(): void {
+    // throw new Error("Method not implemented.");
+  }
+  ngOnInit(): void {
+    // throw new Error("Method not implemented.");
+  }
 
   navigate(route: string) {
     this.opened = false;

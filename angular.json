@@ -38,9 +38,12 @@
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/theme/styles.scss",
               "./node_modules/leaflet/dist/leaflet.css",
-              "./node_modules/ngx-lightbox/lightbox.css"
+              "./node_modules/ngx-lightbox/lightbox.css",
+              "./node_modules/cookieconsent/build/cookieconsent.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/cookieconsent/build/cookieconsent.min.js"
+            ]
           },
           "configurations": {
             "staging": {
@@ -92,7 +95,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumError": "7mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -150,9 +153,7 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {
@@ -168,6 +169,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "lokalkauf-frontend"
 }
