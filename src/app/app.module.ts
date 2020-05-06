@@ -196,7 +196,6 @@ const routes: Routes = [
       },
     },
     { provide: COLLECTION_ENABLED, useValue: false },
-    { provide: DEBUG_MODE, useValue: true },
     ScreenTrackingService,
     UserTrackingService,
   ],

@@ -27,21 +27,23 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {
     ccService.statusChange$.subscribe((x) => {
       console.log(x.status);
+      if (x.status === 'allow') {
+        this.cookieService.set('GAEnabled', 'true');
+        this.analytics.setAnalyticsCollectionEnabled(true);
+        this.analytics.logEvent('Set GAEnabled Cookie - Start with Google Analytics');
+      }
     });
   }
-
-  // this.cookieService.set('GAEnabled', 'true'); --> Has to be set to work with Analytics
-  // Some Observable for Cookies has to be created!
 
   ngOnDestroy(): void {
     // throw new Error("Method not implemented.");
   }
 
-  // this.cookieService.set('GAEnabled', 'true'); --> Has to be set to work with Analytics
-  // Some Observable for Cookies has to be created!
   ngOnInit(): void {
     if (this.cookieService.get('GAEnabled') === 'true') {
       this.analytics.setAnalyticsCollectionEnabled(true);
+      this.analytics.logEvent('GAEnabled Cookie already true - Start with Google Analytics');
+
     }
   }
 
