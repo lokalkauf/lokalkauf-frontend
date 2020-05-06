@@ -59,6 +59,15 @@ import { PressComponent } from './press/press.component';
 import { LightboxModule } from 'ngx-lightbox';
 import { filter } from 'rxjs/operators';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
+import {
+  AngularFireAnalyticsModule,
+  CONFIG,
+  COLLECTION_ENABLED,
+  DEBUG_MODE,
+  ScreenTrackingService,
+  UserTrackingService,
+} from '@angular/fire/analytics';
+import { CookieService } from 'ngx-cookie-service';
 
 import {
   NgcCookieConsentModule,
@@ -89,8 +98,6 @@ const cookieConfig: NgcCookieConsentConfig = {
       dass Dein Besuch auf dieser Website Krümel hinterlässt, die für uns informationen bereitstellen. Cool?`,
   },
 };
-
-
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -168,6 +175,7 @@ const routes: Routes = [
     LightboxModule,
     NgcCookieConsentModule.forRoot(cookieConfig),
     DeviceDetectorModule.forRoot(),
+    AngularFireAnalyticsModule,
   ],
   exports: [RouterModule],
   providers: [
@@ -180,6 +188,16 @@ const routes: Routes = [
     StorageService,
     EMailService,
     ImageService,
+    CookieService,
+    {
+      provide: CONFIG,
+      useValue: {
+        anonymize_ip: true,
+      },
+    },
+    { provide: COLLECTION_ENABLED, useValue: false },
+    ScreenTrackingService,
+    UserTrackingService,
   ],
   bootstrap: [AppComponent],
 })
