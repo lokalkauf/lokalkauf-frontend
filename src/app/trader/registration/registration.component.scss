@@ -24,6 +24,13 @@ lk-warning-box {
     margin-bottom: 20px;
   }
 
+  fieldset {
+    width: 100%;
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+  }
+
   .address {
     display: grid;
     grid-template-columns: 6rem 1fr 5rem;

@@ -4,7 +4,7 @@
   "scripts": {
     "start": "ng serve --ssl true",
     "emulators:setup": "firebase setup:emulators:firestore",
-    "emulators": "firebase emulators:start",
+    "emulators": "firebase emulators:start --only=hosting,firestore",
     "build": "ng build --prod"
   },
   "private": true,
@@ -41,6 +41,7 @@
     "googleapis": "^48.0.0",
     "leaflet": "^1.6.0",
     "ngx-cookieconsent": "^2.2.3",
+    "ngx-device-detector": "^1.4.2",
     "ngx-lightbox": "^2.1.2",
     "ngx-star-rating": "0.0.1",
     "nl2br-pipe": "^1.2.3",

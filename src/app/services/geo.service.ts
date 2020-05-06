@@ -41,9 +41,7 @@ export class GeoService {
       .set({
         coordinates: new firestore.GeoPoint(coords[0], coords[1]),
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch((e) => {});
   }
 
   getLocations(radius: number, coords: Array<number>) {
@@ -95,8 +93,8 @@ export class GeoService {
         .where(arr, 'array-contains', search)
         .get()
     ).pipe(
-      map((a) =>
-        a.docs.map((d) => {
+      map((a) => {
+        const all = a.docs.map((d) => {
           const data = d.data();
           return {
             city: data.d.city,
@@ -106,8 +104,25 @@ export class GeoService {
               data.d.coordinates.longitude,
             ],
           } as GeoAddress;
-        })
-      )
+        });
+
+        // add whole cities
+        if (!isSearchPostal && all && all.length > 0) {
+          const uniqueCities = this.distinctArray(all, 'city');
+          if (uniqueCities) {
+            uniqueCities.forEach((c) => {
+              all.unshift({
+                city: c.city + '',
+                postalcode: '',
+                coordinates: all.find((ct) => ct.city === c.city).coordinates,
+                radius: 25,
+              } as GeoAddress);
+            });
+          }
+        }
+
+        return all;
+      })
     );
   }
 
@@ -141,10 +156,6 @@ export class GeoService {
         );
 
         if (inside) {
-          // console.log(data.postalcode + ' ' + data.city + ' is in: ' + inside);
-          // console.log('coordinates: ' + data.coordinates);
-          // console.log(data.coordinates);
-
           return {
             city: data.city,
             postalcode: data.postalcode,
@@ -152,7 +163,7 @@ export class GeoService {
               data.coordinates.latitude,
               data.coordinates.longitude,
             ],
-            radius: 0,
+            radius: 10,
           };
         }
       }
@@ -166,7 +177,7 @@ export class GeoService {
         city: theNext.city,
         postalcode: theNext.postalcode,
         coordinates: location,
-        radius: 0,
+        radius: 10,
       };
     }
 
@@ -197,10 +208,7 @@ export class GeoService {
           }
         )
         .toPromise();
-    } catch (e) {
-      console.log('error while calling geocoding api');
-      console.log(e);
-    }
+    } catch (e) {}
 
     const candidate = response ? response.candidates?.[0] : null;
     if (!candidate) {
@@ -213,5 +221,19 @@ export class GeoService {
       coordinates: [candidate.location.y, candidate.location.x],
       radius: 0,
     };
+  }
+
+  distinctArray<T>(array: T[], propertyName: string) {
+    if (array && array.length > 0) {
+      return array.filter((item, i, arr) => {
+        return (
+          arr.indexOf(
+            arr.find((t) => t[propertyName] === item[propertyName])
+          ) === i
+        );
+      });
+    }
+
+    return array;
   }
 }

@@ -34,8 +34,10 @@ import { v4 as uuid } from 'uuid';
 export class LkMapComponent implements OnInit, AfterViewInit {
   map: Map;
   radius: 0.5;
+  flying: boolean;
 
   @Output() positionChanged = new EventEmitter<any>();
+  @Output() flyEnd = new EventEmitter<any>();
   @Output() mapMove = new EventEmitter<any>();
   @Output() mapInit = new EventEmitter<any>();
   locations: Array<Location> = new Array<Location>();
@@ -92,6 +94,13 @@ export class LkMapComponent implements OnInit, AfterViewInit {
       this.mapMove.emit(self.map.getCenter());
     });
 
+    map.on('zoomend', (e: any) => {
+      if (this.flying) {
+        this.flying = false;
+        this.flyEnd.emit(self.map.getCenter());
+      }
+    });
+
     this.mapInit.emit();
   }
 
@@ -99,9 +108,11 @@ export class LkMapComponent implements OnInit, AfterViewInit {
 
   public setCenter(position: number[], zoom: number = 18) {
     if (position) {
-      console.log('set center...' + position);
-
-      this.map.flyTo(latLng(position[0], position[1]), 18);
+      this.flying = true;
+      this.map.flyTo(latLng(position[0], position[1]), 18, {
+        animate: true,
+        duration: 2,
+      });
     }
   }
 
@@ -110,17 +121,11 @@ export class LkMapComponent implements OnInit, AfterViewInit {
 
     const id = uuid();
     marker(pos, { alt: id, icon: this.heartIconBig }).addTo(this.map);
-
-    // console.log('return id: ' + id);
-
     return id;
   }
 
   public updateMarkerPosition(markerId: string, position: number[]) {
     const mrkr: Marker = this.findMarkerById(markerId);
-
-    // console.log('updatePos: ' + markerId);
-    // console.log(mrkr);
 
     if (mrkr) {
       mrkr.setLatLng(this.creeateLatLng(position));

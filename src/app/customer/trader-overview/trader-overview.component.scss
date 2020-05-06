@@ -46,6 +46,18 @@ lk-navigation-chips {
   padding-top: 2rem;
   margin-bottom: 2rem;
   width: 100%;
+
+  @media screen and (min-width: 1040px) {
+    align-items: stretch;
+    flex-flow: row wrap;
+    justify-content: space-between;
+
+    &::after {
+      content: '';
+      flex-basis: auto;
+      flex: auto;
+    }
+  }
 }
 
 .traders-input-center {
@@ -62,6 +74,12 @@ lk-navigation-chips {
 
 app-trader-item {
   margin-bottom: 16px;
+
+  @media screen and (min-width: 1040px) {
+    margin-bottom: 32px;
+    margin-left: 12px;
+    margin-right: 12px;
+  }
 }
 
 .no-result-message {
@@ -106,11 +124,31 @@ app-trader-item {
   }
 }
 
+.trader-chips-container {
+  @media screen and (min-width: 1040px) {
+    display: flex;
+    justify-content: center;
+
+    .trader-chips {
+      max-width: 640px;
+      align-items: center;
+
+      div.mat-chip-list-wrapper {
+        justify-content: center;
+      }
+    }
+  }
+}
+
 .slider {
   display: flex;
   justify-content: space-between;
 
   align-items: center;
+
+  @media screen and (min-width: 1040px) {
+    max-width: 640px;
+  }
 
   .slider-form {
     width: 100%;
@@ -122,5 +160,52 @@ app-trader-item {
     text-align: right;
     margin-top: 20px;
     margin-right: 6px;
+  }
+}
+
+.slider-single {
+  width: auto;
+
+  @media screen and (min-width: 1040px) {
+    width: 640px;
+  }
+}
+
+lk-container {
+  .trader-overview-town {
+    text-align: center;
+  }
+
+  .floating-backbutton {
+    display: flex;
+    align-items: center;
+    color: $lightestgrey;
+
+    mat-icon {
+      vertical-align: middle;
+    }
+
+    mat-icon,
+    span {
+      cursor: pointer;
+    }
+
+    span {
+      padding-left: 10px;
+    }
+
+    .symboltext {
+      line-height: 30px;
+      vertical-align: middle;
+    }
+  }
+
+  .margin-boost {
+    margin: 23px auto;
+    font-size: 14px;
+  }
+
+  .navigate-back {
+    text-decoration: none;
   }
 }

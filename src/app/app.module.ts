@@ -59,10 +59,12 @@ import { PressComponent } from './press/press.component';
 import { LightboxModule } from 'ngx-lightbox';
 import { filter } from 'rxjs/operators';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
+
 import {
   NgcCookieConsentModule,
   NgcCookieConsentConfig,
 } from 'ngx-cookieconsent';
+import { DeviceDetectorModule } from 'ngx-device-detector';
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
@@ -86,6 +88,8 @@ const cookieConfig: NgcCookieConsentConfig = {
       dass Dein Besuch auf dieser Website Krümel hinterlässt, die für uns informationen bereitstellen. Cool?`,
   },
 };
+
+
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -158,9 +162,11 @@ const routes: Routes = [
     MatPasswordStrengthModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
+      registrationStrategy: 'registerImmediately',
     }),
     LightboxModule,
     NgcCookieConsentModule.forRoot(cookieConfig),
+    DeviceDetectorModule.forRoot(),
   ],
   exports: [RouterModule],
   providers: [

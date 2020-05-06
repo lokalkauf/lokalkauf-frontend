@@ -3,11 +3,11 @@
     [title]="loggedInUserState.traderProfile.businessname"
   ></lk-page-title>
   <div *ngIf="!loggedInUserState.emailVerified" class="verify-mail-alert">
-    Bitte bestätige deine Email-Adresse:
+    Bitte bestätige Deine E-Mail-Adresse:
     {{ loggedInUserState.traderProfile.email }}<br />
-    Du hast noch keine Email von uns erhalten?
+    Du hast noch keine E-Mail von uns erhalten?
     <a [routerLink]="" (click)="resendEmailVerification()"
-      >Bestätigungsmail erneut senden</a
+      >Bestätigungs-E-Mail erneut senden</a
     ><br /><br />
     {{ mailResendedMessage }}
   </div>

@@ -53,7 +53,7 @@ jobs:
     - name: Deploy
       uses: w9jds/firebase-action@v1.3.0
       with:
-        args: deploy -P staging --only hosting,storage,firestore:rules
+        args: deploy -P staging --only hosting
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 

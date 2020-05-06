@@ -56,69 +56,71 @@
         Bitte gib eine gültige Telefonnummer ein
       </div>
     </div>
-    <div class="address">
-      <div class="registration-input street">
-        <lk-input
-          [warn]="street.touched && street.invalid"
-          type="text"
-          formControlName="street"
-          placeholder="Straße*"
-        >
-        </lk-input>
-        <div class="warning" *ngIf="street.touched && street.invalid">
-          Bitte gib eine Straße ein
+    <fieldset [disabled]="confirmAddressMode">
+      <div class="address">
+        <div class="registration-input street">
+          <lk-input
+            [warn]="street.touched && street.invalid"
+            type="text"
+            formControlName="street"
+            placeholder="Straße*"
+          >
+          </lk-input>
+          <div class="warning" *ngIf="street.touched && street.invalid">
+            Bitte gib eine Straße ein
+          </div>
+        </div>
+        <div class="registration-input streetnumber">
+          <lk-input
+            [warn]="streetnumber.touched && streetnumber.invalid"
+            type="text"
+            formControlName="streetnumber"
+            placeholder="Nr.*"
+          ></lk-input>
+        </div>
+        <div class="registration-input postcode">
+          <lk-input
+            [warn]="postcode.touched && postcode.invalid"
+            type="text"
+            formControlName="postcode"
+            placeholder="Plz*"
+          ></lk-input>
+          <div class="warning" *ngIf="postcode.touched && postcode.invalid">
+            Format: 44135
+          </div>
+        </div>
+        <div class="registration-input city">
+          <lk-input
+            [warn]="city.touched && city.invalid"
+            type="text"
+            formControlName="city"
+            placeholder="Stadt*"
+          >
+          </lk-input>
+          <div class="warning" *ngIf="city.touched && city.invalid">
+            Bitte gib eine Stadt ein
+          </div>
         </div>
       </div>
-      <div class="registration-input streetnumber">
-        <lk-input
-          [warn]="streetnumber.touched && streetnumber.invalid"
-          type="text"
-          formControlName="streetnumber"
-          placeholder="Nr.*"
-        ></lk-input>
-      </div>
-      <div class="registration-input postcode">
-        <lk-input
-          [warn]="postcode.touched && postcode.invalid"
-          type="number"
-          formControlName="postcode"
-          placeholder="Plz*"
-        ></lk-input>
-        <div class="warning" *ngIf="postcode.touched && postcode.invalid">
-          Format: 44135
-        </div>
-      </div>
-      <div class="registration-input city">
-        <lk-input
-          [warn]="city.touched && city.invalid"
-          type="text"
-          formControlName="city"
-          placeholder="Stadt*"
-        >
-        </lk-input>
-        <div class="warning" *ngIf="city.touched && city.invalid">
-          Bitte gib eine Stadt ein
-        </div>
-      </div>
-    </div>
-
+    </fieldset>
     <lk-container class="map-confirmation">
       <div class="warning">
-        <ng-container *ngIf="needConfirmation() || confirmAddressMode">
+        <ng-container *ngIf="needsConfirmation$ | async">
           Bitte bestätige, den auf der Karte angezeigten Standort.<br />
           Positioniere die Karte so, dass das untere Ende des lokalkauf-Herzens
-          auf deinen Standort zeigt.
+          auf Deinen Standort zeigt.
         </ng-container>
       </div>
       <div class="disabled-overlay" *ngIf="!confirmAddressMode">
         <lk-button
-          [color]="needConfirmation() ? 'warn' : 'primary'"
+          *ngIf="!startAddressConfirmation"
+          [color]="(needsConfirmation$ | async) ? 'warn' : 'primary'"
           (click)="openConfirmationMode()"
         >
-          <ng-container *ngIf="!needConfirmation()"
+          <ng-container *ngIf="(needsConfirmation$ | async) === false"
             >Standort ändern</ng-container
           >
-          <ng-container *ngIf="needConfirmation()"
+          <ng-container *ngIf="needsConfirmation$ | async"
             >Standort bestätigen</ng-container
           >
         </lk-button>
@@ -135,7 +137,8 @@
           <mat-icon color="primary">thumb_up_alt</mat-icon>
         </button>
       </div>
-      <lk-map (mapMove)="onMapMove($event)"> </lk-map>
+      <lk-map (mapMove)="onMapMove($event)" (flyEnd)="onMapFlyEnd($event)">
+      </lk-map>
     </lk-container>
 
     <ng-container *ngIf="registrationState === 'new'">
@@ -244,7 +247,9 @@
           </div>
           <div class="save">
             <lk-button
-              [disabled]="!registrationForm.valid || needConfirmation()"
+              [disabled]="
+                !registrationForm.valid || (needsConfirmation$ | async)
+              "
               type="submit"
               label="Aktualisieren"
             >
