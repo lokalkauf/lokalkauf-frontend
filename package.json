@@ -46,6 +46,7 @@
     "nl2br-pipe": "^1.2.3",
     "nodemailer": "^6.4.6",
     "point-in-polygon": "^1.0.1",
+    "proxy-polyfill": "^0.3.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "uuid": "^7.0.2",
