@@ -59,8 +59,46 @@ import { PressComponent } from './press/press.component';
 import { LightboxModule } from 'ngx-lightbox';
 import { filter } from 'rxjs/operators';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
+import {
+  AngularFireAnalyticsModule,
+  CONFIG,
+  COLLECTION_ENABLED,
+  DEBUG_MODE,
+  ScreenTrackingService,
+  UserTrackingService,
+} from '@angular/fire/analytics';
+import { CookieService } from 'ngx-cookie-service';
+
+import {
+  NgcCookieConsentModule,
+  NgcCookieConsentConfig,
+} from 'ngx-cookieconsent';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { BrowserService } from './services/browser.service';
+
+const cookieConfig: NgcCookieConsentConfig = {
+  cookie: {
+    domain: window.location.hostname,
+    // or 'your.domain.com' // it is mandatory to set a domain, for cookies to work properly (see https://goo.gl/S2Hy2A)
+  },
+  palette: {
+    popup: {
+      background: '#fff',
+    },
+    button: {
+      background: '#00b900',
+    },
+  },
+  theme: 'classic',
+  type: 'opt-in',
+  content: {
+    allow: 'Zulassen',
+    deny: 'Ablehnen',
+    link: 'mehr erfahren',
+    message: `<i class="fas fa-cookie-bite"></i><h1>Wir lieben Cookies!</h1>Diese Website verwendet Cookies - das bedeutet,
+      dass Dein Besuch auf dieser Website Krümel hinterlässt, die für uns informationen bereitstellen. Cool?`,
+  },
+};
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -136,7 +174,9 @@ const routes: Routes = [
       registrationStrategy: 'registerImmediately',
     }),
     LightboxModule,
+    NgcCookieConsentModule.forRoot(cookieConfig),
     DeviceDetectorModule.forRoot(),
+    AngularFireAnalyticsModule,
   ],
   exports: [RouterModule],
   providers: [
@@ -150,6 +190,16 @@ const routes: Routes = [
     EMailService,
     ImageService,
     BrowserService,
+    CookieService,
+    {
+      provide: CONFIG,
+      useValue: {
+        anonymize_ip: true,
+      },
+    },
+    { provide: COLLECTION_ENABLED, useValue: false },
+    ScreenTrackingService,
+    UserTrackingService,
   ],
   bootstrap: [AppComponent],
 })
