@@ -80,6 +80,12 @@ Copyright (c) 2010-2016 Robert Kieffer and other contributors. Licensed under th
 
 Copyright (c) 2010-2020 Google LLC. Licensed under the [MIT](https://github.com/angular/angular/blob/master/LICENSE) License
 
+
+## Cookie Icon
+
+Icons made by [Freepik](http://www.freepik.com/) from [www.laticon.com](https://www.flaticon.com/)
+Direct src: [flaticon](https://www.flaticon.com/free-icon/cookie_2435678)
+
 ## ngx-device-detector
 
 Copyright (c) 2016 Ahsan Ayaz. Licensed under [MIT](https://github.com/KoderLabs/ngx-device-detector/blob/master/LICENSE) License
@@ -91,3 +97,4 @@ Copyright (c) 2014-2016 GitHub, Inc. Licensed under [MIT](https://github.com/git
 ## proxy-polyfill
 
 Licensed under the [Apache-2.0](https://github.com/GoogleChrome/proxy-polyfill/blob/master/LICENSE) License.
+

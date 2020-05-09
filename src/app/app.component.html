@@ -99,6 +99,12 @@
       <router-outlet></router-outlet>
     </div>
     <div class="footer">
+      <div class="cookie-footer">
+        <a (click)="this.openCookieConsent()"
+          ><img src="../../assets/cookie.svg" alt="<3 Cookies"
+        /></a>
+      </div>
+
       <a
         mat-list-item
         href="https://www.info.lokalkauf.org/impressum"
