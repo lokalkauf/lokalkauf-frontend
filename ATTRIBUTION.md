@@ -79,3 +79,15 @@ Copyright (c) 2010-2016 Robert Kieffer and other contributors. Licensed under th
 ## zone.js
 
 Copyright (c) 2010-2020 Google LLC. Licensed under the [MIT](https://github.com/angular/angular/blob/master/LICENSE) License
+
+## ngx-device-detector
+
+Copyright (c) 2016 Ahsan Ayaz. Licensed under [MIT](https://github.com/KoderLabs/ngx-device-detector/blob/master/LICENSE) License
+
+## whatwg-fetch
+
+Copyright (c) 2014-2016 GitHub, Inc. Licensed under [MIT](https://github.com/github/fetch/blob/master/LICENSE) License
+
+## proxy-polyfill
+
+Licensed under the [Apache-2.0](https://github.com/GoogleChrome/proxy-polyfill/blob/master/LICENSE) License.

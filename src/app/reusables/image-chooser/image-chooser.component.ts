@@ -19,13 +19,13 @@ import { ErrorService } from '../../services/error.service';
 export class ImageChooserComponent implements OnInit, ControlValueAccessor {
   uploadState: Observable<number> | null = null;
 
-  selectedFile: File;
+  selectedFile: Blob;
   selectedFileDataUrl: string;
 
   constructor(private errorService: ErrorService) {}
 
   private onTouchedCallback: () => void = () => {};
-  private onChangeCallback: (file: File) => void = () => {};
+  private onChangeCallback: (file: Blob) => void = () => {};
 
   ngOnInit(): void {}
 
@@ -41,7 +41,7 @@ export class ImageChooserComponent implements OnInit, ControlValueAccessor {
       return;
     }
 
-    this.selectedFile = await new Promise<File>((resolve) => {
+    this.selectedFile = await new Promise<Blob>((resolve) => {
       loadImage(
         file,
         (image) => {
@@ -58,10 +58,10 @@ export class ImageChooserComponent implements OnInit, ControlValueAccessor {
           const pngFilename =
             file.name.split('/').pop().split('.').shift() + '.png';
 
-          image.toBlob(
-            (b) => resolve(new File([b], pngFilename, { type: 'image/png' })),
-            'image/png'
-          );
+          image.toBlob((b) => {
+            const f = new Blob([b], { type: 'image/png' });
+            resolve(f);
+          }, 'image/png');
           this.selectedFileDataUrl = image.toDataURL('image/png');
         },
         {

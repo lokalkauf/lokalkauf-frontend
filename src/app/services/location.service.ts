@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { functions } from 'firebase';
 import { Location } from '../models/location';
 import { Paging } from '../models/paging';
+
+import * as firebase from 'firebase/app';
+import 'firebase/functions';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +18,8 @@ export class LocationService {
     filter?: { categories: string[]; countOnly?: boolean },
     paging = { desc: false, pageIndex: 0, pageSize: 150 }
   ): Promise<any> {
-    return await functions()
+    return await firebase
+      .functions()
       .httpsCallable(`locationByDistance`)
       .call('Get Locatons', {
         radius,

@@ -1,3 +1,4 @@
+/*eslint max-len: ["error", { "ignoreStrings": true }]*/
 export const uiTexts = {
   haendlerlogin_title: 'Händler Login',
   haendlerlogin_noch_kein_konto: 'Noch kein Konto? Dann gehts',

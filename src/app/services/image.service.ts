@@ -98,10 +98,8 @@ export class ImageService {
     return (await this.getAllTraderImages(traderId)).map((i) => i.url);
   }
 
-  uploadTraderImage(traderId: string, file: File) {
-    const filePath = `Traders/${traderId}/BusinessImages/${uuid()}-${
-      file.name
-    }`;
+  uploadTraderImage(traderId: string, file: Blob) {
+    const filePath = `Traders/${traderId}/BusinessImages/${uuid()}.png`;
     return this.storage.upload(filePath, file);
   }
 
