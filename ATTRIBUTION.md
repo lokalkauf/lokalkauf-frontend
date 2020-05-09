@@ -79,3 +79,8 @@ Copyright (c) 2010-2016 Robert Kieffer and other contributors. Licensed under th
 ## zone.js
 
 Copyright (c) 2010-2020 Google LLC. Licensed under the [MIT](https://github.com/angular/angular/blob/master/LICENSE) License
+
+## Cookie Icon
+
+Icons made by [Freepik](http://www.freepik.com/) from [www.laticon.com](https://www.flaticon.com/)
+Direct src: [flaticon](https://www.flaticon.com/free-icon/cookie_2435678)

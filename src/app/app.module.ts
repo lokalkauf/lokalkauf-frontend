@@ -78,7 +78,6 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
     domain: window.location.hostname,
-    // or 'your.domain.com' // it is mandatory to set a domain, for cookies to work properly (see https://goo.gl/S2Hy2A)
   },
   palette: {
     popup: {
@@ -88,14 +87,17 @@ const cookieConfig: NgcCookieConsentConfig = {
       background: '#00b900',
     },
   },
-  theme: 'classic',
+  theme: 'edgeless',
   type: 'opt-in',
   content: {
     allow: 'Zulassen',
     deny: 'Ablehnen',
     link: 'mehr erfahren',
-    message: `<i class="fas fa-cookie-bite"></i><h1>Wir lieben Cookies!</h1>Diese Website verwendet Cookies - das bedeutet,
-      dass Dein Besuch auf dieser Website Krümel hinterlässt, die für uns informationen bereitstellen. Cool?`,
+    message: `<div class="cookie-content-container"><img src="../../assets/cookie.svg"
+          alt="<3 Cookies" />
+          <div><h1>Wir lieben Cookies!</h1>Diese Website verwendet Cookies - das bedeutet,
+      dass Dein Besuch auf dieser Website Krümel hinterlässt, die für uns informationen bereitstellen. Cool?</div></div>`,
+    policy: 'Cookie Einstellungen',
   },
 };
 

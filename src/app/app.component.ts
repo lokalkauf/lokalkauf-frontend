@@ -35,6 +35,12 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
+  openCookieConsent() {
+    if (this.ccService) {
+      this.ccService.open();
+    }
+  }
+
   ngOnDestroy(): void {
     // throw new Error("Method not implemented.");
   }

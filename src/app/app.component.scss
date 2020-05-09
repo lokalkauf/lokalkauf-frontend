@@ -80,4 +80,16 @@ button.mat-mini-fab.avatar {
   .mat-list-item:hover {
     color: #00b900;
   }
+
+  .cookie-footer {
+    display: inline-block;
+
+    vertical-align: middle;
+    cursor: pointer;
+
+    img {
+      width: 32px;
+      height: 32px;
+    }
+  }
 }
