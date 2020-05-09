@@ -66,3 +66,4 @@ import 'zone.js/dist/zone'; // Included with Angular CLI.
  */
 
 import 'whatwg-fetch';
+import 'blueimp-canvas-to-blob';

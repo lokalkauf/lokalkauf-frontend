@@ -42,6 +42,11 @@ export class BrowserService {
     },
     {
       device: DEVICE.DESKTOP,
+      browserName: 'MS-Edge',
+      version: 12,
+    },
+    {
+      device: DEVICE.DESKTOP,
       browserName: 'Opera',
       version: 68,
     },
@@ -70,6 +75,8 @@ export class BrowserService {
 
   isBrowserSupported(): boolean {
     const isDesktop = this.deviceDetectorService.isDesktop();
+
+    console.log(this.deviceDetectorService.browser_version);
 
     const foundBrowsers = this.supportedBrowsers.filter(
       (x) =>

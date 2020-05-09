@@ -5,13 +5,12 @@ import {
   QueryDocumentSnapshot,
 } from '@angular/fire/firestore';
 import { HttpClient, HttpUrlEncodingCodec } from '@angular/common/http';
-import { map, timeout, flatMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import insidepolygon from 'point-in-polygon';
 import { BehaviorSubject, Observable, of, from } from 'rxjs';
 import { GeoCollectionReference, GeoFirestore, GeoQuery } from 'geofirestore';
 import { firestore } from 'firebase/app';
 import { GeoAddress } from '../models/geoAddress';
-import { TraderProfile } from '../models/traderProfile';
 import { StorageService } from './storage.service';
 
 @Injectable({
