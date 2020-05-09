@@ -74,6 +74,7 @@ import {
   NgcCookieConsentConfig,
 } from 'ngx-cookieconsent';
 import { DeviceDetectorModule } from 'ngx-device-detector';
+import { BrowserService } from './services/browser.service';
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
@@ -190,6 +191,7 @@ const routes: Routes = [
     StorageService,
     EMailService,
     ImageService,
+    BrowserService,
     CookieService,
     {
       provide: CONFIG,

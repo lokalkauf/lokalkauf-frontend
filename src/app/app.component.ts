@@ -24,7 +24,6 @@ export class AppComponent implements OnInit, OnDestroy {
     private analytics: AngularFireAnalytics
   ) {
     ccService.statusChange$.subscribe((x) => {
-      console.log(x.status);
       if (x.status === 'allow') {
         this.cookieService.set('GAEnabled', 'true');
         this.analytics.setAnalyticsCollectionEnabled(true);
