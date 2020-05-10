@@ -3,17 +3,17 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+  production: true,
   firebase: {
-    projectId: 'lokalkauf-security-testing',
-    appId: '1:1056653798296:web:dec81d3506bd353c41d9ed',
-    databaseURL: 'https://lokalkauf-security-testing.firebaseio.com',
-    storageBucket: 'lokalkauf-security-testing.appspot.com',
+    projectId: 'lokalkauf-staging',
+    appId: '1:464711391631:web:defbf4ea539d12b80d53fa',
+    databaseURL: 'https://lokalkauf-staging.firebaseio.com',
+    storageBucket: 'lokalkauf-staging.appspot.com',
     locationId: 'europe-west',
-    apiKey: 'AIzaSyBb_aChDOeE6L2vYyzluSgtDlQY04vlB00',
-    authDomain: 'lokalkauf-security-testing.firebaseapp.com',
-    messagingSenderId: '1056653798296',
-    measurementId: 'G-C5Q2KM9D7G',
+    apiKey: 'AIzaSyDWKZmGX7RaxDfv8_s_mqA_Ct9iFSP2GiM',
+    authDomain: 'lokalkauf-staging.firebaseapp.com',
+    messagingSenderId: '464711391631',
+    measurementId: 'G-4MZVPHHSKR',
   },
 };
 

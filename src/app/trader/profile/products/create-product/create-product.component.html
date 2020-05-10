@@ -1,0 +1,42 @@
+<div class="create-product">
+  <h1>Neues Produkt</h1>
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <app-image-chooser formControlName="image"></app-image-chooser>
+    <div class="product-name">
+      <lk-input
+        type="text"
+        formControlName="name"
+        placeholder="Produktname*"
+      ></lk-input>
+    </div>
+    <div class="product-price">
+      <lk-input
+        type="text"
+        formControlName="price"
+        placeholder="Preis"
+      ></lk-input>
+    </div>
+    <div class="product-description">
+      <lk-input
+        type="text"
+        formControlName="description"
+        placeholder="Beschreibung"
+      ></lk-input>
+    </div>
+    <lk-button
+      class="button-submit"
+      type="submit"
+      [disabled]="!productForm.valid"
+    >
+      Abschicken
+    </lk-button>
+    <lk-button
+      (click)="onCancel()"
+      class="button-cancel"
+      type="button"
+      color="warn"
+    >
+      Abbrechen
+    </lk-button>
+  </form>
+</div>

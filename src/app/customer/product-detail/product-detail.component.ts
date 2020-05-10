@@ -14,7 +14,7 @@ import { ProductDetailFeedbackComponent } from '../product-detail-feedback/produ
   styleUrls: ['./product-detail.component.scss'],
 })
 export class ProductDetailComponent implements OnInit {
-  product$: Observable<Product>;
+  product$: Observable<Product & { id: string }>;
   traderId: string;
 
   constructor(
@@ -33,10 +33,10 @@ export class ProductDetailComponent implements OnInit {
     );
   }
 
-  addToCart(product: Product): void {
+  addToCart(productId: string): void {
     this.cartService.add({
       count: 1,
-      productId: product.id,
+      productId,
       traderId: this.traderId,
     });
 

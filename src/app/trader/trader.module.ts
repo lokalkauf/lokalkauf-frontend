@@ -1,7 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrdersComponent } from './orders/orders.component';
-import { CreateProductComponent } from './create-product/create-product.component';
 import { ReusablesModule } from '../reusables/reusables.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -17,10 +16,12 @@ import { MatPasswordStrengthModule } from '@angular-material-extensions/password
 import { DeleteUserComponent } from './registration/delete-user/delete-user.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
-import { LabelPipe } from '../pipes/label.pipe';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { PipesModule } from '../pipes/pipes.modules';
 import { ImageUploadComponent } from './profile/image-upload/image-upload.component';
 import { OfferComponent } from './profile/offer/offer.component';
+import { ProductsComponent } from './profile/products/products.component';
+import { CreateProductComponent } from './profile/products/create-product/create-product.component';
 
 const routes: Routes = [
   { path: 'trader/profile', component: ProfileComponent },
@@ -34,7 +35,7 @@ const routes: Routes = [
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     OrdersComponent,
-    CreateProductComponent,
+    ProductsComponent,
     RegistrationComponent,
     ProfileComponent,
     LoginComponent,
@@ -42,6 +43,7 @@ const routes: Routes = [
     DeleteUserComponent,
     ImageUploadComponent,
     OfferComponent,
+    CreateProductComponent,
   ],
   imports: [
     CommonModule,
@@ -57,6 +59,7 @@ const routes: Routes = [
     ReusablesModule,
     PipesModule,
     MatPasswordStrengthModule,
+    MatSnackBarModule,
   ],
 })
 export class TraderModule {}
