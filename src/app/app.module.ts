@@ -93,11 +93,13 @@ const cookieConfig: NgcCookieConsentConfig = {
   content: {
     allow: 'Zulassen',
     deny: 'Ablehnen',
-    link: 'mehr erfahren',
+    link: 'Datenschutzerklärung',
+    href: 'https://www.info.lokalkauf.org/datenschutz',
     message: `<div class="cookie-content-container"><img src="../../assets/cookie.svg"
           alt="<3 Cookies" />
           <div><h1>Wir lieben Cookies!</h1>Diese Website verwendet Cookies - das bedeutet,
-      dass Dein Besuch auf dieser Website Krümel hinterlässt, die für uns informationen bereitstellen. Cool?</div></div>`,
+      dass Dein Besuch auf dieser Website Krümel hinterlässt, die für uns informationen bereitstellen. Cool?
+      <br>Nähere Informationen findest du in der Datenschutzerklärung!</div></div>`,
     policy: 'Cookie Einstellungen',
   },
 };

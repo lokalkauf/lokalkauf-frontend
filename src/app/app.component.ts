@@ -27,9 +27,11 @@ export class AppComponent implements OnInit, OnDestroy {
       if (x.status === 'allow') {
         this.cookieService.set('GAEnabled', 'true');
         this.analytics.setAnalyticsCollectionEnabled(true);
-        this.analytics.logEvent(
-          'Set GAEnabled Cookie - Start with Google Analytics'
-        );
+        this.analytics.logEvent('enable_analytics');
+      } else {
+        this.cookieService.delete('GAEnabled');
+        this.analytics.logEvent('disable_analytics');
+        this.analytics.setAnalyticsCollectionEnabled(false);
       }
     });
   }
@@ -47,9 +49,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (this.cookieService.get('GAEnabled') === 'true') {
       this.analytics.setAnalyticsCollectionEnabled(true);
-      this.analytics.logEvent(
-        'GAEnabled Cookie already true - Start with Google Analytics'
-      );
+      this.analytics.logEvent('enable_analytics');
     }
   }
 
