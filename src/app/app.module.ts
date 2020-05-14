@@ -99,7 +99,7 @@ const cookieConfig: NgcCookieConsentConfig = {
           alt="<3 Cookies" />
           <div><h1>Wir lieben Cookies!</h1>Diese Website verwendet Cookies - das bedeutet,
       dass Dein Besuch auf dieser Website Krümel hinterlässt, die für uns informationen bereitstellen. Cool?
-      <br>Nähere Informationen findest du in der Datenschutzerklärung!</div></div>`,
+      <br>Nähere Informationen findest Du in der Datenschutzerklärung!</div></div>`,
     policy: 'Cookie Einstellungen',
   },
 };
