@@ -21,7 +21,14 @@ export class ImageService {
     );
     const ext = imagePath.split('.').pop();
     const thumbnailPath =
-      foldername + 'thumb_' + size + '_' + filenameWithoutExt + '.' + ext;
+      foldername +
+      'thumb_' +
+      size +
+      '_' +
+      filenameWithoutExt +
+      '.' +
+      ext +
+      '.jpg';
 
     return await this.storage.storage.ref(thumbnailPath).getDownloadURL();
   }
@@ -37,7 +44,14 @@ export class ImageService {
     );
     const ext = image.path.split('.').pop();
     const thumbnailPath =
-      foldername + 'thumb_' + size + '_' + filenameWithoutExt + '.' + ext;
+      foldername +
+      'thumb_' +
+      size +
+      '_' +
+      filenameWithoutExt +
+      '.' +
+      ext +
+      '.jpg';
     const thumnbnailRef = await this.storage.storage.ref(thumbnailPath);
     return {
       url: await thumnbnailRef.getDownloadURL(),
