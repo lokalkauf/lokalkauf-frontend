@@ -71,6 +71,7 @@
 
     .button-cancel {
       grid-area: cancel;
+      justify-self: start;
     }
   }
 }

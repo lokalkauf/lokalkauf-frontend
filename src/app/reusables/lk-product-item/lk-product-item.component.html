@@ -1,0 +1,24 @@
+<mat-card>
+  <img
+    class="product-thumbnail"
+    [ngClass]="{
+      placeholder: !(product && product.image)
+    }"
+    [src]="product.image || '/assets/lokalkauf-pin.svg'"
+    [alt]="product.name"
+  />
+  <mat-card-header>
+    <mat-card-title>{{ product.name }}</mat-card-title>
+    <mat-card-subtitle>
+      <div class="text">{{ product.price }} €</div>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-actions *ngIf="enableInteraction">
+    <button mat-icon-button (click)="removeClicked.emit()">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <button mat-icon-button (click)="editClicked.emit()">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

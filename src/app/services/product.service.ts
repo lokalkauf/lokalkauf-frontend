@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Observable, forkJoin } from 'rxjs';
+import { map, tap, flatMap } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Product } from '../models/product';
 
@@ -25,5 +25,31 @@ export class ProductService {
     return this.db
       .collection<Product>(`Traders/${traderId}/Products`)
       .add(product);
+  }
+
+  public updateProduct(
+    traderId: string,
+    productId: string,
+    product: Partial<Product>
+  ) {
+    return this.db
+      .collection<Product>(`Traders/${traderId}/Products`)
+      .doc<Product>(productId)
+      .update(product);
+  }
+
+  public getProductsOfTrader(
+    traderId: string
+  ): Observable<Array<Product & { id: string }>> {
+    return this.db
+      .collection<Product>(`Traders/${traderId}/Products`)
+      .valueChanges({ idField: 'id' });
+  }
+
+  public removeProuct(traderId: string, productId: string) {
+    return this.db
+      .collection<Product>(`Traders/${traderId}/Products`)
+      .doc(productId)
+      .delete();
   }
 }

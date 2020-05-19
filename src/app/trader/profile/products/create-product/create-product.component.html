@@ -1,5 +1,5 @@
 <div class="create-product">
-  <h1>Neues Produkt</h1>
+  <h1>{{ data.product ? 'Produkt bearbeiten' : 'Neues Produkt' }}</h1>
   <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
     <app-image-chooser formControlName="image"></app-image-chooser>
     <div class="product-name">
@@ -30,13 +30,8 @@
     >
       Abschicken
     </lk-button>
-    <lk-button
-      (click)="onCancel()"
-      class="button-cancel"
-      type="button"
-      color="warn"
-    >
+    <button mat-button (click)="onCancel()" class="button-cancel" type="button">
       Abbrechen
-    </lk-button>
+    </button>
   </form>
 </div>

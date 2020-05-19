@@ -22,6 +22,7 @@ import { ImageUploadComponent } from './profile/image-upload/image-upload.compon
 import { OfferComponent } from './profile/offer/offer.component';
 import { ProductsComponent } from './profile/products/products.component';
 import { CreateProductComponent } from './profile/products/create-product/create-product.component';
+import { MatCardModule } from '@angular/material/card';
 
 const routes: Routes = [
   { path: 'trader/profile', component: ProfileComponent },
@@ -56,6 +57,7 @@ const routes: Routes = [
     MatButtonModule,
     MatTabsModule,
     MatDialogModule,
+    MatCardModule,
     ReusablesModule,
     PipesModule,
     MatPasswordStrengthModule,
