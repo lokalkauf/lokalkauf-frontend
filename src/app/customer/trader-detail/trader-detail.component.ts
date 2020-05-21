@@ -48,7 +48,6 @@ export class TraderDetailComponent implements OnInit {
     this.traderMoneyshotImages$ = this.route.params.pipe(
       flatMap(async (params) => {
         const images = await this.imageService.getAllTraderImageUrls(params.id);
-        console.log(images);
         return images.map((img) => new ImageItem({ src: img }));
       })
     );
