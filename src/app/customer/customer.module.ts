@@ -27,6 +27,9 @@ import { PipesModule } from '../pipes/pipes.modules';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { MatSliderModule } from '@angular/material/slider';
+import { GalleryModule, GALLERY_CONFIG } from '@ngx-gallery/core';
+import { LightboxModule } from '@ngx-gallery/lightbox';
+import { GallerizeModule } from '@ngx-gallery/gallerize';
 
 const routes: Routes = [
   {
@@ -76,8 +79,26 @@ const routes: Routes = [
     MatCarouselModule,
     ReactiveFormsModule,
     Nl2BrPipeModule,
+    GalleryModule,
+    LightboxModule.withConfig({
+      backdropClass: 'gallery-lightbox',
+    }),
+    GallerizeModule,
   ],
   exports: [ProductOverviewComponent, ProductItemComponent],
-  providers: [ProductService],
+  providers: [
+    ProductService,
+    {
+      provide: GALLERY_CONFIG,
+      useValue: {
+        dots: false,
+        imageSize: 'contain',
+        counter: false,
+        thumb: false,
+      },
+    },
+  ],
 })
 export class CustomerModule {}
+
+// for fullscreen of lightbox on any device use in config: panelClass: 'fullscreen',

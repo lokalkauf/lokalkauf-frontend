@@ -6,8 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TraderProfile } from '../../models/traderProfile';
 import { Trader } from '../../models/trader';
 import { ImageService } from '../../services/image.service';
-import { Lightbox } from 'ngx-lightbox';
 import { StorageService } from '../../services/storage.service';
+import { GalleryItem, ImageItem } from '@ngx-gallery/core';
 
 @Component({
   selector: 'app-trader-detail',
@@ -17,16 +17,13 @@ import { StorageService } from '../../services/storage.service';
 export class TraderDetailComponent implements OnInit {
   trader$: Observable<Omit<TraderProfile, 'id'>>;
   productAmount$: Observable<number>;
-  traderImages$: Observable<string[]>;
-
+  traderMoneyshotImages$: Observable<GalleryItem[]>;
   showMoreText = false;
-  private lightBoxItems = [];
 
   constructor(
     private db: AngularFirestore,
     private route: ActivatedRoute,
     private imageService: ImageService,
-    private lightbox: Lightbox,
     private router: Router,
     private storageService: StorageService
   ) {}
@@ -48,25 +45,12 @@ export class TraderDetailComponent implements OnInit {
       )
     );
 
-    this.traderImages$ = this.route.params.pipe(
-      flatMap(
-        async (params) => {
-          const images = await this.imageService.getAllTraderImageUrls(
-            params.id
-          );
-
-          if (images && images.length > 0) {
-            images.forEach((i) =>
-              this.lightBoxItems.push({
-                src: i,
-              })
-            );
-          }
-          return images;
-        }
-
-        // this.traderService.getTraderBusinessImageUrls(params.id)
-      )
+    this.traderMoneyshotImages$ = this.route.params.pipe(
+      flatMap(async (params) => {
+        const images = await this.imageService.getAllTraderImageUrls(params.id);
+        console.log(images);
+        return images.map((img) => new ImageItem({ src: img }));
+      })
     );
 
     this.productAmount$ = this.route.params.pipe(
@@ -104,11 +88,6 @@ export class TraderDetailComponent implements OnInit {
     } else {
       return inputText;
     }
-  }
-
-  openLightbox(index: number): void {
-    // open lightbox
-    this.lightbox.open(this.lightBoxItems, index);
   }
 
   navigateBackToOverview() {
