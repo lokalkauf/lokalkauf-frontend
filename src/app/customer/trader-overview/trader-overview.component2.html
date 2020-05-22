@@ -1,12 +1,11 @@
-<lk-container>
+<lk-container style="margin-bottom: 50rem;">
   <lk-map
     class="tradersmap"
     (locationsOnMap)="updateLocations($event)"
     [markers]="tradersForMap"
     [position]="mapPosition"
-    >test</lk-map
-  >
-  <!-- <lk-warning-box collapseTime="10000" [content]="text.rote_infobox | text">
+  ></lk-map>
+  <!--<lk-warning-box collapseTime="10000" [content]="text.rote_infobox | text">
   </lk-warning-box> -->
   <div class="traders-overview" *ngIf="(hasLocations$ | async) === true">
     <lk-page-title title="Alles aus Deiner Nähe"></lk-page-title>
@@ -23,7 +22,10 @@
       </div>
     </div>
   </div>
-  <div class="no-result-message" *ngIf="(hasLocations$ | async) === false">
+  <div
+    class="no-result-message traders-overview"
+    *ngIf="(hasLocations$ | async) === false"
+  >
     Leider wurden in Deinem Umkreis keine Händler gefunden. Unsere Plattform
     befindet sich aktuell im Aufbau, so dass wir noch nicht in allen Regionen
     Deutschlands vertreten sind.
