@@ -1,13 +1,14 @@
 <lk-container>
-  <!--<lk-map
+  <lk-map
     class="tradersmap"
     (locationsOnMap)="updateLocations($event)"
     [markers]="tradersForMap"
     [position]="mapPosition"
-  ></lk-map>-->
+    >test</lk-map
+  >
   <!-- <lk-warning-box collapseTime="10000" [content]="text.rote_infobox | text">
   </lk-warning-box> -->
-  <div class="traders-overview-row" *ngIf="(hasLocations$ | async) === true">
+  <div class="traders-overview" *ngIf="(hasLocations$ | async) === true">
     <lk-page-title title="Alles aus Deiner Nähe"></lk-page-title>
     <lk-chip-list
       [items]="storeTypes"
@@ -17,10 +18,33 @@
     </lk-chip-list>
 
     <div class="traders-overview-content">
-      <app-trader-item
-        *ngFor="let trader of traders"
-        [trader]="trader"
-      ></app-trader-item>
+      <div class="traders-overview-row" *ngFor="let trader of traders">
+        <app-trader-item [trader]="trader"></app-trader-item>
+      </div>
+      <div class="traders-overview-row" *ngFor="let trader of traders">
+        <app-trader-item [trader]="trader"></app-trader-item>
+      </div>
+      <div class="traders-overview-row" *ngFor="let trader of traders">
+        <app-trader-item [trader]="trader"></app-trader-item>
+      </div>
+      <div class="traders-overview-row" *ngFor="let trader of traders">
+        <app-trader-item [trader]="trader"></app-trader-item>
+      </div>
+      <div class="traders-overview-row" *ngFor="let trader of traders">
+        <app-trader-item [trader]="trader"></app-trader-item>
+      </div>
+      <div class="traders-overview-row" *ngFor="let trader of traders">
+        <app-trader-item [trader]="trader"></app-trader-item>
+      </div>
+      <div class="traders-overview-row" *ngFor="let trader of traders">
+        <app-trader-item [trader]="trader"></app-trader-item>
+      </div>
+      <div class="traders-overview-row" *ngFor="let trader of traders">
+        <app-trader-item [trader]="trader"></app-trader-item>
+      </div>
+      <div class="traders-overview-row" *ngFor="let trader of traders">
+        <app-trader-item [trader]="trader"></app-trader-item>
+      </div>
     </div>
   </div>
   <div class="no-result-message" *ngIf="(hasLocations$ | async) === false">

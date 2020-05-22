@@ -9,42 +9,33 @@ lk-navigation-chips {
   display: block;
 }
 
-.traders-map-row {
-  height: 50%;
-  max-height: 26rem;
-}
-
-.traders-overview-row {
-  width: 100%;
-}
-
 .tradersmap {
-  top: 0rem;
-  z-index: 0;
-  height: 50%;
-  max-height: 26rem;
+  width: 992px;
+  height: 50rem;
+  max-height: 50rem;
   position: fixed;
-
-  @media screen and (max-width: 767px) {
-    width: 100%;
-    left: 0;
-    right: 0;
-  }
-
-  @media screen and (min-width: 768px) {
-    width: 740px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+  top: 4rem;
+  z-index: -1;
 }
 
-.traders-overview-content {
+.traders-overview {
+  position: static;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  padding-top: 2rem;
   margin-bottom: 2rem;
   width: 100%;
+  background-color: white;
+  top: 50rem;
+  border-radius: 1rem;
+  margin-top: 50rem;
+}
+
+.traders-overview-row {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  margin-top: 1rem;
 }
 
 .traders-input-center {
