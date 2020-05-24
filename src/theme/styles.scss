@@ -88,7 +88,8 @@ a:visited {
   color: inherit;
 }
 
-div.cc-window.cc-banner {
+div.cc-window,
+div.cc-banner {
   font-family: inherit;
   font-size: 0.9rem;
   background-color: #fcfcfc;
@@ -125,6 +126,7 @@ div.cc-window.cc-banner {
 }
 
 div.cc-revoke {
+  display: none;
   font-family: inherit;
   background-color: #fcfcfc !important;
   font-size: 0.9rem;

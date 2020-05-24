@@ -31,14 +31,18 @@ export class AppComponent implements OnInit, OnDestroy {
       } else {
         this.analytics.logEvent('disable_analytics');
         this.analytics.setAnalyticsCollectionEnabled(false);
-        cookieService.deleteAll('/', '.lokalkauf.org', false, 'Lax');
-        cookieService.deleteAll('/', 'lokalkauf.org', false, 'Lax');
-        cookieService.deleteAll('/', '.web.app', false, 'Lax');
-        cookieService.deleteAll('/', 'web.app', false, 'Lax');
-        cookieService.deleteAll('/', 'localhost', false, 'Lax');
+        cookieService.deleteAll();
 
         const date = new Date().getDate() + 1;
-        cookieService.set('cookieconsent_status', 'deny', date);
+        cookieService.set(
+          'cookieconsent_status',
+          'deny',
+          date,
+          undefined,
+          undefined,
+          undefined,
+          'Strict'
+        );
       }
     });
   }
