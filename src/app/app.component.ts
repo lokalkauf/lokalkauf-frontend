@@ -29,17 +29,22 @@ export class AppComponent implements OnInit, OnDestroy {
         this.analytics.setAnalyticsCollectionEnabled(true);
         this.analytics.logEvent('enable_analytics');
       } else {
+        const domain = window.location.host.split(':')[0];
+        const domainDot = '.' + domain;
         this.analytics.logEvent('disable_analytics');
         this.analytics.setAnalyticsCollectionEnabled(false);
+
         cookieService.deleteAll();
+        cookieService.deleteAll('/', domain);
+        cookieService.deleteAll('/', domainDot);
 
         const date = new Date().getDate() + 1;
         cookieService.set(
           'cookieconsent_status',
           'deny',
           date,
-          undefined,
-          undefined,
+          '/',
+          domainDot,
           undefined,
           'Strict'
         );
