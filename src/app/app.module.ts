@@ -66,6 +66,7 @@ import {
   DEBUG_MODE,
   ScreenTrackingService,
   UserTrackingService,
+  APP_VERSION,
 } from '@angular/fire/analytics';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -204,6 +205,7 @@ const routes: Routes = [
       },
     },
     { provide: COLLECTION_ENABLED, useValue: false },
+    { provide: APP_VERSION, useValue: environment.version },
     ScreenTrackingService,
     UserTrackingService,
   ],
