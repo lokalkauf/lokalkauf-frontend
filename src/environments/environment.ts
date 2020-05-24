@@ -15,6 +15,7 @@ export const environment = {
     messagingSenderId: '1056653798296',
     measurementId: 'G-C5Q2KM9D7G',
   },
+  version: require('../../package.json').version,
 };
 
 /*
