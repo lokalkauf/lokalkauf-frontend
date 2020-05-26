@@ -8,6 +8,7 @@ import { TraderService } from './trader.service';
 import { GeoService } from './geo.service';
 import { User } from 'firebase/app';
 import { ImageService } from './image.service';
+import { AngularFireAnalytics } from '@angular/fire/analytics';
 
 export interface LoggedInUserState {
   uid: string;
@@ -27,8 +28,10 @@ export class UserService {
     private db: AngularFirestore,
     private traderService: TraderService,
     private imageService: ImageService,
-    private geo: GeoService
+    private geo: GeoService,
+    private analytics: AngularFireAnalytics
   ) {
+    this.analytics.logEvent('user_service');
     this.isLoggedIn$ = this.auth.user.pipe(map((user) => user != null));
     this.loggedInUserState$ = this.auth.user.pipe(
       switchMap((user) =>

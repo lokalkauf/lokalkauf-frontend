@@ -4,12 +4,15 @@ import { Paging } from '../models/paging';
 
 import * as firebase from 'firebase/app';
 import 'firebase/functions';
+import { AngularFireAnalytics } from '@angular/fire/analytics';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocationService {
-  constructor() {}
+  constructor(private analytics: AngularFireAnalytics) {
+    this.analytics.logEvent('location_service');
+  }
 
   async nearBy(
     radius: number,

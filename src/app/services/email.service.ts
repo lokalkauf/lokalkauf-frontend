@@ -8,6 +8,7 @@ import { throwError } from 'rxjs';
 import { EMail } from '../models/email';
 import * as firebase from 'firebase/app';
 import 'firebase/functions';
+import { AngularFireAnalytics } from '@angular/fire/analytics';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,12 @@ export class EMailService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private analytics: AngularFireAnalytics
+  ) {
+    this.analytics.logEvent('email_service');
+  }
 
   send(formdata: EMail, templateVars: {}) {
     // TODO update if firebase function changes

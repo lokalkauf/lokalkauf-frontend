@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { CartEntry } from '../models/cartEntry';
 import { Observable } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
+import { AngularFireAnalytics } from '@angular/fire/analytics';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,12 @@ import { filter, tap } from 'rxjs/operators';
 export class ShoppingcartService {
   private cartItems: Array<CartEntry> = null;
 
-  constructor(private db: AngularFirestore) {}
+  constructor(
+    private db: AngularFirestore,
+    private analytics: AngularFireAnalytics
+  ) {
+    this.analytics.logEvent('enable_analytics');
+  }
 
   get(): CartEntry[] {
     this.loadIfNull();
