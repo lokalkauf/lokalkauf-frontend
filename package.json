@@ -2,12 +2,9 @@
   "name": "lokalkauf-frontend",
   "version": "0.0.1",
   "scripts": {
-    "postinstall": "npm run functions:install && npm run functions:compile",
     "start": "ng serve --ssl true",
     "emulators:setup": "firebase setup:emulators:firestore",
-    "emulators": "firebase emulators:start --only=hosting,firestore,functions,ui",
-    "functions:compile": "npm run build --prefix functions",
-    "functions:install": "npm install --prefix functions",
+    "emulators": "firebase emulators:start --only=hosting,firestore",
     "build": "ng build --prod"
   },
   "private": true,
