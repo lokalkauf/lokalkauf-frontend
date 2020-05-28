@@ -8,6 +8,8 @@ import { Trader } from '../../models/trader';
 import { ImageService } from '../../services/image.service';
 import { Lightbox } from 'ngx-lightbox';
 import { StorageService } from '../../services/storage.service';
+import { ProductService } from 'src/app/services/product.service';
+import { Product } from 'src/app/models/product';
 
 @Component({
   selector: 'app-trader-detail',
@@ -18,6 +20,7 @@ export class TraderDetailComponent implements OnInit {
   trader$: Observable<Omit<TraderProfile, 'id'>>;
   productAmount$: Observable<number>;
   traderImages$: Observable<string[]>;
+  products$: Observable<Array<Product & { id: string }>>;
 
   showMoreText = false;
   private lightBoxItems = [];
@@ -28,7 +31,8 @@ export class TraderDetailComponent implements OnInit {
     private imageService: ImageService,
     private lightbox: Lightbox,
     private router: Router,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private productService: ProductService
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +50,10 @@ export class TraderDetailComponent implements OnInit {
             }))
           )
       )
+    );
+
+    this.products$ = this.route.params.pipe(
+      flatMap((params) => this.productService.getProductsOfTrader(params.id))
     );
 
     this.traderImages$ = this.route.params.pipe(
