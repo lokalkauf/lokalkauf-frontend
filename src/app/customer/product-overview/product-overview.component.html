@@ -1,5 +1,8 @@
 <div class="product-overview" *ngIf="products$ | async as products">
-  <a *ngFor="let product of products" [routerLink]="'/trader/' + traderId + '/product-detail/' + product.id">
-    <app-product-item [product]="product" ></app-product-item>
+  <a
+    *ngFor="let product of products"
+    [routerLink]="'/trader/' + traderId + '/product-detail/' + product.id"
+  >
+    <lk-product-item [product]="product"></lk-product-item>
   </a>
 </div>

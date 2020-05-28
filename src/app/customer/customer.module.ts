@@ -1,7 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductOverviewComponent } from './product-overview/product-overview.component';
-import { ProductItemComponent } from './product-item/product-item.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule, Routes } from '@angular/router';
@@ -47,7 +46,6 @@ const routes: Routes = [
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     ProductOverviewComponent,
-    ProductItemComponent,
     ProductDetailComponent,
     ProductDetailFeedbackComponent,
     BuyConfirmationComponent,
@@ -77,7 +75,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     Nl2BrPipeModule,
   ],
-  exports: [ProductOverviewComponent, ProductItemComponent],
+  exports: [ProductOverviewComponent],
   providers: [ProductService],
 })
 export class CustomerModule {}

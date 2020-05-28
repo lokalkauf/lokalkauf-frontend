@@ -1,9 +1,9 @@
-import { Component, Input, Inject } from '@angular/core';
+import { Component, Input, Inject, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { v4 as uuid } from 'uuid';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { TraderService } from 'src/app/services/trader.service';
 import { UserService } from 'src/app/services/user.service';
@@ -12,6 +12,7 @@ import { ProductService } from '../../../../services/product.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Product } from '../../../../models/product';
+import { ImageService } from 'src/app/services/image.service';
 
 export interface ProductDialogData {
   product?: Product & { id: string };
@@ -34,17 +35,29 @@ export class CreateProductComponent {
     image: new FormControl(null, Validators.required),
   });
 
+  imagePlaceholderUrl: string;
+
   constructor(
     public dialogRef: MatDialogRef<CreateProductComponent>,
     private snackBar: MatSnackBar,
     private user: UserService,
     private products: ProductService,
+    private imageService: ImageService,
     @Inject(MAT_DIALOG_DATA) public data: ProductDialogData
   ) {
     if (data.product) {
       this.productForm.get('name').setValue(data.product.name);
       this.productForm.get('price').setValue(data.product.price);
       this.productForm.get('description').setValue(data.product.description);
+      if (this.data.product.defaultImagePath) {
+        this.imageService
+          .getImage(this.data.product.defaultImagePath)
+          .then((image) => {
+            this.imagePlaceholderUrl = image.url;
+            console.log(this.imagePlaceholderUrl);
+          });
+      }
+      this.productForm.markAsPristine();
     }
   }
 
@@ -53,52 +66,84 @@ export class CreateProductComponent {
     const price = Number.parseFloat(this.productForm.get('price').value);
     const description = this.productForm.get('description').value;
 
-    if (this.data.product) {
-      await this.user.loggedInUserState$
-        .pipe(
-          first(),
-          flatMap((loggedInUserState) => {
-            return this.products.updateProduct(
-              loggedInUserState.uid,
-              this.data.product.id,
-              {
-                name,
-                price,
-                description,
-                image: '',
-              }
-            );
-          })
+    await this.user.loggedInUserState$
+      .pipe(
+        first(),
+        flatMap(async (loggedInUserState) =>
+          // if product exists update product else create product
+          this.data.product != null
+            ? this.updateProduct(loggedInUserState.uid, this.data.product.id)
+            : this.createProduct(loggedInUserState.uid)
+        ),
+        flatMap(([userId, productId]) =>
+          // if image input is dirty upload image
+          this.productForm.get('image').dirty
+            ? this.updateImage(userId, productId)
+            : of()
         )
-        .toPromise();
+      )
+      .subscribe(() => {
+        this.snackBar.open(
+          this.data.product
+            ? 'Produkt erflogreich bearbeitet!'
+            : 'Produkt erfolgreich angelegt!',
+          undefined,
+          {
+            duration: 5000,
+          }
+        );
 
-      this.snackBar.open('Produkt erflogreich bearbeitet!', undefined, {
-        duration: 5000,
+        this.dialogRef.close();
       });
-    } else {
-      await this.user.loggedInUserState$
-        .pipe(
-          first(),
-          flatMap((loggedInUserState) => {
-            return this.products.createProduct(loggedInUserState.uid, {
-              name,
-              price,
-              description,
-              image: '',
-            });
-          })
-        )
-        .toPromise();
-
-      this.snackBar.open('Produkt erflogreich angelegt!', undefined, {
-        duration: 5000,
-      });
-    }
-
-    this.dialogRef.close();
   }
 
   onCancel() {
     this.dialogRef.close();
+  }
+
+  private async createProduct(userId: string): Promise<[string, string]> {
+    const name = this.productForm.get('name').value;
+    const price = Number.parseFloat(this.productForm.get('price').value);
+    const description = this.productForm.get('description').value;
+
+    const product = await this.products.createProduct(userId, {
+      name,
+      price,
+      description,
+    });
+    return [userId, product.id];
+  }
+
+  private async updateProduct(
+    userId: string,
+    productId: string
+  ): Promise<[string, string]> {
+    const name = this.productForm.get('name').value;
+    const price = Number.parseFloat(this.productForm.get('price').value);
+    const description = this.productForm.get('description').value;
+
+    const product = await this.products.updateProduct(userId, productId, {
+      name,
+      price,
+      description,
+    });
+    return [userId, productId];
+  }
+
+  private async updateImage(userId: string, productId: string) {
+    console.log(productId);
+    const task = this.imageService.uploadProductImage(
+      userId,
+      productId,
+      this.productForm.get('image').value
+    );
+
+    const imagePath = (await task).ref.fullPath;
+
+    console.log(imagePath);
+
+    await this.products.updateProduct(userId, productId, {
+      defaultImagePath: imagePath,
+    });
   }
 }

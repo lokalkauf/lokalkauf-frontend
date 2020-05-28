@@ -1,7 +1,10 @@
 <div class="create-product">
   <h1>{{ data.product ? 'Produkt bearbeiten' : 'Neues Produkt' }}</h1>
   <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
-    <app-image-chooser formControlName="image"></app-image-chooser>
+    <app-image-chooser
+      formControlName="image"
+      [placeHolderUrl]="imagePlaceholderUrl"
+    ></app-image-chooser>
     <div class="product-name">
       <lk-input
         type="text"

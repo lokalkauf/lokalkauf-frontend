@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from 'src/app/models/product';
+import { ImageService } from 'src/app/services/image.service';
 
 @Component({
   selector: 'lk-product-item',
@@ -13,7 +14,17 @@ export class LkProductItemComponent implements OnInit {
   @Output() editClicked = new EventEmitter();
   @Output() removeClicked = new EventEmitter();
 
-  constructor() {}
+  imageUrl: string;
 
-  ngOnInit(): void {}
+  constructor(private imageService: ImageService) {}
+
+  ngOnInit(): void {
+    if (this.product.defaultImagePath) {
+      this.imageService
+        .getThumbnailUrl(this.product.defaultImagePath)
+        .then((thumbnailUrl) => {
+          this.imageUrl = thumbnailUrl;
+        });
+    }
+  }
 }

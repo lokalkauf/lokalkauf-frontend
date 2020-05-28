@@ -1,6 +1,6 @@
 export interface Product {
   name: string;
-  image: string;
+  defaultImagePath?: string;
   price: number;
   description?: string;
 }

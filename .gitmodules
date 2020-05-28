@@ -1,0 +1,3 @@
+[submodule "functions"]
+	path = functions
+	url = https://github.com/lokalkauf/lokalkauf-functions
