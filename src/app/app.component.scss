@@ -66,7 +66,7 @@ button.mat-mini-fab.avatar {
 
   .mat-list-item {
     display: inline-block;
-    margin: 20px 10px;
+    margin: 10px;
 
     @media screen and (min-width: 768px) {
       margin: 20px;
@@ -79,5 +79,24 @@ button.mat-mini-fab.avatar {
 
   .mat-list-item:hover {
     color: #00b900;
+  }
+
+  .cookie-footer {
+    display: inline-block;
+
+    vertical-align: middle;
+    cursor: pointer;
+
+    img {
+      width: 32px;
+      height: 32px;
+    }
+
+    @media screen and (max-width: 768px) {
+      img {
+        width: 24px;
+        height: 24px;
+      }
+    }
   }
 }

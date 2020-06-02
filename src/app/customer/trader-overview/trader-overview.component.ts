@@ -186,7 +186,8 @@ export class TraderOverviewComponent implements OnInit {
           // This should be refactored in one of the next iterations!
           this.locations.forEach(async (l: any) => {
             l.thumbnailURL = await await this.imageService.getThumbnailUrl(
-              l.defaultImagePath
+              l.defaultImagePath,
+              '224x224'
             );
 
             if (!l.thumbnailURL) {

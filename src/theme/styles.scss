@@ -70,6 +70,14 @@ app-root {
   filter: grayscale(100%);
 }
 
+.cc-compliance {
+  align-self: flex-end;
+
+  @media only screen and (max-width: 480px) {
+    align-self: end;
+  }
+}
+
 a {
   text-decoration: underline;
   color: inherit;
@@ -78,4 +86,48 @@ a {
 a:visited {
   text-decoration: underline;
   color: inherit;
+}
+
+div.cc-window,
+div.cc-banner {
+  font-family: inherit;
+  font-size: 0.9rem;
+  background-color: #fcfcfc;
+  border-top: solid 1px #eaeaea;
+
+  @media screen and (max-width: 767px) {
+    flex-direction: column !important;
+    align-items: unset;
+  }
+
+  a.cc-btn {
+    hyphens: none;
+    font-family: inherit;
+
+    &.cc-deny {
+      background-color: $white;
+    }
+  }
+
+  div.cookie-content-container {
+    display: flex;
+
+    img {
+      margin-top: 0.7rem;
+      margin-right: 0.8rem;
+      width: 3.8rem;
+      height: 3.8rem;
+    }
+  }
+
+  .cc-link {
+    margin-left: 4.4rem;
+  }
+}
+
+div.cc-revoke {
+  display: none;
+  font-family: inherit;
+  background-color: #fcfcfc !important;
+  font-size: 0.9rem;
 }

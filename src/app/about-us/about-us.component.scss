@@ -12,6 +12,24 @@
     text-align: justify;
   }
 
+  .supporters-container {
+    margin-bottom: 32px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    .supporters-content {
+      text-align: center;
+    }
+
+    img {
+      width: 24px;
+      height: 24px;
+      margin: 6px;
+    }
+  }
+
   .about-us-names {
     text-align: center;
     font-size: 0.8rem;

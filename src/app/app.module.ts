@@ -59,7 +59,52 @@ import { PressComponent } from './press/press.component';
 import { LightboxModule } from 'ngx-lightbox';
 import { filter } from 'rxjs/operators';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
+import {
+  AngularFireAnalyticsModule,
+  CONFIG,
+  COLLECTION_ENABLED,
+  DEBUG_MODE,
+  ScreenTrackingService,
+  UserTrackingService,
+} from '@angular/fire/analytics';
+import { CookieService } from 'ngx-cookie-service';
+
+import {
+  NgcCookieConsentModule,
+  NgcCookieConsentConfig,
+} from 'ngx-cookieconsent';
 import { DeviceDetectorModule } from 'ngx-device-detector';
+import { BrowserService } from './services/browser.service';
+
+const cookieConfig: NgcCookieConsentConfig = {
+  cookie: {
+    domain: window.location.hostname,
+  },
+  palette: {
+    popup: {
+      background: '#fff',
+    },
+    button: {
+      background: '#00b900',
+    },
+  },
+  theme: 'edgeless',
+  type: 'opt-in',
+  content: {
+    allow: 'Zulassen',
+    deny: 'Ablehnen',
+    link: 'Datenschutzerklärung',
+    href: 'https://www.info.lokalkauf.org/datenschutz',
+    message: `<div class="cookie-content-container"><img src="../../assets/cookie.svg"
+          alt="<3 Cookies" />
+          <div>Wir verwenden Cookies, um Zugriffe auf unserer Website zu analysieren. Außerdem geben wir Informationen zu
+           Deiner Verwendung unserer Website an unsere Partner für Analysen weiter. Unsere Partner führen diese Informationen
+            möglicherweise mit weiteren Daten zusammen, die Du ihnen bereitgestellt hast oder die sie im Rahmen Deiner Nutzung
+            der Dienste gesammelt haben.
+            <br />Nähere Informationen findest Du in der Datenschutzerklärung (3. und 8.5).</div></div>`,
+    policy: 'Cookie Einstellungen',
+  },
+};
 
 const routes: Routes = [
   { path: '', component: StartComponent },
@@ -135,7 +180,9 @@ const routes: Routes = [
       registrationStrategy: 'registerImmediately',
     }),
     LightboxModule,
+    NgcCookieConsentModule.forRoot(cookieConfig),
     DeviceDetectorModule.forRoot(),
+    AngularFireAnalyticsModule,
   ],
   exports: [RouterModule],
   providers: [
@@ -148,6 +195,17 @@ const routes: Routes = [
     StorageService,
     EMailService,
     ImageService,
+    BrowserService,
+    CookieService,
+    {
+      provide: CONFIG,
+      useValue: {
+        anonymize_ip: true,
+      },
+    },
+    { provide: COLLECTION_ENABLED, useValue: false },
+    ScreenTrackingService,
+    UserTrackingService,
   ],
   bootstrap: [AppComponent],
 })

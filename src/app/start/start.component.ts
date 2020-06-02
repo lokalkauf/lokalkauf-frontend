@@ -7,15 +7,10 @@ import {
 } from '@angular/core';
 import { Link } from '../models/link';
 import { Router } from '@angular/router';
-import { debounce } from 'lodash';
-
-import { GeoService } from '../services/geo.service';
 import { ScrollStrategy } from '@angular/cdk/overlay';
 import { UserService } from '../services/user.service';
 import { StorageService } from '../services/storage.service';
 import { FormControl, Validators } from '@angular/forms';
-import { SearchInputComponent } from './search-input/search-input.component';
-import { GeoAddress } from '../models/geoAddress';
 import { uiTexts } from 'src/app/services/uiTexts';
 import { TextService } from '../services/text.service';
 
@@ -60,7 +55,7 @@ export class StartComponent implements OnInit {
     public router: Router,
     public userService: UserService,
     private storageService: StorageService,
-    private textService: TextService
+    textService: TextService
   ) {
     this.disabledLosButton = true;
     this.userService.isLoggedIn$.subscribe((loggedin) => {
