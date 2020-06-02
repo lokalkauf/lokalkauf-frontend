@@ -1,0 +1,20 @@
+<div
+  class="lk-testimonial-container"
+  *ngIf="testimonialList | async as testimonials"
+>
+  <ng-container *ngFor="let elem of testimonials; let i = index">
+    <div
+      class="lk-testimonial-content"
+      id="testimonial-{{ i }}"
+      [ngClass]="{
+        'lk-testimonal-fade-in': currentElementIndex === i,
+        'lk-testimonal-fade-out': currentElementIndex !== i
+      }"
+    >
+      <div><img src="../../../assets/{{ elem.img }}" /></div>
+      <div>{{ elem.name }}</div>
+      <div>{{ elem.text }}</div>
+      <div>{{ elem.traderid }}</div>
+    </div>
+  </ng-container>
+</div>

@@ -13,6 +13,8 @@ import { StorageService } from '../services/storage.service';
 import { FormControl, Validators } from '@angular/forms';
 import { uiTexts } from 'src/app/services/uiTexts';
 import { TextService } from '../services/text.service';
+import { Testimonial } from '../reusables/lk-testimonal/lk-testimonial.component';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-start',
@@ -50,6 +52,8 @@ export class StartComponent implements OnInit {
 
   testimonials = [];
 
+  testimonialsAsync$: Observable<Testimonial[]>;
+
   @ViewChild('searchInput', { read: ElementRef }) searchInput: any;
   constructor(
     public router: Router,
@@ -74,6 +78,29 @@ export class StartComponent implements OnInit {
         testee: textService.getText(uiTexts.testimonal_2_testee),
       },
     ];
+
+    this.testimonialsAsync$ = of([
+      {
+        img: 'user-voice-casabiente.png',
+        text: 'ok',
+        name: 'ca',
+      } as Testimonial,
+      {
+        img: 'user-voice-duester.png',
+        text: 'ok2',
+        name: 'ca2',
+      } as Testimonial,
+      {
+        img: 'user-voice-casabiente.png',
+        text: 'ok3',
+        name: 'ca3',
+      } as Testimonial,
+      {
+        img: 'user-voice-duester.png',
+        text: 'ok4',
+        name: 'ca4',
+      } as Testimonial,
+    ]);
   }
 
   text = uiTexts;

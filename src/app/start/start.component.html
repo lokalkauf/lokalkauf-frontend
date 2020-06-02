@@ -54,27 +54,21 @@
 </lk-container>
 
 <div class="user-voice">
+  <lk-testimonial [testimonialList]="testimonialsAsync$"> </lk-testimonial>
+</div>
+<br />
+<br />
+<!--<div class="user-voice">
   <lk-container>
-    <mat-carousel
-      [autoplay]="true"
-      slides="testimonials.length"
-      [maintainAspectRatio]="false"
-      [interval]="5000"
-      maxWidth="100%"
-    >
-      <mat-carousel-slide
-        *ngFor="let testimonial of testimonials"
-        [hideOverlay]="true"
-      >
+    <mat-carousel [autoplay]="true" slides="testimonials.length" [maintainAspectRatio]="false" [interval]="5000"
+      maxWidth="100%">
+      <mat-carousel-slide *ngFor="let testimonial of testimonials" [hideOverlay]="true">
         <div>
-          <img
-            src="../../assets/{{ testimonial.img }}"
-            alt="{{ testimonial.testee }}"
-          />
+          <img src="../../assets/{{ testimonial.img }}" alt="{{ testimonial.testee }}" />
           <h2>»{{ testimonial.text }}«</h2>
           <strong>{{ testimonial.testee }}</strong>
         </div>
       </mat-carousel-slide>
     </mat-carousel>
   </lk-container>
-</div>
+</div>-->
