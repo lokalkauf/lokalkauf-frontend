@@ -31,12 +31,17 @@ export class AppComponent implements OnInit, OnDestroy {
       } else {
         const domain = window.location.host.split(':')[0];
         const domainDot = '.' + domain;
+        const domainDotWww = '.www' + domain;
         this.analytics.logEvent('disable_analytics');
         this.analytics.setAnalyticsCollectionEnabled(false);
 
         cookieService.deleteAll();
         cookieService.deleteAll('/', domain);
+        cookieService.deleteAll('/', domainDotWww);
         cookieService.deleteAll('/', domainDot);
+        cookieService.deleteAll('/', '.lokalkauf.org');
+        cookieService.deleteAll('/', '.www.lokalkauf.org');
+        cookieService.deleteAll('/', 'www.lokalkauf.org');
 
         const date = new Date().getDate() + 1;
         cookieService.set(
