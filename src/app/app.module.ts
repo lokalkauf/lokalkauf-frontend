@@ -58,7 +58,6 @@ import { RedirectComponent } from './redirect/redirect.component';
 import { PressComponent } from './press/press.component';
 import { LightboxModule } from 'ngx-lightbox';
 import { filter } from 'rxjs/operators';
-import { MatCarouselModule } from '@ngmodule/material-carousel';
 import {
   AngularFireAnalyticsModule,
   CONFIG,
@@ -160,7 +159,6 @@ const routes: Routes = [
     AngularFireDatabaseModule,
     CustomerModule,
     TraderModule,
-    MatCarouselModule,
     TransportModule,
     RouterModule.forRoot(routes, {
       anchorScrolling: 'enabled',

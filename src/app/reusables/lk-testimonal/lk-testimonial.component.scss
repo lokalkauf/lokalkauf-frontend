@@ -10,8 +10,31 @@
   .lk-testimonial-content {
     flex-grow: 1;
     text-align: center;
-    background-color: green;
     width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: auto;
+  }
+
+  .lk-testimonial-content-testimonial {
+    font-weight: 400;
+    font-size: 24px;
+    font-family: Bitter, 'serif';
+  }
+
+  .lk-testimonial-content-trader {
+    margin-top: 20px;
+    font-weight: bold;
+  }
+
+  .lk-testimonial-content-link {
+    margin-top: 10px;
+  }
+
+  .lk-testimonial-content-expander {
+    position: relative;
+    visibility: hidden;
   }
 
   .lk-testimonal-fade-in {

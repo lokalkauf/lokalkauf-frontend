@@ -12,9 +12,26 @@
       }"
     >
       <div><img src="../../../assets/{{ elem.img }}" /></div>
-      <div>{{ elem.name }}</div>
-      <div>{{ elem.text }}</div>
-      <div>{{ elem.traderid }}</div>
+      <div class="lk-testimonial-content-testimonial">
+        »<span [innerHtml]="elem.text"></span>«
+      </div>
+      <div class="lk-testimonial-content-trader" [innerHtml]="elem.name"></div>
+      <div class="lk-testimonial-content-link">
+        <a [routerLink]="elem.traderlink">Geschäft besuchen</a>
+      </div>
     </div>
   </ng-container>
+  <div class="lk-testimonial-content-expander">
+    <div><img src="../../../assets/{{ expander.img }}" /></div>
+    <div class="lk-testimonial-content-testimonial">
+      »<span [innerHtml]="expander.text"></span>«
+    </div>
+    <div
+      class="lk-testimonial-content-trader"
+      [innerHtml]="expander.name"
+    ></div>
+    <div class="lk-testimonial-content-link">
+      <a [routerLink]="expander.traderlink">Geschäft besuchen</a>
+    </div>
+  </div>
 </div>

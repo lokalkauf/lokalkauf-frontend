@@ -5,7 +5,7 @@ export interface Testimonial {
   img: string;
   text: string;
   name: string;
-  traderid: string;
+  traderlink: string;
 }
 
 export interface TestimonialConfig {
@@ -26,12 +26,14 @@ export class LkTestimonialComponent implements OnInit {
 
   currentElementIndex = -1;
   lstSync: Testimonial[];
+  expander: Testimonial;
+
   ngOnInit() {
     this.testimonialList.subscribe((testis) => {
       this.lstSync = testis;
       const lsLength = testis.length - 1;
-
       this.runCarousel(this.lstSync, lsLength);
+
       interval(this.config.speed).subscribe((x) => {
         this.runCarousel(this.lstSync, lsLength);
       });
@@ -39,11 +41,12 @@ export class LkTestimonialComponent implements OnInit {
   }
 
   private runCarousel(testis: Testimonial[], lsLength: number) {
-    console.log(this.currentElementIndex, lsLength);
+    // console.log(this.currentElementIndex, lsLength);
     if (this.currentElementIndex === lsLength) {
       this.currentElementIndex = 0;
     } else {
       this.currentElementIndex++;
     }
+    this.expander = testis[this.currentElementIndex];
   }
 }

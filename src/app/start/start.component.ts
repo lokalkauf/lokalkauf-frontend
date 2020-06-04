@@ -66,39 +66,18 @@ export class StartComponent implements OnInit {
       this.isLoggedIn = loggedin;
     });
 
-    this.testimonials = [
-      {
-        img: 'user-voice-casabiente.png',
-        text: textService.getText(uiTexts.testimonal_1_testimonial),
-        testee: textService.getText(uiTexts.testimonal_1_testee),
-      },
-      {
-        img: 'user-voice-duester.png',
-        text: textService.getText(uiTexts.testimonal_2_testimonial),
-        testee: textService.getText(uiTexts.testimonal_2_testee),
-      },
-    ];
-
     this.testimonialsAsync$ = of([
       {
         img: 'user-voice-casabiente.png',
-        text: 'ok',
-        name: 'ca',
+        text: textService.getText(uiTexts.testimonal_1_testimonial),
+        name: textService.getText(uiTexts.testimonal_1_testee),
+        traderlink: 'trader-detail/GgjZJpNDNEdmFFH0PGoxH4RLxRJ3',
       } as Testimonial,
       {
         img: 'user-voice-duester.png',
-        text: 'ok2',
-        name: 'ca2',
-      } as Testimonial,
-      {
-        img: 'user-voice-casabiente.png',
-        text: 'ok3',
-        name: 'ca3',
-      } as Testimonial,
-      {
-        img: 'user-voice-duester.png',
-        text: 'ok4',
-        name: 'ca4',
+        text: textService.getText(uiTexts.testimonal_2_testimonial),
+        name: textService.getText(uiTexts.testimonal_2_testee),
+        traderlink: 'trader-detail/GgjZJpNDNEdmFFH0PGoxH4RLxRJ3',
       } as Testimonial,
     ]);
   }
