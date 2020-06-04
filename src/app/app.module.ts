@@ -56,7 +56,6 @@ import { MuiService } from './services/mui.service';
 import { PipesModule } from './pipes/pipes.modules';
 import { RedirectComponent } from './redirect/redirect.component';
 import { PressComponent } from './press/press.component';
-import { LightboxModule } from 'ngx-lightbox';
 import { filter } from 'rxjs/operators';
 import {
   AngularFireAnalyticsModule,
@@ -175,7 +174,6 @@ const routes: Routes = [
       enabled: environment.production,
       registrationStrategy: 'registerImmediately',
     }),
-    LightboxModule,
     NgcCookieConsentModule.forRoot(cookieConfig),
     DeviceDetectorModule.forRoot(),
     AngularFireAnalyticsModule,
