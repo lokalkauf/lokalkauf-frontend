@@ -62,7 +62,7 @@
 
   <app-trader-contact [trader]="trader"></app-trader-contact>
   <ng-container *ngIf="(productAmount$ | async) > 0">
-    <h3>Unsere Produkte</h3>
+    <h3 class="products-headline">Unsere Produkte</h3>
 
     <div class="product-list" *ngIf="products$ | async as products">
       <lk-product-item
