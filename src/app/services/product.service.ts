@@ -10,45 +10,40 @@ import { Product } from '../models/product';
 export class ProductService {
   constructor(private db: AngularFirestore) {}
 
-  public getProduct(
-    traderId: string,
-    productId: string
-  ): Observable<Product & { id: string }> {
+  public getProduct(traderId: string, productId: string): Observable<Product> {
     return this.db
-      .collection<Product>(`Traders/${traderId}/Products`)
-      .doc<Product>(productId)
+      .collection<Omit<Product, 'id'>>(`Traders/${traderId}/Products`)
+      .doc<Omit<Product, 'id'>>(productId)
       .valueChanges()
       .pipe(map((x) => ({ ...x, id: productId })));
   }
 
-  public createProduct(traderId: string, product: Product) {
+  public createProduct(traderId: string, product: Omit<Product, 'id'>) {
     return this.db
-      .collection<Product>(`Traders/${traderId}/Products`)
+      .collection<Omit<Product, 'id'>>(`Traders/${traderId}/Products`)
       .add(product);
   }
 
   public updateProduct(
     traderId: string,
     productId: string,
-    product: Partial<Product>
+    product: Partial<Omit<Product, 'id'>>
   ) {
     return this.db
-      .collection<Product>(`Traders/${traderId}/Products`)
-      .doc<Product>(productId)
+      .collection<Omit<Product, 'id'>>(`Traders/${traderId}/Products`)
+      .doc<Omit<Product, 'id'>>(productId)
       .update(product);
   }
 
-  public getProductsOfTrader(
-    traderId: string
-  ): Observable<Array<Product & { id: string }>> {
+  public getProductsOfTrader(traderId: string): Observable<Array<Product>> {
     return this.db
-      .collection<Product>(`Traders/${traderId}/Products`)
+      .collection<Omit<Product, 'id'>>(`Traders/${traderId}/Products`)
       .valueChanges({ idField: 'id' });
   }
 
   public removeProduct(traderId: string, productId: string) {
     return this.db
-      .collection<Product>(`Traders/${traderId}/Products`)
+      .collection<Omit<Product, 'id'>>(`Traders/${traderId}/Products`)
       .doc(productId)
       .delete();
   }

@@ -15,7 +15,7 @@ import { Product } from '../../../../models/product';
 import { ImageService } from 'src/app/services/image.service';
 
 export interface ProductDialogData {
-  product?: Product & { id: string };
+  product?: Product;
 }
 
 @Component({

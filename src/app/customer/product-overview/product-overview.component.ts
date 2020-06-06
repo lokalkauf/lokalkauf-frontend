@@ -11,12 +11,12 @@ import { Product } from '../../models/product';
 export class ProductOverviewComponent implements OnInit {
   @Input() traderId: string;
 
-  products$: Observable<Array<Product & { id: string }>>;
+  products$: Observable<Array<Product>>;
   constructor(private db: AngularFirestore) {}
 
   ngOnInit() {
     this.products$ = this.db
-      .collection<Product>(`Traders/${this.traderId}/Products`)
+      .collection<Omit<Product, 'id'>>(`Traders/${this.traderId}/Products`)
       .valueChanges({ idField: 'id' });
   }
 }

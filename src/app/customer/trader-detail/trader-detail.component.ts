@@ -20,7 +20,7 @@ export class TraderDetailComponent implements OnInit {
   trader$: Observable<Omit<TraderProfile, 'id'>>;
   productAmount$: Observable<number>;
   traderImages$: Observable<string[]>;
-  products$: Observable<Array<Product & { id: string }>>;
+  products$: Observable<Array<Product>>;
 
   showMoreText = false;
   private lightBoxItems = [];

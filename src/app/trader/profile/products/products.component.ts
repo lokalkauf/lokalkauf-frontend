@@ -12,7 +12,7 @@ import { UserService } from '../../../services/user.service';
   styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit {
-  products$: Observable<Array<Product & { id: string }>>;
+  products$: Observable<Array<Product>>;
 
   constructor(
     public dialog: MatDialog,
@@ -35,7 +35,7 @@ export class ProductsComponent implements OnInit {
     );
   }
 
-  editProduct(product: Product & { id: string }) {
+  editProduct(product: Product) {
     this.dialog.open(CreateProductComponent, {
       disableClose: true,
       data: { product },

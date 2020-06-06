@@ -14,7 +14,7 @@ import { ProductDetailFeedbackComponent } from '../product-detail-feedback/produ
   styleUrls: ['./product-detail.component.scss'],
 })
 export class ProductDetailComponent implements OnInit {
-  product$: Observable<Product & { id: string }>;
+  product$: Observable<Product>;
   traderId: string;
 
   constructor(
