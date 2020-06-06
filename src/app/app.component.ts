@@ -29,9 +29,30 @@ export class AppComponent implements OnInit, OnDestroy {
         this.analytics.setAnalyticsCollectionEnabled(true);
         this.analytics.logEvent('enable_analytics');
       } else {
-        this.cookieService.delete('GAEnabled');
+        const domain = window.location.host.split(':')[0];
+        const domainDot = '.' + domain;
+        const domainDotWww = '.www' + domain;
         this.analytics.logEvent('disable_analytics');
         this.analytics.setAnalyticsCollectionEnabled(false);
+
+        cookieService.deleteAll();
+        cookieService.deleteAll('/', domain);
+        cookieService.deleteAll('/', domainDotWww);
+        cookieService.deleteAll('/', domainDot);
+        cookieService.deleteAll('/', '.lokalkauf.org');
+        cookieService.deleteAll('/', '.www.lokalkauf.org');
+        cookieService.deleteAll('/', 'www.lokalkauf.org');
+
+        const date = new Date().getDate() + 1;
+        cookieService.set(
+          'cookieconsent_status',
+          'deny',
+          date,
+          '/',
+          domainDot,
+          undefined,
+          'Strict'
+        );
       }
     });
   }
