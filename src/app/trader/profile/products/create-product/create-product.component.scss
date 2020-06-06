@@ -74,4 +74,10 @@
       justify-self: start;
     }
   }
+
+  .move-right {
+    margin-left: 1rem;
+    align-self: flex-end;
+    margin-bottom: 1rem;
+  }
 }

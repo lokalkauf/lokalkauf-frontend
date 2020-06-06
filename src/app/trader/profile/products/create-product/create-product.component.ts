@@ -13,6 +13,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Product } from '../../../../models/product';
 import { ImageService } from 'src/app/services/image.service';
+import { BrowserService } from 'src/app/services/browser.service';
 
 export interface ProductDialogData {
   product?: Product;
@@ -36,6 +37,9 @@ export class CreateProductComponent {
   });
 
   imagePlaceholderUrl: string;
+  imageUploadState?: Observable<number>;
+  isBrowserSupported: boolean;
+  browserName: string;
 
   constructor(
     public dialogRef: MatDialogRef<CreateProductComponent>,
@@ -43,6 +47,7 @@ export class CreateProductComponent {
     private user: UserService,
     private products: ProductService,
     private imageService: ImageService,
+    private browserService: BrowserService,
     @Inject(MAT_DIALOG_DATA) public data: ProductDialogData
   ) {
     if (data.product) {
@@ -59,6 +64,8 @@ export class CreateProductComponent {
       }
       this.productForm.markAsPristine();
     }
+    this.isBrowserSupported = browserService.isBrowserSupported();
+    this.browserName = browserService.getCurrentBrowser();
   }
 
   async onSubmit() {
@@ -83,7 +90,7 @@ export class CreateProductComponent {
       .subscribe(() => {
         this.snackBar.open(
           this.data.product
-            ? 'Produkt erflogreich bearbeitet!'
+            ? 'Produkt erfolgreich bearbeitet!'
             : 'Produkt erfolgreich angelegt!',
           undefined,
           {
@@ -121,10 +128,9 @@ export class CreateProductComponent {
     productId: string
   ): Promise<[string, string]> {
     const name = this.productForm.get('name').value;
+    const priceString = '' + this.productForm.get('price').value;
     const price = Number.parseFloat(
-      this.productForm.get('price').value
-        ? (this.productForm.get('price').value as string).replace(',', '.')
-        : ''
+      priceString ? priceString.replace(',', '.') : ''
     );
     const description = this.productForm.get('description').value;
 
@@ -142,7 +148,7 @@ export class CreateProductComponent {
       productId,
       this.productForm.get('image').value
     );
-
+    this.imageUploadState = task.percentageChanges();
     const imagePath = (await task).ref.fullPath;
 
     console.log(imagePath);
@@ -150,5 +156,6 @@ export class CreateProductComponent {
     await this.products.updateProduct(userId, productId, {
       defaultImagePath: imagePath,
     });
+    this.imageUploadState = null;
   }
 }
