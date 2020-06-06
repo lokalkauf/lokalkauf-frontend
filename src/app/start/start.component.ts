@@ -71,13 +71,13 @@ export class StartComponent implements OnInit {
         img: 'user-voice-casabiente.png',
         text: textService.getText(uiTexts.testimonal_1_testimonial),
         name: textService.getText(uiTexts.testimonal_1_testee),
-        traderlink: 'trader-detail/GgjZJpNDNEdmFFH0PGoxH4RLxRJ3',
+        traderlink: 'trader-detail/ysWSjEfKtSYa18Aij2KoJKKCqUs1',
       } as Testimonial,
       {
         img: 'user-voice-duester.png',
         text: textService.getText(uiTexts.testimonal_2_testimonial),
         name: textService.getText(uiTexts.testimonal_2_testee),
-        traderlink: 'trader-detail/GgjZJpNDNEdmFFH0PGoxH4RLxRJ3',
+        traderlink: 'trader-detail/C6nOYXF5iCc1ZvVa6yBBf0jtTdk1',
       } as Testimonial,
     ]);
   }

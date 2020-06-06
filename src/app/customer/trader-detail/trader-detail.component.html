@@ -1,72 +1,90 @@
 <lk-container *ngIf="trader$ | async as trader">
-  <div class="floating-backbutton margin-boost">
-    <a
-      class="navigate-back"
-      (click)="navigateBackToOverview()"
-      alt="zurück zur Übersicht"
-    >
-      <mat-icon class="inlinesymbol vertical-align-middle"
-        >chevron_left</mat-icon
+  <lk-container *ngIf="(traderLoadingStateSuccessful$ | async) === false">
+    <div class="trader-title-wrapper">
+      <br />
+      <br />
+      <lk-page-title
+        [title]="'Das Geschäft konnte leider nicht gefunden werden.'"
+      ></lk-page-title>
+      <br />
+      <br />
+      <div class="trader-description text">
+        Suche in <a [routerLink]="['/']">Deiner Stadt</a> nach tollen
+        Alternativen.
+      </div>
+    </div>
+  </lk-container>
+  <lk-container *ngIf="traderLoadingStateSuccessful$ | async">
+    <div class="floating-backbutton margin-boost">
+      <a
+        class="navigate-back"
+        (click)="navigateBackToOverview()"
+        alt="zurück zur Übersicht"
       >
-      <span class="symboltext">Zurück zur Händlersuche</span>
-    </a>
-  </div>
-
-  <div class="trader-title-wrapper">
-    <lk-page-title [title]="trader.businessname"></lk-page-title>
-  </div>
-
-  <div
-    class="trader-description text"
-    *ngIf="trader.description && !showMoreText"
-  >
-    <span [innerHTML]="shortenText(trader.description) | nl2br: true"></span>...
-    <div
-      *ngIf="trader.description.length > 200"
-      (click)="showMoreText = true"
-      class="toggleDetails"
-    >
-      mehr lesen
+        <mat-icon class="inlinesymbol vertical-align-middle"
+          >chevron_left</mat-icon
+        >
+        <span class="symboltext">Zurück zur Händlersuche</span>
+      </a>
     </div>
-  </div>
-  <div
-    class="trader-description text"
-    *ngIf="trader.description && showMoreText"
-  >
-    <span [innerHTML]="trader.description | nl2br: true"></span>
-    <div
-      *ngIf="trader.description.length > 200"
-      (click)="showMoreText = false"
-      class="toggleDetails"
-    >
-      weniger
+
+    <div class="trader-title-wrapper">
+      <lk-page-title [title]="trader.businessname"></lk-page-title>
     </div>
-  </div>
-  <ng-container *ngIf="traderMoneyshotImages$ | async as images">
-    <ng-container *ngIf="images.length > 0">
-      <gallery gallerize class="gallery-box" [items]="images"> </gallery>
+
+    <div
+      class="trader-description text"
+      *ngIf="trader.description && !showMoreText"
+    >
+      <span [innerHTML]="shortenText(trader.description) | nl2br: true"></span
+      >...
+      <div
+        *ngIf="trader.description.length > 200"
+        (click)="showMoreText = true"
+        class="toggleDetails"
+      >
+        mehr lesen
+      </div>
+    </div>
+    <div
+      class="trader-description text"
+      *ngIf="trader.description && showMoreText"
+    >
+      <span [innerHTML]="trader.description | nl2br: true"></span>
+      <div
+        *ngIf="trader.description.length > 200"
+        (click)="showMoreText = false"
+        class="toggleDetails"
+      >
+        weniger
+      </div>
+    </div>
+    <ng-container *ngIf="traderMoneyshotImages$ | async as images">
+      <ng-container *ngIf="images.length > 0">
+        <gallery gallerize class="gallery-box" [items]="images"> </gallery>
+      </ng-container>
     </ng-container>
-  </ng-container>
-  <app-trader-contact [trader]="trader"></app-trader-contact>
-  <p class="trader-product-amount" *ngIf="(productAmount$ | async) > 0">
-    <span
-      class="product-amount"
-      *ngIf="productAmount$ | async as productAmount"
-      >{{ productAmount }}</span
-    >
-    Produkte
-  </p>
-
-  <div class="floating-backbutton margin-boost">
-    <a
-      class="navigate-back"
-      (click)="navigateBackToOverview()"
-      alt="zurück zur Übersicht"
-    >
-      <mat-icon class="inlinesymbol vertical-align-middle"
-        >chevron_left</mat-icon
+    <app-trader-contact [trader]="trader"></app-trader-contact>
+    <p class="trader-product-amount" *ngIf="(productAmount$ | async) > 0">
+      <span
+        class="product-amount"
+        *ngIf="productAmount$ | async as productAmount"
+        >{{ productAmount }}</span
       >
-      <span class="symboltext">Zurück zur Händlersuche</span>
-    </a>
-  </div>
+      Produkte
+    </p>
+
+    <div class="floating-backbutton margin-boost">
+      <a
+        class="navigate-back"
+        (click)="navigateBackToOverview()"
+        alt="zurück zur Übersicht"
+      >
+        <mat-icon class="inlinesymbol vertical-align-middle"
+          >chevron_left</mat-icon
+        >
+        <span class="symboltext">Zurück zur Händlersuche</span>
+      </a>
+    </div>
+  </lk-container>
 </lk-container>

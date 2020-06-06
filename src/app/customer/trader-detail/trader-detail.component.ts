@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { flatMap, map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { flatMap, map, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TraderProfile } from '../../models/traderProfile';
 import { Trader } from '../../models/trader';
@@ -20,6 +20,8 @@ export class TraderDetailComponent implements OnInit {
   traderMoneyshotImages$: Observable<GalleryItem[]>;
   showMoreText = false;
 
+  traderLoadingStateSuccessful$: Observable<boolean>;
+
   constructor(
     private db: AngularFirestore,
     private route: ActivatedRoute,
@@ -36,11 +38,19 @@ export class TraderDetailComponent implements OnInit {
           .doc<Omit<TraderProfile, 'id'>>(params.id)
           .valueChanges()
           .pipe(
-            map((x) => ({
-              ...x,
-              homepage: this.getCorrectUrl(x.homepage),
-              id: params.id,
-            }))
+            tap(
+              (trader) => (this.traderLoadingStateSuccessful$ = of(!!trader))
+            ),
+            map((trader) =>
+              trader
+                ? {
+                    ...trader,
+                    homepage: this.getCorrectUrl(trader.homepage),
+                    id: params.id,
+                    loadSuccess: true,
+                  }
+                : ({} as TraderProfile)
+            )
           )
       )
     );

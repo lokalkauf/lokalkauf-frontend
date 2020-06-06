@@ -11,7 +11,9 @@
         'lk-testimonal-fade-out': currentElementIndex !== i
       }"
     >
-      <div><img src="../../../assets/{{ elem.img }}" /></div>
+      <div class="lk-testimonial-content-trader-image">
+        <img src="../../../assets/{{ elem.img }}" />
+      </div>
       <div class="lk-testimonial-content-testimonial">
         »<span [innerHtml]="elem.text"></span>«
       </div>
@@ -22,7 +24,9 @@
     </div>
   </ng-container>
   <div class="lk-testimonial-content-expander">
-    <div><img src="../../../assets/{{ expander.img }}" /></div>
+    <div class="lk-testimonial-content-trader-image">
+      <img src=" ../../../assets/{{ expander.img }}" />
+    </div>
     <div class="lk-testimonial-content-testimonial">
       »<span [innerHtml]="expander.text"></span>«
     </div>
