@@ -18,6 +18,7 @@ import { UserService } from '../../services/user.service';
 import { LocationService } from '../../services/location.service';
 import { ImageService } from 'src/app/services/image.service';
 import { SpinnerService } from 'src/app/services/spinner.service';
+import { AngularFireAnalytics } from '@angular/fire/analytics';
 
 @Component({
   selector: 'app-trader-overview',
@@ -109,12 +110,16 @@ export class TraderOverviewComponent implements OnInit {
     private locationService: LocationService,
     private imageService: ImageService,
     private spinnerService: SpinnerService,
-    public device: DeviceDetectorService
+    public device: DeviceDetectorService,
+    private analytics: AngularFireAnalytics
   ) {
     this.storeTypes = of(this.STORE_TYPES);
     const currentLocation = this.storageService.loadLocation();
     if (currentLocation && currentLocation.city) {
       this.currentLocation = currentLocation.city;
+      this.analytics.logEvent('searched_location', {
+        city: this.currentLocation,
+      });
     }
   }
 
@@ -226,6 +231,10 @@ export class TraderOverviewComponent implements OnInit {
 
   setRange(val: number) {
     this.rangeChanging$.next(val);
+    this.analytics.logEvent('searched_location', {
+      city: this.currentLocation,
+      range: val,
+    });
   }
 
   setStoreType(selEvent: LkSelectOptions) {

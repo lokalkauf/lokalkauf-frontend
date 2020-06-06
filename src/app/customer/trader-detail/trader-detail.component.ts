@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { flatMap, map } from 'rxjs/operators';
+import { flatMap, map, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TraderProfile } from '../../models/traderProfile';
 import { Trader } from '../../models/trader';
 import { ImageService } from '../../services/image.service';
 import { Lightbox } from 'ngx-lightbox';
 import { StorageService } from '../../services/storage.service';
+import { AngularFireAnalytics } from '@angular/fire/analytics';
 
 @Component({
   selector: 'app-trader-detail',
@@ -28,7 +29,8 @@ export class TraderDetailComponent implements OnInit {
     private imageService: ImageService,
     private lightbox: Lightbox,
     private router: Router,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private analytics: AngularFireAnalytics,
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +41,9 @@ export class TraderDetailComponent implements OnInit {
           .doc<Omit<TraderProfile, 'id'>>(params.id)
           .valueChanges()
           .pipe(
+            tap((x) => {
+              this.analytics.logEvent('trader_detail', { trader: x.businessname, city: x.city, distance: x.currentDistance });
+            }),
             map((x) => ({
               ...x,
               homepage: this.getCorrectUrl(x.homepage),

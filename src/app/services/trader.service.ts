@@ -5,19 +5,12 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TraderProfile, TraderProfileStatus } from '../models/traderProfile';
 import { GeoService } from './geo.service';
-import { AngularFireAnalytics } from '@angular/fire/analytics';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TraderService {
-  constructor(
-    private db: AngularFirestore,
-    private geo: GeoService,
-    private analytics: AngularFireAnalytics
-  ) {
-    this.analytics.logEvent('trader_service');
-  }
+  constructor(private db: AngularFirestore, private geo: GeoService) {}
 
   async createTraderProfile(id: string, trader: TraderProfile) {
     await this.db.collection('Traders').doc(id).set(trader);

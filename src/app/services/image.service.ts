@@ -2,18 +2,12 @@ import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { v4 as uuid } from 'uuid';
 import { ImageSource } from '../models/imageSource';
-import { AngularFireAnalytics } from '@angular/fire/analytics';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ImageService {
-  constructor(
-    private storage: AngularFireStorage,
-    private analytics: AngularFireAnalytics
-  ) {
-    this.analytics.logEvent('image_service');
-  }
+  constructor(private storage: AngularFireStorage) {}
 
   async getThumbnailUrl(imagePath, size = '224x224'): Promise<string> {
     if (!imagePath) {

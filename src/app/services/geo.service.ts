@@ -34,7 +34,6 @@ export class GeoService {
     this.geoFire = new GeoFirestore(db.firestore);
     this.locations = this.geoFire.collection('locations');
     this.geoPostalcodes = this.geoFire.collection('GeoData');
-    this.analytics.logEvent('geo_service');
   }
 
   createLocation(traderId: string, coords: Array<number>) {

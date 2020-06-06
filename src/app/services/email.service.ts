@@ -23,9 +23,7 @@ export class EMailService {
   constructor(
     private http: HttpClient,
     private analytics: AngularFireAnalytics
-  ) {
-    this.analytics.logEvent('email_service');
-  }
+  ) {}
 
   send(formdata: EMail, templateVars: {}) {
     // TODO update if firebase function changes
@@ -43,6 +41,7 @@ export class EMailService {
     try {
       const sendMailFunction = firebase.functions().httpsCallable(`sendGrid`);
       sendMailFunction.call('Send Mail', data);
+      this.analytics.logEvent('email_service_sent');
     } catch (e) {
       console.error('Mail could not be send: ' + e);
     }
