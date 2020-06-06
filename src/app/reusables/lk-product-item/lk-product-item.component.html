@@ -10,7 +10,7 @@
   <mat-card-header>
     <mat-card-title>{{ product.name }}</mat-card-title>
     <mat-card-subtitle>
-      <div class="text">{{ product.price }} €</div>
+      <div class="text">{{ product.price | number: '1.2-2' }} €</div>
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-actions *ngIf="enableInteraction">

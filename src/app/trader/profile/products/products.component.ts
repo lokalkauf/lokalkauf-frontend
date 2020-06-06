@@ -29,7 +29,7 @@ export class ProductsComponent implements OnInit {
   }
 
   removeProduct(productId: string) {
-    this.productService.removeProuct(
+    this.productService.removeProduct(
       this.userService.getAuthenticatedUser().uid,
       productId
     );

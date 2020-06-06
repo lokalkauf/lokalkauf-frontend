@@ -46,7 +46,7 @@ export class ProductService {
       .valueChanges({ idField: 'id' });
   }
 
-  public removeProuct(traderId: string, productId: string) {
+  public removeProduct(traderId: string, productId: string) {
     return this.db
       .collection<Product>(`Traders/${traderId}/Products`)
       .doc(productId)
