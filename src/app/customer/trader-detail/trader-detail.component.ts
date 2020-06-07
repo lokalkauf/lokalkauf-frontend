@@ -7,6 +7,9 @@ import { TraderProfile } from '../../models/traderProfile';
 import { Trader } from '../../models/trader';
 import { ImageService } from '../../services/image.service';
 import { StorageService } from '../../services/storage.service';
+
+import { AngularFireAnalytics } from '@angular/fire/analytics';
+
 import { GalleryItem, ImageItem } from '@ngx-gallery/core';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/models/product';
@@ -35,6 +38,7 @@ export class TraderDetailComponent implements OnInit {
     private imageService: ImageService,
     private router: Router,
     private storageService: StorageService,
+    private analytics: AngularFireAnalytics,
     private productService: ProductService
   ) {}
 
@@ -46,9 +50,20 @@ export class TraderDetailComponent implements OnInit {
           .doc<Omit<TraderProfile, 'id'>>(params.id)
           .valueChanges()
           .pipe(
-            tap(
-              (trader) => (this.traderLoadingStateSuccessful$ = of(!!trader))
-            ),
+            tap((trader) => {
+              this.traderLoadingStateSuccessful$ = of(!!trader);
+              if (trader) {
+                this.analytics.logEvent('trader_detail', {
+                  trader: trader.businessname,
+                  city: trader.city,
+                  distance: trader.currentDistance,
+                });
+              } else {
+                this.analytics.logEvent('trader_detail', {
+                  tader: 'unknown trader was loaded',
+                });
+              }
+            }),
             map((trader) =>
               trader
                 ? {

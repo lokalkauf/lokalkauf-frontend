@@ -12,6 +12,7 @@ import { GeoCollectionReference, GeoFirestore, GeoQuery } from 'geofirestore';
 import { firestore } from 'firebase/app';
 import { GeoAddress } from '../models/geoAddress';
 import { StorageService } from './storage.service';
+import { AngularFireAnalytics } from '@angular/fire/analytics';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,8 @@ export class GeoService {
   constructor(
     private db: AngularFirestore,
     private http: HttpClient,
-    private storage: StorageService
+    private storage: StorageService,
+    private analytics: AngularFireAnalytics
   ) {
     this.geoFire = new GeoFirestore(db.firestore);
     this.locations = this.geoFire.collection('locations');
