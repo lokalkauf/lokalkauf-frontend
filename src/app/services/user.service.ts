@@ -8,6 +8,7 @@ import { TraderService } from './trader.service';
 import { GeoService } from './geo.service';
 import { User } from 'firebase/app';
 import { ImageService } from './image.service';
+import { ProductService } from './product.service';
 
 export interface LoggedInUserState {
   uid: string;
@@ -27,7 +28,8 @@ export class UserService {
     private db: AngularFirestore,
     private traderService: TraderService,
     private imageService: ImageService,
-    private geo: GeoService
+    private geo: GeoService,
+    private productService: ProductService
   ) {
     this.isLoggedIn$ = this.auth.user.pipe(map((user) => user != null));
     this.loggedInUserState$ = this.auth.user.pipe(
@@ -160,6 +162,12 @@ export class UserService {
     return this.imageService.uploadTraderImage(
       this.auth.auth.currentUser.uid,
       file
+    );
+  }
+
+  getProducts() {
+    return this.productService.getProductsOfTrader(
+      this.auth.auth.currentUser.uid
     );
   }
 }

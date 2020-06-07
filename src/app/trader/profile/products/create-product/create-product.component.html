@@ -1,0 +1,54 @@
+<div class="create-product">
+  <h1>{{ data.product ? 'Produkt bearbeiten' : 'Neues Produkt' }}</h1>
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <ng-container *ngIf="isBrowserSupported">
+      <app-image-chooser
+        formControlName="image"
+        [placeHolderUrl]="imagePlaceholderUrl"
+      ></app-image-chooser>
+      <span class="move-right" *ngIf="this.imageUploadState | async">
+        Übertragung:
+        {{ this.imageUploadState | async | number: '1.2-2' }}
+        %</span
+      >
+    </ng-container>
+    <ng-container *ngIf="!isBrowserSupported">
+      Dein Browser scheint etwas in die Jahre gekommen zu sein und unser Service
+      benutzt modernste Technologien.
+      <br />
+      <br />Deshalb aktualisiere bitte Deine Version von {{ browserName }} bevor
+      Du Deine Bilder für Dein Produkt hochladen kannst.
+    </ng-container>
+    <div class="product-name">
+      <lk-input
+        type="text"
+        formControlName="name"
+        placeholder="Produktname*"
+      ></lk-input>
+    </div>
+    <div class="product-price">
+      <lk-input
+        type="text"
+        formControlName="price"
+        placeholder="Preis"
+      ></lk-input>
+    </div>
+    <div class="product-description">
+      <lk-input
+        type="text"
+        formControlName="description"
+        placeholder="Beschreibung"
+      ></lk-input>
+    </div>
+    <lk-button
+      class="button-submit"
+      type="submit"
+      [disabled]="!productForm.valid"
+    >
+      Abschicken
+    </lk-button>
+    <button mat-button (click)="onCancel()" class="button-cancel" type="button">
+      Abbrechen
+    </button>
+  </form>
+</div>

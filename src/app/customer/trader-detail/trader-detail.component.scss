@@ -100,6 +100,40 @@ lk-container {
   }
 }
 
+.product-list {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  width: 100%;
+
+  @media screen and (min-width: 1040px) {
+    align-items: stretch;
+    flex-flow: row wrap;
+    justify-content: space-between;
+
+    &::after {
+      content: '';
+      flex-basis: auto;
+      flex: auto;
+    }
+  }
+}
+
+lk-product-item {
+  margin-bottom: 16px;
+
+  @media screen and (min-width: 1040px) {
+    margin-bottom: 32px;
+    margin-right: 24px;
+  }
+}
+
 .navigate-back {
   text-decoration: none;
+}
+
+h3.products-headline {
+  margin-top: 46px;
 }
