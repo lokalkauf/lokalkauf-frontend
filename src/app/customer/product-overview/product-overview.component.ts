@@ -11,7 +11,7 @@ import { Product } from '../../models/product';
 export class ProductOverviewComponent implements OnInit {
   @Input() traderId: string;
 
-  products$: Observable<Product[]>;
+  products$: Observable<Array<Product>>;
   constructor(private db: AngularFirestore) {}
 
   ngOnInit() {

@@ -1,0 +1,16 @@
+<ng-container *ngIf="products$ | async as products">
+  <h1>Meine Produkte</h1>
+  <div class="product-amount">{{ products.length }} Produkte</div>
+  <lk-button class="btn-create-product" (click)="createDialog()">
+    <mat-icon>add</mat-icon> Neues Produkt hinzufügen
+  </lk-button>
+  <div class="product-list">
+    <lk-product-item
+      *ngFor="let product of products"
+      [product]="product"
+      [enableInteraction]="true"
+      (editClicked)="editProduct(product)"
+      (removeClicked)="removeProduct(product.id)"
+    ></lk-product-item>
+  </div>
+</ng-container>

@@ -18,6 +18,16 @@ body {
   -ms-hyphenate-limit-chars: auto 3;
   -ms-hyphenate-limit-lines: 4;
   hyphens: auto;
+
+  .mat-button,
+  .mat-raised-button,
+  .mat-icon-button,
+  .mat-stroked-button,
+  .mat-flat-button,
+  .mat-fab,
+  .mat-mini-fab {
+    font-family: Bitter, 'serif';
+  }
 }
 
 h1,

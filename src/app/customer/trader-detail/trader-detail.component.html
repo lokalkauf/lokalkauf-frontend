@@ -65,14 +65,19 @@
       </ng-container>
     </ng-container>
     <app-trader-contact [trader]="trader"></app-trader-contact>
-    <p class="trader-product-amount" *ngIf="(productAmount$ | async) > 0">
-      <span
-        class="product-amount"
-        *ngIf="productAmount$ | async as productAmount"
-        >{{ productAmount }}</span
-      >
-      Produkte
-    </p>
+
+    <ng-container *ngIf="(productAmount$ | async) > 0">
+      <h3 class="products-headline">Unsere Produkte</h3>
+
+      <div class="product-list" *ngIf="products$ | async as products">
+        <lk-product-item
+          *ngFor="let product of products"
+          [product]="product"
+          [enableInteraction]="false"
+        >
+        </lk-product-item>
+      </div>
+    </ng-container>
 
     <div class="floating-backbutton margin-boost">
       <a

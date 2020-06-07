@@ -8,6 +8,8 @@ import { Trader } from '../../models/trader';
 import { ImageService } from '../../services/image.service';
 import { StorageService } from '../../services/storage.service';
 import { GalleryItem, ImageItem } from '@ngx-gallery/core';
+import { ProductService } from 'src/app/services/product.service';
+import { Product } from 'src/app/models/product';
 
 @Component({
   selector: 'app-trader-detail',
@@ -17,7 +19,12 @@ import { GalleryItem, ImageItem } from '@ngx-gallery/core';
 export class TraderDetailComponent implements OnInit {
   trader$: Observable<Omit<TraderProfile, 'id'>>;
   productAmount$: Observable<number>;
+
   traderMoneyshotImages$: Observable<GalleryItem[]>;
+
+  traderImages$: Observable<string[]>;
+  products$: Observable<Array<Product>>;
+
   showMoreText = false;
 
   traderLoadingStateSuccessful$: Observable<boolean>;
@@ -27,7 +34,8 @@ export class TraderDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private imageService: ImageService,
     private router: Router,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private productService: ProductService
   ) {}
 
   ngOnInit(): void {
@@ -60,6 +68,23 @@ export class TraderDetailComponent implements OnInit {
         const images = await this.imageService.getAllTraderImageUrls(params.id);
         return images.map((img) => new ImageItem({ src: img }));
       })
+    );
+
+    this.products$ = this.route.params.pipe(
+      flatMap((params) => this.productService.getProductsOfTrader(params.id))
+    );
+
+    this.traderImages$ = this.route.params.pipe(
+      flatMap(
+        async (params) => {
+          const images = await this.imageService.getAllTraderImageUrls(
+            params.id
+          );
+          return images;
+        }
+
+        // this.traderService.getTraderBusinessImageUrls(params.id)
+      )
     );
 
     this.productAmount$ = this.route.params.pipe(
