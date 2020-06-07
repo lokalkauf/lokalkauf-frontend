@@ -26,6 +26,9 @@ import { RatingStarComponent } from './rating-star/rating-star.component';
 import { LkContainerComponent } from './lk-container/lk-container.component';
 import { LkSliderComponent } from './lk-slider/lk-slider.component';
 import { MatSliderModule } from '@angular/material/slider';
+import { LkTestimonialComponent } from './lk-testimonal/lk-testimonial.component';
+import { LkProductItemComponent } from './lk-product-item/lk-product-item.component';
+import { MatCardModule } from '@angular/material/card';
 
 const routes: Routes = [];
 
@@ -48,6 +51,8 @@ const routes: Routes = [];
     LkChipListComponent,
     LkMapComponent,
     LkSliderComponent,
+    LkTestimonialComponent,
+    LkProductItemComponent,
   ],
   imports: [
     CommonModule,
@@ -59,6 +64,7 @@ const routes: Routes = [];
     MatInputModule,
     MatButtonModule,
     MatSliderModule,
+    MatCardModule,
     MatTooltipModule,
     NgxStarRatingModule,
     MatChipsModule,
@@ -80,6 +86,8 @@ const routes: Routes = [];
     LkChipListComponent,
     LkMapComponent,
     LkSliderComponent,
+    LkTestimonialComponent,
+    LkProductItemComponent,
   ],
 })
 export class ReusablesModule {}

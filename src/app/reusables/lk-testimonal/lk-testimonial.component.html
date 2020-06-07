@@ -1,0 +1,41 @@
+<div
+  class="lk-testimonial-container"
+  *ngIf="testimonialList | async as testimonials"
+>
+  <ng-container *ngFor="let elem of testimonials; let i = index">
+    <div
+      class="lk-testimonial-content"
+      id="testimonial-{{ i }}"
+      [ngClass]="{
+        'lk-testimonal-fade-in': currentElementIndex === i,
+        'lk-testimonal-fade-out': currentElementIndex !== i
+      }"
+    >
+      <div class="lk-testimonial-content-trader-image">
+        <img src="../../../assets/{{ elem.img }}" />
+      </div>
+      <div class="lk-testimonial-content-testimonial">
+        »<span [innerHtml]="elem.text"></span>«
+      </div>
+      <div class="lk-testimonial-content-trader" [innerHtml]="elem.name"></div>
+      <div class="lk-testimonial-content-link">
+        <a [routerLink]="elem.traderlink">Geschäft besuchen</a>
+      </div>
+    </div>
+  </ng-container>
+  <div class="lk-testimonial-content-expander">
+    <div class="lk-testimonial-content-trader-image">
+      <img src=" ../../../assets/{{ expander.img }}" />
+    </div>
+    <div class="lk-testimonial-content-testimonial">
+      »<span [innerHtml]="expander.text"></span>«
+    </div>
+    <div
+      class="lk-testimonial-content-trader"
+      [innerHtml]="expander.name"
+    ></div>
+    <div class="lk-testimonial-content-link">
+      <a [routerLink]="expander.traderlink">Geschäft besuchen</a>
+    </div>
+  </div>
+</div>

@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { flatMap, map, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TraderProfile } from '../../models/traderProfile';
 import { Trader } from '../../models/trader';
 import { ImageService } from '../../services/image.service';
-import { Lightbox } from 'ngx-lightbox';
 import { StorageService } from '../../services/storage.service';
+
 import { AngularFireAnalytics } from '@angular/fire/analytics';
+
+import { GalleryItem, ImageItem } from '@ngx-gallery/core';
+import { ProductService } from 'src/app/services/product.service';
+import { Product } from 'src/app/models/product';
 
 @Component({
   selector: 'app-trader-detail',
@@ -18,19 +22,24 @@ import { AngularFireAnalytics } from '@angular/fire/analytics';
 export class TraderDetailComponent implements OnInit {
   trader$: Observable<Omit<TraderProfile, 'id'>>;
   productAmount$: Observable<number>;
+
+  traderMoneyshotImages$: Observable<GalleryItem[]>;
+
   traderImages$: Observable<string[]>;
+  products$: Observable<Array<Product>>;
 
   showMoreText = false;
-  private lightBoxItems = [];
+
+  traderLoadingStateSuccessful$: Observable<boolean>;
 
   constructor(
     private db: AngularFirestore,
     private route: ActivatedRoute,
     private imageService: ImageService,
-    private lightbox: Lightbox,
     private router: Router,
     private storageService: StorageService,
     private analytics: AngularFireAnalytics,
+    private productService: ProductService
   ) {}
 
   ngOnInit(): void {
@@ -41,16 +50,43 @@ export class TraderDetailComponent implements OnInit {
           .doc<Omit<TraderProfile, 'id'>>(params.id)
           .valueChanges()
           .pipe(
-            tap((x) => {
-              this.analytics.logEvent('trader_detail', { trader: x.businessname, city: x.city, distance: x.currentDistance });
+            tap((trader) => {
+              this.traderLoadingStateSuccessful$ = of(!!trader);
+              if (trader) {
+                this.analytics.logEvent('trader_detail', {
+                  trader: trader.businessname,
+                  city: trader.city,
+                  distance: trader.currentDistance,
+                });
+              } else {
+                this.analytics.logEvent('trader_detail', {
+                  tader: 'unknown trader was loaded',
+                });
+              }
             }),
-            map((x) => ({
-              ...x,
-              homepage: this.getCorrectUrl(x.homepage),
-              id: params.id,
-            }))
+            map((trader) =>
+              trader
+                ? {
+                    ...trader,
+                    homepage: this.getCorrectUrl(trader.homepage),
+                    id: params.id,
+                    loadSuccess: true,
+                  }
+                : ({} as TraderProfile)
+            )
           )
       )
+    );
+
+    this.traderMoneyshotImages$ = this.route.params.pipe(
+      flatMap(async (params) => {
+        const images = await this.imageService.getAllTraderImageUrls(params.id);
+        return images.map((img) => new ImageItem({ src: img }));
+      })
+    );
+
+    this.products$ = this.route.params.pipe(
+      flatMap((params) => this.productService.getProductsOfTrader(params.id))
     );
 
     this.traderImages$ = this.route.params.pipe(
@@ -59,14 +95,6 @@ export class TraderDetailComponent implements OnInit {
           const images = await this.imageService.getAllTraderImageUrls(
             params.id
           );
-
-          if (images && images.length > 0) {
-            images.forEach((i) =>
-              this.lightBoxItems.push({
-                src: i,
-              })
-            );
-          }
           return images;
         }
 
@@ -109,11 +137,6 @@ export class TraderDetailComponent implements OnInit {
     } else {
       return inputText;
     }
-  }
-
-  openLightbox(index: number): void {
-    // open lightbox
-    this.lightbox.open(this.lightBoxItems, index);
   }
 
   navigateBackToOverview() {

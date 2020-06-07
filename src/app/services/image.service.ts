@@ -61,35 +61,6 @@ export class ImageService {
     };
   }
 
-  async getAllTraderThumbnails(traderId: string): Promise<ImageSource[]> {
-    const imageList = await this.storage.storage
-      .ref(`Traders/${traderId}/BusinessImages`)
-      .list();
-
-    const images = await Promise.all(
-      imageList.items.map(async (item) => {
-        const metadata = (await item.getMetadata()) as firebase.storage.FullMetadata;
-        if (
-          metadata.contentType.startsWith('image/') &&
-          this.isThumbnail(metadata.fullPath)
-        ) {
-          return {
-            url: await item.getDownloadURL(),
-            size: metadata.size,
-            name: metadata.name,
-            path: item.fullPath,
-          };
-        }
-      })
-    );
-
-    return images.filter((item) => item != null);
-  }
-
-  async getAllTraderThumbnailUrls(traderId: string) {
-    return (await this.getAllTraderThumbnails(traderId)).map((i) => i.url);
-  }
-
   async getAllTraderImages(traderId: string): Promise<ImageSource[]> {
     const imageList = await this.storage.storage
       .ref(`Traders/${traderId}/BusinessImages`)
@@ -120,6 +91,11 @@ export class ImageService {
 
   uploadTraderImage(traderId: string, file: Blob) {
     const filePath = `Traders/${traderId}/BusinessImages/${uuid()}.png`;
+    return this.storage.upload(filePath, file);
+  }
+
+  uploadProductImage(traderId: string, productId: string, file: Blob) {
+    const filePath = `Traders/${traderId}/ProductImages/${productId}/${uuid()}.png`;
     return this.storage.upload(filePath, file);
   }
 

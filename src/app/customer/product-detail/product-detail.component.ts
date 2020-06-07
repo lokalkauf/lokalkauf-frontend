@@ -33,10 +33,10 @@ export class ProductDetailComponent implements OnInit {
     );
   }
 
-  addToCart(product: Product): void {
+  addToCart(productId: string): void {
     this.cartService.add({
       count: 1,
-      productId: product.id,
+      productId,
       traderId: this.traderId,
     });
 
