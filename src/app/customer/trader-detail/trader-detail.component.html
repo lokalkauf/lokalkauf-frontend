@@ -1,89 +1,95 @@
 <lk-container *ngIf="trader$ | async as trader">
-  <div class="floating-backbutton margin-boost">
-    <a
-      class="navigate-back"
-      (click)="navigateBackToOverview()"
-      alt="zurück zur Übersicht"
-    >
-      <mat-icon class="inlinesymbol vertical-align-middle"
-        >chevron_left</mat-icon
+  <lk-container *ngIf="(traderLoadingStateSuccessful$ | async) === false">
+    <div class="trader-title-wrapper">
+      <br />
+      <br />
+      <lk-page-title
+        [title]="'Das Geschäft konnte leider nicht gefunden werden.'"
+      ></lk-page-title>
+      <br />
+      <br />
+      <div class="trader-description text">
+        Suche in <a [routerLink]="['/']">Deiner Stadt</a> nach tollen
+        Alternativen.
+      </div>
+    </div>
+  </lk-container>
+  <lk-container *ngIf="traderLoadingStateSuccessful$ | async">
+    <div class="floating-backbutton margin-boost">
+      <a
+        class="navigate-back"
+        (click)="navigateBackToOverview()"
+        alt="zurück zur Übersicht"
       >
-      <span class="symboltext">Zurück zur Händlersuche</span>
-    </a>
-  </div>
+        <mat-icon class="inlinesymbol vertical-align-middle"
+          >chevron_left</mat-icon
+        >
+        <span class="symboltext">Zurück zur Händlersuche</span>
+      </a>
+    </div>
 
-  <div class="trader-title-wrapper">
-    <lk-page-title [title]="trader.businessname"></lk-page-title>
-  </div>
+    <div class="trader-title-wrapper">
+      <lk-page-title [title]="trader.businessname"></lk-page-title>
+    </div>
 
-  <div
-    class="trader-description text"
-    *ngIf="trader.description && !showMoreText"
-  >
-    <span [innerHTML]="shortenText(trader.description) | nl2br: true"></span>...
     <div
-      *ngIf="trader.description.length > 200"
-      (click)="showMoreText = true"
-      class="toggleDetails"
+      class="trader-description text"
+      *ngIf="trader.description && !showMoreText"
     >
-      mehr lesen
+      <span [innerHTML]="shortenText(trader.description) | nl2br: true"></span
+      >...
+      <div
+        *ngIf="trader.description.length > 200"
+        (click)="showMoreText = true"
+        class="toggleDetails"
+      >
+        mehr lesen
+      </div>
     </div>
-  </div>
-  <div
-    class="trader-description text"
-    *ngIf="trader.description && showMoreText"
-  >
-    <span [innerHTML]="trader.description | nl2br: true"></span>
     <div
-      *ngIf="trader.description.length > 200"
-      (click)="showMoreText = false"
-      class="toggleDetails"
+      class="trader-description text"
+      *ngIf="trader.description && showMoreText"
     >
-      weniger
+      <span [innerHTML]="trader.description | nl2br: true"></span>
+      <div
+        *ngIf="trader.description.length > 200"
+        (click)="showMoreText = false"
+        class="toggleDetails"
+      >
+        weniger
+      </div>
     </div>
-  </div>
+    <ng-container *ngIf="traderMoneyshotImages$ | async as images">
+      <ng-container *ngIf="images.length > 0">
+        <gallery gallerize class="gallery-box" [items]="images"> </gallery>
+      </ng-container>
+    </ng-container>
+    <app-trader-contact [trader]="trader"></app-trader-contact>
 
-  <div class="carousel">
-    <mat-carousel
-      *ngIf="traderImages$ | async as images"
-      [hideArrows]="false"
-      [hideIndicators]="false"
-      [proportion]="90"
-    >
-      <mat-carousel-slide
-        *ngFor="let image of images; let i = index"
-        [image]="image"
-        overlayColor="#00000000"
+    <ng-container *ngIf="(productAmount$ | async) > 0">
+      <h3 class="products-headline">Unsere Produkte</h3>
+
+      <div class="product-list" *ngIf="products$ | async as products">
+        <lk-product-item
+          *ngFor="let product of products"
+          [product]="product"
+          [enableInteraction]="false"
+        >
+        </lk-product-item>
+      </div>
+    </ng-container>
+
+    <div class="floating-backbutton margin-boost">
+      <a
+        class="navigate-back"
+        (click)="navigateBackToOverview()"
+        alt="zurück zur Übersicht"
       >
-        <div style="width: 100%; height: 100%;" (click)="openLightbox(i)"></div>
-      </mat-carousel-slide>
-    </mat-carousel>
-  </div>
-
-  <app-trader-contact [trader]="trader"></app-trader-contact>
-  <ng-container *ngIf="(productAmount$ | async) > 0">
-    <h3 class="products-headline">Unsere Produkte</h3>
-
-    <div class="product-list" *ngIf="products$ | async as products">
-      <lk-product-item
-        *ngFor="let product of products"
-        [product]="product"
-        [enableInteraction]="false"
-      >
-      </lk-product-item>
+        <mat-icon class="inlinesymbol vertical-align-middle"
+          >chevron_left</mat-icon
+        >
+        <span class="symboltext">Zurück zur Händlersuche</span>
+      </a>
     </div>
-  </ng-container>
-
-  <div class="floating-backbutton margin-boost">
-    <a
-      class="navigate-back"
-      (click)="navigateBackToOverview()"
-      alt="zurück zur Übersicht"
-    >
-      <mat-icon class="inlinesymbol vertical-align-middle"
-        >chevron_left</mat-icon
-      >
-      <span class="symboltext">Zurück zur Händlersuche</span>
-    </a>
-  </div>
+  </lk-container>
 </lk-container>

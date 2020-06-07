@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { flatMap, map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { flatMap, map, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TraderProfile } from '../../models/traderProfile';
 import { Trader } from '../../models/trader';
 import { ImageService } from '../../services/image.service';
-import { Lightbox } from 'ngx-lightbox';
 import { StorageService } from '../../services/storage.service';
+import { GalleryItem, ImageItem } from '@ngx-gallery/core';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/models/product';
 
@@ -19,17 +19,20 @@ import { Product } from 'src/app/models/product';
 export class TraderDetailComponent implements OnInit {
   trader$: Observable<Omit<TraderProfile, 'id'>>;
   productAmount$: Observable<number>;
+
+  traderMoneyshotImages$: Observable<GalleryItem[]>;
+
   traderImages$: Observable<string[]>;
   products$: Observable<Array<Product>>;
 
   showMoreText = false;
-  private lightBoxItems = [];
+
+  traderLoadingStateSuccessful$: Observable<boolean>;
 
   constructor(
     private db: AngularFirestore,
     private route: ActivatedRoute,
     private imageService: ImageService,
-    private lightbox: Lightbox,
     private router: Router,
     private storageService: StorageService,
     private productService: ProductService
@@ -43,13 +46,28 @@ export class TraderDetailComponent implements OnInit {
           .doc<Omit<TraderProfile, 'id'>>(params.id)
           .valueChanges()
           .pipe(
-            map((x) => ({
-              ...x,
-              homepage: this.getCorrectUrl(x.homepage),
-              id: params.id,
-            }))
+            tap(
+              (trader) => (this.traderLoadingStateSuccessful$ = of(!!trader))
+            ),
+            map((trader) =>
+              trader
+                ? {
+                    ...trader,
+                    homepage: this.getCorrectUrl(trader.homepage),
+                    id: params.id,
+                    loadSuccess: true,
+                  }
+                : ({} as TraderProfile)
+            )
           )
       )
+    );
+
+    this.traderMoneyshotImages$ = this.route.params.pipe(
+      flatMap(async (params) => {
+        const images = await this.imageService.getAllTraderImageUrls(params.id);
+        return images.map((img) => new ImageItem({ src: img }));
+      })
     );
 
     this.products$ = this.route.params.pipe(
@@ -62,14 +80,6 @@ export class TraderDetailComponent implements OnInit {
           const images = await this.imageService.getAllTraderImageUrls(
             params.id
           );
-
-          if (images && images.length > 0) {
-            images.forEach((i) =>
-              this.lightBoxItems.push({
-                src: i,
-              })
-            );
-          }
           return images;
         }
 
@@ -112,11 +122,6 @@ export class TraderDetailComponent implements OnInit {
     } else {
       return inputText;
     }
-  }
-
-  openLightbox(index: number): void {
-    // open lightbox
-    this.lightbox.open(this.lightBoxItems, index);
   }
 
   navigateBackToOverview() {

@@ -134,6 +134,10 @@ lk-product-item {
   text-decoration: none;
 }
 
+.gallery-box {
+  box-sizing: border-box;
+  background-color: $white;
+}
 h3.products-headline {
   margin-top: 46px;
 }

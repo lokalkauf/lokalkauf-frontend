@@ -13,6 +13,8 @@ import { StorageService } from '../services/storage.service';
 import { FormControl, Validators } from '@angular/forms';
 import { uiTexts } from 'src/app/services/uiTexts';
 import { TextService } from '../services/text.service';
+import { Testimonial } from '../reusables/lk-testimonal/lk-testimonial.component';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-start',
@@ -50,6 +52,8 @@ export class StartComponent implements OnInit {
 
   testimonials = [];
 
+  testimonialsAsync$: Observable<Testimonial[]>;
+
   @ViewChild('searchInput', { read: ElementRef }) searchInput: any;
   constructor(
     public router: Router,
@@ -62,18 +66,20 @@ export class StartComponent implements OnInit {
       this.isLoggedIn = loggedin;
     });
 
-    this.testimonials = [
+    this.testimonialsAsync$ = of([
       {
         img: 'user-voice-casabiente.png',
         text: textService.getText(uiTexts.testimonal_1_testimonial),
-        testee: textService.getText(uiTexts.testimonal_1_testee),
-      },
+        name: textService.getText(uiTexts.testimonal_1_testee),
+        traderlink: 'trader-detail/ysWSjEfKtSYa18Aij2KoJKKCqUs1',
+      } as Testimonial,
       {
         img: 'user-voice-duester.png',
         text: textService.getText(uiTexts.testimonal_2_testimonial),
-        testee: textService.getText(uiTexts.testimonal_2_testee),
-      },
-    ];
+        name: textService.getText(uiTexts.testimonal_2_testee),
+        traderlink: 'trader-detail/C6nOYXF5iCc1ZvVa6yBBf0jtTdk1',
+      } as Testimonial,
+    ]);
   }
 
   text = uiTexts;
