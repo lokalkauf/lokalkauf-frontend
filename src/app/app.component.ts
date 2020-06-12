@@ -5,6 +5,9 @@ import { UserService } from './services/user.service';
 import { StorageService } from './services/storage.service';
 import { AngularFireAnalytics } from '@angular/fire/analytics';
 import { CookieService } from 'ngx-cookie-service';
+import { BookmarksService } from './services/bookmarks.service';
+import { Observable, of } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -14,11 +17,13 @@ import { CookieService } from 'ngx-cookie-service';
 export class AppComponent implements OnInit, OnDestroy {
   events: string[] = [];
   opened: boolean;
+  bookmarks: Observable<number>;
 
   constructor(
     public router: Router,
     public userService: UserService,
     private storageService: StorageService,
+    private bookmarkService: BookmarksService,
     private ccService: NgcCookieConsentService,
     private cookieService: CookieService,
     private analytics: AngularFireAnalytics
@@ -55,6 +60,10 @@ export class AppComponent implements OnInit, OnDestroy {
         );
       }
     });
+
+    this.bookmarks = this.bookmarkService
+      .getBookmarkCount()
+      .pipe(distinctUntilChanged());
   }
 
   openCookieConsent() {

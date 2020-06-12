@@ -13,6 +13,8 @@ import { TraderMapComponent } from './trader-map/trader-map.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ShoppingcartItemComponent } from './shoppingcart-item/shoppingcart-item.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -28,6 +30,11 @@ import { MatSliderModule } from '@angular/material/slider';
 import { GalleryModule, GALLERY_CONFIG } from '@ngx-gallery/core';
 import { LightboxModule } from '@ngx-gallery/lightbox';
 import { GallerizeModule } from '@ngx-gallery/gallerize';
+import { BookmarksService } from '../services/bookmarks.service';
+import { BookmarksOverviewComponent } from './bookmarks-overview/bookmarks-overview.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LkMapComponent } from '../reusables/lk-map/lk-map.component';
 
 const routes: Routes = [
   {
@@ -51,6 +58,7 @@ const routes: Routes = [
     ProductDetailComponent,
     ProductDetailFeedbackComponent,
     BuyConfirmationComponent,
+    BookmarksOverviewComponent,
     ShoppingcartComponent,
     TraderOverviewComponent,
     TraderItemComponent,
@@ -61,6 +69,8 @@ const routes: Routes = [
     InquiryConfirmationComponent,
   ],
   imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
     CommonModule,
     MatCardModule,
     MatSnackBarModule,
@@ -69,6 +79,8 @@ const routes: Routes = [
     MatInputModule,
     MatButtonModule,
     MatSliderModule,
+    MatStepperModule,
+    MatExpansionModule,
     FontAwesomeModule,
     ReusablesModule,
     PipesModule,
@@ -84,6 +96,7 @@ const routes: Routes = [
   exports: [ProductOverviewComponent],
   providers: [
     ProductService,
+    BookmarksService,
     {
       provide: GALLERY_CONFIG,
       useValue: {

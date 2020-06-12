@@ -13,6 +13,15 @@
       <a mat-button [routerLink]="'/press'">Presse</a>
       <a mat-button [routerLink]="'/faq'">Hilfe</a>
     </div>
+    <button mat-mini-fab class="avatar bookmarks" [routerLink]="'/bookmarks'">
+      <mat-icon
+        [matBadgeHidden]="(bookmarks | async) <= 0"
+        matBadge="{{ bookmarks | async }}"
+        matBadgePosition="before"
+        matBadgeColor="accent"
+        >favorite</mat-icon
+      >
+    </button>
     <button mat-mini-fab class="avatar" [matMenuTriggerFor]="storeMenu">
       <mat-icon>store</mat-icon>
     </button>

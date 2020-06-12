@@ -1,0 +1,67 @@
+.bookmarks-description {
+  text-align: center;
+
+  margin-bottom: 24px;
+
+  @media screen and (max-width: 767px) {
+    text-align: justify;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column-reverse;
+
+  @media screen and(min-width:768px) {
+    flex-direction: row;
+  }
+
+  width: 100%;
+
+  .left-side {
+    width: 100%;
+    max-width: 100%;
+
+    div.mat-step {
+      border-top: dotted 1px rgba(0, 0, 0, 0.1);
+    }
+
+    @media screen and(min-width:768px) {
+      width: 34%;
+      max-width: 34%;
+    }
+
+    .trader-details {
+      img {
+        width: 112px;
+        height: 112px;
+      }
+    }
+  }
+
+  .right-side {
+    width: 100%;
+    max-width: 100%;
+
+    @media screen and(min-width:768px) {
+      width: 66%;
+      max-width: 66%;
+    }
+  }
+}
+
+lk-map {
+  position: relative;
+  z-index: 1;
+  display: block;
+
+  min-height: 450px;
+  height: 450px !important;
+
+  @media screen and(min-width:768px) {
+    height: 300px !important;
+  }
+
+  width: 100%;
+  margin-left: -1;
+}

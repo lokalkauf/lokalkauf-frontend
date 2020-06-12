@@ -9,6 +9,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -74,6 +76,9 @@ import {
 } from 'ngx-cookieconsent';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { BrowserService } from './services/browser.service';
+import { BookmarksService } from './services/bookmarks.service';
+import { BookmarksOverviewComponent } from './customer/bookmarks-overview/bookmarks-overview.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
@@ -113,6 +118,7 @@ const routes: Routes = [
   { path: 'aboutus', component: AboutUsComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'press', component: PressComponent },
+  { path: 'bookmarks', component: BookmarksOverviewComponent },
   {
     path: 'redirect',
     component: RedirectComponent,
@@ -152,6 +158,9 @@ const routes: Routes = [
     MatListModule,
     MatInputModule,
     MatButtonModule,
+    MatStepperModule,
+    MatExpansionModule,
+    MatBadgeModule,
     MatProgressSpinnerModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
@@ -190,6 +199,7 @@ const routes: Routes = [
     TextService,
     SpinnerService,
     StorageService,
+    BookmarksService,
     EMailService,
     ImageService,
     BrowserService,

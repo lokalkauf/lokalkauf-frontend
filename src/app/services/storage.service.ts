@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GeoAddress } from '../models/geoAddress';
 import { LkSelectOptions } from '../reusables/lk-select/lk-select.component';
+import { Bookmark } from '../models/bookmark';
 
 @Injectable()
 export class StorageService {
@@ -26,6 +27,14 @@ export class StorageService {
 
   loadTraderFilter(): LkSelectOptions {
     return this.load('trader-filter');
+  }
+
+  saveBookmarks(bookmarks: Bookmark[]) {
+    this.save('bookmarks', bookmarks);
+  }
+
+  loadBookmarks(): Bookmark[] {
+    return this.load('bookmarks');
   }
 
   private save<T>(key: string, item: T, toLocalStorage?: boolean) {

@@ -22,9 +22,36 @@
         </div>
         <div class="distance-small">
           {{ trader.distance | number: '1.2-2' }} km
+          <ng-container *ngIf="(isTraderInBookmarks$ | async) === true">
+            <br /><button mat-button (click)="removeBookmark(trader.id)">
+              <mat-icon class="green-bookmark-icon">favorite</mat-icon>
+            </button>
+          </ng-container>
+
+          <ng-container *ngIf="(isTraderInBookmarks$ | async) === false">
+            <br /><button
+              mat-button
+              (click)="addBookmarkSmall($event, trader.id)"
+            >
+              <mat-icon>favorite_outline</mat-icon>
+            </button>
+          </ng-container>
         </div>
       </mat-card-subtitle>
     </mat-card-header>
   </mat-card>
 </a>
-<div class="distance-large">{{ trader.distance | number: '1.2-2' }} km</div>
+<div class="distance-large">
+  <ng-container *ngIf="(isTraderInBookmarks$ | async) === true">
+    <button mat-button (click)="removeBookmark(trader.id)">
+      <mat-icon class="green-bookmark-icon">favorite</mat-icon>
+    </button>
+  </ng-container>
+
+  <ng-container *ngIf="(isTraderInBookmarks$ | async) === false">
+    <button mat-button (click)="addBookmark(trader.id)">
+      <mat-icon>favorite_outline</mat-icon>
+    </button>
+  </ng-container>
+  {{ trader.distance | number: '1.2-2' }} km
+</div>
