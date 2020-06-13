@@ -23,7 +23,10 @@
         <div class="distance-small">
           {{ trader.distance | number: '1.2-2' }} km
           <ng-container *ngIf="(isTraderInBookmarks$ | async) === true">
-            <br /><button mat-button (click)="removeBookmark(trader.id)">
+            <br /><button
+              mat-button
+              (click)="removeBookmarkSmall($event, trader.id)"
+            >
               <mat-icon class="green-bookmark-icon">favorite</mat-icon>
             </button>
           </ng-container>
