@@ -29,6 +29,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { LkTestimonialComponent } from './lk-testimonal/lk-testimonial.component';
 import { LkProductItemComponent } from './lk-product-item/lk-product-item.component';
 import { MatCardModule } from '@angular/material/card';
+import { LkContainerFullComponent } from './lk-container-full/lk-container.component-full';
 
 const routes: Routes = [];
 
@@ -48,6 +49,7 @@ const routes: Routes = [];
     LkWarningBoxComponent,
     RatingStarComponent,
     LkContainerComponent,
+    LkContainerFullComponent,
     LkChipListComponent,
     LkMapComponent,
     LkSliderComponent,
@@ -83,6 +85,7 @@ const routes: Routes = [];
     LkWarningBoxComponent,
     RatingStarComponent,
     LkContainerComponent,
+    LkContainerFullComponent,
     LkChipListComponent,
     LkMapComponent,
     LkSliderComponent,

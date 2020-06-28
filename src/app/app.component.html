@@ -99,45 +99,66 @@
       <router-outlet></router-outlet>
     </div>
     <div class="footer">
-      <div class="cookie-footer">
-        <a (click)="this.openCookieConsent()"
-          ><img src="../../assets/cookie.svg" alt="<3 Cookies"
-        /></a>
-      </div>
+      <div class="some-footer">
+        <a
+          mat-icon-button
+          href="https://www.facebook.com/sharer/sharer.php?u=https%3A//www.lokalkauf.org"
+          target="_blank"
+        >
+          <fa-icon [icon]="faFacebookF" size="2x" class="share-mono"></fa-icon>
+        </a>
 
-      <a
-        mat-list-item
-        href="https://www.info.lokalkauf.org/impressum"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Impressum
-      </a>
-      <a
-        mat-list-item
-        href="https://www.info.lokalkauf.org/agb"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        AGB
-      </a>
-      <a
-        mat-list-item
-        href="https://www.info.lokalkauf.org/datenschutz"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Datenschutzerklärung
-      </a>
-      <a
-        mat-list-item
-        href="https://www.lokalkauf.org/3rdpartylicenses.txt"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Lizenzen
-      </a>
-      <a mat-list-item [routerLink]="'/feedback'">Feedback</a>
+        <a
+          mat-icon-button
+          href="https://www.instagram.com/lokalkauf/"
+          target="_blank"
+        >
+          <fa-icon [icon]="faInstagram" size="2x" class="share-mono"></fa-icon>
+        </a>
+      </div>
+      <div class="links-footer">
+        <a
+          mat-list-item
+          class="cookie-footer-link"
+          (click)="this.openCookieConsent()"
+        >
+          Cookies
+        </a>
+
+        <a
+          mat-list-item
+          href="https://www.lokalkauf.org/3rdpartylicenses.txt"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Lizenzen
+        </a>
+        <a mat-list-item [routerLink]="'/feedback'">Feedback</a>
+        <a
+          mat-list-item
+          href="https://www.info.lokalkauf.org/agb"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          AGB
+        </a>
+        <a
+          mat-list-item
+          href="https://www.info.lokalkauf.org/impressum"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Impressum
+        </a>
+        <a
+          mat-list-item
+          href="https://www.info.lokalkauf.org/datenschutz"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Datenschutzerklärung
+        </a>
+      </div>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

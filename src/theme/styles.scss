@@ -35,7 +35,8 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+.fancy-link {
   font-family: Bitter, 'serif';
   color: $normalgreen;
   font-weight: 400;
@@ -43,6 +44,16 @@ h6 {
 
 h1 {
   font-size: 1.6rem;
+}
+
+.fancy-link {
+  text-decoration: none;
+
+  &::after {
+    size: 1.6rem;
+    display: inline;
+    content: ' \203A ';
+  }
 }
 
 input {
@@ -96,6 +107,11 @@ a {
 a:visited {
   text-decoration: underline;
   color: inherit;
+}
+
+a.fancy-link:visited {
+  text-decoration: none;
+  color: $normalgreen;
 }
 
 div.cc-window,
