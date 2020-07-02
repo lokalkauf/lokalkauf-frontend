@@ -75,7 +75,7 @@
 </lk-container-full>
 
 <lk-container class="presse-container">
-  <h2>Aktuelle Pressemeldungen</h2>
+  <h2>{{ text.start_presse_headline | text }}</h2>
   <div class="presse-container-content">
     <ng-container *ngFor="let press of press$ | async">
       <div class="presse-content">

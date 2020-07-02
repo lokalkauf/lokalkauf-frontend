@@ -31,6 +31,7 @@ export const uiTexts = {
     'mit den Bürgern digital verbindet und dabei nachhaltig unterstützt, die Coronakrise zu bewältigen',
   start_mission_aboutus: 'Mehr über uns erfahren',
   start_wirvsvirus_headline: 'Im offiziellen Solution Enabler Programm von',
+  start_presse_headline: 'Aktuelle Pressemeldungen',
   start_presse_1_date: '29.03.2020',
   start_presse_1_title:
     'Dies Projekte helfen Geschäften und Restaurants in der Corona-Krise',

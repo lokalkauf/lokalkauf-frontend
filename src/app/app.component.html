@@ -3,7 +3,6 @@
     <a mat-button [routerLink]="'/'" class="logo-link">
       <img src="assets/lokalkauf-logo.svg" alt="lokalkauf" />
     </a>
-    <span class="menu-spacer"></span>
     <div fxHide.lt-md>
       <a mat-button (click)="navigateTraders()" routerLinkActive="active"
         >H&auml;ndlersuche
@@ -13,10 +12,12 @@
       <a mat-button [routerLink]="'/press'">Presse</a>
       <a mat-button [routerLink]="'/faq'">Hilfe</a>
     </div>
+    <span class="menu-spacer"></span>
     <button mat-mini-fab class="avatar" [matMenuTriggerFor]="storeMenu">
       <mat-icon>store</mat-icon>
     </button>
-    <mat-menu #storeMenu="matMenu" class="mat-elevation-z0">
+
+    <mat-menu #storeMenu="matMenu" class="mat-elevation-z2">
       <button
         mat-menu-item
         [routerLink]="'/trader/login'"
