@@ -34,6 +34,19 @@ mat-sidenav {
   }
 }
 
+.geschaeft-accent {
+  color: #54c8e1;
+  font-weight: bold;
+
+  span {
+    display: inline-block;
+
+    @media screen and (max-width: 459px) {
+      display: none;
+    }
+  }
+}
+
 button.mat-mini-fab.avatar {
   box-shadow: none;
   background-color: #eee;

@@ -13,9 +13,13 @@
       <a mat-button [routerLink]="'/faq'">Hilfe</a>
     </div>
     <span class="menu-spacer"></span>
-    <button mat-mini-fab class="avatar" [matMenuTriggerFor]="storeMenu">
-      <mat-icon>store</mat-icon>
-    </button>
+    <a
+      mat-button
+      [matMenuTriggerFor]="storeMenu"
+      class="geschaeft-accent fancy-link-90"
+    >
+      <mat-icon>store</mat-icon> <span>Geschäftsbereich</span>
+    </a>
 
     <mat-menu #storeMenu="matMenu" class="mat-elevation-z2">
       <button

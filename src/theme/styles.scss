@@ -50,8 +50,22 @@ h1 {
   text-decoration: none;
 
   &::after {
-    size: 1.6rem;
+    font-size: 1.6rem;
     display: inline;
+    content: ' \203A ';
+  }
+}
+
+.fancy-link-90 {
+  text-decoration: none;
+
+  &::after {
+    transform: rotate(90deg);
+    position: absolute;
+    font-size: 1.6rem;
+    left: calc(100% - 9px);
+    top: 2px;
+    display: inline-block;
     content: ' \203A ';
   }
 }
