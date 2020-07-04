@@ -178,8 +178,8 @@ export class TraderOverviewComponent implements OnInit {
     this.locationService
       .nearBy(this.paramRadius, this.userPosition, filter)
       .then((result: any) => {
-        this.locations = result.data.locations;
-
+        this.locations = result;
+        console.log(this.locations);
         if (this.locations && this.locations.length > 0) {
           // set hasLocations and hasinitialLocations to true, to hide the 'No results found' view
           this.hasLocations$ = of(true);
