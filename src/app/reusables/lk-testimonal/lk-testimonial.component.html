@@ -19,7 +19,9 @@
       </div>
       <div class="lk-testimonial-content-trader" [innerHtml]="elem.name"></div>
       <div class="lk-testimonial-content-link">
-        <a [routerLink]="elem.traderlink">Geschäft besuchen</a>
+        <a [routerLink]="elem.traderlink" class="fancy-link"
+          >Zur Händlerseite</a
+        >
       </div>
     </div>
   </ng-container>
@@ -35,7 +37,9 @@
       [innerHtml]="expander.name"
     ></div>
     <div class="lk-testimonial-content-link">
-      <a [routerLink]="expander.traderlink">Geschäft besuchen</a>
+      <a [routerLink]="expander.traderlink" class="fancy-link"
+        >Zur Händlerseite</a
+      >
     </div>
   </div>
 </div>
