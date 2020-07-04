@@ -193,6 +193,10 @@
 }
 
 .alternate-background-user-voice {
+  @media screen and (max-width: 1086px) {
+    background-color: $normalgreen;
+    margin-bottom: unset;
+  }
 }
 
 .user-voice {
@@ -201,14 +205,6 @@
   padding: 20px 35px 50px 35px;
   background-color: $normalgreen;
   color: #fff;
-
-  lk-container {
-    height: 300px;
-
-    @media screen and (max-width: 767px) {
-      height: 450px;
-    }
-  }
 
   h2 {
     color: #fff;
