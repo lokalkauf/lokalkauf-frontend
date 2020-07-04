@@ -155,7 +155,7 @@ export class TraderOverviewComponent implements OnInit {
           .get('range')
           .setValue(this.paramRadius, { emitEvent: false, onlySelf: true });
 
-        this.initLocations();
+        this.loadLocations();
       } catch {}
     });
   }
@@ -210,24 +210,24 @@ export class TraderOverviewComponent implements OnInit {
   // Initially the counters of the available locations are loaded.
   // this minimizes the initial transfer of data. The initial call of the locations
   // is mainly used to display the "No results found" view.
-  initLocations() {
-    this.spinnerService.show();
-    this.locationService
-      .countNearBy(this.paramRadius, this.userPosition)
-      .then((res) => {
-        this.hasInitLocations = res && res.totalItems > 0;
+  // initLocations() {
+  //   this.spinnerService.show();
+  //   this.locationService
+  //     .countNearBy(this.paramRadius, this.userPosition)
+  //     .then((res) => {
+  //       this.hasInitLocations = res && res.totalItems > 0;
 
-        this.hasLocations$ = of(this.hasInitLocations);
+  //       this.hasLocations$ = of(this.hasInitLocations);
 
-        if (this.hasInitLocations) {
-          this.loadLocations();
-        }
-      })
-      .catch((e) => {})
-      .finally(() => {
-        this.spinnerService.hide();
-      });
-  }
+  //       if (this.hasInitLocations) {
+  //         this.loadLocations();
+  //       }
+  //     })
+  //     .catch((e) => {})
+  //     .finally(() => {
+  //       this.spinnerService.hide();
+  //     });
+  // }
 
   setRange(val: number) {
     this.rangeChanging$.next(val);

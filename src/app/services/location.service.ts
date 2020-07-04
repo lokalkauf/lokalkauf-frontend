@@ -5,6 +5,7 @@ import algoliasearch from 'algoliasearch/lite';
 
 import * as firebase from 'firebase/app';
 import 'firebase/functions';
+import { Trader } from '../models/trader';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,7 @@ export class LocationService {
 
     filter?: { categories: string[]; countOnly?: boolean },
     paging = { desc: false, pageIndex: 0, pageSize: 150 }
-  ): Promise<any> {
+  ): Promise<Array<Trader>> {
     const client = algoliasearch(
       'V051EVLWXE',
       '85739eacae698fba1aaf524e40fe1b99'
@@ -30,7 +31,13 @@ export class LocationService {
         aroundRadius: radius * 1000,
       })
       .then(({ hits }) => {
-        return hits;
+        return hits.map(
+          (trader) =>
+            (({
+              ...trader,
+              id: trader.objectID,
+            } as any) as Trader)
+        );
       });
     const res = await firebase
       .functions()
@@ -47,15 +54,15 @@ export class LocationService {
     console.log(res);
   }
 
-  async countNearBy(radius: number, coordinates: number[]): Promise<Paging> {
-    // Is it smart to call nearBy twice? This seams to take quite long.
-    const result = await this.nearBy(
-      radius,
-      coordinates,
-      { categories: [], countOnly: true },
-      { desc: false, pageIndex: 0, pageSize: 100000 }
-    );
+  // async countNearBy(radius: number, coordinates: number[]): Promise<Paging> {
+  //   // Is it smart to call nearBy twice? This seams to take quite long.
+  //   const result = await this.nearBy(
+  //     radius,
+  //     coordinates,
+  //     { categories: [], countOnly: true },
+  //     { desc: false, pageIndex: 0, pageSize: 100000 }
+  //   );
 
-    return result.data.paging;
-  }
+  //   return result.data.paging;
+  // }
 }
