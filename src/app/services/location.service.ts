@@ -29,13 +29,15 @@ export class LocationService {
       .search('', {
         aroundLatLng: `${coordinates[0]}, ${coordinates[1]}`,
         aroundRadius: radius * 1000,
+        getRankingInfo: true,
       })
       .then(({ hits }) => {
         return hits.map(
-          (trader) =>
+          (trader: any) =>
             (({
               ...trader,
               id: trader.objectID,
+              distance: trader._rankingInfo.geoDistance / 1000,
             } as any) as Trader)
         );
       });
