@@ -17,19 +17,26 @@ export class LocationService {
     radius: number,
     coordinates: number[],
 
-    filter?: { categories: string[]; countOnly?: boolean },
+    filter?: { categories: string[] },
     paging = { desc: false, pageIndex: 0, pageSize: 150 }
   ): Promise<Array<Trader>> {
+    // Move this somewhere else
     const client = algoliasearch(
       'V051EVLWXE',
       '85739eacae698fba1aaf524e40fe1b99'
     );
     const index = client.initIndex('traders_st');
+
+    const categories: string[] = [];
+    filter.categories.map((category) => {
+      categories.push(`storeType.${category}=1`);
+    });
     return await index
       .search('', {
         aroundLatLng: `${coordinates[0]}, ${coordinates[1]}`,
         aroundRadius: radius * 1000,
         getRankingInfo: true,
+        filters: categories.join(' OR '),
       })
       .then(({ hits }) => {
         return hits.map(
@@ -51,7 +58,6 @@ export class LocationService {
         pageIndex: paging.pageIndex,
         pageSize: paging.pageSize,
         categories: filter?.categories,
-        countOnly: filter?.countOnly === true,
       });
     console.log(res);
   }

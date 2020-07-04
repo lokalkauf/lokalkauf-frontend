@@ -156,7 +156,7 @@ export class TraderOverviewComponent implements OnInit {
           .setValue(this.paramRadius, { emitEvent: false, onlySelf: true });
 
         this.loadLocations();
-      } catch { }
+      } catch {}
     });
   }
 
@@ -179,7 +179,6 @@ export class TraderOverviewComponent implements OnInit {
       .nearBy(this.paramRadius, this.userPosition, filter)
       .then((result: any) => {
         this.locations = result;
-        console.log(this.locations);
         if (this.locations && this.locations.length > 0) {
           // set hasLocations and hasinitialLocations to true, to hide the 'No results found' view
           this.hasLocations$ = of(true);
@@ -201,10 +200,14 @@ export class TraderOverviewComponent implements OnInit {
           });
         } else {
           // Show "no result page" if no shops were found
-          this.hasLocations$ = of(false);
+          // but dont show it if filters are selected.
+          // Otherwise the filter cant be unselected.
+          if (filter.categories.length === 0) {
+            this.hasLocations$ = of(false);
+          }
         }
       })
-      .catch((e) => { })
+      .catch((e) => {})
       .finally(() => {
         this.spinnerService.hide();
       });
