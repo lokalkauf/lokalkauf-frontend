@@ -156,7 +156,7 @@ export class TraderOverviewComponent implements OnInit {
           .setValue(this.paramRadius, { emitEvent: false, onlySelf: true });
 
         this.loadLocations();
-      } catch {}
+      } catch { }
     });
   }
 
@@ -190,7 +190,7 @@ export class TraderOverviewComponent implements OnInit {
           // from the DB. The public thumbnailURL should already be stored in the locations.
           // This should be refactored in one of the next iterations!
           this.locations.forEach(async (l: any) => {
-            l.thumbnailURL = await await this.imageService.getThumbnailUrl(
+            l.thumbnailURL = await this.imageService.getThumbnailUrl(
               l.defaultImagePath,
               '224x224'
             );
@@ -199,35 +199,16 @@ export class TraderOverviewComponent implements OnInit {
               l.thumbnailURL = '/assets/lokalkauf-pin.svg';
             }
           });
+        } else {
+          // Show "no result page" if no shops were found
+          this.hasLocations$ = of(false);
         }
       })
-      .catch((e) => {})
+      .catch((e) => { })
       .finally(() => {
         this.spinnerService.hide();
       });
   }
-
-  // Initially the counters of the available locations are loaded.
-  // this minimizes the initial transfer of data. The initial call of the locations
-  // is mainly used to display the "No results found" view.
-  // initLocations() {
-  //   this.spinnerService.show();
-  //   this.locationService
-  //     .countNearBy(this.paramRadius, this.userPosition)
-  //     .then((res) => {
-  //       this.hasInitLocations = res && res.totalItems > 0;
-
-  //       this.hasLocations$ = of(this.hasInitLocations);
-
-  //       if (this.hasInitLocations) {
-  //         this.loadLocations();
-  //       }
-  //     })
-  //     .catch((e) => {})
-  //     .finally(() => {
-  //       this.spinnerService.hide();
-  //     });
-  // }
 
   setRange(val: number) {
     this.rangeChanging$.next(val);
