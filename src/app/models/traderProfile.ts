@@ -17,6 +17,7 @@ export interface TraderProfile {
   homepage: string;
   status: TraderProfileStatus;
   soMeShare: boolean;
+  licence?: string;
   confirmedLocation?: number[];
   storeType: {
     gastronomie: boolean;

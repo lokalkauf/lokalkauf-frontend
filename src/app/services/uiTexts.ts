@@ -59,6 +59,10 @@ export const uiTexts = {
     ' für mich als Händler und für meine Kunden finde ich gelungen.',
   start_searchbottom_headline:
     'Überzeugt? <br />Dann entdecke unsere Händler und Geschäfte!',
+  licence_odbl_general_text:
+    'Diese Daten stehen unter Open Data Commons Open Database Lizenz, ',
+  licence_odbl_url_text: ' &copy OpenStreetMap-Mitwirkende.',
+  licence_odbl_url: 'https://www.openstreetmap.org/copyright',
 };
 
 export type TextValue =

@@ -76,8 +76,6 @@ export class BrowserService {
   isBrowserSupported(): boolean {
     const isDesktop = this.deviceDetectorService.isDesktop();
 
-    console.log(this.deviceDetectorService.browser_version);
-
     const foundBrowsers = this.supportedBrowsers.filter(
       (x) =>
         x.device === (isDesktop ? DEVICE.DESKTOP : DEVICE.MOBILE) &&
