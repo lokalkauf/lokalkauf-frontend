@@ -13,15 +13,16 @@
       <a mat-button [routerLink]="'/faq'">Hilfe</a>
     </div>
     <span class="menu-spacer"></span>
-    <button mat-mini-fab class="avatar bookmarks" [routerLink]="'/bookmarks'">
+    <a mat-button class="avatar bookmarks" [routerLink]="'/bookmarks'">
       <mat-icon
+        color="primary"
         [matBadgeHidden]="(bookmarks | async) <= 0"
         matBadge="{{ bookmarks | async }}"
         matBadgePosition="before"
         matBadgeColor="accent"
         >favorite</mat-icon
       >
-    </button>
+    </a>
     <a
       mat-button
       [matMenuTriggerFor]="storeMenu"
@@ -57,10 +58,6 @@
       <mat-icon>menu</mat-icon>
     </button>
   </mat-toolbar-row>
-
-  <!-- <mat-toolbar-row>
-      <span style="font-size: 12px;">SimpleCRM helps you easily manage your contacts</span>
-  </mat-toolbar-row> -->
 </mat-toolbar>
 
 <mat-sidenav-container>

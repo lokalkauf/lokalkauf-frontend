@@ -40,6 +40,7 @@ export class LkMapComponent implements OnInit, AfterViewInit {
   @Output() flyEnd = new EventEmitter<any>();
   @Output() mapMove = new EventEmitter<any>();
   @Output() mapInit = new EventEmitter<any>();
+  @Output() mapMarkerClick = new EventEmitter<string>();
   locations: Array<Location> = new Array<Location>();
 
   // esriTiles = 'https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_v2/VectorTileServer/tile/{z}/{x}/{y}.pbf';
@@ -116,11 +117,20 @@ export class LkMapComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public addMarker(position?: number[]) {
+  public addMarker(position?: number[], emitClickEvent?: boolean) {
     const pos = position ? this.creeateLatLng(position) : this.map.getCenter();
 
     const id = uuid();
-    marker(pos, { alt: id, icon: this.heartIconBig }).addTo(this.map);
+    if (emitClickEvent) {
+      marker(pos, { alt: id, icon: this.heartIconBig })
+        .addTo(this.map)
+        .on('click', (e) => {
+          this.mapMarkerClick.emit(id);
+        });
+    } else {
+      marker(pos, { alt: id, icon: this.heartIconBig }).addTo(this.map);
+    }
+
     return id;
   }
 

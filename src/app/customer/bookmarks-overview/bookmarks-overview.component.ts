@@ -10,9 +10,11 @@ import {
 } from 'src/app/models/traderProfile';
 import { LkMapComponent } from 'src/app/reusables/lk-map/lk-map.component';
 import { ImageService } from 'src/app/services/image.service';
+import { MatStepper } from '@angular/material/stepper';
 
 export interface TraderProfilesPlus extends TraderProfile {
   thumbUrl?: string;
+  mapid?: string;
 }
 
 @Component({
@@ -27,6 +29,7 @@ export class BookmarksOverviewComponent implements OnInit {
   hasProfilesInBookmark$: Observable<number> = of(0);
 
   @ViewChild(LkMapComponent) map: LkMapComponent;
+  @ViewChild('stepper') private bookmarkStepperList: MatStepper;
 
   constructor(
     readonly bookmarksService: BookmarksService,
@@ -64,12 +67,25 @@ export class BookmarksOverviewComponent implements OnInit {
         this.imageService
           .getThumbnailUrl(profile.defaultImagePath)
           .then((x) => (profile.thumbUrl = x));
-        this.map.addMarker(profile.confirmedLocation);
+        const id = this.map.addMarker(profile.confirmedLocation, true);
+        if (id) {
+          profile.id = id;
+        }
       });
       if (profiles.length > 0) {
         this.map.setCenter(profiles[0].confirmedLocation);
       }
     });
+  }
+
+  clickCallback(id: string) {
+    this.traderProfiles$
+      .pipe(
+        map((profiles) => profiles.findIndex((profile) => profile.id === id))
+      )
+      .subscribe((index) => {
+        this.bookmarkStepperList.selectedIndex = index;
+      });
   }
 
   private sortProfiles(): (
@@ -99,6 +115,12 @@ export class BookmarksOverviewComponent implements OnInit {
           })
         )
         .subscribe();
+
+      setTimeout(() => {
+        document
+          .getElementById(this.bookmarkStepperList._getStepLabelId(index))
+          .scrollIntoView(true);
+      });
     }
   }
 
