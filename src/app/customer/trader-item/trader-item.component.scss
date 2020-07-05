@@ -79,6 +79,12 @@ mat-card {
         display: block;
       }
 
+      .text {
+        @media only screen and (max-width: 480px) {
+          font-size: 12px;
+        }
+      }
+
       .distance-small {
         flex-grow: 2;
         text-align: right;

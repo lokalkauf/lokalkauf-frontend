@@ -1,0 +1,10 @@
+<lk-container class="lk-attribution" *ngIf="licenceOutput">
+  {{ licenceOutput.generalText | text }}
+  <a
+    *ngIf="licenceOutput.url && licenceOutput.urlText"
+    href="{{ licenceOutput.url | text }}"
+    target="_blank"
+    rel="noopener noreferrer"
+    [innerHTML]="licenceOutput.urlText | text"
+  ></a>
+</lk-container>

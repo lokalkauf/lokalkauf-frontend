@@ -3,7 +3,6 @@
     <a mat-button [routerLink]="'/'" class="logo-link">
       <img src="assets/lokalkauf-logo.svg" alt="lokalkauf" />
     </a>
-    <span class="menu-spacer"></span>
     <div fxHide.lt-md>
       <a mat-button (click)="navigateTraders()" routerLinkActive="active"
         >H&auml;ndlersuche
@@ -13,6 +12,7 @@
       <a mat-button [routerLink]="'/press'">Presse</a>
       <a mat-button [routerLink]="'/faq'">Hilfe</a>
     </div>
+    <span class="menu-spacer"></span>
     <button mat-mini-fab class="avatar bookmarks" [routerLink]="'/bookmarks'">
       <mat-icon
         [matBadgeHidden]="(bookmarks | async) <= 0"
@@ -22,10 +22,15 @@
         >favorite</mat-icon
       >
     </button>
-    <button mat-mini-fab class="avatar" [matMenuTriggerFor]="storeMenu">
-      <mat-icon>store</mat-icon>
-    </button>
-    <mat-menu #storeMenu="matMenu" class="mat-elevation-z0">
+    <a
+      mat-button
+      [matMenuTriggerFor]="storeMenu"
+      class="geschaeft-accent fancy-link-90"
+    >
+      <mat-icon>store</mat-icon> <span>Geschäftsbereich</span>
+    </a>
+
+    <mat-menu #storeMenu="matMenu" class="mat-elevation-z2">
       <button
         mat-menu-item
         [routerLink]="'/trader/login'"
@@ -108,45 +113,66 @@
       <router-outlet></router-outlet>
     </div>
     <div class="footer">
-      <div class="cookie-footer">
-        <a (click)="this.openCookieConsent()"
-          ><img src="../../assets/cookie.svg" alt="<3 Cookies"
-        /></a>
-      </div>
+      <div class="some-footer">
+        <a
+          mat-icon-button
+          href="https://www.facebook.com/sharer/sharer.php?u=https%3A//www.lokalkauf.org"
+          target="_blank"
+        >
+          <fa-icon [icon]="faFacebookF" size="2x" class="share-mono"></fa-icon>
+        </a>
 
-      <a
-        mat-list-item
-        href="https://www.info.lokalkauf.org/impressum"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Impressum
-      </a>
-      <a
-        mat-list-item
-        href="https://www.info.lokalkauf.org/agb"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        AGB
-      </a>
-      <a
-        mat-list-item
-        href="https://www.info.lokalkauf.org/datenschutz"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Datenschutzerklärung
-      </a>
-      <a
-        mat-list-item
-        href="https://www.lokalkauf.org/3rdpartylicenses.txt"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Lizenzen
-      </a>
-      <a mat-list-item [routerLink]="'/feedback'">Feedback</a>
+        <a
+          mat-icon-button
+          href="https://www.instagram.com/lokalkauf/"
+          target="_blank"
+        >
+          <fa-icon [icon]="faInstagram" size="2x" class="share-mono"></fa-icon>
+        </a>
+      </div>
+      <div class="links-footer">
+        <a
+          mat-list-item
+          class="cookie-footer-link"
+          (click)="this.openCookieConsent()"
+        >
+          Cookies
+        </a>
+
+        <a
+          mat-list-item
+          href="https://www.lokalkauf.org/3rdpartylicenses.txt"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Lizenzen
+        </a>
+        <a mat-list-item [routerLink]="'/feedback'">Feedback</a>
+        <a
+          mat-list-item
+          href="https://www.info.lokalkauf.org/agb"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          AGB
+        </a>
+        <a
+          mat-list-item
+          href="https://www.info.lokalkauf.org/impressum"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Impressum
+        </a>
+        <a
+          mat-list-item
+          href="https://www.info.lokalkauf.org/datenschutz"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Datenschutzerklärung
+        </a>
+      </div>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

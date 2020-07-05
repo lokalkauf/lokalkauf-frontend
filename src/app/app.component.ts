@@ -8,6 +8,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { BookmarksService } from './services/bookmarks.service';
 import { Observable, of } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { faFacebookF, faInstagram } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,8 @@ export class AppComponent implements OnInit, OnDestroy {
   events: string[] = [];
   opened: boolean;
   bookmarks: Observable<number>;
+  faFacebookF = faFacebookF;
+  faInstagram = faInstagram;
 
   constructor(
     public router: Router,
