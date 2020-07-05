@@ -18,9 +18,15 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 export class LkChipListComponent implements OnInit {
   @Input() items: Observable<LkSelectOptions[]>;
   @Input() selectedKey: string;
-
+  @Input() removable: boolean;
+  selectable1 = false;
   @Output()
   lkChipListChange: EventEmitter<LkSelectOptions> = new EventEmitter<
+    LkSelectOptions
+  >();
+
+  @Output()
+  lkChipRemove: EventEmitter<LkSelectOptions> = new EventEmitter<
     LkSelectOptions
   >();
 
@@ -33,5 +39,11 @@ export class LkChipListComponent implements OnInit {
   select(option: LkSelectOptions) {
     this.selectedKey = option.key;
     this.lkChipListChange.emit(option);
+  }
+
+  remove(option: LkSelectOptions): void {
+    if (option && this.removable) {
+      this.lkChipRemove.emit(option);
+    }
   }
 }

@@ -15,15 +15,33 @@
   <div class="traders-overview-row" *ngIf="(hasLocations$ | async) === true">
     <lk-page-title title="Alles aus Deiner Nähe"></lk-page-title>
 
-    <div>
+    <div class="textsearch-container">
       <form [formGroup]="traderSearchForm" (ngSubmit)="onTextSearchSubmit()">
-        <lk-input
-          formControlName="searchText"
-          name="searchText"
-          [placeholder]="text.textSearch_placeholder | text"
-        >
-        </lk-input>
-        <lk-button type="submit" [label]="'volltext'"></lk-button>
+        <div class="textsearch-search-container">
+          <div class="search-text">
+            <lk-input
+              formControlName="searchText"
+              name="searchText"
+              [placeholder]="text.textSearch_placeholder | text"
+            >
+            </lk-input>
+          </div>
+          <div class="search-button">
+            <lk-button
+              class="search-button"
+              type="submit"
+              [label]="'volltext'"
+            ></lk-button>
+            <div class="textsearch-chips-container">
+              <lk-chip-list
+                [items]="searchEntries"
+                [removable]="true"
+                (lkChipRemove)="removeSearchtextChip($event)"
+              >
+              </lk-chip-list>
+            </div>
+          </div>
+        </div>
       </form>
     </div>
 

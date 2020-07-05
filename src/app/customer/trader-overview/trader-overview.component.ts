@@ -90,6 +90,7 @@ export class TraderOverviewComponent implements OnInit {
   faInstagram = faInstagram;
   text = uiTexts;
 
+  searchEntries: Observable<LkSelectOptions[]>;
   traderSearchForm = new FormGroup({
     searchText: new FormControl(''),
   });
@@ -117,6 +118,18 @@ export class TraderOverviewComponent implements OnInit {
     private analytics: AngularFireAnalytics
   ) {
     this.storeTypes = of(this.STORE_TYPES);
+
+    const textSearch = storageService.loadTextsearch();
+    if (textSearch && textSearch.length >= 3) {
+      this.searchEntries = of([
+        {
+          key: textSearch,
+          value: textSearch,
+          display: textSearch,
+        } as LkSelectOptions,
+      ]);
+    }
+
     const currentLocation = this.storageService.loadLocation();
     if (currentLocation && currentLocation.city) {
       this.currentLocation = currentLocation.city;
@@ -165,17 +178,28 @@ export class TraderOverviewComponent implements OnInit {
 
   async onTextSearchSubmit() {
     const textToSearchFor = this.traderSearchForm.get('searchText').value;
+    this.storageService.saveTextsearch(textToSearchFor);
     if (textToSearchFor && textToSearchFor.length >= 3) {
-      this.loadLocations(textToSearchFor);
+      this.loadLocations();
+      if (textToSearchFor && textToSearchFor.length >= 3) {
+        this.searchEntries = of([
+          {
+            key: textToSearchFor,
+            value: textToSearchFor,
+            display: textToSearchFor,
+          } as LkSelectOptions,
+        ]);
+      }
     } else {
       console.log('mindestens 3 Zeichen eingeben');
     }
   }
 
   // the locations of the Traders are loaded here
-  loadLocations(searchstring: string = '') {
+  loadLocations() {
     this.spinnerService.show();
     const filter = this.getCategoryFilter();
+    const searchtext = this.storageService.loadTextsearch();
 
     // if the initial call has no results,
     // and a category from Session Storage
@@ -188,7 +212,7 @@ export class TraderOverviewComponent implements OnInit {
     }
 
     this.locationService
-      .nearBy(this.paramRadius, this.userPosition, searchstring, filter)
+      .nearBy(this.paramRadius, this.userPosition, searchtext, filter)
       .then((result: any) => {
         this.locations = result;
         if (this.locations && this.locations.length > 0) {
@@ -214,7 +238,7 @@ export class TraderOverviewComponent implements OnInit {
           // Show "no result page" if no shops were found
           // but dont show it if filters are selected.
           // Otherwise the filter cant be unselected.
-          if (filter.categories.length === 0) {
+          if (filter.categories.length === 0 && searchtext.length === 0) {
             this.hasLocations$ = of(false);
           }
         }
@@ -223,6 +247,12 @@ export class TraderOverviewComponent implements OnInit {
       .finally(() => {
         this.spinnerService.hide();
       });
+  }
+
+  removeSearchtextChip(valEvent: LkSelectOptions) {
+    this.storageService.saveTextsearch('');
+    this.searchEntries = of([]);
+    this.loadLocations();
   }
 
   setRange(val: number) {
