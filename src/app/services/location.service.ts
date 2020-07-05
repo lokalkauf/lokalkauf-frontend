@@ -16,9 +16,7 @@ export class LocationService {
   async nearBy(
     radius: number,
     coordinates: number[],
-
-    filter?: { categories: string[] },
-    paging = { desc: false, pageIndex: 0, pageSize: 150 }
+    filter?: { categories: string[] }
   ): Promise<Array<Trader>> {
     // Move this somewhere else
     const client = algoliasearch(
@@ -37,8 +35,11 @@ export class LocationService {
         aroundRadius: radius * 1000,
         getRankingInfo: true,
         filters: categories.join(' OR '),
+        // 1000 is max
+        hitsPerPage: 1000,
       })
       .then(({ hits }) => {
+        console.log(hits);
         return hits.map(
           (trader: any) =>
             (({
@@ -48,18 +49,6 @@ export class LocationService {
             } as any) as Trader)
         );
       });
-    const res = await firebase
-      .functions()
-      .httpsCallable(`locationByDistance`)
-      .call('Get Locatons', {
-        radius,
-        coordinates,
-        desc: paging.desc,
-        pageIndex: paging.pageIndex,
-        pageSize: paging.pageSize,
-        categories: filter?.categories,
-      });
-    console.log(res);
   }
 
   // async countNearBy(radius: number, coordinates: number[]): Promise<Paging> {

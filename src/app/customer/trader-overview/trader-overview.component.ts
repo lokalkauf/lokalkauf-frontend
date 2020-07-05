@@ -102,7 +102,6 @@ export class TraderOverviewComponent implements OnInit {
   rangeGroup = new FormGroup({
     range: new FormControl(0),
   });
-
   constructor(
     private route: ActivatedRoute,
     public readonly storageService: StorageService,
