@@ -38,6 +38,7 @@ export const uiTexts = {
   testimonal_2_testimonial:
     'Lokalkauf gefällt mir sehr gut. Vor allem die einfache Bedienung' +
     ' für mich als Händler und für meine Kunden finde ich gelungen.',
+  textSearch_placeholder: 'Tu ma suchen',
 };
 
 export type TextValue =

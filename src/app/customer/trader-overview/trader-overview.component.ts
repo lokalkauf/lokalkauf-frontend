@@ -90,6 +90,10 @@ export class TraderOverviewComponent implements OnInit {
   faInstagram = faInstagram;
   text = uiTexts;
 
+  traderSearchForm = new FormGroup({
+    searchText: new FormControl(''),
+  });
+
   rangeChanging$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   userPosition: number[];
@@ -159,8 +163,17 @@ export class TraderOverviewComponent implements OnInit {
     });
   }
 
+  async onTextSearchSubmit() {
+    const textToSearchFor = this.traderSearchForm.get('searchText').value;
+    if (textToSearchFor && textToSearchFor.length >= 3) {
+      this.loadLocations(textToSearchFor);
+    } else {
+      console.log('mindestens 3 Zeichen eingeben');
+    }
+  }
+
   // the locations of the Traders are loaded here
-  loadLocations() {
+  loadLocations(searchstring: string = '') {
     this.spinnerService.show();
     const filter = this.getCategoryFilter();
 
@@ -175,7 +188,7 @@ export class TraderOverviewComponent implements OnInit {
     }
 
     this.locationService
-      .nearBy(this.paramRadius, this.userPosition, filter)
+      .nearBy(this.paramRadius, this.userPosition, searchstring, filter)
       .then((result: any) => {
         this.locations = result;
         if (this.locations && this.locations.length > 0) {

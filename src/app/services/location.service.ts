@@ -16,6 +16,7 @@ export class LocationService {
   async nearBy(
     radius: number,
     coordinates: number[],
+    searchString: string,
     filter?: { categories: string[] }
   ): Promise<Array<Trader>> {
     // Move this somewhere else
@@ -30,7 +31,7 @@ export class LocationService {
       categories.push(`storeType.${category}=1`);
     });
     return await index
-      .search('', {
+      .search(searchString, {
         aroundLatLng: `${coordinates[0]}, ${coordinates[1]}`,
         aroundRadius: radius * 1000,
         getRankingInfo: true,
