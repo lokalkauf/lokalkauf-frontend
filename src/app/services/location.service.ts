@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Location } from '../models/location';
-import { Paging } from '../models/paging';
 import algoliasearch from 'algoliasearch/lite';
 
-import * as firebase from 'firebase/app';
-import 'firebase/functions';
 import { Trader } from '../models/trader';
 import { environment } from '../../environments/environment';
 
@@ -12,7 +8,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class LocationService {
-  constructor() { }
+  constructor() {}
 
   async nearBy(
     radius: number,
@@ -20,7 +16,10 @@ export class LocationService {
     searchString: string,
     filter?: { categories: string[] }
   ): Promise<Array<Trader>> {
-    const client = algoliasearch(environment.algolia.appId, environment.algolia.searchKey);
+    const client = algoliasearch(
+      environment.algolia.appId,
+      environment.algolia.searchKey
+    );
     const index = client.initIndex(environment.algolia.indexName);
 
     const categories: string[] = [];
@@ -37,7 +36,6 @@ export class LocationService {
         hitsPerPage: 1000,
       })
       .then(({ hits }) => {
-        console.log(hits);
         return hits.map(
           (trader: any) =>
             (({
@@ -48,16 +46,4 @@ export class LocationService {
         );
       });
   }
-
-  // async countNearBy(radius: number, coordinates: number[]): Promise<Paging> {
-  //   // Is it smart to call nearBy twice? This seams to take quite long.
-  //   const result = await this.nearBy(
-  //     radius,
-  //     coordinates,
-  //     { categories: [], countOnly: true },
-  //     { desc: false, pageIndex: 0, pageSize: 100000 }
-  //   );
-
-  //   return result.data.paging;
-  // }
 }
