@@ -30,7 +30,7 @@
             <lk-button
               class="search-button"
               type="submit"
-              [label]="'volltext'"
+              [label]="'Filtern!'"
             ></lk-button>
             <div class="textsearch-chips-container">
               <lk-chip-list
@@ -78,6 +78,9 @@
         [trader]="location"
       ></app-trader-item>
     </div>
+    <ng-container *ngIf="(odblLicense$ | async) === true">
+      <lk-attribution licence="odbl"></lk-attribution>
+    </ng-container>
   </div>
 
   <div class="traders-overview-row" *ngIf="(hasLocations$ | async) === false">

@@ -82,6 +82,7 @@ export class TraderOverviewComponent implements OnInit {
   selectedTraderCategory: LkSelectOptions;
   storeTypes: Observable<LkSelectOptions[]>;
   currentLocation: string;
+  odblLicense$: Observable<boolean>;
 
   hasLocations$: Observable<boolean> = of(true);
   faFacebookF = faFacebookF;
@@ -118,7 +119,7 @@ export class TraderOverviewComponent implements OnInit {
     private analytics: AngularFireAnalytics
   ) {
     this.storeTypes = of(this.STORE_TYPES);
-
+    this.odblLicense$ = of(false);
     const textSearch = storageService.loadTextsearch();
     if (textSearch && textSearch.length >= 3) {
       this.searchEntries = of([
@@ -178,8 +179,8 @@ export class TraderOverviewComponent implements OnInit {
 
   async onTextSearchSubmit() {
     const textToSearchFor = this.traderSearchForm.get('searchText').value;
-    this.storageService.saveTextsearch(textToSearchFor);
     if (textToSearchFor && textToSearchFor.length >= 3) {
+      this.storageService.saveTextsearch(textToSearchFor);
       this.loadLocations();
       if (textToSearchFor && textToSearchFor.length >= 3) {
         this.searchEntries = of([
@@ -210,7 +211,7 @@ export class TraderOverviewComponent implements OnInit {
       this.setStoreType(this.STORE_TYPES[0]);
       return;
     }
-
+    this.odblLicense$ = of(false);
     this.locationService
       .nearBy(this.paramRadius, this.userPosition, searchtext, filter)
       .then((result: any) => {
@@ -225,6 +226,9 @@ export class TraderOverviewComponent implements OnInit {
           // from the DB. The public thumbnailURL should already be stored in the locations.
           // This should be refactored in one of the next iterations!
           this.locations.forEach(async (l: any) => {
+            if (l.licence && l.licence !== '') {
+              this.odblLicense$ = of(true);
+            }
             l.thumbnailURL = await this.imageService.getThumbnailUrl(
               l.defaultImagePath,
               '224x224'
