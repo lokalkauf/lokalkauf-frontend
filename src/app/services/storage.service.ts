@@ -28,6 +28,14 @@ export class StorageService {
     return this.load('trader-filter');
   }
 
+  saveTextsearch(searchString: string) {
+    this.save('search-text', searchString);
+  }
+
+  loadTextsearch(): string {
+    return this.load('search-text');
+  }
+
   private save<T>(key: string, item: T, toLocalStorage?: boolean) {
     const jsonItem = JSON.stringify(item);
 

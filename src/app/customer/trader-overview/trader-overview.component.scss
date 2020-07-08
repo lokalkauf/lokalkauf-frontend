@@ -124,6 +124,29 @@ app-trader-item {
   }
 }
 
+.textsearch-container {
+  margin: 20px auto;
+
+  @media screen and (min-width: 1040px) {
+    max-width: 640px;
+  }
+
+  .textsearch-search-container {
+    .search-text {
+      width: 100%;
+    }
+
+    .search-button {
+      display: flex;
+      align-items: center;
+
+      .textsearch-chips-container {
+        margin-left: 20px;
+      }
+    }
+  }
+}
+
 .trader-chips-container {
   @media screen and (min-width: 1040px) {
     display: flex;

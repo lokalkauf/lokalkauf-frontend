@@ -11,5 +11,10 @@ export const environment = {
     messagingSenderId: '167060133004',
     measurementId: 'G-WJ6XGZ3RP5',
   },
+  algolia: {
+    appId: 'V051EVLWXE',
+    searchKey: '85739eacae698fba1aaf524e40fe1b99',
+    indexName: 'prod_TRADERS',
+  },
   version: require('../../package.json').version,
 };

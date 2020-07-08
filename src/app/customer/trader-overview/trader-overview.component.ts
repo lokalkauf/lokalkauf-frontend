@@ -90,6 +90,11 @@ export class TraderOverviewComponent implements OnInit {
   faInstagram = faInstagram;
   text = uiTexts;
 
+  searchEntries: Observable<LkSelectOptions[]>;
+  traderSearchForm = new FormGroup({
+    searchText: new FormControl(''),
+  });
+
   rangeChanging$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   userPosition: number[];
@@ -102,7 +107,6 @@ export class TraderOverviewComponent implements OnInit {
   rangeGroup = new FormGroup({
     range: new FormControl(0),
   });
-
   constructor(
     private route: ActivatedRoute,
     public readonly storageService: StorageService,
@@ -114,6 +118,18 @@ export class TraderOverviewComponent implements OnInit {
     private analytics: AngularFireAnalytics
   ) {
     this.storeTypes = of(this.STORE_TYPES);
+
+    const textSearch = storageService.loadTextsearch();
+    if (textSearch && textSearch.length >= 3) {
+      this.searchEntries = of([
+        {
+          key: textSearch,
+          value: textSearch,
+          display: textSearch,
+        } as LkSelectOptions,
+      ]);
+    }
+
     const currentLocation = this.storageService.loadLocation();
     if (currentLocation && currentLocation.city) {
       this.currentLocation = currentLocation.city;
@@ -155,15 +171,35 @@ export class TraderOverviewComponent implements OnInit {
           .get('range')
           .setValue(this.paramRadius, { emitEvent: false, onlySelf: true });
 
-        this.initLocations();
+        this.loadLocations();
       } catch {}
     });
+  }
+
+  async onTextSearchSubmit() {
+    const textToSearchFor = this.traderSearchForm.get('searchText').value;
+    this.storageService.saveTextsearch(textToSearchFor);
+    if (textToSearchFor && textToSearchFor.length >= 3) {
+      this.loadLocations();
+      if (textToSearchFor && textToSearchFor.length >= 3) {
+        this.searchEntries = of([
+          {
+            key: textToSearchFor,
+            value: textToSearchFor,
+            display: textToSearchFor,
+          } as LkSelectOptions,
+        ]);
+      }
+    } else {
+      console.log('mindestens 3 Zeichen eingeben');
+    }
   }
 
   // the locations of the Traders are loaded here
   loadLocations() {
     this.spinnerService.show();
     const filter = this.getCategoryFilter();
+    const searchtext = this.storageService.loadTextsearch();
 
     // if the initial call has no results,
     // and a category from Session Storage
@@ -176,10 +212,9 @@ export class TraderOverviewComponent implements OnInit {
     }
 
     this.locationService
-      .nearBy(this.paramRadius, this.userPosition, filter)
+      .nearBy(this.paramRadius, this.userPosition, searchtext, filter)
       .then((result: any) => {
-        this.locations = result.data.locations;
-
+        this.locations = result;
         if (this.locations && this.locations.length > 0) {
           // set hasLocations and hasinitialLocations to true, to hide the 'No results found' view
           this.hasLocations$ = of(true);
@@ -190,7 +225,7 @@ export class TraderOverviewComponent implements OnInit {
           // from the DB. The public thumbnailURL should already be stored in the locations.
           // This should be refactored in one of the next iterations!
           this.locations.forEach(async (l: any) => {
-            l.thumbnailURL = await await this.imageService.getThumbnailUrl(
+            l.thumbnailURL = await this.imageService.getThumbnailUrl(
               l.defaultImagePath,
               '224x224'
             );
@@ -199,6 +234,13 @@ export class TraderOverviewComponent implements OnInit {
               l.thumbnailURL = '/assets/lokalkauf-pin.svg';
             }
           });
+        } else {
+          // Show "no result page" if no shops were found
+          // but dont show it if filters are selected.
+          // Otherwise the filter cant be unselected.
+          if (filter.categories.length === 0 && searchtext.length === 0) {
+            this.hasLocations$ = of(false);
+          }
         }
       })
       .catch((e) => {})
@@ -207,26 +249,10 @@ export class TraderOverviewComponent implements OnInit {
       });
   }
 
-  // Initially the counters of the available locations are loaded.
-  // this minimizes the initial transfer of data. The initial call of the locations
-  // is mainly used to display the "No results found" view.
-  initLocations() {
-    this.spinnerService.show();
-    this.locationService
-      .countNearBy(this.paramRadius, this.userPosition)
-      .then((res) => {
-        this.hasInitLocations = res && res.totalItems > 0;
-
-        this.hasLocations$ = of(this.hasInitLocations);
-
-        if (this.hasInitLocations) {
-          this.loadLocations();
-        }
-      })
-      .catch((e) => {})
-      .finally(() => {
-        this.spinnerService.hide();
-      });
+  removeSearchtextChip(valEvent: LkSelectOptions) {
+    this.storageService.saveTextsearch('');
+    this.searchEntries = of([]);
+    this.loadLocations();
   }
 
   setRange(val: number) {
