@@ -65,6 +65,13 @@
   }
 }
 
+.desktop-mobile {
+  @media screen and (min-width: 1086px) {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+}
+
 .doubleheart {
   margin: 70px auto 16px auto;
   width: 180px;
@@ -72,31 +79,123 @@
   position: relative;
 
   img {
-    width: 80px;
     position: absolute;
 
     &:first-of-type {
-      left: 0px;
+      width: 108px;
+      left: 100px;
+      top: 10px;
     }
 
     &:nth-of-type(2) {
-      top: 30px;
-      left: 100px;
+      width: 150px;
+      top: 110px;
+      left: 0px;
+    }
+  }
+
+  @media screen and (max-width: 1086px) {
+    margin: 70px auto 16px auto;
+    width: 180px;
+    height: 130px;
+    position: relative;
+
+    img {
+      position: absolute;
+
+      &:first-of-type {
+        width: 80px;
+        left: 0px;
+        top: unset;
+      }
+
+      &:nth-of-type(2) {
+        width: 80px;
+        top: 30px;
+        left: 100px;
+      }
+    }
+  }
+}
+
+.our-mission {
+  width: 605px;
+  text-align: left;
+
+  @media screen and (max-width: 1086px) {
+    text-align: center;
+    width: unset;
+  }
+}
+
+.wirvsvirus-container,
+.center-content {
+  text-align: center;
+}
+
+.presse-container {
+  text-align: left;
+  padding: 35px 20px;
+
+  @media screen and (max-width: 1086px) {
+    text-align: center;
+  }
+}
+
+.wirvsvirus {
+  @media screen and (max-width: 1086px) {
+    img {
+      max-width: calc(100vw - 80px);
     }
   }
 }
 
 .our-mission,
 .wirvsvirus-container {
-  text-align: center;
   padding: 35px 20px;
+}
 
+.presse-container-content,
+.wirvsvirus-container-content {
+  display: flex;
+  justify-content: space-between;
+
+  @media screen and (max-width: 1086px) {
+    text-align: center;
+    display: unset;
+  }
+
+  .presse-content,
   .wirvsvirus {
+    max-width: 445px;
+
     @media screen and (max-width: 1086px) {
-      img {
-        max-width: calc(100vw - 80px);
+      max-width: unset;
+    }
+
+    @media screen and (min-width: 1085px) {
+      .press-content-logo {
+        min-height: 150px;
+        display: flex;
+        align-items: flex-end;
       }
     }
+
+    .press-content-date,
+    .press-content-link {
+      margin: 26px 0px;
+    }
+
+    .press-content-link {
+      margin-bottom: 40px;
+    }
+  }
+}
+
+.alternate-background-user-voice {
+  @media screen and (max-width: 1086px) {
+    background-color: $normalgreen;
+    margin-bottom: unset;
   }
 }
 
@@ -107,16 +206,16 @@
   background-color: $normalgreen;
   color: #fff;
 
-  lk-container {
-    height: 300px;
-
-    @media screen and (max-width: 767px) {
-      height: 450px;
-    }
-  }
-
   h2 {
     color: #fff;
+  }
+}
+
+.search-bottom {
+  padding: 35px 20px;
+
+  img {
+    width: 45px;
   }
 }
 
@@ -129,4 +228,8 @@ lk-search-input {
 
 div .carousel[style] {
   height: 100% !important;
+}
+
+.alternate-background {
+  background-color: $evenlightergrey;
 }
