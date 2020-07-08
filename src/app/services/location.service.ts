@@ -6,12 +6,13 @@ import algoliasearch from 'algoliasearch/lite';
 import * as firebase from 'firebase/app';
 import 'firebase/functions';
 import { Trader } from '../models/trader';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocationService {
-  constructor() {}
+  constructor() { }
 
   async nearBy(
     radius: number,
@@ -19,12 +20,8 @@ export class LocationService {
     searchString: string,
     filter?: { categories: string[] }
   ): Promise<Array<Trader>> {
-    // Move this somewhere else
-    const client = algoliasearch(
-      'V051EVLWXE',
-      '85739eacae698fba1aaf524e40fe1b99'
-    );
-    const index = client.initIndex('traders_st');
+    const client = algoliasearch(environment.algolia.appId, environment.algolia.searchKey);
+    const index = client.initIndex(environment.algolia.indexName);
 
     const categories: string[] = [];
     filter.categories.map((category) => {
