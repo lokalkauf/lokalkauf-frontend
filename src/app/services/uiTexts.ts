@@ -57,6 +57,7 @@ export const uiTexts = {
   testimonal_2_testimonial:
     'Lokalkauf gefällt mir sehr gut. Vor allem die einfache Bedienung' +
     ' für mich als Händler und für meine Kunden finde ich gelungen.',
+  textSearch_placeholder: 'Händlersuche',
   start_searchbottom_headline:
     'Überzeugt? <br />Dann entdecke unsere Händler und Geschäfte!',
   licence_odbl_general_text:
