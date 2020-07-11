@@ -1,6 +1,6 @@
 <div *ngIf="product$ | async as product" id="details">
   <mat-card>
-    <img mat-card [src]="product.image" [alt]="product.name" />
+    <img mat-card [src]="product.defaultImagePath" [alt]="product.name" />
   </mat-card>
   <div>
     <div id="product-detail-title">{{ product.name }}</div>
@@ -8,7 +8,7 @@
       {{ product.description }}
     </div>
     <div id="product-detail-price">
-      {{ product.price | number: '1.2-2' }} &euro;
+      {{ product.price | number: '1.2-2':'de' }} &euro;
     </div>
     <div id="product-detail-button">
       <button

@@ -15,7 +15,6 @@ export class TraderItemComponent implements OnInit {
 
   constructor(private readonly bookmarkService: BookmarksService) {}
   ngOnInit(): void {
-    console.log('id:', this.trader.id);
     this.isTraderInBookmarks$ = of(
       this.bookmarkService.isTraderInBookmarks(this.trader.id)
     );

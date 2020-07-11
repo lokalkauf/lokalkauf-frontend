@@ -129,5 +129,11 @@ mat-card {
     margin-right: 16px;
     margin-left: 16px;
     text-align: right;
+
+    .osm-large {
+      position: absolute;
+      top: 5px;
+      left: -10px;
+    }
   }
 }

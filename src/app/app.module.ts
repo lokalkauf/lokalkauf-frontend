@@ -79,6 +79,10 @@ import { BrowserService } from './services/browser.service';
 import { BookmarksService } from './services/bookmarks.service';
 import { BookmarksOverviewComponent } from './customer/bookmarks-overview/bookmarks-overview.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+
+registerLocaleData(localeDe);
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {

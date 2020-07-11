@@ -21,10 +21,10 @@
           {{ trader.city }}
         </div>
         <div class="distance-small">
-          {{ trader.distance | number: '1.2-2' }} km
+          {{ trader.distance | number: '1.2-2':'de' }} km
           <ng-container *ngIf="(isTraderInBookmarks$ | async) === true">
-            <br /><button
-              mat-button
+            <button
+              mat-icon-button
               (click)="removeBookmarkSmall($event, trader.id)"
             >
               <mat-icon class="green-bookmark-icon">favorite</mat-icon>
@@ -32,12 +32,21 @@
           </ng-container>
 
           <ng-container *ngIf="(isTraderInBookmarks$ | async) === false">
-            <br /><button
-              mat-button
+            <button
+              mat-icon-button
               (click)="addBookmarkSmall($event, trader.id)"
             >
               <mat-icon>favorite_outline</mat-icon>
             </button>
+          </ng-container>
+          <ng-container *ngIf="trader.licence === 'ODbL'">
+            <a
+              href="https://www.openstreetmap.org/copyright"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src="../../../assets/osm-attribution-16.png" />
+            </a>
           </ng-container>
         </div>
       </mat-card-subtitle>
@@ -45,6 +54,15 @@
   </mat-card>
 </a>
 <div class="distance-large">
+  <ng-container *ngIf="trader.licence === 'ODbL'">
+    <a
+      href="https://www.openstreetmap.org/copyright"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <img class="osm-large" src="../../../assets/osm-attribution-24.png" />
+    </a>
+  </ng-container>
   <ng-container *ngIf="(isTraderInBookmarks$ | async) === true">
     <button mat-button (click)="removeBookmark(trader.id)">
       <mat-icon class="green-bookmark-icon">favorite</mat-icon>
@@ -56,5 +74,5 @@
       <mat-icon>favorite_outline</mat-icon>
     </button>
   </ng-container>
-  {{ trader.distance | number: '1.2-2' }} km
+  {{ trader.distance | number: '1.2-2':'de' }} km
 </div>
