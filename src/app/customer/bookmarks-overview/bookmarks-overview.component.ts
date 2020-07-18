@@ -67,9 +67,9 @@ export class BookmarksOverviewComponent implements OnInit {
         this.imageService
           .getThumbnailUrl(profile.defaultImagePath)
           .then((x) => (profile.thumbUrl = x));
-        const id = this.map.addMarker(profile.confirmedLocation, true);
-        if (id) {
-          profile.id = id;
+        const mid = this.map.addMarker(profile.confirmedLocation, true);
+        if (mid) {
+          profile.mapid = mid;
         }
       });
       if (profiles.length > 0) {
@@ -78,10 +78,12 @@ export class BookmarksOverviewComponent implements OnInit {
     });
   }
 
-  clickCallback(id: string) {
+  clickCallback(mid: string) {
     this.traderProfiles$
       .pipe(
-        map((profiles) => profiles.findIndex((profile) => profile.id === id))
+        map((profiles) =>
+          profiles.findIndex((profile) => profile.mapid === mid)
+        )
       )
       .subscribe((index) => {
         this.bookmarkStepperList.selectedIndex = index;
