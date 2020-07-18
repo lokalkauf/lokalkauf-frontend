@@ -138,10 +138,16 @@ export class TraderOverviewComponent implements OnInit {
         city: this.currentLocation,
       });
     }
+
+    const currentFilter = this.storageService.loadTraderFilter();
+    if (currentFilter && currentFilter.value) {
+      this.setStoreType(currentFilter);
+    }
   }
 
   ngOnInit() {
     this.selectedTraderCategory = this.storageService.loadTraderFilter();
+    console.log('cat:', this.selectedTraderCategory);
     if (this.selectedTraderCategory) {
       this.storeType = this.selectedTraderCategory.value;
     }
@@ -154,7 +160,7 @@ export class TraderOverviewComponent implements OnInit {
         location.radius = this.sanitizeRadius(value);
 
         this.storageService.saveLocation(location);
-
+        console.log('range');
         this.loadLocations();
       }
     });
@@ -171,7 +177,6 @@ export class TraderOverviewComponent implements OnInit {
         this.rangeGroup
           .get('range')
           .setValue(this.paramRadius, { emitEvent: false, onlySelf: true });
-
         this.loadLocations();
       } catch {}
     });
@@ -206,11 +211,15 @@ export class TraderOverviewComponent implements OnInit {
     // and a category from Session Storage
     // is isn't equals 'all', then try again with the
     // category 'all' to repeat the initial search process.
-    if (!this.hasInitLocations && this.storeType !== 'alle') {
+    // This only works of event bubbling after changing the
+    //  value of the select box - kinda yolo
+    // think of something else, please!
+    /* if (!this.hasInitLocations && this.storeType !== 'alle') {
       this.selectedTraderCategory = this.STORE_TYPES[0];
       this.setStoreType(this.STORE_TYPES[0]);
       return;
     }
+    */
     this.odblLicense$ = of(false);
     this.locationService
       .nearBy(this.paramRadius, this.userPosition, searchtext, filter)
@@ -271,7 +280,7 @@ export class TraderOverviewComponent implements OnInit {
     if (selEvent) {
       this.storeType = selEvent.value;
       this.storageService.saveTraderFilter(selEvent);
-
+      console.log('type', selEvent);
       this.loadLocations();
     }
   }
