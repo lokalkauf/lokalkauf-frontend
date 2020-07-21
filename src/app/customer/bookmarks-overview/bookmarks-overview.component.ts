@@ -11,6 +11,8 @@ import {
 import { LkMapComponent } from 'src/app/reusables/lk-map/lk-map.component';
 import { ImageService } from 'src/app/services/image.service';
 import { MatStepper } from '@angular/material/stepper';
+import { NavigationService, Coords } from 'src/app/services/navigation.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 export interface TraderProfilesPlus extends TraderProfile {
   thumbUrl?: string;
@@ -27,6 +29,7 @@ export class BookmarksOverviewComponent implements OnInit {
   bookmarks: Observable<Bookmark[]>;
   traderProfiles$: Observable<TraderProfilesPlus[]>;
   hasProfilesInBookmark$: Observable<number> = of(0);
+  showNavigationAttribution$ = of(false);
 
   @ViewChild(LkMapComponent) map: LkMapComponent;
   @ViewChild('stepper') private bookmarkStepperList: MatStepper;
@@ -34,8 +37,11 @@ export class BookmarksOverviewComponent implements OnInit {
   constructor(
     readonly bookmarksService: BookmarksService,
     private readonly traderService: TraderService,
-    private readonly imageService: ImageService
+    private readonly imageService: ImageService,
+    private readonly storageService: StorageService,
+    private readonly navigationService: NavigationService
   ) {
+    this.showNavigationAttribution$ = of(false);
     bookmarksService
       .getBookmarksAsync()
       .pipe(
@@ -56,6 +62,7 @@ export class BookmarksOverviewComponent implements OnInit {
           this.hasProfilesInBookmark$ = of(
             bookmarkArray ? bookmarkArray.length : 0
           );
+          this.displayRouteFromCache();
         })
       )
       .subscribe();
@@ -129,6 +136,45 @@ export class BookmarksOverviewComponent implements OnInit {
   deleteBookmarks() {
     this.bookmarksService.deleteBookmarks();
     this.hasProfilesInBookmark$ = of(0);
+  }
+
+  navigate() {
+    this.traderProfiles$
+      .pipe(
+        map((profiles) => {
+          const coords = profiles.map((trader) =>
+            this.swap(trader.confirmedLocation)
+          );
+          this.navigationService.getNavigationPath(coords).subscribe((geo) => {
+            this.map.displayGeoJsonOnMap(geo);
+            this.showNavigationAttribution$ = of(true);
+          });
+        })
+      )
+      .subscribe();
+  }
+
+  displayRouteFromCache() {
+    this.traderProfiles$
+      .pipe(
+        map((profiles) => {
+          const coords = profiles.map((trader) =>
+            this.swap(trader.confirmedLocation)
+          );
+          const cachedData = this.storageService.loadCache(
+            this.navigationService.getCacheKey(coords)
+          );
+          if (cachedData) {
+            this.map.displayGeoJsonOnMap(cachedData);
+            this.showNavigationAttribution$ = of(true);
+          }
+        })
+      )
+      .subscribe();
+  }
+
+  private swap(input: number[]): number[] {
+    return [input[1], input[0]];
   }
 
   ngOnInit(): void {}

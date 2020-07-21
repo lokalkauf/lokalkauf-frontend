@@ -16,5 +16,8 @@ export const environment = {
     searchKey: '85739eacae698fba1aaf524e40fe1b99',
     indexName: 'staging_TRADERS',
   },
+  openrouteservice: {
+    apikey: '5b3ce3597851110001cf624849bebcbe63f94701b7afdcdbe298da5f',
+  },
   version: require('../../package.json').version,
 };

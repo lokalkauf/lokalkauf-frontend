@@ -147,7 +147,6 @@ export class TraderOverviewComponent implements OnInit {
 
   ngOnInit() {
     this.selectedTraderCategory = this.storageService.loadTraderFilter();
-    console.log('cat:', this.selectedTraderCategory);
     if (this.selectedTraderCategory) {
       this.storeType = this.selectedTraderCategory.value;
     }
@@ -160,7 +159,6 @@ export class TraderOverviewComponent implements OnInit {
         location.radius = this.sanitizeRadius(value);
 
         this.storageService.saveLocation(location);
-        console.log('range');
         this.loadLocations();
       }
     });

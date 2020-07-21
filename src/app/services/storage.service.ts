@@ -44,6 +44,14 @@ export class StorageService {
     return this.load('search-text');
   }
 
+  saveCache(key: string, value: string) {
+    this.save(key, value);
+  }
+
+  loadCache(key: string) {
+    return this.load(key);
+  }
+
   private save<T>(key: string, item: T, toLocalStorage?: boolean) {
     const jsonItem = JSON.stringify(item);
 

@@ -81,6 +81,7 @@ import { BookmarksOverviewComponent } from './customer/bookmarks-overview/bookma
 import { MatExpansionModule } from '@angular/material/expansion';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
+import { NavigationService } from './services/navigation.service';
 
 registerLocaleData(localeDe);
 
@@ -203,6 +204,7 @@ const routes: Routes = [
     TextService,
     SpinnerService,
     StorageService,
+    NavigationService,
     BookmarksService,
     EMailService,
     ImageService,

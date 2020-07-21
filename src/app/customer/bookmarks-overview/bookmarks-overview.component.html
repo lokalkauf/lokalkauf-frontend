@@ -69,6 +69,19 @@
     <div class="right-side">
       <lk-container>
         <lk-map (mapMarkerClick)="clickCallback($event)"></lk-map>
+        <div
+          class="openrouteservice"
+          *ngIf="showNavigationAttribution$ | async"
+        >
+          Routes by:
+          <a
+            href="https://openrouteservice.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >openrouteservice.org</a
+          >
+          | OpenStreetMap contributors
+        </div>
       </lk-container>
     </div>
   </div>
@@ -76,6 +89,10 @@
     <div>
       <button mat-button (click)="deleteBookmarks()">
         <mat-icon>delete</mat-icon>
+      </button>
+
+      <button mat-button (click)="navigate()">
+        <mat-icon>navigation</mat-icon>
       </button>
     </div>
   </ng-container>

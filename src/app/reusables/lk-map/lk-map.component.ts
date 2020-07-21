@@ -11,6 +11,8 @@ import {
   tileLayer,
   latLng,
   marker,
+  GeoJSON,
+  geoJSON,
   CircleMarker,
   circleMarker,
   LatLng,
@@ -115,6 +117,15 @@ export class LkMapComponent implements OnInit, AfterViewInit {
         duration: 2,
       });
     }
+  }
+
+  public displayGeoJsonOnMap(geo: any) {
+    const greenStyle = {
+      color: '#009300',
+      opacity: 0.65,
+    };
+
+    geoJSON(geo, { style: greenStyle }).addTo(this.map);
   }
 
   public addMarker(position?: number[], emitClickEvent?: boolean) {
