@@ -2,12 +2,18 @@ import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
 import { Observable, of, Subject } from 'rxjs';
 import { Bookmark } from '../models/bookmark';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { BookmarkList } from '../models/bookmarkList';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class BookmarksService {
   private bookmarkSubject: Subject<number> = new Subject<number>();
 
-  constructor(private readonly storageService: StorageService) {
+  constructor(
+    private readonly storageService: StorageService,
+    private readonly db: AngularFirestore
+  ) {
     if (this.getBookmarks()) {
       setTimeout(() => {
         this.bookmarkSubject.next(this.getBookmarks().length);
@@ -15,6 +21,7 @@ export class BookmarksService {
     }
   }
 
+  //#region single
   getBookmarks(): Bookmark[] {
     const loaded = this.storageService.loadBookmarks();
     return loaded ? loaded : [];
@@ -72,11 +79,42 @@ export class BookmarksService {
       : false;
   }
 
+  //#endregion
+
   private updateBookmarksCount(): void {
     this.bookmarkSubject.next(this.getBookmarks().length);
   }
 
   public getBookmarkCount(): Observable<number> {
     return this.bookmarkSubject;
+  }
+
+  public async updateBookmarkList(bookmarkList: BookmarkList) {
+    if (!bookmarkList.id) {
+      const result = await this.db
+        .collection<Omit<BookmarkList, 'id'>>('Merkliste')
+        .add(bookmarkList);
+      if (result) {
+        this.storageService.saveActiveBookmarkId(result.id);
+        return { ...bookmarkList, id: result.id };
+      }
+    } else {
+      console.log('upd', bookmarkList.id);
+      return this.db
+        .collection<Omit<BookmarkList, 'id'>>('Merkliste')
+        .doc(bookmarkList.id)
+        .update(bookmarkList);
+    }
+  }
+
+  public loadBookmarkList(id: string): Observable<BookmarkList> {
+    if (id) {
+      return this.db
+        .collection<BookmarkList>(`Merkliste`)
+        .doc<Omit<BookmarkList, 'id'>>(id)
+        .valueChanges()
+        .pipe(map((x) => ({ ...x })));
+    }
+    return of(undefined);
   }
 }

@@ -2,8 +2,8 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { BookmarksService } from 'src/app/services/bookmarks.service';
 import { TraderService } from 'src/app/services/trader.service';
 import { Bookmark } from 'src/app/models/bookmark';
-import { Observable, from, Subject, of } from 'rxjs';
-import { map, tap, distinctUntilChanged } from 'rxjs/operators';
+import { Observable, from, of } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import {
   TraderProfileStatus,
   TraderProfile,
@@ -13,6 +13,7 @@ import { ImageService } from 'src/app/services/image.service';
 import { MatStepper } from '@angular/material/stepper';
 import { NavigationService, Coords } from 'src/app/services/navigation.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { BookmarkList } from 'src/app/models/bookmarkList';
 
 export interface TraderProfilesPlus extends TraderProfile {
   thumbUrl?: string;
@@ -171,6 +172,73 @@ export class BookmarksOverviewComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+
+  private gatherDataForSave() {
+    return this.traderProfiles$.pipe(
+      map((profiles) => {
+        const coords = profiles.map((trader) =>
+          this.swap(trader.confirmedLocation)
+        );
+
+        return {
+          traders: profiles.map((x) => ({ traderid: x.id })),
+          geo: this.storageService.loadCache(
+            this.navigationService.getCacheKey(coords)
+          ),
+        };
+      })
+    );
+  }
+
+  async save() {
+    this.gatherDataForSave().subscribe(async (data) => {
+      const bookmarklist: BookmarkList = {
+        bookmarks: data.traders as Bookmark[],
+        geojson: data.geo ? btoa(JSON.stringify(data.geo)) : null,
+        name: 'abc',
+        creationdate: new Date().toLocaleString(),
+      };
+
+      if (this.storageService.loadActiveBookmarkId()) {
+        bookmarklist.id = this.storageService.loadActiveBookmarkId();
+      }
+      const result = await this.bookmarksService.updateBookmarkList(
+        bookmarklist
+      );
+
+      if (result) {
+        console.log(result);
+      }
+    });
+  }
+
+  load() {
+    if (!this.storageService.loadActiveBookmarkId()) {
+      return;
+    }
+    this.bookmarksService
+      .loadBookmarkList(this.storageService.loadActiveBookmarkId())
+      .subscribe((bklist: BookmarkList) => {
+        const bookmarkArray = bklist.bookmarks.map(
+          (traderlist) => traderlist.traderid
+        );
+        if (bookmarkArray) {
+          this.traderProfiles$ = from(
+            this.traderService.getTraderProfiles(
+              bookmarkArray,
+              TraderProfileStatus.PUBLIC
+            )
+          );
+
+          this.hasProfilesInBookmark$ = of(
+            bookmarkArray ? bookmarkArray.length : 0
+          );
+          if (bklist.geojson) {
+            this.map.displayGeoJsonOnMap(JSON.parse(atob(bklist.geojson)));
+          }
+        }
+      });
   }
 
   private swap(input: number[]): number[] {

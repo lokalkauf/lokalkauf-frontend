@@ -36,6 +36,15 @@ export class StorageService {
   loadBookmarks(): Bookmark[] {
     return this.load('bookmarks');
   }
+
+  saveActiveBookmarkId(id: string) {
+    this.save('active-bookmark-id', id, true);
+  }
+
+  loadActiveBookmarkId(): string | undefined {
+    return this.load('active-bookmark-id', true);
+  }
+
   saveTextsearch(searchString: string) {
     this.save('search-text', searchString);
   }
