@@ -13,7 +13,12 @@
       <a mat-button [routerLink]="'/faq'">Hilfe</a>
     </div>
     <span class="menu-spacer"></span>
-    <a mat-button class="avatar bookmarks" [routerLink]="'/bookmarks'">
+    <a
+      mat-button
+      [matMenuTriggerFor]="bookmarkMenu"
+      class="avatar bookmarks"
+      [routerLink]="'/bookmarks'"
+    >
       <mat-icon
         color="primary"
         [matBadgeHidden]="(bookmarks | async) <= 0"
@@ -23,6 +28,10 @@
         >favorite</mat-icon
       >
     </a>
+    <mat-menu #bookmarkMenu="matMenu" class="mat-elevation-z2">
+      <button mat-menu-item (click)="clearActiveBookmarkId()">neu...</button>
+    </mat-menu>
+
     <a
       mat-button
       [matMenuTriggerFor]="storeMenu"

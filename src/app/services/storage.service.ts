@@ -45,6 +45,22 @@ export class StorageService {
     return this.load('active-bookmark-id', true);
   }
 
+  savePrivateBookmark(id: string) {
+    if (!!id || !id || id.length === 0) {
+      return;
+    }
+    const privateBookmarks = this.loadPrivateBookmarks();
+    if (privateBookmarks.filter((ids) => ids === id).length === 0) {
+      privateBookmarks.push(id);
+      this.save('private-bookmarks', privateBookmarks, true);
+    }
+  }
+
+  loadPrivateBookmarks(): string[] {
+    const result = this.load<string[]>('private-bookmarks', true);
+    return !result ? [] : result;
+  }
+
   saveTextsearch(searchString: string) {
     this.save('search-text', searchString);
   }

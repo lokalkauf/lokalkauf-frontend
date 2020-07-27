@@ -1,92 +1,87 @@
 import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
 import { Bookmark } from '../models/bookmark';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { BookmarkList } from '../models/bookmarkList';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
+
+export enum BOOKMARK_MODE {
+  LOCAL = 'LOCAL',
+  REMOTE = 'REMOTE',
+  FOLLOWED = 'FOLLOWED',
+}
 
 @Injectable()
 export class BookmarksService {
-  private bookmarkSubject: Subject<number> = new Subject<number>();
+  public bookmarkSubject: Subject<number> = new Subject<number>();
+  private bookmarkMode: BOOKMARK_MODE = BOOKMARK_MODE.LOCAL;
+
+  currentBookmarklist = new BehaviorSubject<BookmarkList>(undefined);
 
   constructor(
     private readonly storageService: StorageService,
     private readonly db: AngularFirestore
   ) {
-    if (this.getBookmarks()) {
-      setTimeout(() => {
-        this.bookmarkSubject.next(this.getBookmarks().length);
-      }, 1000);
+    this.currentBookmarklist.subscribe((bookmarkList) => {
+      if (bookmarkList) {
+        this.bookmarkSubject.next(bookmarkList.bookmarks.length);
+      } else {
+        this.bookmarkSubject.next(null);
+      }
+    });
+  }
+
+  addTrader(bookmark: Bookmark) {
+    if (this.currentBookmarklist) {
+      const currentList = this.currentBookmarklist.getValue();
+      if (currentList) {
+        if (currentList.bookmarks.length === 0) {
+          currentList.bookmarks.push(bookmark);
+        } else {
+          if (
+            currentList.bookmarks.filter(
+              (y) => y.traderid === bookmark.traderid
+            ).length === 0
+          ) {
+            currentList.bookmarks.push(bookmark);
+          }
+        }
+        this.updateBookmarkList(currentList);
+      }
     }
   }
 
-  //#region single
-  getBookmarks(): Bookmark[] {
-    const loaded = this.storageService.loadBookmarks();
-    return loaded ? loaded : [];
-  }
-
-  getBookmarksAsync(): Observable<Bookmark[]> {
-    const loaded = this.storageService.loadBookmarks();
-    return loaded ? of(loaded) : of([]);
-  }
-
-  addTrader(bookmark: Bookmark): Bookmark[] {
-    const allBookmarks = this.getBookmarks();
-    if (!allBookmarks) {
-      const bookmarks: Bookmark[] = new Array();
-      bookmarks.push(bookmark);
-      this.storageService.saveBookmarks(bookmarks);
-      this.updateBookmarksCount();
-      return bookmarks;
+  removeTrader(bookmark: Bookmark) {
+    if (this.currentBookmarklist) {
+      const currentList = this.currentBookmarklist.getValue();
+      if (currentList) {
+        if (this.isTraderInBookmarks(bookmark.traderid)) {
+          currentList.bookmarks = currentList.bookmarks.filter(
+            (y) => y.traderid !== bookmark.traderid
+          );
+          this.updateBookmarkList(currentList);
+        }
+      }
     }
-
-    if (
-      allBookmarks.filter((x) => x.traderid === bookmark.traderid).length === 0
-    ) {
-      allBookmarks.push(bookmark);
-      this.storageService.saveBookmarks(allBookmarks);
-    }
-    this.updateBookmarksCount();
-    return allBookmarks;
-  }
-
-  removeTrader(bookmark: Bookmark): Bookmark[] {
-    const allBookmarks = this.getBookmarks();
-    if (
-      allBookmarks.filter((x) => x.traderid === bookmark.traderid).length > 0
-    ) {
-      this.storageService.saveBookmarks(
-        allBookmarks.filter((x) => x.traderid !== bookmark.traderid)
-      );
-    }
-    this.updateBookmarksCount();
-    return allBookmarks;
   }
 
   deleteBookmarks() {
-    this.storageService.saveBookmarks([]);
-    this.updateBookmarksCount();
+    console.log('NOT IMPLEMENTED YET');
+    // this.storageService.saveBookmarks([]);
   }
 
   isTraderInBookmarks(traderid: string): boolean {
-    const allBookmarks = this.getBookmarks();
-
-    return allBookmarks &&
-      allBookmarks.filter((x) => x.traderid === traderid).length > 0
-      ? true
-      : false;
-  }
-
-  //#endregion
-
-  private updateBookmarksCount(): void {
-    this.bookmarkSubject.next(this.getBookmarks().length);
-  }
-
-  public getBookmarkCount(): Observable<number> {
-    return this.bookmarkSubject;
+    if (
+      this.currentBookmarklist.getValue() &&
+      this.currentBookmarklist.getValue().bookmarks
+    ) {
+      return (
+        this.currentBookmarklist
+          .getValue()
+          .bookmarks.filter((trader) => trader.traderid === traderid).length > 0
+      );
+    }
   }
 
   public async updateBookmarkList(bookmarkList: BookmarkList) {
@@ -95,15 +90,23 @@ export class BookmarksService {
         .collection<Omit<BookmarkList, 'id'>>('Merkliste')
         .add(bookmarkList);
       if (result) {
+        const oldActiveId = this.storageService.loadActiveBookmarkId();
+        this.storageService.savePrivateBookmark(oldActiveId);
+        this.storageService.savePrivateBookmark(result.id);
         this.storageService.saveActiveBookmarkId(result.id);
-        return { ...bookmarkList, id: result.id };
+
+        const returnValue = { ...bookmarkList, id: result.id };
+        this.updateLocal(returnValue);
+        return returnValue;
       }
     } else {
       console.log('upd', bookmarkList.id);
-      return this.db
+      const update = this.db
         .collection<Omit<BookmarkList, 'id'>>('Merkliste')
         .doc(bookmarkList.id)
         .update(bookmarkList);
+      this.updateLocal(bookmarkList);
+      return update;
     }
   }
 
@@ -113,8 +116,24 @@ export class BookmarksService {
         .collection<BookmarkList>(`Merkliste`)
         .doc<Omit<BookmarkList, 'id'>>(id)
         .valueChanges()
-        .pipe(map((x) => ({ ...x })));
+        .pipe(
+          map((bookmarkList) => {
+            console.log('load from remote');
+            this.updateLocal(bookmarkList);
+            return { ...bookmarkList };
+          })
+        );
     }
     return of(undefined);
+  }
+
+  public clearCurrentBookmarklist() {
+    this.updateLocal(undefined);
+    this.storageService.saveActiveBookmarkId('');
+  }
+
+  private updateLocal(bookmarklist: BookmarkList) {
+    console.log('updateLocal', bookmarklist);
+    this.currentBookmarklist.next(bookmarklist);
   }
 }

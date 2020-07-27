@@ -19,6 +19,8 @@ import { LocationService } from '../../services/location.service';
 import { ImageService } from 'src/app/services/image.service';
 import { SpinnerService } from 'src/app/services/spinner.service';
 import { AngularFireAnalytics } from '@angular/fire/analytics';
+import { MatDialog } from '@angular/material/dialog';
+import { BookmarksDialogComponent } from '../bookmarks-dialog/bookmarks-dialog.component';
 
 @Component({
   selector: 'app-trader-overview',
@@ -110,13 +112,13 @@ export class TraderOverviewComponent implements OnInit {
   });
   constructor(
     private route: ActivatedRoute,
-    public readonly storageService: StorageService,
-    public userService: UserService,
     private locationService: LocationService,
     private imageService: ImageService,
     private spinnerService: SpinnerService,
-    public device: DeviceDetectorService,
-    private analytics: AngularFireAnalytics
+    private analytics: AngularFireAnalytics,
+    public readonly storageService: StorageService,
+    public userService: UserService,
+    public device: DeviceDetectorService
   ) {
     this.storeTypes = of(this.STORE_TYPES);
     this.odblLicense$ = of(false);

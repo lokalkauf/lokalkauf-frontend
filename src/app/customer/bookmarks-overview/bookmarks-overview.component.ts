@@ -2,8 +2,8 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { BookmarksService } from 'src/app/services/bookmarks.service';
 import { TraderService } from 'src/app/services/trader.service';
 import { Bookmark } from 'src/app/models/bookmark';
-import { Observable, from, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Observable, from, of, BehaviorSubject } from 'rxjs';
+import { map, tap, distinctUntilChanged } from 'rxjs/operators';
 import {
   TraderProfileStatus,
   TraderProfile,
@@ -28,7 +28,9 @@ export interface TraderProfilesPlus extends TraderProfile {
 })
 export class BookmarksOverviewComponent implements OnInit {
   bookmarks: Observable<Bookmark[]>;
-  traderProfiles$: Observable<TraderProfilesPlus[]>;
+  traderProfiles$: BehaviorSubject<TraderProfilesPlus[]> = new BehaviorSubject<
+    TraderProfilesPlus[]
+  >(null);
   hasProfilesInBookmark$: Observable<number> = of(0);
   showNavigationAttribution$ = of(false);
 
@@ -43,32 +45,13 @@ export class BookmarksOverviewComponent implements OnInit {
     private readonly navigationService: NavigationService
   ) {
     this.showNavigationAttribution$ = of(false);
-    bookmarksService
-      .getBookmarksAsync()
-      .pipe(
-        map((bookmarks) => {
-          if (bookmarks) {
-            return bookmarks.map((bookmark) => bookmark.traderid);
-          }
-        }),
-        tap((bookmarkArray) => {
-          if (bookmarkArray) {
-            this.traderProfiles$ = from(
-              this.traderService.getTraderProfiles(
-                bookmarkArray,
-                TraderProfileStatus.PUBLIC
-              )
-            );
-          }
-          this.hasProfilesInBookmark$ = of(
-            bookmarkArray ? bookmarkArray.length : 0
-          );
-          this.displayRouteFromCache();
-        })
-      )
-      .subscribe();
+
+    this.load();
 
     this.traderProfiles$.subscribe((profiles) => {
+      if (!profiles) {
+        return;
+      }
       profiles.sort(this.sortProfiles());
 
       profiles.forEach((profile) => {
@@ -224,26 +207,27 @@ export class BookmarksOverviewComponent implements OnInit {
           (traderlist) => traderlist.traderid
         );
         if (bookmarkArray) {
-          this.traderProfiles$ = from(
+          from(
             this.traderService.getTraderProfiles(
               bookmarkArray,
               TraderProfileStatus.PUBLIC
             )
-          );
+          ).subscribe((x) => this.traderProfiles$.next(x));
 
           this.hasProfilesInBookmark$ = of(
             bookmarkArray ? bookmarkArray.length : 0
           );
           if (bklist.geojson) {
             this.map.displayGeoJsonOnMap(JSON.parse(atob(bklist.geojson)));
+            this.showNavigationAttribution$ = of(true);
           }
         }
       });
   }
 
+  ngOnInit(): void {}
+
   private swap(input: number[]): number[] {
     return [input[1], input[0]];
   }
-
-  ngOnInit(): void {}
 }

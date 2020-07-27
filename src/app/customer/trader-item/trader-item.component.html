@@ -31,7 +31,7 @@
             </button>
           </ng-container>
 
-          <ng-container *ngIf="(isTraderInBookmarks$ | async) === false">
+          <ng-container *ngIf="(isTraderInBookmarks$ | async) !== true">
             <button
               mat-icon-button
               (click)="addBookmarkSmall($event, trader.id)"
@@ -69,7 +69,7 @@
     </button>
   </ng-container>
 
-  <ng-container *ngIf="(isTraderInBookmarks$ | async) === false">
+  <ng-container *ngIf="(isTraderInBookmarks$ | async) !== true">
     <button mat-button (click)="addBookmark(trader.id)">
       <mat-icon>favorite_outline</mat-icon>
     </button>

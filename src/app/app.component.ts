@@ -64,9 +64,19 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.bookmarks = this.bookmarkService
-      .getBookmarkCount()
-      .pipe(distinctUntilChanged());
+    this.bookmarkService.bookmarkSubject.subscribe(
+      (traderCount) => (this.bookmarks = of(traderCount))
+    );
+
+    const currentBookmarkId = this.storageService.loadActiveBookmarkId();
+    console.log(currentBookmarkId);
+    if (currentBookmarkId) {
+      this.bookmarkService.loadBookmarkList(currentBookmarkId).subscribe();
+    }
+  }
+
+  clearActiveBookmarkId() {
+    this.bookmarkService.clearCurrentBookmarklist();
   }
 
   openCookieConsent() {

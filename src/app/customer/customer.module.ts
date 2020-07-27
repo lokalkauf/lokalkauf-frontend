@@ -34,7 +34,9 @@ import { BookmarksService } from '../services/bookmarks.service';
 import { BookmarksOverviewComponent } from './bookmarks-overview/bookmarks-overview.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
 import { LkMapComponent } from '../reusables/lk-map/lk-map.component';
+import { BookmarksDialogComponent } from './bookmarks-dialog/bookmarks-dialog.component';
 
 const routes: Routes = [
   {
@@ -59,6 +61,7 @@ const routes: Routes = [
     ProductDetailFeedbackComponent,
     BuyConfirmationComponent,
     BookmarksOverviewComponent,
+    BookmarksDialogComponent,
     ShoppingcartComponent,
     TraderOverviewComponent,
     TraderItemComponent,
@@ -78,9 +81,10 @@ const routes: Routes = [
     MatIconModule,
     MatInputModule,
     MatButtonModule,
+    MatDialogModule,
+    MatExpansionModule,
     MatSliderModule,
     MatStepperModule,
-    MatExpansionModule,
     FontAwesomeModule,
     ReusablesModule,
     PipesModule,
