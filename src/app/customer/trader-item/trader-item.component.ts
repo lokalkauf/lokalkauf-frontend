@@ -28,9 +28,13 @@ export class TraderItemComponent implements OnInit {
   ngOnInit(): void {
     this.bookmarkService.currentBookmarklist
       .pipe(
-        map((x) => {
-          if (x) {
-            this.isTraderInBookmarks$ = of(this.updateSelection(x.bookmarks));
+        map((bookmark) => {
+          if (bookmark) {
+            this.isTraderInBookmarks$ = of(
+              this.updateSelection(bookmark.bookmarks)
+            );
+          } else {
+            this.isTraderInBookmarks$ = of(false);
           }
         })
       )

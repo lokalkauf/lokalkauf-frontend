@@ -13,12 +13,7 @@
       <a mat-button [routerLink]="'/faq'">Hilfe</a>
     </div>
     <span class="menu-spacer"></span>
-    <a
-      mat-button
-      [matMenuTriggerFor]="bookmarkMenu"
-      class="avatar bookmarks"
-      [routerLink]="'/bookmarks'"
-    >
+    <a mat-button [matMenuTriggerFor]="bookmarkMenu" class="avatar bookmarks">
       <mat-icon
         color="primary"
         [matBadgeHidden]="(bookmarks | async) <= 0"
@@ -29,7 +24,24 @@
       >
     </a>
     <mat-menu #bookmarkMenu="matMenu" class="mat-elevation-z2">
-      <button mat-menu-item (click)="clearActiveBookmarkId()">neu...</button>
+      <a mat-menu-item [routerLink]="'/bookmarks'">
+        <mat-icon>map</mat-icon>Kartenansicht
+      </a>
+      <ng-container *ngFor="let bk of localBookmarks | async">
+        <button mat-menu-item (click)="loadBookmarkList(bk.id)">
+          <ng-container *ngIf="bk.id === currentBookmarkId">
+            <mat-icon color="primary">favorite</mat-icon>
+          </ng-container>
+          <ng-container *ngIf="bk.id !== currentBookmarkId">
+            <mat-icon>favorite_outline</mat-icon>
+          </ng-container>
+          {{ bk.name }}
+        </button>
+      </ng-container>
+
+      <button mat-menu-item (click)="clearActiveBookmarkId()">
+        <mat-icon>playlist_add</mat-icon>Neu
+      </button>
     </mat-menu>
 
     <a

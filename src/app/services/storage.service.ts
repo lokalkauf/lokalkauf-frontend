@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { GeoAddress } from '../models/geoAddress';
 import { LkSelectOptions } from '../reusables/lk-select/lk-select.component';
 import { Bookmark } from '../models/bookmark';
+import { LocalBookmark } from './bookmarks.service';
 
 @Injectable()
 export class StorageService {
@@ -45,19 +46,23 @@ export class StorageService {
     return this.load('active-bookmark-id', true);
   }
 
-  savePrivateBookmark(id: string) {
-    if (!!id || !id || id.length === 0) {
+  savePrivateBookmark(localBookmark: LocalBookmark) {
+    if (!localBookmark || localBookmark.id.length === 0) {
       return;
     }
     const privateBookmarks = this.loadPrivateBookmarks();
-    if (privateBookmarks.filter((ids) => ids === id).length === 0) {
-      privateBookmarks.push(id);
+    if (
+      !privateBookmarks ||
+      privateBookmarks.filter((local) => local.id === localBookmark.id)
+        .length === 0
+    ) {
+      privateBookmarks.push(localBookmark);
       this.save('private-bookmarks', privateBookmarks, true);
     }
   }
 
-  loadPrivateBookmarks(): string[] {
-    const result = this.load<string[]>('private-bookmarks', true);
+  loadPrivateBookmarks(): LocalBookmark[] {
+    const result = this.load<LocalBookmark[]>('private-bookmarks', true);
     return !result ? [] : result;
   }
 

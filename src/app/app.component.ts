@@ -5,7 +5,7 @@ import { UserService } from './services/user.service';
 import { StorageService } from './services/storage.service';
 import { AngularFireAnalytics } from '@angular/fire/analytics';
 import { CookieService } from 'ngx-cookie-service';
-import { BookmarksService } from './services/bookmarks.service';
+import { BookmarksService, LocalBookmark } from './services/bookmarks.service';
 import { Observable, of } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { faFacebookF, faInstagram } from '@fortawesome/free-brands-svg-icons';
@@ -21,6 +21,9 @@ export class AppComponent implements OnInit, OnDestroy {
   bookmarks: Observable<number>;
   faFacebookF = faFacebookF;
   faInstagram = faInstagram;
+
+  localBookmarks: Observable<LocalBookmark[]>;
+  currentBookmarkId: string;
 
   constructor(
     public router: Router,
@@ -68,10 +71,21 @@ export class AppComponent implements OnInit, OnDestroy {
       (traderCount) => (this.bookmarks = of(traderCount))
     );
 
-    const currentBookmarkId = this.storageService.loadActiveBookmarkId();
-    console.log(currentBookmarkId);
-    if (currentBookmarkId) {
-      this.bookmarkService.loadBookmarkList(currentBookmarkId).subscribe();
+    this.currentBookmarkId = this.storageService.loadActiveBookmarkId();
+    if (this.currentBookmarkId) {
+      this.bookmarkService.loadBookmarkList(this.currentBookmarkId).subscribe();
+    }
+
+    this.bookmarkService.currentBookmarklist.subscribe((x) => {
+      this.localBookmarks = of(this.bookmarkService.getLocalBookmarkLists());
+    });
+  }
+
+  loadBookmarkList(id: string) {
+    if (id && id.length > 0) {
+      this.storageService.saveActiveBookmarkId(id);
+      this.bookmarkService.loadBookmarkList(id).subscribe();
+      this.currentBookmarkId = id;
     }
   }
 

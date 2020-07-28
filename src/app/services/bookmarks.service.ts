@@ -12,6 +12,11 @@ export enum BOOKMARK_MODE {
   FOLLOWED = 'FOLLOWED',
 }
 
+export interface LocalBookmark {
+  id: string;
+  name: string;
+}
+
 @Injectable()
 export class BookmarksService {
   public bookmarkSubject: Subject<number> = new Subject<number>();
@@ -86,13 +91,16 @@ export class BookmarksService {
 
   public async updateBookmarkList(bookmarkList: BookmarkList) {
     if (!bookmarkList.id) {
+      console.log('new');
       const result = await this.db
         .collection<Omit<BookmarkList, 'id'>>('Merkliste')
         .add(bookmarkList);
       if (result) {
         const oldActiveId = this.storageService.loadActiveBookmarkId();
-        this.storageService.savePrivateBookmark(oldActiveId);
-        this.storageService.savePrivateBookmark(result.id);
+        this.storageService.savePrivateBookmark({
+          id: result.id,
+          name: bookmarkList.name,
+        });
         this.storageService.saveActiveBookmarkId(result.id);
 
         const returnValue = { ...bookmarkList, id: result.id };
@@ -130,6 +138,12 @@ export class BookmarksService {
   public clearCurrentBookmarklist() {
     this.updateLocal(undefined);
     this.storageService.saveActiveBookmarkId('');
+  }
+
+  public getLocalBookmarkLists(): LocalBookmark[] {
+    return this.storageService
+      .loadPrivateBookmarks()
+      .filter((bookmark) => bookmark.id !== '');
   }
 
   private updateLocal(bookmarklist: BookmarkList) {
