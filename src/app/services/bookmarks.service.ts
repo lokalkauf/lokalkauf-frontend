@@ -136,8 +136,8 @@ export class BookmarksService {
   }
 
   public clearCurrentBookmarklist() {
-    this.updateLocal(undefined);
     this.storageService.saveActiveBookmarkId('');
+    this.updateLocal(undefined);
   }
 
   public getLocalBookmarkLists(): LocalBookmark[] {

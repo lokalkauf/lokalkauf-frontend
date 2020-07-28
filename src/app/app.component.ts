@@ -77,6 +77,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     this.bookmarkService.currentBookmarklist.subscribe((x) => {
+      this.currentBookmarkId = this.storageService.loadActiveBookmarkId();
       this.localBookmarks = of(this.bookmarkService.getLocalBookmarkLists());
     });
   }
