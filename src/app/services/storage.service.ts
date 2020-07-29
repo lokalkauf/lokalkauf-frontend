@@ -60,6 +60,15 @@ export class StorageService {
       this.save('private-bookmarks', privateBookmarks, true);
     }
   }
+  removePrivateBookmark(bookmarkid: string) {
+    const bookmarks = this.loadPrivateBookmarks();
+    if (bookmarks) {
+      const privateBookmarks = bookmarks.filter(
+        (bookmark) => bookmark.id !== bookmarkid
+      );
+      this.save('private-bookmarks', privateBookmarks, true);
+    }
+  }
 
   loadPrivateBookmarks(): LocalBookmark[] {
     const result = this.load<LocalBookmark[]>('private-bookmarks', true);

@@ -71,9 +71,16 @@ export class BookmarksService {
     }
   }
 
-  deleteBookmarks() {
-    console.log('NOT IMPLEMENTED YET');
-    // this.storageService.saveBookmarks([]);
+  async deleteBookmark() {
+    const bookmarkid = this.storageService.loadActiveBookmarkId();
+    if (bookmarkid) {
+      this.storageService.removePrivateBookmark(bookmarkid);
+      await this.db
+        .collection<Omit<BookmarkList, 'id'>>(`Merkliste`)
+        .doc(bookmarkid)
+        .delete();
+    }
+    this.clearCurrentBookmarklist();
   }
 
   isTraderInBookmarks(traderid: string): boolean {
@@ -111,7 +118,7 @@ export class BookmarksService {
       console.log('upd', bookmarkList.id);
       const update = this.db
         .collection<Omit<BookmarkList, 'id'>>('Merkliste')
-        .doc(bookmarkList.id)
+        .doc<Omit<BookmarkList, 'id'>>(bookmarkList.id)
         .update(bookmarkList);
       this.updateLocal(bookmarkList);
       return update;
@@ -127,8 +134,9 @@ export class BookmarksService {
         .pipe(
           map((bookmarkList) => {
             console.log('load from remote');
-            this.updateLocal(bookmarkList);
-            return { ...bookmarkList };
+            const retval = { ...bookmarkList, id };
+            this.updateLocal(retval);
+            return retval;
           })
         );
     }

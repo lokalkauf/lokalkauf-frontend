@@ -119,8 +119,8 @@ export class BookmarksOverviewComponent implements OnInit {
     }
   }
 
-  deleteBookmarks() {
-    this.bookmarksService.deleteBookmarks();
+  deleteBookmark() {
+    this.bookmarksService.deleteBookmark();
     this.hasProfilesInBookmark$ = of(0);
   }
 
@@ -183,7 +183,7 @@ export class BookmarksOverviewComponent implements OnInit {
       const bookmarklist: BookmarkList = {
         bookmarks: data.traders as Bookmark[],
         geojson: data.geo ? btoa(JSON.stringify(data.geo)) : null,
-        name: 'abc',
+        name: this.bookmarksService.currentBookmarklist.getValue().name,
         creationdate: new Date().toLocaleString(),
       };
 
@@ -207,6 +207,9 @@ export class BookmarksOverviewComponent implements OnInit {
     this.bookmarksService
       .loadBookmarkList(this.storageService.loadActiveBookmarkId())
       .subscribe((bklist: BookmarkList) => {
+        if (!bklist || !bklist.bookmarks) {
+          return;
+        }
         const bookmarkArray = bklist.bookmarks.map(
           (traderlist) => traderlist.traderid
         );
