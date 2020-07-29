@@ -128,16 +128,22 @@ export class LkMapComponent implements OnInit, AfterViewInit {
     geoJSON(geo, { style: greenStyle }).addTo(this.map);
   }
 
+  public clearAllMarkers() {
+    if (this.markers && this.markers.length > 0) {
+      this.markers.forEach((m) => this.map.removeLayer(m));
+    }
+  }
+
   public addMarker(position?: number[], emitClickEvent?: boolean) {
     const pos = position ? this.creeateLatLng(position) : this.map.getCenter();
 
     const id = uuid();
     if (emitClickEvent) {
-      marker(pos, { alt: id, icon: this.heartIconBig })
-        .addTo(this.map)
-        .on('click', (e) => {
-          this.mapMarkerClick.emit(id);
-        });
+      const myMarker = marker(pos, { alt: id, icon: this.heartIconBig });
+      myMarker.addTo(this.map).on('click', (e) => {
+        this.mapMarkerClick.emit(id);
+      });
+      this.markers.push(myMarker);
     } else {
       marker(pos, { alt: id, icon: this.heartIconBig }).addTo(this.map);
     }

@@ -54,6 +54,8 @@ export class BookmarksOverviewComponent implements OnInit {
       }
       profiles.sort(this.sortProfiles());
 
+      this.map.clearAllMarkers();
+
       profiles.forEach((profile) => {
         this.imageService
           .getThumbnailUrl(profile.defaultImagePath)
@@ -225,7 +227,15 @@ export class BookmarksOverviewComponent implements OnInit {
       });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.bookmarksService.bookmarkSubject
+      .pipe(distinctUntilChanged())
+      .subscribe((x) => {
+        if (x) {
+          this.load();
+        }
+      });
+  }
 
   private swap(input: number[]): number[] {
     return [input[1], input[0]];
