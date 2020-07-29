@@ -131,6 +131,7 @@ export class BookmarksOverviewComponent implements OnInit {
           const coords = profiles.map((trader) =>
             this.swap(trader.confirmedLocation)
           );
+          this.map.clearRoute();
           this.navigationService.getNavigationPath(coords).subscribe((geo) => {
             this.map.displayGeoJsonOnMap(geo);
             this.showNavigationAttribution$ = of(true);
@@ -150,6 +151,7 @@ export class BookmarksOverviewComponent implements OnInit {
           const cachedData = this.storageService.loadCache(
             this.navigationService.getCacheKey(coords)
           );
+          this.map.clearRoute();
           if (cachedData) {
             this.map.displayGeoJsonOnMap(cachedData);
             this.showNavigationAttribution$ = of(true);
@@ -219,6 +221,7 @@ export class BookmarksOverviewComponent implements OnInit {
           this.hasProfilesInBookmark$ = of(
             bookmarkArray ? bookmarkArray.length : 0
           );
+          this.map.clearRoute();
           if (bklist.geojson) {
             this.map.displayGeoJsonOnMap(JSON.parse(atob(bklist.geojson)));
             this.showNavigationAttribution$ = of(true);

@@ -80,6 +80,8 @@ export class LkMapComponent implements OnInit, AfterViewInit {
     // }),
   ];
 
+  route: GeoJSON<any>;
+
   constructor(private geo: GeoService) {}
 
   ngAfterViewInit(): void {}
@@ -125,12 +127,20 @@ export class LkMapComponent implements OnInit, AfterViewInit {
       opacity: 0.65,
     };
 
-    geoJSON(geo, { style: greenStyle }).addTo(this.map);
+    const newRoute = geoJSON(geo, { style: greenStyle });
+    this.route = newRoute;
+    newRoute.addTo(this.map);
   }
 
   public clearAllMarkers() {
     if (this.markers && this.markers.length > 0) {
       this.markers.forEach((m) => this.map.removeLayer(m));
+    }
+  }
+
+  public clearRoute() {
+    if (this.route) {
+      this.map.removeLayer(this.route);
     }
   }
 
