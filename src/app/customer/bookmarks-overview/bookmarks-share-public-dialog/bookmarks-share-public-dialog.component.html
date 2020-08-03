@@ -1,0 +1,36 @@
+<div>
+  <h1>Merkliste teilen</h1>
+  <div class="abc">
+    Du kannst Deine Merkliste mit deinen Freunden, Bekannten <br />über Social
+    Meda teilen.
+  </div>
+  <div *ngIf="(isShared$ | async) === false">
+    <div>Aktuell ist deine Liste nicht geteilt</div>
+    <lk-button type="button" (click)="shareNow()">Jetzt teilen</lk-button>
+  </div>
+  <div *ngIf="(isShared$ | async) === true">
+    Teile diesen QR-Code:
+    <div class="qr-center">
+      <qrcode
+        [qrdata]="getCurrentPublicUrl()"
+        [width]="256"
+        [errorCorrectionLevel]="'M'"
+        [elementType]="'svg'"
+      >
+      </qrcode>
+    </div>
+    <div>
+      Oder du teilst diesen Link: <br /><a
+        href="{{ getCurrentPublicUrl() }}"
+        target="_blank"
+        >{{ getCurrentPublicUrl() }}</a
+      >
+    </div>
+    <lk-button type="button" (click)="closeDialog()"
+      >Nicht mehr teilen</lk-button
+    >
+  </div>
+  <div class="abc">
+    <lk-button type="button" (click)="closeDialog()">Schließen</lk-button>
+  </div>
+</div>

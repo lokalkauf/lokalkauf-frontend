@@ -37,6 +37,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LkMapComponent } from '../reusables/lk-map/lk-map.component';
 import { BookmarksDialogComponent } from './bookmarks-dialog/bookmarks-dialog.component';
+import { QRCodeModule } from 'angularx-qrcode';
+import { BookmarksPrivateImportComponent } from './bookmarks-private-import/bookmarks-private-import.component';
+// tslint:disable-next-line:max-line-length
+import { BookmarksSharePrivateDialogComponent } from './bookmarks-overview/bookmarks-share-private-dialog/bookmarks-share-private-dialog.component';
+// tslint:disable-next-line:max-line-length
+import { BookmarksSharePublicDialogComponent } from './bookmarks-overview/bookmarks-share-public-dialog/bookmarks-share-public-dialog.component';
 
 const routes: Routes = [
   {
@@ -62,6 +68,9 @@ const routes: Routes = [
     BuyConfirmationComponent,
     BookmarksOverviewComponent,
     BookmarksDialogComponent,
+    BookmarksPrivateImportComponent,
+    BookmarksSharePrivateDialogComponent,
+    BookmarksSharePublicDialogComponent,
     ShoppingcartComponent,
     TraderOverviewComponent,
     TraderItemComponent,
@@ -96,6 +105,7 @@ const routes: Routes = [
       backdropClass: 'gallery-lightbox',
     }),
     GallerizeModule,
+    QRCodeModule,
   ],
   exports: [ProductOverviewComponent],
   providers: [

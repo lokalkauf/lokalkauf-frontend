@@ -1,8 +1,21 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  ViewChild,
+  OnDestroy,
+} from '@angular/core';
 import { BookmarksService } from 'src/app/services/bookmarks.service';
 import { TraderService } from 'src/app/services/trader.service';
 import { Bookmark } from 'src/app/models/bookmark';
-import { Observable, from, of, BehaviorSubject } from 'rxjs';
+import {
+  Observable,
+  from,
+  of,
+  BehaviorSubject,
+  Subject,
+  Subscription,
+} from 'rxjs';
 import { map, tap, distinctUntilChanged } from 'rxjs/operators';
 import {
   TraderProfileStatus,
@@ -14,6 +27,12 @@ import { MatStepper } from '@angular/material/stepper';
 import { NavigationService, Coords } from 'src/app/services/navigation.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { BookmarkList } from 'src/app/models/bookmarkList';
+import {
+  throwMatDialogContentAlreadyAttachedError,
+  MatDialog,
+} from '@angular/material/dialog';
+import { BookmarksSharePrivateDialogComponent } from './bookmarks-share-private-dialog/bookmarks-share-private-dialog.component';
+import { BookmarksSharePublicDialogComponent } from './bookmarks-share-public-dialog/bookmarks-share-public-dialog.component';
 
 export interface TraderProfilesPlus extends TraderProfile {
   thumbUrl?: string;
@@ -26,13 +45,16 @@ export interface TraderProfilesPlus extends TraderProfile {
   styleUrls: ['./bookmarks-overview.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class BookmarksOverviewComponent implements OnInit {
+export class BookmarksOverviewComponent implements OnInit, OnDestroy {
   bookmarks: Observable<Bookmark[]>;
   traderProfiles$: BehaviorSubject<TraderProfilesPlus[]> = new BehaviorSubject<
     TraderProfilesPlus[]
   >(null);
   hasProfilesInBookmark$: Observable<number> = of(0);
   showNavigationAttribution$ = of(false);
+
+  tradersCounterSubscription: Subscription;
+  loaderSubscription: Subscription;
 
   @ViewChild(LkMapComponent) map: LkMapComponent;
   @ViewChild('stepper') private bookmarkStepperList: MatStepper;
@@ -42,7 +64,8 @@ export class BookmarksOverviewComponent implements OnInit {
     private readonly traderService: TraderService,
     private readonly imageService: ImageService,
     private readonly storageService: StorageService,
-    private readonly navigationService: NavigationService
+    private readonly navigationService: NavigationService,
+    public dialog: MatDialog
   ) {
     this.showNavigationAttribution$ = of(false);
 
@@ -69,6 +92,14 @@ export class BookmarksOverviewComponent implements OnInit {
         this.map.setCenter(profiles[0].confirmedLocation);
       }
     });
+  }
+  ngOnDestroy(): void {
+    if (this.tradersCounterSubscription) {
+      this.tradersCounterSubscription.unsubscribe();
+    }
+    if (this.loaderSubscription) {
+      this.loaderSubscription.unsubscribe();
+    }
   }
 
   clickCallback(mid: string) {
@@ -204,7 +235,8 @@ export class BookmarksOverviewComponent implements OnInit {
     if (!this.storageService.loadActiveBookmarkId()) {
       return;
     }
-    this.bookmarksService
+
+    this.loaderSubscription = this.bookmarksService
       .loadBookmarkList(this.storageService.loadActiveBookmarkId())
       .subscribe((bklist: BookmarkList) => {
         if (!bklist || !bklist.bookmarks) {
@@ -233,11 +265,24 @@ export class BookmarksOverviewComponent implements OnInit {
       });
   }
 
+  openSharePrivateDialog() {
+    this.dialog.open(BookmarksSharePrivateDialogComponent, {
+      disableClose: true,
+    });
+  }
+
+  openSharePublicDialog() {
+    this.dialog.open(BookmarksSharePublicDialogComponent, {
+      disableClose: true,
+    });
+  }
+
   ngOnInit(): void {
-    this.bookmarksService.bookmarkSubject
+    this.tradersCounterSubscription = this.bookmarksService.bookmarkSubject
       .pipe(distinctUntilChanged())
       .subscribe((x) => {
         if (x) {
+          console.log('FROM INIT');
           this.load();
         }
       });

@@ -133,10 +133,12 @@ export class BookmarksService {
         .valueChanges()
         .pipe(
           map((bookmarkList) => {
-            console.log('load from remote');
+            console.log('load from remote', bookmarkList);
             const retval = { ...bookmarkList, id };
-            this.updateLocal(retval);
-            return retval;
+            if (bookmarkList) {
+              this.updateLocal(retval);
+            }
+            return bookmarkList ? retval : undefined;
           })
         );
     }
@@ -152,6 +154,18 @@ export class BookmarksService {
     return this.storageService
       .loadPrivateBookmarks()
       .filter((bookmark) => bookmark.id !== '');
+  }
+
+  public importToLocalStorage(bookmarkList: BookmarkList): boolean {
+    if (!bookmarkList || !bookmarkList.id || !bookmarkList.name) {
+      return false;
+    }
+    this.storageService.savePrivateBookmark({
+      id: bookmarkList.id,
+      name: bookmarkList.name,
+    });
+    this.storageService.saveActiveBookmarkId(bookmarkList.id);
+    return true;
   }
 
   private updateLocal(bookmarklist: BookmarkList) {

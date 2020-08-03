@@ -99,9 +99,13 @@
         <mat-icon>save</mat-icon>
       </button>
 
-      <!--<button mat-button (click)="load()">
-        <mat-icon>cloud_download</mat-icon>
-      </button>-->
+      <button mat-button (click)="openSharePrivateDialog()">
+        <mat-icon>sync_alt</mat-icon>
+      </button>
+
+      <button mat-button (click)="openSharePublicDialog()">
+        <mat-icon>share</mat-icon>
+      </button>
     </div>
   </ng-container>
 </lk-container>

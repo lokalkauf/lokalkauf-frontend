@@ -1,0 +1,28 @@
+<div>
+  <h1>Private Merkliste teilen</h1>
+  <div>
+    Wenn du die Liste zusätzlich auf einem anderen Gerät verwalten
+    <br />möchtest, dann kannst du auf dem Gerät diesen QR-Code scannen
+  </div>
+  <div class="qr-center">
+    <qrcode
+      [qrdata]="getCurrentPrivateUrl()"
+      [width]="256"
+      [errorCorrectionLevel]="'M'"
+      [elementType]="'svg'"
+    ></qrcode>
+  </div>
+
+  <div>
+    Oder du rufst auf dem Gerät diesen Link auf: <br /><a
+      href="{{ getCurrentPrivateUrl() }}"
+      target="_blank"
+      >{{ getCurrentPrivateUrl() }}</a
+    >
+  </div>
+  <div class="qr-red">
+    Bitte achte darauf, diesen Link nicht öffentlich zu teilen!
+  </div>
+
+  <lk-button type="button" (click)="closeDialog()">Schließen</lk-button>
+</div>

@@ -82,6 +82,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { NavigationService } from './services/navigation.service';
+import { QRCodeModule } from 'angularx-qrcode';
+import { BookmarksPrivateImportComponent } from './customer/bookmarks-private-import/bookmarks-private-import.component';
 
 registerLocaleData(localeDe);
 
@@ -124,6 +126,7 @@ const routes: Routes = [
   { path: 'faq', component: FaqComponent },
   { path: 'press', component: PressComponent },
   { path: 'bookmarks', component: BookmarksOverviewComponent },
+  { path: 'bookmarks-pi/:id', component: BookmarksPrivateImportComponent },
   {
     path: 'redirect',
     component: RedirectComponent,
@@ -194,6 +197,7 @@ const routes: Routes = [
     NgcCookieConsentModule.forRoot(cookieConfig),
     DeviceDetectorModule.forRoot(),
     AngularFireAnalyticsModule,
+    QRCodeModule,
   ],
   exports: [RouterModule],
   providers: [
