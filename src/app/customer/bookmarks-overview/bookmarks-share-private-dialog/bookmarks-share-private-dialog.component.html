@@ -19,6 +19,9 @@
       target="_blank"
       >{{ getCurrentPrivateUrl() }}</a
     >
+    <button mat-button (click)="copyToClipboard()">
+      <mat-icon>content_copy</mat-icon>
+    </button>
   </div>
   <div class="qr-red">
     Bitte achte darauf, diesen Link nicht öffentlich zu teilen!

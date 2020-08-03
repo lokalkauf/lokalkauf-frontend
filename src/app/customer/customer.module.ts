@@ -43,6 +43,7 @@ import { BookmarksPrivateImportComponent } from './bookmarks-private-import/book
 import { BookmarksSharePrivateDialogComponent } from './bookmarks-overview/bookmarks-share-private-dialog/bookmarks-share-private-dialog.component';
 // tslint:disable-next-line:max-line-length
 import { BookmarksSharePublicDialogComponent } from './bookmarks-overview/bookmarks-share-public-dialog/bookmarks-share-public-dialog.component';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 const routes: Routes = [
   {

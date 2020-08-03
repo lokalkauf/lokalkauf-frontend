@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { Router, ParamMap, ActivatedRoute } from '@angular/router';
 import { switchMap, map } from 'rxjs/operators';
 import { parseLazyRoute } from '@angular/compiler/src/aot/lazy_routes';
 import { BookmarksService } from 'src/app/services/bookmarks.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { BookmarkList } from 'src/app/models/bookmarkList';
 
 @Component({
@@ -12,9 +12,12 @@ import { BookmarkList } from 'src/app/models/bookmarkList';
   styleUrls: ['./bookmarks-private-import.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class BookmarksPrivateImportComponent {
+export class BookmarksPrivateImportComponent implements OnDestroy {
   isError: Observable<boolean>;
   merklistenid: string;
+
+  bookmarkSubscripion$: Subscription;
+
   constructor(
     private readonly router: Router,
     private readonly activeRoute: ActivatedRoute,
@@ -31,7 +34,7 @@ export class BookmarksPrivateImportComponent {
       })
     );
 
-    bookmark$
+    this.bookmarkSubscripion$ = bookmark$
       .pipe(
         map((bookmark) => {
           if (bookmark) {
@@ -45,5 +48,8 @@ export class BookmarksPrivateImportComponent {
         })
       )
       .subscribe();
+  }
+  ngOnDestroy(): void {
+    this.bookmarkSubscripion$.unsubscribe();
   }
 }

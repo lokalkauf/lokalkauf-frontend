@@ -1,6 +1,7 @@
 import { ViewEncapsulation, Component, Inject } from '@angular/core';
 import { BookmarksService } from 'src/app/services/bookmarks.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-bookmarks-share-private-dialog',
@@ -11,6 +12,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class BookmarksSharePrivateDialogComponent {
   constructor(
     private readonly bookmarksService: BookmarksService,
+    private clipboard: Clipboard,
     public dialogRef: MatDialogRef<BookmarksSharePrivateDialogComponent>
   ) {}
 
@@ -27,6 +29,10 @@ export class BookmarksSharePrivateDialogComponent {
         this.bookmarksService.currentBookmarklist.getValue().id
       );
     }
+  }
+
+  copyToClipboard() {
+    this.clipboard.copy(this.getCurrentPrivateUrl());
   }
 
   closeDialog() {
