@@ -24,3 +24,18 @@ lk-map {
     height: 112px;
   }
 }
+
+ul.trader-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 250px;
+
+  li:not(:first-child) {
+    border-top: #c4c4c4 solid 1px;
+  }
+}
+
+.bold {
+  font-weight: 600;
+}

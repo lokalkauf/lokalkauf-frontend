@@ -6,7 +6,7 @@
 
   <ng-container *ngIf="(isError | async) === false">
     <ng-container *ngIf="bookmarkListPublic$ | async as bmk">
-      <div>{{ bmk.name }}</div>
+      <h2>{{ bmk.name }}</h2>
       <div>{{ bmk.description }}</div>
 
       <lk-map></lk-map>
@@ -21,7 +21,7 @@
         | OpenStreetMap contributors
       </div>
 
-      <ul>
+      <ul class="trader-list">
         <li *ngFor="let profile of traderProfiles$ | async">
           <strong>{{ profile.businessname }}</strong>
           <br />{{ profile.street }} {{ profile.number }} <br />{{
@@ -35,6 +35,21 @@
           </div>
         </li>
       </ul>
+      <button mat-button>
+        <mat-icon>save</mat-icon>
+      </button>
     </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="isError | async">
+    Leider hat das Laden nicht funktioniert.
+    <br />
+    <br />
+    Die öffentliche Liste ist entfernt worden oder der Link ist nicht korrekt.
+    <br />
+    <br />
+    Bei Fragen wende Dich bitte an uns über das
+    <a [routerLink]="'/feedback'">Feedback-Formular</a>. <br />Gibt dabei bitte
+    die ID <span class="bold">{{ merklistenid }}</span> mit an!
   </ng-container>
 </lk-container>
