@@ -44,6 +44,7 @@ import { BookmarksSharePrivateDialogComponent } from './bookmarks-overview/bookm
 // tslint:disable-next-line:max-line-length
 import { BookmarksSharePublicDialogComponent } from './bookmarks-overview/bookmarks-share-public-dialog/bookmarks-share-public-dialog.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { BookmarksPublicImportComponent } from './bookmarks-public-import/bookmarks-public-import.component';
 
 const routes: Routes = [
   {
@@ -69,6 +70,7 @@ const routes: Routes = [
     BuyConfirmationComponent,
     BookmarksOverviewComponent,
     BookmarksDialogComponent,
+    BookmarksPublicImportComponent,
     BookmarksPrivateImportComponent,
     BookmarksSharePrivateDialogComponent,
     BookmarksSharePublicDialogComponent,

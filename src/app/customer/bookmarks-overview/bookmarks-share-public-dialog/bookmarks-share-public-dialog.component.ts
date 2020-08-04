@@ -1,7 +1,7 @@
-import { ViewEncapsulation, Component, Inject } from '@angular/core';
+import { ViewEncapsulation, Component, Inject, OnInit } from '@angular/core';
 import { BookmarksService } from 'src/app/services/bookmarks.service';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observable, of } from 'rxjs';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Observable, of, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-bookmarks-share-public-dialog',
@@ -9,26 +9,37 @@ import { Observable, of } from 'rxjs';
   styleUrls: ['./bookmarks-share-public-dialog.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class BookmarksSharePublicDialogComponent {
-  isShared$: Observable<boolean> = of(false);
+export class BookmarksSharePublicDialogComponent implements OnInit {
+  isShared$: Observable<boolean>;
+
+  currentBookmarkSubscription: Subscription;
 
   constructor(
     private readonly bookmarksService: BookmarksService,
     public dialogRef: MatDialogRef<BookmarksSharePublicDialogComponent>
   ) {
-    const currentbookmarkPresent =
-      this.bookmarksService.currentBookmarklist &&
-      this.bookmarksService.currentBookmarklist.getValue();
-    if (currentbookmarkPresent) {
-      this.isShared$ = of(
-        this.bookmarksService.currentBookmarklist.getValue().publicid
-          ? true
-          : false
-      );
-    }
+    this.isShared$ = of(false);
+  }
+  ngOnInit(): void {
+    this.currentBookmarkSubscription = this.bookmarksService.currentBookmarklist.subscribe(
+      (bkm) => {
+        this.isShared$ = of(
+          bkm.publicid !== undefined &&
+            bkm.publicid.length > 0 &&
+            bkm.publicactive !== undefined &&
+            bkm.publicactive === true
+        );
+      }
+    );
   }
 
-  shareNow() {}
+  async shareNow() {
+    await this.bookmarksService.publishLocalBookmarkList();
+  }
+
+  unshare() {
+    this.bookmarksService.unpublishLocalBookmarkList();
+  }
 
   public getCurrentPublicUrl() {
     const domain = window.location.host;
@@ -46,6 +57,9 @@ export class BookmarksSharePublicDialogComponent {
   }
 
   closeDialog() {
+    if (this.currentBookmarkSubscription) {
+      this.currentBookmarkSubscription.unsubscribe();
+    }
     this.dialogRef.close();
   }
 }

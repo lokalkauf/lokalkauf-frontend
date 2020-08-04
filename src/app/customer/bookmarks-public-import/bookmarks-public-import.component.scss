@@ -1,0 +1,26 @@
+lk-map {
+  position: relative;
+  z-index: 1;
+  display: block;
+
+  min-height: 450px;
+  height: 450px !important;
+
+  @media screen and(min-width:768px) {
+    height: 300px !important;
+  }
+
+  width: 100%;
+  margin-left: -1;
+}
+
+.openrouteservice {
+  font-size: 11px;
+}
+
+.trader-details {
+  img {
+    width: 112px;
+    height: 112px;
+  }
+}

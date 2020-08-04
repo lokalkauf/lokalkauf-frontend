@@ -1,13 +1,12 @@
 import { Bookmark } from './bookmark';
 
-export interface BookmarkList {
+export interface BookmarkListPublic {
   id?: string;
-  publicid?: string;
-  publicactive?: boolean;
   name: string;
   description?: string;
   creationdate: string;
   bookmarks: Bookmark[];
   updatedate?: string;
   geojson?: string;
+  isactive?: boolean;
 }

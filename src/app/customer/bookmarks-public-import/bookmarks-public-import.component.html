@@ -1,0 +1,40 @@
+<lk-container>
+  <br />
+  <br />
+  <lk-page-title title="Öffentliche Liste"></lk-page-title>
+  <br />
+
+  <ng-container *ngIf="(isError | async) === false">
+    <ng-container *ngIf="bookmarkListPublic$ | async as bmk">
+      <div>{{ bmk.name }}</div>
+      <div>{{ bmk.description }}</div>
+
+      <lk-map></lk-map>
+      <div class="openrouteservice" *ngIf="showNavigationAttribution$ | async">
+        Routes by:
+        <a
+          href="https://openrouteservice.org/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >openrouteservice.org</a
+        >
+        | OpenStreetMap contributors
+      </div>
+
+      <ul>
+        <li *ngFor="let profile of traderProfiles$ | async">
+          <strong>{{ profile.businessname }}</strong>
+          <br />{{ profile.street }} {{ profile.number }} <br />{{
+            profile.postcode
+          }}
+          {{ profile.city }}
+          <div class="trader-details">
+            <ng-container *ngIf="profile.thumbUrl">
+              <img src="{{ profile.thumbUrl }}" />
+            </ng-container>
+          </div>
+        </li>
+      </ul>
+    </ng-container>
+  </ng-container>
+</lk-container>

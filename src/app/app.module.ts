@@ -84,6 +84,7 @@ import localeDe from '@angular/common/locales/de';
 import { NavigationService } from './services/navigation.service';
 import { QRCodeModule } from 'angularx-qrcode';
 import { BookmarksPrivateImportComponent } from './customer/bookmarks-private-import/bookmarks-private-import.component';
+import { BookmarksPublicImportComponent } from './customer/bookmarks-public-import/bookmarks-public-import.component';
 
 registerLocaleData(localeDe);
 
@@ -127,6 +128,7 @@ const routes: Routes = [
   { path: 'press', component: PressComponent },
   { path: 'bookmarks', component: BookmarksOverviewComponent },
   { path: 'bookmarks-pi/:id', component: BookmarksPrivateImportComponent },
+  { path: 'bookmarks-public/:id', component: BookmarksPublicImportComponent },
   {
     path: 'redirect',
     component: RedirectComponent,

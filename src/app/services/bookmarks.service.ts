@@ -5,12 +5,7 @@ import { Bookmark } from '../models/bookmark';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { BookmarkList } from '../models/bookmarkList';
 import { map, tap } from 'rxjs/operators';
-
-export enum BOOKMARK_MODE {
-  LOCAL = 'LOCAL',
-  REMOTE = 'REMOTE',
-  FOLLOWED = 'FOLLOWED',
-}
+import { BookmarkListPublic } from '../models/bookmarkListPublic';
 
 export interface LocalBookmark {
   id: string;
@@ -20,8 +15,6 @@ export interface LocalBookmark {
 @Injectable()
 export class BookmarksService {
   public bookmarkSubject: Subject<number> = new Subject<number>();
-  private bookmarkMode: BOOKMARK_MODE = BOOKMARK_MODE.LOCAL;
-
   currentBookmarklist = new BehaviorSubject<BookmarkList>(undefined);
 
   constructor(
@@ -103,7 +96,6 @@ export class BookmarksService {
         .collection<Omit<BookmarkList, 'id'>>('Merkliste')
         .add(bookmarkList);
       if (result) {
-        const oldActiveId = this.storageService.loadActiveBookmarkId();
         this.storageService.savePrivateBookmark({
           id: result.id,
           name: bookmarkList.name,
@@ -145,6 +137,25 @@ export class BookmarksService {
     return of(undefined);
   }
 
+  public loadPublicBookmarkList(id: string): Observable<BookmarkListPublic> {
+    if (id) {
+      return this.db
+        .collection<BookmarkListPublic>(`Merkliste_PUBLIC`)
+        .doc<Omit<BookmarkListPublic, 'id'>>(id)
+        .valueChanges()
+        .pipe(
+          map((bookmarkList) => {
+            console.log('load PUBLIC from remote', bookmarkList);
+            const retval = { ...bookmarkList, id };
+
+            // is public muss hier && bookmarkList.isactive
+            return bookmarkList ? retval : undefined;
+          })
+        );
+    }
+    return of(undefined);
+  }
+
   public clearCurrentBookmarklist() {
     this.storageService.saveActiveBookmarkId('');
     this.updateLocal(undefined);
@@ -166,6 +177,39 @@ export class BookmarksService {
     });
     this.storageService.saveActiveBookmarkId(bookmarkList.id);
     return true;
+  }
+
+  public async publishLocalBookmarkList() {
+    if (this.currentBookmarklist && this.currentBookmarklist.getValue()) {
+      const bookmarkList = this.currentBookmarklist.getValue();
+      if (bookmarkList.id) {
+        let publicid: string;
+        if (!bookmarkList.publicid) {
+          const result = await this.db
+            .collection<Omit<BookmarkListPublic, 'id'>>('Merkliste_PUBLIC')
+            .add({
+              creationdate: new Date().toLocaleString(),
+            } as BookmarkListPublic);
+          publicid = result.id;
+        } else {
+          publicid = bookmarkList.publicid;
+        }
+
+        if (publicid) {
+          bookmarkList.publicid = publicid;
+          bookmarkList.publicactive = true;
+          this.updateBookmarkList(bookmarkList);
+        }
+      }
+    }
+  }
+
+  public unpublishLocalBookmarkList() {
+    if (this.currentBookmarklist && this.currentBookmarklist.getValue()) {
+      const bookmarkList = this.currentBookmarklist.getValue();
+      bookmarkList.publicactive = false;
+      this.updateBookmarkList(bookmarkList);
+    }
   }
 
   private updateLocal(bookmarklist: BookmarkList) {
