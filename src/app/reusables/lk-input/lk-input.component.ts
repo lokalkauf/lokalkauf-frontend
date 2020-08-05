@@ -19,6 +19,7 @@ export class LkInputComponent implements ControlValueAccessor {
   @Input() warn = false;
   @Input() name: string;
   @Input() pattern: string;
+  @Input() maxLength = 32767;
 
   // The internal data model
   private innerValue: any = '';

@@ -77,10 +77,20 @@ mat-card {
         text-overflow: ellipsis;
         overflow: hidden;
         font-size: 0.8rem;
+
+        @media screen and (max-width: 767px) {
+          height: 50px;
+          max-height: 50px;
+        }
       }
 
       .price {
         white-space: nowrap;
+        font-size: unset;
+
+        @media screen and (max-width: 767px) {
+          font-size: 0.8rem;
+        }
       }
     }
 
