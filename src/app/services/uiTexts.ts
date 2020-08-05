@@ -8,13 +8,13 @@ export const uiTexts = {
   anmelden: 'Anmelden',
   password: { de: 'Passwort', en: 'Password' },
   rote_infobox: 'Unsere Plattform befindet sich in der Pilotphase.',
-  umkreissuche_userlocation_text: 'Deinen Wohnort finden / Postleitzahlsuche',
+  umkreissuche_userlocation_text: 'Wohnort oder Postleitzahl',
   umkreissuche_userlocation_gpsenabled: ' (mein Standort)',
   start_button_geschaeft_suchen: 'Geschäft finden',
   start_zusammen_headline: 'Buy local - Act global',
   start_zusammen_text:
     'Finde Deine Lieblingsprodukte direkt bei Dir in der Nähe und unterstütze beim Kauf nicht nur ' +
-    'den Händler und Gastronom vor Ort, sondern deine ganze Community.' +
+    'den Händler und Gastronom vor Ort, sondern Deine ganze Community.' +
     '<br /><br />Du bist ein lokaler Einzelhändler oder Gastronom und möchtest online mehr Kunden erreichen?' +
     '<br />Wir helfen Dir!',
   start_button_haender_anmelden: 'Geschäftsprofil anlegen',
@@ -27,7 +27,7 @@ export const uiTexts = {
     'digital mit den Bürgern verbindet und die lokale Region nachhaltig unterstützt, indem sie ein Bewusstsein für den ' +
     'lokalen Einzelhandel und die Gastronomie schafft.' +
     '<br /><br />Wir sind das digitale Schaufenster des lokalen, stationären Einzelhandels, der Restaurants und der Geschäfte ' +
-    'um die Ecke.Als Team, als Plattform und als Verein engagieren wir uns für den lokalen Einzelhandel.',
+    'um die Ecke. Als Team, als Plattform und als Verein engagieren wir uns für den lokalen Einzelhandel.',
   start_mission_aboutus: 'Mehr über uns erfahren',
   start_wirvsvirus_headline: 'Im offiziellen Solution Enabler Programm von',
   start_presse_headline: 'Aktuelle Pressemeldungen',

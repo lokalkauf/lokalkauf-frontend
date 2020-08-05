@@ -5,12 +5,23 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: auto;
     column-gap: 10px;
+
     grid-template-areas:
       'image image image image'
       'name name name .'
       'price price . .'
       'description description description description'
       'cancel . . submit';
+
+    @media screen and (max-width: 640px) {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        'image'
+        'name'
+        'price'
+        'description'
+        'cancelSubmit';
+    }
 
     .product-image {
       grid-area: image;
@@ -67,10 +78,21 @@
 
     .button-submit {
       grid-area: submit;
+      justify-self: unset;
+
+      @media screen and (max-width: 640px) {
+        grid-area: cancelSubmit;
+        justify-self: end;
+      }
     }
 
     .button-cancel {
       grid-area: cancel;
+
+      @media screen and (max-width: 640px) {
+        grid-area: cancelSubmit;
+      }
+
       justify-self: start;
     }
   }

@@ -3,7 +3,6 @@
 :host {
   display: block;
   width: 100%;
-  height: 100%;
 
   @media screen and (min-width: 1040px) {
     display: inline-block;
@@ -65,10 +64,23 @@ mat-card {
       margin-bottom: 0;
 
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
 
       @media screen and (min-width: 1040px) {
-        display: block;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .desc {
+        height: 40px;
+        max-height: 40px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-size: 0.8rem;
+      }
+
+      .price {
+        white-space: nowrap;
       }
     }
 
@@ -84,6 +96,7 @@ mat-card {
         padding-top: 16px;
         text-overflow: unset;
         white-space: unset !important;
+        flex: 1;
       }
     }
   }
