@@ -49,13 +49,12 @@
 
     <div class="contactButtons">
       <h3>Kontaktmöglichkeiten</h3>
-      <div class="contactButton floating">
+      <div class="contactButton floating" *ngIf="trader.telephone">
         <mat-icon>local_phone</mat-icon>
         <a [href]="'tel:' + trader.telephone">
           {{ trader.telephone }}
         </a>
       </div>
-
       <div *ngIf="trader.storeEmail" class="contactButton floating">
         <mat-icon>email</mat-icon>
         <a [href]="'mailto:' + trader.storeEmail">
@@ -72,9 +71,11 @@
 
       <div class="contactButton floating contact-form-toggle-button">
         <lk-button
+          [disabled]="!trader.storeEmail"
           (click)="toggleContactForm()"
           [label]="'Händler direkt kontaktieren'"
-        ></lk-button>
+        >
+        </lk-button>
       </div>
     </div>
   </div>

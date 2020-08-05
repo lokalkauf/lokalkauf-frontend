@@ -2,8 +2,12 @@
   <mat-chip
     *ngFor="let item of items | async"
     [selected]="item.key === selectedKey"
+    [selectable]="!removable"
+    [removable]="removable"
+    (removed)="remove(item)"
     (click)="select(item)"
   >
     {{ item.display }}
+    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
   </mat-chip>
 </mat-chip-list>

@@ -18,6 +18,16 @@ body {
   -ms-hyphenate-limit-chars: auto 3;
   -ms-hyphenate-limit-lines: 4;
   hyphens: auto;
+
+  .mat-button,
+  .mat-raised-button,
+  .mat-icon-button,
+  .mat-stroked-button,
+  .mat-flat-button,
+  .mat-fab,
+  .mat-mini-fab {
+    font-family: Bitter, 'serif';
+  }
 }
 
 h1,
@@ -25,7 +35,8 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+.fancy-link {
   font-family: Bitter, 'serif';
   color: $normalgreen;
   font-weight: 400;
@@ -33,6 +44,30 @@ h6 {
 
 h1 {
   font-size: 1.6rem;
+}
+
+.fancy-link {
+  text-decoration: none;
+
+  &::after {
+    font-size: 1.6rem;
+    display: inline;
+    content: ' \203A ';
+  }
+}
+
+.fancy-link-90 {
+  text-decoration: none;
+
+  &::after {
+    transform: rotate(90deg);
+    position: absolute;
+    font-size: 1.6rem;
+    left: calc(100% - 9px);
+    top: 2px;
+    display: inline-block;
+    content: ' \203A ';
+  }
 }
 
 input {
@@ -88,6 +123,11 @@ a:visited {
   color: inherit;
 }
 
+a.fancy-link:visited {
+  text-decoration: none;
+  color: $normalgreen;
+}
+
 div.cc-window,
 div.cc-banner {
   font-family: inherit;
@@ -130,4 +170,14 @@ div.cc-revoke {
   font-family: inherit;
   background-color: #fcfcfc !important;
   font-size: 0.9rem;
+}
+
+.gallery-lightbox {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+#lightbox-lightbox {
+  .g-box {
+    background-color: #ffffff;
+  }
 }

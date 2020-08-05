@@ -8,6 +8,7 @@ import { throwError } from 'rxjs';
 import { EMail } from '../models/email';
 import * as firebase from 'firebase/app';
 import 'firebase/functions';
+import { AngularFireAnalytics } from '@angular/fire/analytics';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,10 @@ export class EMailService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private analytics: AngularFireAnalytics
+  ) {}
 
   send(formdata: EMail, templateVars: {}) {
     // TODO update if firebase function changes
@@ -37,6 +41,7 @@ export class EMailService {
     try {
       const sendMailFunction = firebase.functions().httpsCallable(`sendGrid`);
       sendMailFunction.call('Send Mail', data);
+      this.analytics.logEvent('email_service_sent');
     } catch (e) {
       console.error('Mail could not be send: ' + e);
     }

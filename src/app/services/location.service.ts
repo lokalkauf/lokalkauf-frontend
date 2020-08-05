@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Location } from '../models/location';
-import { Paging } from '../models/paging';
+import algoliasearch from 'algoliasearch/lite';
 
-import * as firebase from 'firebase/app';
-import 'firebase/functions';
+import { Trader } from '../models/trader';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -14,32 +13,37 @@ export class LocationService {
   async nearBy(
     radius: number,
     coordinates: number[],
-
-    filter?: { categories: string[]; countOnly?: boolean },
-    paging = { desc: false, pageIndex: 0, pageSize: 150 }
-  ): Promise<any> {
-    return await firebase
-      .functions()
-      .httpsCallable(`locationByDistance`)
-      .call('Get Locatons', {
-        radius,
-        coordinates,
-        desc: paging.desc,
-        pageIndex: paging.pageIndex,
-        pageSize: paging.pageSize,
-        categories: filter?.categories,
-        countOnly: filter?.countOnly === true,
-      });
-  }
-
-  async countNearBy(radius: number, coordinates: number[]): Promise<Paging> {
-    const result = await this.nearBy(
-      radius,
-      coordinates,
-      { categories: [], countOnly: true },
-      { desc: false, pageIndex: 0, pageSize: 100000 }
+    searchString: string,
+    filter?: { categories: string[] }
+  ): Promise<Array<Trader>> {
+    const client = algoliasearch(
+      environment.algolia.appId,
+      environment.algolia.searchKey
     );
+    const index = client.initIndex(environment.algolia.indexName);
 
-    return result.data.paging;
+    const categories: string[] = [];
+    filter.categories.map((category) => {
+      categories.push(`storeType.${category}=1`);
+    });
+    return await index
+      .search(searchString, {
+        aroundLatLng: `${coordinates[0]}, ${coordinates[1]}`,
+        aroundRadius: radius * 1000,
+        getRankingInfo: true,
+        filters: categories.join(' OR '),
+        // 1000 is max
+        hitsPerPage: 1000,
+      })
+      .then(({ hits }) => {
+        return hits.map(
+          (trader: any) =>
+            (({
+              ...trader,
+              id: trader.objectID,
+              distance: trader._rankingInfo.geoDistance / 1000,
+            } as any) as Trader)
+        );
+      });
   }
 }

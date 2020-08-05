@@ -60,8 +60,12 @@ export class TraderContactComponent implements OnInit {
   getAdress() {
     // check for at least one mandantory field, if you visit the profile detail page at least once
     if (this.trader.city) {
-      return ` ${this.trader.street} ${this.trader.number}
-      <br />${this.trader.postcode} ${this.trader.city}
+      return ` ${this.trader.street ? this.trader.street : ''} ${
+        this.trader.number ? this.trader.number : ''
+      }
+      <br />${this.trader.postcode ? this.trader.postcode : ''} ${
+        this.trader.city
+      }
       `;
     }
   }

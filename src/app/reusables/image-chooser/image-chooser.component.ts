@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import loadImage from 'blueimp-load-image';
@@ -21,6 +21,8 @@ export class ImageChooserComponent implements OnInit, ControlValueAccessor {
 
   selectedFile: Blob;
   selectedFileDataUrl: string;
+
+  @Input() placeHolderUrl: string;
 
   constructor(private errorService: ErrorService) {}
 

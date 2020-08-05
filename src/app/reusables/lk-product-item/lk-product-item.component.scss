@@ -1,0 +1,119 @@
+@import '../../../theme/variables.scss';
+
+:host {
+  display: block;
+  width: 100%;
+
+  @media screen and (min-width: 1040px) {
+    display: inline-block;
+    width: 224px;
+    margin-bottom: 24px;
+  }
+}
+
+mat-card {
+  display: flex;
+  overflow: hidden;
+  align-items: stretch;
+  max-width: 100%;
+
+  @media screen and (min-width: 1040px) {
+    display: block;
+    padding-left: 0px;
+    padding-right: 0px;
+    height: calc(100% - 32px);
+  }
+
+  .product-thumbnail {
+    display: block;
+    width: 110px;
+    height: 110px;
+    margin-left: -16px;
+    margin-top: -16px;
+    margin-bottom: -16px;
+    margin-right: -16px;
+    object-fit: cover;
+    flex-shrink: 0;
+
+    @media screen and (min-width: 1040px) {
+      width: 100%;
+      height: 224px;
+      margin-bottom: 0px;
+      margin-left: 0px;
+      margin-right: 0px;
+    }
+
+    &.placeholder {
+      object-fit: scale-down;
+      background-color: $lightestgreen;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+  }
+
+  mat-card-header {
+    flex-grow: 1;
+    overflow: hidden;
+    width: 100%;
+
+    @media screen and (min-width: 1040px) {
+      display: block;
+    }
+
+    mat-card-subtitle {
+      margin-bottom: 0;
+
+      display: flex;
+      justify-content: space-between;
+
+      @media screen and (min-width: 1040px) {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .desc {
+        height: 40px;
+        max-height: 40px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-size: 0.8rem;
+
+        @media screen and (max-width: 767px) {
+          height: 50px;
+          max-height: 50px;
+        }
+      }
+
+      .price {
+        white-space: nowrap;
+        font-size: unset;
+
+        @media screen and (max-width: 767px) {
+          font-size: 0.8rem;
+        }
+      }
+    }
+
+    mat-card-title {
+      font-family: Bitter;
+      color: $normalgreen;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
+
+      @media screen and (min-width: 1040px) {
+        padding-top: 16px;
+        text-overflow: unset;
+        white-space: unset !important;
+        flex: 1;
+      }
+    }
+  }
+
+  mat-card-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 16px;
+  }
+}

@@ -30,19 +30,40 @@
     >
     </lk-button>
   </div>
+</lk-container>
+
+<lk-container class="desktop-mobile">
   <div class="doubleheart">
     <img src="../../assets/lokalkauf-pin.svg" alt="<3 lokalkauf" />
     <img src="../../assets/lokalkauf-pin.svg" alt="<3 lokalkauf" />
   </div>
-
   <div class="our-mission">
     <h2>{{ text.start_mission_headline | text }}</h2>
     <p [innerHTML]="text.start_mission_text | text"></p>
+    <p>
+      <a class="fancy-link" [routerLink]="['/aboutus']">
+        {{ text.start_mission_aboutus | text }}</a
+      >
+    </p>
   </div>
+</lk-container>
 
-  <div class="wirvsvirus-container">
-    <h2>{{ text.start_wirvsvirus_headline | text }}</h2>
-    <div class="wirvsvirus">
+<lk-container class="alternate-background-user-voice">
+  <div class="user-voice">
+    <lk-testimonial
+      [testimonialList]="testimonialsAsync$"
+      [config]="{ speed: 11000 }"
+    ></lk-testimonial>
+  </div>
+</lk-container>
+
+<lk-container-full class="alternate-background">
+  <div class="wirvsvirus-container-content">
+    <div class="wirvsvirus-content">
+      <h2>{{ text.start_wirvsvirus_headline | text }}</h2>
+    </div>
+
+    <div class="wirvsvirus-content wirvsvirus">
       <a
         href="https://wirvsvirushackathon.org/"
         target="_blank"
@@ -51,30 +72,47 @@
       /></a>
     </div>
   </div>
+</lk-container-full>
+
+<lk-container class="presse-container">
+  <h2>{{ text.start_presse_headline | text }}</h2>
+  <div class="presse-container-content">
+    <ng-container *ngFor="let press of press$ | async">
+      <div class="presse-content">
+        <div class="press-content-logo">
+          <img src="assets/presse/{{ press.img }}" />
+        </div>
+        <div class="press-content-date">{{ press.date }}</div>
+        <h2>{{ press.title }}</h2>
+        <div class="press-content-content">{{ press.content }}</div>
+        <div class="press-content-link">
+          <a
+            href="{{ press.link }}"
+            class="fancy-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            >{{ text.start_presse_artikel | text }}</a
+          >
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <a [routerLink]="['/press']" class="fancy-link">{{
+    text.start_presse_alle_artikel
+  }}</a>
 </lk-container>
 
-<div class="user-voice">
-  <lk-container>
-    <mat-carousel
-      [autoplay]="true"
-      slides="testimonials.length"
-      [maintainAspectRatio]="false"
-      [interval]="5000"
-      maxWidth="100%"
-    >
-      <mat-carousel-slide
-        *ngFor="let testimonial of testimonials"
-        [hideOverlay]="true"
-      >
-        <div>
-          <img
-            src="../../assets/{{ testimonial.img }}"
-            alt="{{ testimonial.testee }}"
-          />
-          <h2>»{{ testimonial.text }}«</h2>
-          <strong>{{ testimonial.testee }}</strong>
-        </div>
-      </mat-carousel-slide>
-    </mat-carousel>
-  </lk-container>
-</div>
+<lk-container-full class="center-content alternate-background search-bottom">
+  <img src="../../assets/lokalkauf-pin.svg" alt="<3 lokalkauf" />
+  <h1 [innerHTML]="text.start_searchbottom_headline | text"></h1>
+  <form (submit)="navigateToLocation()">
+    <lk-search-input
+      [formControl]="locationFormControl"
+      #searchInput
+    ></lk-search-input>
+    <lk-button
+      type="submit"
+      [label]="text.start_button_geschaeft_suchen | text"
+    ></lk-button>
+  </form>
+</lk-container-full>

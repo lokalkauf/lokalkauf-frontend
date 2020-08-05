@@ -1,0 +1,59 @@
+.lk-testimonial-container {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  max-width: 960px;
+  position: relative;
+  margin: auto;
+
+  .lk-testimonial-content {
+    flex-grow: 1;
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: auto;
+  }
+
+  .lk-testimonial-content-trader-image {
+    img {
+      margin-bottom: 20px;
+    }
+  }
+
+  .lk-testimonial-content-testimonial {
+    font-weight: 400;
+    font-size: 24px;
+    font-family: Bitter, 'serif';
+  }
+
+  .lk-testimonial-content-trader {
+    margin-top: 20px;
+    font-weight: bold;
+  }
+
+  .lk-testimonial-content-link {
+    margin-top: 10px;
+
+    .fancy-link {
+      color: white !important;
+    }
+  }
+
+  .lk-testimonial-content-expander {
+    position: relative;
+    visibility: hidden;
+  }
+
+  .lk-testimonal-fade-in {
+    transition: opacity 500ms ease-in;
+    opacity: 1;
+  }
+
+  .lk-testimonal-fade-out {
+    opacity: 0;
+    transition: opacity 500ms ease-out;
+  }
+}
