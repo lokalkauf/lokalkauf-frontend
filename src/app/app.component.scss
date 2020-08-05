@@ -88,7 +88,7 @@ button.mat-mini-fab.avatar {
   .links-footer {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-evenly;
     hyphens: none;
     flex-wrap: wrap;
     height: 100%;
@@ -117,7 +117,7 @@ button.mat-mini-fab.avatar {
 
   .some-footer {
     float: unset;
-    text-align: left;
+    text-align: center;
 
     @media screen and (min-width: 768px) {
       float: left;
