@@ -218,6 +218,7 @@ export class TraderOverviewComponent implements OnInit {
         this.locations = result;
         if (this.locations && this.locations.length > 0) {
           // set hasLocations and hasinitialLocations to true, to hide the 'No results found' view
+          console.log('this.locations.length', this.locations.length);
           this.hasLocations$ = of(true);
           this.hasInitLocations = true;
 
@@ -242,7 +243,12 @@ export class TraderOverviewComponent implements OnInit {
           // Show "no result page" if no shops were found
           // but dont show it if filters are selected.
           // Otherwise the filter cant be unselected.
-          if (filter.categories.length === 0 && searchtext.length === 0) {
+          console.log(
+            'filter.categories.length - else case ',
+            filter.categories.length,
+            searchtext
+          );
+          if (filter.categories.length === 0 && !searchtext) {
             this.hasLocations$ = of(false);
           }
         }
