@@ -12,10 +12,24 @@ export interface LocalBookmark {
   name: string;
 }
 
+export enum BOOKMARK_TYPE {
+  PUBLIC = 'PUBLIC',
+  PRIVATE = 'PRIVATE',
+  UNKNOWN = 'UNKNOWN',
+}
+
+export interface ActiveBookmark {
+  id: string;
+  type: BOOKMARK_TYPE;
+}
+
 @Injectable()
 export class BookmarksService {
   public bookmarkSubject: Subject<number> = new Subject<number>();
   currentBookmarklist = new BehaviorSubject<BookmarkList>(undefined);
+  currentBookmarklistType = new BehaviorSubject<BOOKMARK_TYPE>(
+    BOOKMARK_TYPE.UNKNOWN
+  );
 
   constructor(
     private readonly storageService: StorageService,
@@ -31,7 +45,10 @@ export class BookmarksService {
   }
 
   addTrader(bookmark: Bookmark) {
-    if (this.currentBookmarklist) {
+    if (
+      this.currentBookmarklist &&
+      this.currentBookmarklistType.getValue() === BOOKMARK_TYPE.PRIVATE
+    ) {
       const currentList = this.currentBookmarklist.getValue();
       if (currentList) {
         if (currentList.bookmarks.length === 0) {
@@ -51,7 +68,10 @@ export class BookmarksService {
   }
 
   removeTrader(bookmark: Bookmark) {
-    if (this.currentBookmarklist) {
+    if (
+      this.currentBookmarklist &&
+      this.currentBookmarklistType.getValue() === BOOKMARK_TYPE.PRIVATE
+    ) {
       const currentList = this.currentBookmarklist.getValue();
       if (currentList) {
         if (this.isTraderInBookmarks(bookmark.traderid)) {
@@ -67,10 +87,10 @@ export class BookmarksService {
   async deleteBookmark() {
     const bookmarkid = this.storageService.loadActiveBookmarkId();
     if (bookmarkid) {
-      this.storageService.removePrivateBookmark(bookmarkid);
+      this.storageService.removePrivateBookmark(bookmarkid.id);
       await this.db
         .collection<Omit<BookmarkList, 'id'>>(`Merkliste`)
-        .doc(bookmarkid)
+        .doc(bookmarkid.id)
         .delete();
     }
     this.clearCurrentBookmarklist();
@@ -100,7 +120,10 @@ export class BookmarksService {
           id: result.id,
           name: bookmarkList.name,
         });
-        this.storageService.saveActiveBookmarkId(result.id);
+        this.storageService.saveActiveBookmarkId({
+          id: result.id,
+          type: BOOKMARK_TYPE.PRIVATE,
+        });
 
         const returnValue = { ...bookmarkList, id: result.id };
         this.updateLocal(returnValue);
@@ -115,6 +138,18 @@ export class BookmarksService {
       this.updateLocal(bookmarkList);
       return update;
     }
+  }
+
+  public loadActiveBookmarkList(
+    activeBookmark: ActiveBookmark
+  ): Observable<BookmarkList> {
+    if (!activeBookmark) {
+      return of(undefined);
+    }
+
+    return activeBookmark.type === BOOKMARK_TYPE.PRIVATE
+      ? this.loadBookmarkList(activeBookmark.id)
+      : this.loadPublicBookmarkList(activeBookmark.id);
   }
 
   public loadBookmarkList(id: string): Observable<BookmarkList> {
@@ -137,7 +172,10 @@ export class BookmarksService {
     return of(undefined);
   }
 
-  public loadPublicBookmarkList(id: string): Observable<BookmarkListPublic> {
+  public loadPublicBookmarkList(
+    id: string,
+    loadForReal: boolean = false
+  ): Observable<BookmarkListPublic> {
     if (id) {
       return this.db
         .collection<BookmarkListPublic>(`Merkliste_PUBLIC`)
@@ -147,9 +185,14 @@ export class BookmarksService {
           map((bookmarkList) => {
             console.log('load PUBLIC from remote', bookmarkList);
             const retval = { ...bookmarkList, id };
-
-            // is public muss hier && bookmarkList.isactive
-            return bookmarkList ? retval : undefined;
+            if (bookmarkList && bookmarkList.isActive) {
+              if (loadForReal) {
+                this.updateLocal(bookmarkList, BOOKMARK_TYPE.PUBLIC);
+              }
+              return retval;
+            } else {
+              return undefined;
+            }
           })
         );
     }
@@ -157,13 +200,22 @@ export class BookmarksService {
   }
 
   public clearCurrentBookmarklist() {
-    this.storageService.saveActiveBookmarkId('');
+    this.storageService.saveActiveBookmarkId({
+      id: '',
+      type: BOOKMARK_TYPE.UNKNOWN,
+    });
     this.updateLocal(undefined);
   }
 
   public getLocalBookmarkLists(): LocalBookmark[] {
     return this.storageService
       .loadPrivateBookmarks()
+      .filter((bookmark) => bookmark.id !== '');
+  }
+
+  public getLocalPublicBookmarklists(): LocalBookmark[] {
+    return this.storageService
+      .loadPublicBookmarks()
       .filter((bookmark) => bookmark.id !== '');
   }
 
@@ -175,7 +227,10 @@ export class BookmarksService {
       id: bookmarkList.id,
       name: bookmarkList.name,
     });
-    this.storageService.saveActiveBookmarkId(bookmarkList.id);
+    this.storageService.saveActiveBookmarkId({
+      id: bookmarkList.id,
+      type: BOOKMARK_TYPE.PRIVATE,
+    });
     return true;
   }
 
@@ -212,8 +267,24 @@ export class BookmarksService {
     }
   }
 
-  private updateLocal(bookmarklist: BookmarkList) {
+  public importPublicBookmarklist(bookmarkList: BookmarkList) {
+    this.storageService.savePublicBookmark({
+      id: bookmarkList.id,
+      name: bookmarkList.name,
+    });
+    this.storageService.saveActiveBookmarkId({
+      id: bookmarkList.id,
+      type: BOOKMARK_TYPE.PUBLIC,
+    });
+    this.updateLocal(bookmarkList, BOOKMARK_TYPE.PUBLIC);
+  }
+
+  private updateLocal(
+    bookmarklist: BookmarkList,
+    type: BOOKMARK_TYPE = BOOKMARK_TYPE.PRIVATE
+  ) {
     console.log('updateLocal', bookmarklist);
     this.currentBookmarklist.next(bookmarklist);
+    this.currentBookmarklistType.next(type);
   }
 }

@@ -1,11 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgcCookieConsentService } from 'ngx-cookieconsent';
 import { UserService } from './services/user.service';
 import { StorageService } from './services/storage.service';
 import { AngularFireAnalytics } from '@angular/fire/analytics';
 import { CookieService } from 'ngx-cookie-service';
-import { BookmarksService, LocalBookmark } from './services/bookmarks.service';
+import {
+  BookmarksService,
+  LocalBookmark,
+  ActiveBookmark,
+  BOOKMARK_TYPE,
+} from './services/bookmarks.service';
 import { Observable, of } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { faFacebookF, faInstagram } from '@fortawesome/free-brands-svg-icons';
@@ -23,7 +28,8 @@ export class AppComponent implements OnInit, OnDestroy {
   faInstagram = faInstagram;
 
   localBookmarks: Observable<LocalBookmark[]>;
-  currentBookmarkId: string;
+  localPublicBookmarks: Observable<LocalBookmark[]>;
+  currentBookmark: ActiveBookmark;
 
   constructor(
     public router: Router,
@@ -71,22 +77,46 @@ export class AppComponent implements OnInit, OnDestroy {
       (traderCount) => (this.bookmarks = of(traderCount))
     );
 
-    this.currentBookmarkId = this.storageService.loadActiveBookmarkId();
-    if (this.currentBookmarkId) {
-      this.bookmarkService.loadBookmarkList(this.currentBookmarkId).subscribe();
+    this.currentBookmark = this.storageService.loadActiveBookmarkId();
+    if (this.currentBookmark) {
+      if (this.currentBookmark.type === BOOKMARK_TYPE.PUBLIC) {
+        this.bookmarkService
+          .loadPublicBookmarkList(this.currentBookmark.id, true)
+          .subscribe();
+      } else {
+        this.bookmarkService
+          .loadBookmarkList(this.currentBookmark.id)
+          .subscribe();
+      }
     }
 
     this.bookmarkService.currentBookmarklist.subscribe((x) => {
-      this.currentBookmarkId = this.storageService.loadActiveBookmarkId();
+      this.currentBookmark = this.storageService.loadActiveBookmarkId();
       this.localBookmarks = of(this.bookmarkService.getLocalBookmarkLists());
+      this.localPublicBookmarks = of(
+        this.bookmarkService.getLocalPublicBookmarklists()
+      );
     });
   }
 
   loadBookmarkList(id: string) {
     if (id && id.length > 0) {
-      this.storageService.saveActiveBookmarkId(id);
+      this.storageService.saveActiveBookmarkId({
+        id,
+        type: BOOKMARK_TYPE.PRIVATE,
+      });
       this.bookmarkService.loadBookmarkList(id).subscribe();
-      this.currentBookmarkId = id;
+      this.currentBookmark = { id, type: BOOKMARK_TYPE.PRIVATE };
+    }
+  }
+  loadPublicBookmarkList(id: string) {
+    if (id && id.length > 0) {
+      this.storageService.saveActiveBookmarkId({
+        id,
+        type: BOOKMARK_TYPE.PUBLIC,
+      });
+      this.bookmarkService.loadPublicBookmarkList(id, true).subscribe();
+      this.currentBookmark = { id, type: BOOKMARK_TYPE.PUBLIC };
     }
   }
 

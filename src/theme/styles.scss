@@ -181,3 +181,17 @@ div.cc-revoke {
     background-color: #ffffff;
   }
 }
+
+mat-icon.custom-badge {
+  span.mat-badge-content {
+    width: 26px;
+    text-align: center;
+    border-radius: 12px;
+    background: rgba(136, 225, 245, 0);
+    left: 13px;
+    color: rgba(136, 225, 245, 0.75);
+    font-size: 22px;
+
+    font-family: 'Material Icons' !important;
+  }
+}

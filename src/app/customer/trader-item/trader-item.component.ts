@@ -1,5 +1,8 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { BookmarksService } from 'src/app/services/bookmarks.service';
+import {
+  BookmarksService,
+  BOOKMARK_TYPE,
+} from 'src/app/services/bookmarks.service';
 import { Trader } from 'src/app/models/trader';
 import { Bookmark } from 'src/app/models/bookmark';
 import { Observable, of, Subscription, BehaviorSubject } from 'rxjs';
@@ -52,7 +55,11 @@ export class TraderItemComponent implements OnInit {
   }
 
   addBookmark(id: string) {
-    if (!this.storageService.loadActiveBookmarkId()) {
+    const currentBookmark = this.storageService.loadActiveBookmarkId();
+    if (
+      !currentBookmark ||
+      (!currentBookmark.id && currentBookmark.type === BOOKMARK_TYPE.UNKNOWN)
+    ) {
       this.createBookmarksDialog(id);
     } else {
       this.bookmarkService.addTrader({ traderid: id } as Bookmark);
@@ -60,7 +67,11 @@ export class TraderItemComponent implements OnInit {
   }
 
   addBookmarkSmall($event: Event, id: string) {
-    if (!this.storageService.loadActiveBookmarkId()) {
+    const currentBookmark = this.storageService.loadActiveBookmarkId();
+    if (
+      !currentBookmark ||
+      (!currentBookmark.id && currentBookmark.type === BOOKMARK_TYPE.UNKNOWN)
+    ) {
       this.createBookmarksDialog(id);
     } else {
       this.bookmarkService.addTrader({ traderid: id } as Bookmark);

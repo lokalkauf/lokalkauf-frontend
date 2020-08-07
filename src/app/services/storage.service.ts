@@ -2,7 +2,12 @@ import { Injectable } from '@angular/core';
 import { GeoAddress } from '../models/geoAddress';
 import { LkSelectOptions } from '../reusables/lk-select/lk-select.component';
 import { Bookmark } from '../models/bookmark';
-import { LocalBookmark } from './bookmarks.service';
+import {
+  LocalBookmark,
+  BOOKMARK_TYPE,
+  ActiveBookmark,
+} from './bookmarks.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable()
 export class StorageService {
@@ -30,19 +35,11 @@ export class StorageService {
     return this.load('trader-filter');
   }
 
-  saveBookmarks(bookmarks: Bookmark[]) {
-    this.save('bookmarks', bookmarks);
+  saveActiveBookmarkId(activeBookmark: ActiveBookmark) {
+    this.save('active-bookmark-id', activeBookmark, true);
   }
 
-  loadBookmarks(): Bookmark[] {
-    return this.load('bookmarks');
-  }
-
-  saveActiveBookmarkId(id: string) {
-    this.save('active-bookmark-id', id, true);
-  }
-
-  loadActiveBookmarkId(): string | undefined {
+  loadActiveBookmarkId(): ActiveBookmark | undefined {
     return this.load('active-bookmark-id', true);
   }
 
@@ -60,6 +57,7 @@ export class StorageService {
       this.save('private-bookmarks', privateBookmarks, true);
     }
   }
+
   removePrivateBookmark(bookmarkid: string) {
     const bookmarks = this.loadPrivateBookmarks();
     if (bookmarks) {
@@ -72,6 +70,36 @@ export class StorageService {
 
   loadPrivateBookmarks(): LocalBookmark[] {
     const result = this.load<LocalBookmark[]>('private-bookmarks', true);
+    return !result ? [] : result;
+  }
+
+  savePublicBookmark(localBookmark: LocalBookmark) {
+    if (!localBookmark || localBookmark.id.length === 0) {
+      return;
+    }
+    const publicBookmarks = this.loadPublicBookmarks();
+    if (
+      !publicBookmarks ||
+      publicBookmarks.filter((local) => local.id === localBookmark.id)
+        .length === 0
+    ) {
+      publicBookmarks.push(localBookmark);
+      this.save('public-bookmarks', publicBookmarks, true);
+    }
+  }
+
+  removePublicBookmark(bookmarkid: string) {
+    const bookmarks = this.loadPublicBookmarks();
+    if (bookmarks) {
+      const publicBookmarks = bookmarks.filter(
+        (bookmark) => bookmark.id !== bookmarkid
+      );
+      this.save('private-bookmarks', publicBookmarks, true);
+    }
+  }
+
+  loadPublicBookmarks(): LocalBookmark[] {
+    const result = this.load<LocalBookmark[]>('public-bookmarks', true);
     return !result ? [] : result;
   }
 

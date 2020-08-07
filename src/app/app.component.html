@@ -27,18 +27,47 @@
       <a mat-menu-item [routerLink]="'/bookmarks'">
         <mat-icon>map</mat-icon>Kartenansicht
       </a>
+      <mat-divider></mat-divider>
       <ng-container *ngFor="let bk of localBookmarks | async">
         <button mat-menu-item (click)="loadBookmarkList(bk.id)">
-          <ng-container *ngIf="bk.id === currentBookmarkId">
+          <ng-container *ngIf="currentBookmark && bk.id === currentBookmark.id">
             <mat-icon color="primary">favorite</mat-icon>
           </ng-container>
-          <ng-container *ngIf="bk.id !== currentBookmarkId">
+          <ng-container *ngIf="currentBookmark && bk.id !== currentBookmark.id">
             <mat-icon>favorite_outline</mat-icon>
           </ng-container>
           {{ bk.name }}
         </button>
       </ng-container>
-
+      <mat-divider *ngIf="(localBookmarks | async).length > 0"></mat-divider>
+      <ng-container *ngFor="let bk of localPublicBookmarks | async">
+        <button mat-menu-item (click)="loadPublicBookmarkList(bk.id)">
+          <ng-container *ngIf="currentBookmark && bk.id === currentBookmark.id">
+            <mat-icon
+              color="primary"
+              class="custom-badge"
+              matBadgePosition="below|before"
+              matBadgeColor="accent"
+              matBadge="cloud_download"
+              >favorite
+            </mat-icon>
+          </ng-container>
+          <ng-container *ngIf="currentBookmark && bk.id !== currentBookmark.id">
+            <mat-icon
+              class="custom-badge"
+              matBadgePosition="below|before"
+              matBadgeColor="accent"
+              matBadge="cloud_download"
+            >
+              favorite_outline</mat-icon
+            >
+          </ng-container>
+          {{ bk.name }}
+        </button>
+      </ng-container>
+      <mat-divider
+        *ngIf="(localPublicBookmarks | async).length > 0"
+      ></mat-divider>
       <button mat-menu-item (click)="clearActiveBookmarkId()">
         <mat-icon>playlist_add</mat-icon>Neu
       </button>

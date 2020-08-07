@@ -103,10 +103,24 @@ export class BookmarksPublicImportComponent implements OnDestroy {
           ).subscribe((x) => this.traderProfiles$.next(x));
         }
       } else {
-        console.log('ups');
         this.isError = of(true);
       }
     });
+  }
+
+  save() {
+    if (this.bookmarkListPublic$) {
+      const sub = this.bookmarkListPublic$
+        .pipe(
+          map((bookmark) => {
+            this.bookmarksService.importPublicBookmarklist(bookmark);
+          })
+        )
+        .subscribe();
+      if (sub) {
+        sub.unsubscribe();
+      }
+    }
   }
 
   ngOnDestroy(): void {

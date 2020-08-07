@@ -5,7 +5,10 @@ import {
   ViewChild,
   OnDestroy,
 } from '@angular/core';
-import { BookmarksService } from 'src/app/services/bookmarks.service';
+import {
+  BookmarksService,
+  BOOKMARK_TYPE,
+} from 'src/app/services/bookmarks.service';
 import { TraderService } from 'src/app/services/trader.service';
 import { Bookmark } from 'src/app/models/bookmark';
 import {
@@ -219,7 +222,7 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
       };
 
       if (this.storageService.loadActiveBookmarkId()) {
-        bookmarklist.id = this.storageService.loadActiveBookmarkId();
+        bookmarklist.id = this.storageService.loadActiveBookmarkId().id;
       }
       const result = await this.bookmarksService.updateBookmarkList(
         bookmarklist
@@ -236,8 +239,10 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
       return;
     }
 
+    const currentBookmark = this.storageService.loadActiveBookmarkId();
+
     this.loaderSubscription = this.bookmarksService
-      .loadBookmarkList(this.storageService.loadActiveBookmarkId())
+      .loadActiveBookmarkList(currentBookmark)
       .subscribe((bklist: BookmarkList) => {
         if (!bklist || !bklist.bookmarks) {
           return;

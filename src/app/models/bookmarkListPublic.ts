@@ -8,5 +8,5 @@ export interface BookmarkListPublic {
   bookmarks: Bookmark[];
   updatedate?: string;
   geojson?: string;
-  isactive?: boolean;
+  isActive?: boolean;
 }
