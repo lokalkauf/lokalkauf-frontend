@@ -2,6 +2,7 @@ import { ViewEncapsulation, Component, Inject, OnInit } from '@angular/core';
 import { BookmarksService } from 'src/app/services/bookmarks.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable, of, Subscription } from 'rxjs';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-bookmarks-share-public-dialog',
@@ -16,6 +17,7 @@ export class BookmarksSharePublicDialogComponent implements OnInit {
 
   constructor(
     private readonly bookmarksService: BookmarksService,
+    private clipboard: Clipboard,
     public dialogRef: MatDialogRef<BookmarksSharePublicDialogComponent>
   ) {
     this.isShared$ = of(false);
@@ -31,6 +33,10 @@ export class BookmarksSharePublicDialogComponent implements OnInit {
         );
       }
     );
+  }
+
+  copyToClipboard() {
+    this.clipboard.copy(this.getCurrentPublicUrl());
   }
 
   async shareNow() {

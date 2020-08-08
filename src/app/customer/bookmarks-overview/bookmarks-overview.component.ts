@@ -58,6 +58,7 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
 
   tradersCounterSubscription: Subscription;
   loaderSubscription: Subscription;
+  bookmarkList$: Observable<BookmarkList>;
 
   @ViewChild(LkMapComponent) map: LkMapComponent;
   @ViewChild('stepper') private bookmarkStepperList: MatStepper;
@@ -247,6 +248,7 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
         if (!bklist || !bklist.bookmarks) {
           return;
         }
+
         const bookmarkArray = bklist.bookmarks.map(
           (traderlist) => traderlist.traderid
         );
@@ -257,6 +259,8 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
               TraderProfileStatus.PUBLIC
             )
           ).subscribe((x) => this.traderProfiles$.next(x));
+
+          this.bookmarkList$ = of(bklist);
 
           this.hasProfilesInBookmark$ = of(
             bookmarkArray ? bookmarkArray.length : 0

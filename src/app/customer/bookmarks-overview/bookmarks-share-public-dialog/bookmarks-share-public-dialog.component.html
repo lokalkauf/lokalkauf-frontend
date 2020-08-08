@@ -25,6 +25,9 @@
         target="_blank"
         >{{ getCurrentPublicUrl() }}</a
       >
+      <button mat-button (click)="copyToClipboard()">
+        <mat-icon>content_copy</mat-icon>
+      </button>
     </div>
     <div>
       <lk-button type="button" (click)="unshare()">Nicht mehr teilen</lk-button>

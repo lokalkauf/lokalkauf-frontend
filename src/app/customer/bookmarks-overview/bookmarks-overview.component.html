@@ -5,6 +5,10 @@
   <div class="bookmarks-description">
     Genieße Deinen Ausflug in die Stadt und lerne Sie ganz neu kennen!
   </div>
+  <ng-container *ngIf="bookmarkList$ | async as bmk">
+    <h2>{{ bmk.name }}</h2>
+    <div [innerHTML]="bmk.description | nl2br: true"></div>
+  </ng-container>
   <div class="container">
     <div class="left-side">
       <ng-container *ngIf="(hasProfilesInBookmark$ | async) === 0">

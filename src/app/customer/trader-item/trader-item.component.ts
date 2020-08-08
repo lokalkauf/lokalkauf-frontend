@@ -18,9 +18,11 @@ import { StorageService } from 'src/app/services/storage.service';
   templateUrl: './trader-item.component.html',
   styleUrls: ['./trader-item.component.scss'],
 })
-export class TraderItemComponent implements OnInit {
+export class TraderItemComponent implements OnInit, OnDestroy {
   @Input() trader: any;
   isTraderInBookmarks$: Observable<boolean>;
+
+  bookmarklistSubsciption: Subscription;
 
   constructor(
     private readonly bookmarkService: BookmarksService,
@@ -28,8 +30,14 @@ export class TraderItemComponent implements OnInit {
     public dialog: MatDialog
   ) {}
 
+  ngOnDestroy(): void {
+    if (this.bookmarklistSubsciption) {
+      this.bookmarklistSubsciption.unsubscribe();
+    }
+  }
+
   ngOnInit(): void {
-    this.bookmarkService.currentBookmarklist
+    this.bookmarklistSubsciption = this.bookmarkService.currentBookmarklist
       .pipe(
         map((bookmark) => {
           if (bookmark) {
@@ -39,7 +47,8 @@ export class TraderItemComponent implements OnInit {
           } else {
             this.isTraderInBookmarks$ = of(false);
           }
-        })
+        }),
+        distinctUntilChanged()
       )
       .subscribe();
   }

@@ -18,6 +18,7 @@ export interface BookmarkData {
 export class BookmarksDialogComponent {
   bookmarkForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
+    description: new FormControl(''),
   });
 
   constructor(
@@ -32,8 +33,12 @@ export class BookmarksDialogComponent {
       bookmarks: [{ traderid: this.data.traderid } as Bookmark],
       geojson: null,
       name: this.bookmarkForm.get('name').value,
+      description: this.bookmarkForm.get('description')
+        ? this.bookmarkForm.get('description').value
+        : undefined,
       creationdate: new Date().toLocaleString(),
     };
+    console.log(bookmarkList);
     await this.bookmarkService.updateBookmarkList(bookmarkList);
     this.closeDialog();
   }

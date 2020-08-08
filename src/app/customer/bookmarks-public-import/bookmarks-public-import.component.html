@@ -7,7 +7,7 @@
   <ng-container *ngIf="(isError | async) === false">
     <ng-container *ngIf="bookmarkListPublic$ | async as bmk">
       <h2>{{ bmk.name }}</h2>
-      <div>{{ bmk.description }}</div>
+      <div [innerHTML]="bmk.description | nl2br: true"></div>
 
       <lk-map></lk-map>
       <div class="openrouteservice" *ngIf="showNavigationAttribution$ | async">
