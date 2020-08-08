@@ -4,6 +4,7 @@ import {
   ViewEncapsulation,
   ViewChild,
   OnDestroy,
+  AfterViewInit,
 } from '@angular/core';
 import {
   BookmarksService,
@@ -97,6 +98,7 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
       }
     });
   }
+
   ngOnDestroy(): void {
     if (this.tradersCounterSubscription) {
       this.tradersCounterSubscription.unsubscribe();
@@ -114,7 +116,9 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
         )
       )
       .subscribe((index) => {
-        this.bookmarkStepperList.selectedIndex = index;
+        if (this.bookmarkStepperList.steps.length >= index) {
+          this.bookmarkStepperList.selectedIndex = index;
+        }
       });
   }
 
@@ -136,12 +140,13 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
   stepperChange($event) {
     if ($event) {
       const index = $event.selectedIndex;
-
       this.traderProfiles$
         .pipe(
           map((profiles) => {
-            const coords = profiles[index].confirmedLocation;
-            this.map.setCenter(coords);
+            if (profiles[index]) {
+              const coords = profiles[index].confirmedLocation;
+              this.map.setCenter(coords);
+            }
           })
         )
         .subscribe();
@@ -239,7 +244,6 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
     if (!this.storageService.loadActiveBookmarkId()) {
       return;
     }
-
     const currentBookmark = this.storageService.loadActiveBookmarkId();
 
     this.loaderSubscription = this.bookmarksService
@@ -261,7 +265,6 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
           ).subscribe((x) => this.traderProfiles$.next(x));
 
           this.bookmarkList$ = of(bklist);
-
           this.hasProfilesInBookmark$ = of(
             bookmarkArray ? bookmarkArray.length : 0
           );
@@ -293,6 +296,9 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
         if (x) {
           console.log('FROM INIT');
           this.load();
+          if (this.bookmarkStepperList) {
+            this.bookmarkStepperList.selectedIndex = 0;
+          }
         }
       });
   }
