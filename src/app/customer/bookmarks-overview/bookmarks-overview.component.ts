@@ -37,6 +37,7 @@ import {
 } from '@angular/material/dialog';
 import { BookmarksSharePrivateDialogComponent } from './bookmarks-share-private-dialog/bookmarks-share-private-dialog.component';
 import { BookmarksSharePublicDialogComponent } from './bookmarks-share-public-dialog/bookmarks-share-public-dialog.component';
+import { MatSelectionList, MatListOption } from '@angular/material/list';
 
 export interface TraderProfilesPlus extends TraderProfile {
   thumbUrl?: string;
@@ -62,7 +63,7 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
   bookmarkList$: Observable<BookmarkList>;
 
   @ViewChild(LkMapComponent) map: LkMapComponent;
-  @ViewChild('stepper') private bookmarkStepperList: MatStepper;
+  @ViewChild('lst') private bookmarkUiList: MatSelectionList;
 
   constructor(
     readonly bookmarksService: BookmarksService,
@@ -109,17 +110,16 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
   }
 
   clickCallback(mid: string) {
-    this.traderProfiles$
-      .pipe(
-        map((profiles) =>
-          profiles.findIndex((profile) => profile.mapid === mid)
-        )
-      )
-      .subscribe((index) => {
-        if (this.bookmarkStepperList.steps.length >= index) {
-          this.bookmarkStepperList.selectedIndex = index;
+    if (mid) {
+      const res = this.traderProfiles$.value.find((x) => x.mapid === mid);
+      if (res) {
+        const opt = this.bookmarkUiList.options.find((x) => x.value === res.id);
+        if (opt) {
+          this.bookmarkUiList.selectedOptions.select(opt);
+          opt.focus();
         }
-      });
+      }
+    }
   }
 
   private sortProfiles(): (
@@ -137,25 +137,15 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
     };
   }
 
-  stepperChange($event) {
-    if ($event) {
-      const index = $event.selectedIndex;
-      this.traderProfiles$
-        .pipe(
-          map((profiles) => {
-            if (profiles[index]) {
-              const coords = profiles[index].confirmedLocation;
-              this.map.setCenter(coords);
-            }
-          })
-        )
-        .subscribe();
+  listChange($event) {
+    const id: string = $event.option.value as string;
+    if (!id) {
+      return;
+    }
 
-      setTimeout(() => {
-        document
-          .getElementById(this.bookmarkStepperList._getStepLabelId(index))
-          .scrollIntoView(true);
-      });
+    const elem = this.traderProfiles$.value.find((x) => x.id === id);
+    if (elem) {
+      this.map.setCenter(elem.confirmedLocation);
     }
   }
 
@@ -296,8 +286,12 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
         if (x) {
           console.log('FROM INIT');
           this.load();
-          if (this.bookmarkStepperList) {
+          /*if (this.bookmarkStepperList) {
             this.bookmarkStepperList.selectedIndex = 0;
+          }*/
+          if (this.bookmarkUiList) {
+            this.bookmarkUiList.options.first.focus();
+            this.bookmarkUiList.options.first.selected = true;
           }
         }
       });

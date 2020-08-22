@@ -1,7 +1,7 @@
 <lk-container>
   <br />
   <br />
-  <lk-page-title title="Stadtbummel"></lk-page-title>
+  <lk-page-title title="Lieblingsläden"></lk-page-title>
   <div class="bookmarks-description">
     Genieße Deinen Ausflug in die Stadt und lerne Sie ganz neu kennen!
   </div>
@@ -24,50 +24,70 @@
         <br />Probiere es gleich aus!
       </ng-container>
       <ng-container *ngIf="(hasProfilesInBookmark$ | async) > 0">
-        <mat-vertical-stepper
-          #stepper
-          (selectionChange)="stepperChange($event)"
+        <div class="button-container">
+          <button mat-button class="btn" (click)="navigate()">
+            <mat-icon>navigation</mat-icon>
+            Route
+          </button>
+          <!--<button mat-button (click)="save()">
+            <mat-icon>save</mat-icon>
+          </button>-->
+          <button mat-button class="btn" (click)="openSharePublicDialog()">
+            <mat-icon>share</mat-icon>
+            Teilen
+          </button>
+
+          <button mat-button class="btn" (click)="openSharePrivateDialog()">
+            <mat-icon>important_devices</mat-icon>
+            Geräte Share
+          </button>
+
+          <button mat-button class="btn" (click)="deleteBookmark()">
+            <mat-icon>delete</mat-icon>
+            Liste löschen
+          </button>
+        </div>
+
+        <mat-selection-list
+          #lst
+          [multiple]="false"
+          (selectionChange)="listChange($event)"
         >
-          <ng-template matStepperIcon="edit" let-index="index">
-            {{ index + 1 }}
-          </ng-template>
-          <mat-step
-            *ngFor="
-              let profile of traderProfiles$ | async;
-              let isFirst = first;
-              let isLast = last
-            "
+          <mat-list-option
+            class="lst-row"
+            *ngFor="let profile of traderProfiles$ | async; let isFirst = first"
+            [value]="profile.id"
           >
-            <ng-template matStepperIcon="number" matStepLabel>{{
-              profile.businessname
-            }}</ng-template>
-            <div class="trader-details">
-              <ng-container *ngIf="profile.thumbUrl">
-                <img src="{{ profile.thumbUrl }}" />
-                <br />
-              </ng-container>
-              {{ profile.street }} {{ profile.number }} <br />
-              {{ profile.postcode }} {{ profile.city }}
-              <div>
-                <a [routerLink]="'/trader-detail/' + profile.id"
-                  >Geschäft besuchen</a
-                >
-              </div>
-              <div>
-                <button
-                  *ngIf="isFirst === false"
-                  mat-icon-button
-                  matStepperPrevious
-                >
-                  <mat-icon>keyboard_arrow_up</mat-icon>
-                </button>
-                <button *ngIf="isLast === false" mat-icon-button matStepperNext>
-                  <mat-icon>keyboard_arrow_down</mat-icon>
-                </button>
+            <div class="trader-profile-container">
+              <div
+                class="thumb-image"
+                [ngStyle]="{
+                  'background-image':
+                    'url(' +
+                    (profile.thumbUrl
+                      ? profile.thumbUrl
+                      : '../../../assets/lokalkaufSocialMedia.png') +
+                    ')'
+                }"
+              ></div>
+
+              <div class="address">
+                <div class="address-headline">{{ profile.businessname }}</div>
+                <div class="address-details">
+                  {{ profile.street }} {{ profile.number }} <br />
+                  {{ profile.postcode }} {{ profile.city }}
+                </div>
+                <div class="address-link">
+                  <a
+                    class="fancy-link"
+                    [routerLink]="'/trader-detail/' + profile.id"
+                    >Geschäftsprofil anzeigen</a
+                  >
+                </div>
               </div>
             </div>
-          </mat-step>
-        </mat-vertical-stepper>
+          </mat-list-option>
+        </mat-selection-list>
       </ng-container>
     </div>
     <div class="right-side">
@@ -89,27 +109,4 @@
       </lk-container>
     </div>
   </div>
-  <ng-container *ngIf="(hasProfilesInBookmark$ | async) > 0">
-    <div>
-      <button mat-button (click)="deleteBookmark()">
-        <mat-icon>delete</mat-icon>
-      </button>
-
-      <button mat-button (click)="navigate()">
-        <mat-icon>navigation</mat-icon>
-      </button>
-
-      <button mat-button (click)="save()">
-        <mat-icon>save</mat-icon>
-      </button>
-
-      <button mat-button (click)="openSharePrivateDialog()">
-        <mat-icon>sync_alt</mat-icon>
-      </button>
-
-      <button mat-button (click)="openSharePublicDialog()">
-        <mat-icon>share</mat-icon>
-      </button>
-    </div>
-  </ng-container>
 </lk-container>

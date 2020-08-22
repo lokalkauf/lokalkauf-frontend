@@ -45,6 +45,7 @@ import { BookmarksSharePrivateDialogComponent } from './bookmarks-overview/bookm
 import { BookmarksSharePublicDialogComponent } from './bookmarks-overview/bookmarks-share-public-dialog/bookmarks-share-public-dialog.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { BookmarksPublicImportComponent } from './bookmarks-public-import/bookmarks-public-import.component';
+import { MatListModule } from '@angular/material/list';
 
 const routes: Routes = [
   {
@@ -94,6 +95,7 @@ const routes: Routes = [
     MatInputModule,
     MatButtonModule,
     MatDialogModule,
+    MatListModule,
     MatExpansionModule,
     MatSliderModule,
     MatStepperModule,
