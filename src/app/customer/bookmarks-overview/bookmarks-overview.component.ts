@@ -81,8 +81,6 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
       if (!profiles) {
         return;
       }
-      profiles.sort(this.sortProfiles());
-
       this.map.clearAllMarkers();
 
       profiles.forEach((profile) => {
@@ -122,22 +120,23 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
     }
   }
 
-  private sortProfiles(): (
-    a: TraderProfilesPlus,
-    b: TraderProfilesPlus
-  ) => number {
-    return (x, y) => {
-      if (x.city > y.city) {
-        return -1;
+  async resortList($event) {
+    const fromIndex: number = $event.previousIndex;
+    const toIndex: number = $event.currentIndex;
+    if (fromIndex >= 0 && toIndex >= 0) {
+      const traders = this.traderProfiles$.getValue();
+      if (toIndex >= traders.length) {
+        let k = toIndex - traders.length + 1;
+        while (k--) {
+          traders.push(undefined);
+        }
       }
-      if (y.city > x.city) {
-        return 1;
-      }
-      return 0;
-    };
+      traders.splice(toIndex, 0, traders.splice(fromIndex, 1)[0]);
+      this.save();
+    }
   }
 
-  listChange($event) {
+  listSelectionChange($event) {
     const id: string = $event.option.value as string;
     if (!id) {
       return;
@@ -192,42 +191,33 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
   }
 
   private gatherDataForSave() {
-    return this.traderProfiles$.pipe(
-      map((profiles) => {
-        const coords = profiles.map((trader) =>
-          this.swap(trader.confirmedLocation)
-        );
-
-        return {
-          traders: profiles.map((x) => ({ traderid: x.id })),
-          geo: this.storageService.loadCache(
-            this.navigationService.getCacheKey(coords)
-          ),
-        };
-      })
-    );
+    const val = this.traderProfiles$.value;
+    const coords = val.map((trader) => this.swap(trader.confirmedLocation));
+    return {
+      traders: val.map((x) => ({ traderid: x.id })),
+      geo: this.storageService.loadCache(
+        this.navigationService.getCacheKey(coords)
+      ),
+    };
   }
 
   async save() {
-    this.gatherDataForSave().subscribe(async (data) => {
-      const bookmarklist: BookmarkList = {
-        bookmarks: data.traders as Bookmark[],
-        geojson: data.geo ? btoa(JSON.stringify(data.geo)) : null,
-        name: this.bookmarksService.currentBookmarklist.getValue().name,
-        creationdate: new Date().toLocaleString(),
-      };
+    const data = this.gatherDataForSave();
+    const bookmarklist: BookmarkList = {
+      bookmarks: data.traders as Bookmark[],
+      geojson: data.geo ? btoa(JSON.stringify(data.geo)) : null,
+      name: this.bookmarksService.currentBookmarklist.getValue().name,
+      creationdate: new Date().toLocaleString(),
+    };
 
-      if (this.storageService.loadActiveBookmarkId()) {
-        bookmarklist.id = this.storageService.loadActiveBookmarkId().id;
-      }
-      const result = await this.bookmarksService.updateBookmarkList(
-        bookmarklist
-      );
+    if (this.storageService.loadActiveBookmarkId()) {
+      bookmarklist.id = this.storageService.loadActiveBookmarkId().id;
+    }
+    const result = await this.bookmarksService.updateBookmarkList(bookmarklist);
 
-      if (result) {
-        console.log(result);
-      }
-    });
+    if (result) {
+      console.log('save bookmark', result);
+    }
   }
 
   load() {
@@ -246,13 +236,23 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
         const bookmarkArray = bklist.bookmarks.map(
           (traderlist) => traderlist.traderid
         );
+        console.log('bookmarkArray', bookmarkArray);
         if (bookmarkArray) {
           from(
             this.traderService.getTraderProfiles(
               bookmarkArray,
               TraderProfileStatus.PUBLIC
             )
-          ).subscribe((x) => this.traderProfiles$.next(x));
+          ).subscribe((x) => {
+            const tp: TraderProfilesPlus[] = [];
+            bookmarkArray.forEach((y) => {
+              const elem = x.find((z) => z.id === y);
+              if (elem) {
+                tp.push(elem);
+              }
+            });
+            this.traderProfiles$.next(tp);
+          });
 
           this.bookmarkList$ = of(bklist);
           this.hasProfilesInBookmark$ = of(
@@ -286,9 +286,6 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
         if (x) {
           console.log('FROM INIT');
           this.load();
-          /*if (this.bookmarkStepperList) {
-            this.bookmarkStepperList.selectedIndex = 0;
-          }*/
           if (this.bookmarkUiList) {
             this.bookmarkUiList.options.first.focus();
             this.bookmarkUiList.options.first.selected = true;

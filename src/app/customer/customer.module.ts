@@ -46,6 +46,7 @@ import { BookmarksSharePublicDialogComponent } from './bookmarks-overview/bookma
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { BookmarksPublicImportComponent } from './bookmarks-public-import/bookmarks-public-import.component';
 import { MatListModule } from '@angular/material/list';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 const routes: Routes = [
   {
@@ -99,6 +100,7 @@ const routes: Routes = [
     MatExpansionModule,
     MatSliderModule,
     MatStepperModule,
+    DragDropModule,
     FontAwesomeModule,
     ReusablesModule,
     PipesModule,

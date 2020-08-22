@@ -49,16 +49,23 @@
         </div>
 
         <mat-selection-list
+          cdkDropList
           #lst
           [multiple]="false"
-          (selectionChange)="listChange($event)"
+          (selectionChange)="listSelectionChange($event)"
+          (cdkDropListDropped)="resortList($event)"
         >
           <mat-list-option
+            cdkDrag
             class="lst-row"
             *ngFor="let profile of traderProfiles$ | async; let isFirst = first"
             [value]="profile.id"
           >
+            <div class="drag-drop-placeholder" *cdkDragPlaceholder></div>
             <div class="trader-profile-container">
+              <div class="drag-indicator" cdkDragHandle>
+                <mat-icon>drag_indicator</mat-icon>
+              </div>
               <div
                 class="thumb-image"
                 [ngStyle]="{
