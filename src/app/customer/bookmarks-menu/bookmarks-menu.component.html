@@ -1,0 +1,22 @@
+<ng-container>
+  <button mat-button [matMenuTriggerFor]="bookmarkMenuTrader">
+    <mat-icon>favorite_outline</mat-icon>
+  </button>
+
+  <mat-menu #bookmarkMenuTrader="matMenu" class="mat-elevation-z2">
+    <div class="mat-menu-headline" *ngIf="(localBookmarks | async).length > 0">
+      privater Merkliste zufügen
+    </div>
+    <ng-container *ngFor="let bk of localBookmarks | async">
+      <button mat-menu-item (click)="addToBookmarklist(bk.id)">
+        <mat-icon>favorite</mat-icon>
+        {{ bk.name }}
+      </button>
+    </ng-container>
+
+    <mat-divider *ngIf="(localBookmarks | async).length > 0"></mat-divider>
+    <button mat-menu-item (click)="clearActiveBookmarkId()">
+      <mat-icon>playlist_add</mat-icon>Neu
+    </button>
+  </mat-menu>
+</ng-container>

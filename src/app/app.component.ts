@@ -105,18 +105,27 @@ export class AppComponent implements OnInit, OnDestroy {
         id,
         type: BOOKMARK_TYPE.PRIVATE,
       });
-      this.bookmarkService.loadBookmarkList(id).subscribe();
+
       this.currentBookmark = { id, type: BOOKMARK_TYPE.PRIVATE };
+
+      this.bookmarkService.loadBookmarkList(id).subscribe(() => {
+        this.router.navigate(['/bookmarks']);
+      });
     }
   }
+
   loadPublicBookmarkList(id: string) {
     if (id && id.length > 0) {
       this.storageService.saveActiveBookmarkId({
         id,
         type: BOOKMARK_TYPE.PUBLIC,
       });
-      this.bookmarkService.loadPublicBookmarkList(id, true).subscribe();
+
       this.currentBookmark = { id, type: BOOKMARK_TYPE.PUBLIC };
+
+      this.bookmarkService.loadPublicBookmarkList(id, true).subscribe(() => {
+        this.router.navigate(['/bookmarks']);
+      });
     }
   }
 

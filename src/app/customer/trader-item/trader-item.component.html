@@ -73,6 +73,7 @@
     <button mat-button (click)="addBookmark(trader.id)">
       <mat-icon>favorite_outline</mat-icon>
     </button>
+    <app-bookmarks-menu traderId="{{ trader.id }}"></app-bookmarks-menu>
   </ng-container>
   {{ trader.distance | number: '1.2-2':'de' }} km
 </div>

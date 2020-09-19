@@ -47,6 +47,8 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { BookmarksPublicImportComponent } from './bookmarks-public-import/bookmarks-public-import.component';
 import { MatListModule } from '@angular/material/list';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { BookmarksMenuComponent } from './bookmarks-menu/bookmarks-menu.component';
+import { MatMenu, MatMenuModule } from '@angular/material/menu';
 
 const routes: Routes = [
   {
@@ -76,6 +78,7 @@ const routes: Routes = [
     BookmarksPrivateImportComponent,
     BookmarksSharePrivateDialogComponent,
     BookmarksSharePublicDialogComponent,
+    BookmarksMenuComponent,
     ShoppingcartComponent,
     TraderOverviewComponent,
     TraderItemComponent,
@@ -97,6 +100,7 @@ const routes: Routes = [
     MatButtonModule,
     MatDialogModule,
     MatListModule,
+    MatMenuModule,
     MatExpansionModule,
     MatSliderModule,
     MatStepperModule,

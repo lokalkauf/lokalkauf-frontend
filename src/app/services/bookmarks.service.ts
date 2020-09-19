@@ -84,6 +84,37 @@ export class BookmarksService {
     }
   }
 
+  async addTraderToBookmark(bookmarkId: string, bookmark: Bookmark) {
+    if (bookmarkId === this.currentBookmarklist.getValue().id) {
+      return await this.addTrader(bookmark);
+    }
+
+    const remoteBookmark = await this.db
+      .collection<BookmarkList>(`Merkliste`)
+      .doc<BookmarkList>(bookmarkId)
+      .get()
+      .toPromise();
+
+    if (remoteBookmark) {
+      const r = remoteBookmark.data();
+      if (r) {
+        console.log('ffffff', r, bookmark);
+        if (
+          r.bookmarks.filter((y) => y.traderid === bookmark.traderid).length ===
+          0
+        ) {
+          r.bookmarks.push(bookmark);
+          await this.db
+            .collection(`Merkliste`)
+            .doc(bookmarkId)
+            .update({ bookmarks: r.bookmarks });
+        }
+      }
+    }
+  }
+
+  removeTraderFromBookmark(traderid: string, bookmarkId: string) {}
+
   async deleteBookmark() {
     const bookmarkid = this.storageService.loadActiveBookmarkId();
     if (bookmarkid) {
