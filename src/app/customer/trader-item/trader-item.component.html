@@ -22,7 +22,7 @@
         </div>
         <div class="distance-small">
           {{ trader.distance | number: '1.2-2':'de' }} km
-          <ng-container *ngIf="(isTraderInBookmarks$ | async) === true">
+          <!--<ng-container *ngIf="(isTraderInBookmarks$ | async) === true">
             <button
               mat-icon-button
               (click)="removeBookmarkSmall($event, trader.id)"
@@ -38,7 +38,12 @@
             >
               <mat-icon>favorite_outline</mat-icon>
             </button>
-          </ng-container>
+          </ng-container>-->
+          <app-bookmarks-menu
+            (click)="preventDefault($event)"
+            traderId="{{ trader.id }}"
+          ></app-bookmarks-menu>
+
           <ng-container *ngIf="trader.licence === 'ODbL'">
             <a
               href="https://www.openstreetmap.org/copyright"
@@ -63,18 +68,6 @@
       <img class="osm-large" src="../../../assets/osm-attribution-24.png" />
     </a>
   </ng-container>
-  <ng-container *ngIf="(isTraderInBookmarks$ | async) === true">
-    <!--<button mat-button (click)="removeBookmark(trader.id)">
-      <mat-icon class="green-bookmark-icon">favorite</mat-icon>
-    </button>-->
-    <app-bookmarks-menu traderId="{{ trader.id }}"></app-bookmarks-menu>
-  </ng-container>
-
-  <ng-container *ngIf="(isTraderInBookmarks$ | async) !== true">
-    <!--<button mat-button (click)="addBookmark(trader.id)">
-      <mat-icon>favorite_outline</mat-icon>
-    </button>-->
-    <app-bookmarks-menu traderId="{{ trader.id }}"></app-bookmarks-menu>
-  </ng-container>
+  <app-bookmarks-menu traderId="{{ trader.id }}"></app-bookmarks-menu>
   {{ trader.distance | number: '1.2-2':'de' }} km
 </div>

@@ -75,6 +75,11 @@ export class TraderItemComponent implements OnInit, OnDestroy {
     }
   }
 
+  preventDefault($event: Event) {
+    $event.preventDefault();
+    $event.stopImmediatePropagation();
+  }
+
   addBookmarkSmall($event: Event, id: string) {
     const currentBookmark = this.storageService.loadActiveBookmarkId();
     if (
