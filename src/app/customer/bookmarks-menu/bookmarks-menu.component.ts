@@ -4,12 +4,7 @@ import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Bookmark } from 'src/app/models/bookmark';
-import {
-  ActiveBookmark,
-  BookmarksService,
-  BOOKMARK_TYPE,
-  LocalBookmark,
-} from 'src/app/services/bookmarks.service';
+import { ActiveBookmark, BookmarksService, BOOKMARK_TYPE, LocalBookmark } from 'src/app/services/bookmarks.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { threadId } from 'worker_threads';
 
@@ -28,11 +23,7 @@ export class BookmarksMenuComponent {
 
   @Input() traderId: string;
 
-  constructor(
-    private storageService: StorageService,
-    private bookmarkService: BookmarksService,
-    public dialog: MatDialog
-  ) {
+  constructor(private storageService: StorageService, private bookmarkService: BookmarksService, public dialog: MatDialog) {
     this.bookmarkService.currentBookmarklist.subscribe((x) => {
       this.currentBookmark = this.storageService.loadActiveBookmarkId();
       this.localBookmarks = of(this.bookmarkService.getLocalBookmarkLists());
@@ -42,11 +33,7 @@ export class BookmarksMenuComponent {
   amISelected(): Observable<boolean> {
     return this.bookmarkService.currentBookmarklist.pipe(
       map((y) => {
-        return (
-          this.currentBookmark.id &&
-          y &&
-          y.bookmarks.filter((x) => x.traderid === this.traderId).length > 0
-        );
+        return this.currentBookmark.id && y && y.bookmarks.filter((x) => x.traderid === this.traderId).length > 0;
       })
     );
   }
@@ -54,11 +41,7 @@ export class BookmarksMenuComponent {
   amISelectedInCurrentList(bookmarkid: string): Observable<boolean> {
     return this.bookmarkService.currentBookmarklist.pipe(
       map((y) => {
-        return (
-          this.currentBookmark.id === bookmarkid &&
-          y &&
-          y.bookmarks.filter((x) => x.traderid === this.traderId).length > 0
-        );
+        return this.currentBookmark.id === bookmarkid && y && y.bookmarks.filter((x) => x.traderid === this.traderId).length > 0;
       })
     );
   }
@@ -76,10 +59,7 @@ export class BookmarksMenuComponent {
 
   addToBookmarklist(bookmarkid: string) {
     const currentBookmark = this.storageService.loadActiveBookmarkId();
-    if (
-      !currentBookmark ||
-      (!currentBookmark.id && currentBookmark.type === BOOKMARK_TYPE.UNKNOWN)
-    ) {
+    if (!currentBookmark || (!currentBookmark.id && currentBookmark.type === BOOKMARK_TYPE.UNKNOWN)) {
       return;
     } else {
       this.bookmarkService.addTraderToBookmark(bookmarkid, {
@@ -90,10 +70,7 @@ export class BookmarksMenuComponent {
 
   removeFromBookmarklist() {
     const currentBookmark = this.storageService.loadActiveBookmarkId();
-    if (
-      !currentBookmark ||
-      (!currentBookmark.id && currentBookmark.type === BOOKMARK_TYPE.UNKNOWN)
-    ) {
+    if (!currentBookmark || (!currentBookmark.id && currentBookmark.type === BOOKMARK_TYPE.UNKNOWN)) {
       return;
     } else {
       this.bookmarkService.removeTrader({
