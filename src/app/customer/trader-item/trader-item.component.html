@@ -64,15 +64,16 @@
     </a>
   </ng-container>
   <ng-container *ngIf="(isTraderInBookmarks$ | async) === true">
-    <button mat-button (click)="removeBookmark(trader.id)">
+    <!--<button mat-button (click)="removeBookmark(trader.id)">
       <mat-icon class="green-bookmark-icon">favorite</mat-icon>
-    </button>
+    </button>-->
+    <app-bookmarks-menu traderId="{{ trader.id }}"></app-bookmarks-menu>
   </ng-container>
 
   <ng-container *ngIf="(isTraderInBookmarks$ | async) !== true">
-    <button mat-button (click)="addBookmark(trader.id)">
+    <!--<button mat-button (click)="addBookmark(trader.id)">
       <mat-icon>favorite_outline</mat-icon>
-    </button>
+    </button>-->
     <app-bookmarks-menu traderId="{{ trader.id }}"></app-bookmarks-menu>
   </ng-container>
   {{ trader.distance | number: '1.2-2':'de' }} km

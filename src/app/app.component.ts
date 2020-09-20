@@ -109,6 +109,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.currentBookmark = { id, type: BOOKMARK_TYPE.PRIVATE };
 
       this.bookmarkService.loadBookmarkList(id).subscribe(() => {
+        console.log('nav to bookmark');
         this.router.navigate(['/bookmarks']);
       });
     }

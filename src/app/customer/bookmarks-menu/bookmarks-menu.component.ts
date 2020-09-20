@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Bookmark } from 'src/app/models/bookmark';
 import {
   ActiveBookmark,
@@ -21,6 +22,8 @@ export class BookmarksMenuComponent {
   localBookmarks: Observable<LocalBookmark[]>;
   currentBookmark: ActiveBookmark;
 
+  isTraderCurrentList$: Observable<boolean>;
+
   @ViewChild('bookmarkMenuTrader') matMenu: MatMenu;
 
   @Input() traderId: string;
@@ -34,6 +37,30 @@ export class BookmarksMenuComponent {
       this.currentBookmark = this.storageService.loadActiveBookmarkId();
       this.localBookmarks = of(this.bookmarkService.getLocalBookmarkLists());
     });
+  }
+
+  amISelected(): Observable<boolean> {
+    return this.bookmarkService.currentBookmarklist.pipe(
+      map((y) => {
+        return (
+          this.currentBookmark.id &&
+          y &&
+          y.bookmarks.filter((x) => x.traderid === this.traderId).length > 0
+        );
+      })
+    );
+  }
+
+  amISelectedInCurrentList(bookmarkid: string): Observable<boolean> {
+    return this.bookmarkService.currentBookmarklist.pipe(
+      map((y) => {
+        return (
+          this.currentBookmark.id === bookmarkid &&
+          y &&
+          y.bookmarks.filter((x) => x.traderid === this.traderId).length > 0
+        );
+      })
+    );
   }
 
   loadBookmarkList(id: string) {
@@ -56,6 +83,20 @@ export class BookmarksMenuComponent {
       return;
     } else {
       this.bookmarkService.addTraderToBookmark(bookmarkid, {
+        traderid: this.traderId,
+      } as Bookmark);
+    }
+  }
+
+  removeFromBookmarklist() {
+    const currentBookmark = this.storageService.loadActiveBookmarkId();
+    if (
+      !currentBookmark ||
+      (!currentBookmark.id && currentBookmark.type === BOOKMARK_TYPE.UNKNOWN)
+    ) {
+      return;
+    } else {
+      this.bookmarkService.removeTrader({
         traderid: this.traderId,
       } as Bookmark);
     }
