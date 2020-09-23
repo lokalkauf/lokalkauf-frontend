@@ -5,15 +5,12 @@ import { UserService } from './services/user.service';
 import { StorageService } from './services/storage.service';
 import { AngularFireAnalytics } from '@angular/fire/analytics';
 import { CookieService } from 'ngx-cookie-service';
-import {
-  BookmarksService,
-  LocalBookmark,
-  ActiveBookmark,
-  BOOKMARK_TYPE,
-} from './services/bookmarks.service';
+import { BookmarksService, LocalBookmark, ActiveBookmark, BOOKMARK_TYPE } from './services/bookmarks.service';
 import { Observable, of } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { faFacebookF, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { BookmarksDialogComponent } from './customer/bookmarks-dialog/bookmarks-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-root',
@@ -38,7 +35,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private bookmarkService: BookmarksService,
     private ccService: NgcCookieConsentService,
     private cookieService: CookieService,
-    private analytics: AngularFireAnalytics
+    private analytics: AngularFireAnalytics,
+    public dialog: MatDialog
   ) {
     ccService.statusChange$.subscribe((x) => {
       if (x.status === 'allow') {
@@ -61,41 +59,25 @@ export class AppComponent implements OnInit, OnDestroy {
         cookieService.deleteAll('/', 'www.lokalkauf.org');
 
         const date = new Date().getDate() + 1;
-        cookieService.set(
-          'cookieconsent_status',
-          'deny',
-          date,
-          '/',
-          domainDot,
-          undefined,
-          'Strict'
-        );
+        cookieService.set('cookieconsent_status', 'deny', date, '/', domainDot, undefined, 'Strict');
       }
     });
 
-    this.bookmarkService.bookmarkSubject.subscribe(
-      (traderCount) => (this.bookmarks = of(traderCount))
-    );
+    this.bookmarkService.bookmarkSubject.subscribe((traderCount) => (this.bookmarks = of(traderCount)));
 
     this.currentBookmark = this.storageService.loadActiveBookmarkId();
     if (this.currentBookmark) {
       if (this.currentBookmark.type === BOOKMARK_TYPE.PUBLIC) {
-        this.bookmarkService
-          .loadPublicBookmarkList(this.currentBookmark.id, true)
-          .subscribe();
+        this.bookmarkService.loadPublicBookmarkList(this.currentBookmark.id, true).subscribe();
       } else {
-        this.bookmarkService
-          .loadBookmarkList(this.currentBookmark.id)
-          .subscribe();
+        this.bookmarkService.loadBookmarkList(this.currentBookmark.id).subscribe();
       }
     }
 
     this.bookmarkService.currentBookmarklist.subscribe((x) => {
       this.currentBookmark = this.storageService.loadActiveBookmarkId();
       this.localBookmarks = of(this.bookmarkService.getLocalBookmarkLists());
-      this.localPublicBookmarks = of(
-        this.bookmarkService.getLocalPublicBookmarklists()
-      );
+      this.localPublicBookmarks = of(this.bookmarkService.getLocalPublicBookmarklists());
     });
   }
 
@@ -161,9 +143,7 @@ export class AppComponent implements OnInit, OnDestroy {
     let route = '/';
     const city = this.storageService.loadLocation();
     if (city) {
-      route = `/localtraders/${city.coordinates[0]}/${city.coordinates[1]}/${
-        city.radius ? city.radius.toString() : '10'
-      }`;
+      route = `/localtraders/${city.coordinates[0]}/${city.coordinates[1]}/${city.radius ? city.radius.toString() : '10'}`;
     }
     this.router.navigate([route]);
   }

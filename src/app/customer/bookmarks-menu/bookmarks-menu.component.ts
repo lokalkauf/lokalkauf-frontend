@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { Bookmark } from 'src/app/models/bookmark';
 import { ActiveBookmark, BookmarksService, BOOKMARK_TYPE, LocalBookmark } from 'src/app/services/bookmarks.service';
 import { StorageService } from 'src/app/services/storage.service';
-import { threadId } from 'worker_threads';
+import { BookmarksDialogComponent } from '../bookmarks-dialog/bookmarks-dialog.component';
 
 @Component({
   selector: 'app-bookmarks-menu',
@@ -31,17 +31,24 @@ export class BookmarksMenuComponent {
   }
 
   amISelected(): Observable<boolean> {
+    if (!this.bookmarkService.currentBookmarklist.getValue()) {
+      return of(false);
+    }
+
     return this.bookmarkService.currentBookmarklist.pipe(
       map((y) => {
-        return this.currentBookmark.id && y && y.bookmarks.filter((x) => x.traderid === this.traderId).length > 0;
+        return this.currentBookmark && this.currentBookmark.id && y && y.bookmarks.filter((x) => x.traderid === this.traderId).length > 0;
       })
     );
   }
 
   amISelectedInCurrentList(bookmarkid: string): Observable<boolean> {
+    if (!this.bookmarkService.currentBookmarklist.getValue()) {
+      return of(false);
+    }
     return this.bookmarkService.currentBookmarklist.pipe(
       map((y) => {
-        return this.currentBookmark.id === bookmarkid && y && y.bookmarks.filter((x) => x.traderid === this.traderId).length > 0;
+        return this.currentBookmark && this.currentBookmark.id === bookmarkid && y && y.bookmarks.filter((x) => x.traderid === this.traderId).length > 0;
       })
     );
   }
@@ -81,5 +88,9 @@ export class BookmarksMenuComponent {
 
   clearActiveBookmarkId() {
     this.bookmarkService.clearCurrentBookmarklist();
+    this.dialog.open(BookmarksDialogComponent, {
+      disableClose: true,
+      data: { traderid: this.traderId },
+    });
   }
 }
