@@ -9,25 +9,29 @@
   </button>
 
   <mat-menu #bookmarkMenuTrader="matMenu" class="mat-elevation-z2">
-    <div class="mat-menu-headline" *ngIf="(localBookmarks | async).length > 0">
-      Merkliste zufügen
-    </div>
-    <ng-container *ngFor="let bk of localBookmarks | async">
-      <ng-container *ngIf="(amISelectedInCurrentList(bk.id) | async) === false">
-        <button mat-menu-item (click)="addToBookmarklist(bk.id)">
-          <mat-icon>favorite</mat-icon>
-          {{ bk.name }}
-        </button>
-      </ng-container>
-      <ng-container *ngIf="(amISelectedInCurrentList(bk.id) | async) === true">
-        <button mat-menu-item (click)="removeFromBookmarklist()">
-          <mat-icon color="primary">favorite</mat-icon>
-          {{ bk.name }}
-        </button>
-      </ng-container>
-    </ng-container>
+    <ng-template matMenuContent>
+      <ng-container *ngIf="localBookmarks | async as lb">
+        <div class="mat-menu-headline" *ngIf="lb.length > 0">
+          Merkliste zufügen
+        </div>
+        <ng-container *ngFor="let bk of lb">
+          <ng-container *ngIf="(amISelectedInCurrentList(bk.id) | async) === false">
+            <button mat-menu-item (click)="addToBookmarklist(bk.id)">
+              <mat-icon>favorite</mat-icon>
+              {{ bk.name }}
+            </button>
+          </ng-container>
+          <ng-container *ngIf="(amISelectedInCurrentList(bk.id) | async) === true">
+            <button mat-menu-item (click)="removeFromBookmarklist()">
+              <mat-icon color="primary">favorite</mat-icon>
+              {{ bk.name }}
+            </button>
+          </ng-container>
+        </ng-container>
 
-    <mat-divider *ngIf="(localBookmarks | async).length > 0"></mat-divider>
-    <button mat-menu-item (click)="addNewBookmark()"><mat-icon>playlist_add</mat-icon>Neu</button>
+        <mat-divider *ngIf="lb.length > 0"></mat-divider>
+      </ng-container>
+      <button mat-menu-item (click)="addNewBookmark()"><mat-icon>playlist_add</mat-icon>Neu</button>
+    </ng-template>
   </mat-menu>
 </ng-container>

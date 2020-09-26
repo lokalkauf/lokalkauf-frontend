@@ -1,40 +1,17 @@
-import {
-  Component,
-  OnInit,
-  ViewEncapsulation,
-  ViewChild,
-  OnDestroy,
-  AfterViewInit,
-} from '@angular/core';
-import {
-  BookmarksService,
-  BOOKMARK_TYPE,
-} from 'src/app/services/bookmarks.service';
+import { Component, OnInit, ViewEncapsulation, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
+import { BookmarksService, BOOKMARK_TYPE } from 'src/app/services/bookmarks.service';
 import { TraderService } from 'src/app/services/trader.service';
 import { Bookmark } from 'src/app/models/bookmark';
-import {
-  Observable,
-  from,
-  of,
-  BehaviorSubject,
-  Subject,
-  Subscription,
-} from 'rxjs';
+import { Observable, from, of, BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { map, tap, distinctUntilChanged } from 'rxjs/operators';
-import {
-  TraderProfileStatus,
-  TraderProfile,
-} from 'src/app/models/traderProfile';
+import { TraderProfileStatus, TraderProfile } from 'src/app/models/traderProfile';
 import { LkMapComponent } from 'src/app/reusables/lk-map/lk-map.component';
 import { ImageService } from 'src/app/services/image.service';
 import { MatStepper } from '@angular/material/stepper';
 import { NavigationService, Coords } from 'src/app/services/navigation.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { BookmarkList } from 'src/app/models/bookmarkList';
-import {
-  throwMatDialogContentAlreadyAttachedError,
-  MatDialog,
-} from '@angular/material/dialog';
+import { throwMatDialogContentAlreadyAttachedError, MatDialog } from '@angular/material/dialog';
 import { BookmarksSharePrivateDialogComponent } from './bookmarks-share-private-dialog/bookmarks-share-private-dialog.component';
 import { BookmarksSharePublicDialogComponent } from './bookmarks-share-public-dialog/bookmarks-share-public-dialog.component';
 import { MatSelectionList, MatListOption } from '@angular/material/list';
@@ -52,9 +29,7 @@ export interface TraderProfilesPlus extends TraderProfile {
 })
 export class BookmarksOverviewComponent implements OnInit, OnDestroy {
   bookmarks: Observable<Bookmark[]>;
-  traderProfiles$: BehaviorSubject<TraderProfilesPlus[]> = new BehaviorSubject<
-    TraderProfilesPlus[]
-  >(null);
+  traderProfiles$: BehaviorSubject<TraderProfilesPlus[]> = new BehaviorSubject<TraderProfilesPlus[]>(null);
   hasProfilesInBookmark$: Observable<number> = of(0);
   showNavigationAttribution$ = of(false);
 
@@ -84,9 +59,7 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
       this.map.clearAllMarkers();
 
       profiles.forEach((profile) => {
-        this.imageService
-          .getThumbnailUrl(profile.defaultImagePath)
-          .then((x) => (profile.thumbUrl = x));
+        this.imageService.getThumbnailUrl(profile.defaultImagePath).then((x) => (profile.thumbUrl = x));
         const mid = this.map.addMarker(profile.confirmedLocation, true);
         if (mid) {
           profile.mapid = mid;
@@ -99,10 +72,12 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    console.log('dest');
     if (this.tradersCounterSubscription) {
       this.tradersCounterSubscription.unsubscribe();
     }
     if (this.loaderSubscription) {
+      console.log('destroy sub');
       this.loaderSubscription.unsubscribe();
     }
   }
@@ -157,9 +132,7 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
     this.traderProfiles$
       .pipe(
         map((profiles) => {
-          const coords = profiles.map((trader) =>
-            this.swap(trader.confirmedLocation)
-          );
+          const coords = profiles.map((trader) => this.swap(trader.confirmedLocation));
           this.map.clearRoute();
           this.navigationService.getNavigationPath(coords).subscribe((geo) => {
             this.map.displayGeoJsonOnMap(geo);
@@ -174,12 +147,8 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
     this.traderProfiles$
       .pipe(
         map((profiles) => {
-          const coords = profiles.map((trader) =>
-            this.swap(trader.confirmedLocation)
-          );
-          const cachedData = this.storageService.loadCache(
-            this.navigationService.getCacheKey(coords)
-          );
+          const coords = profiles.map((trader) => this.swap(trader.confirmedLocation));
+          const cachedData = this.storageService.loadCache(this.navigationService.getCacheKey(coords));
           this.map.clearRoute();
           if (cachedData) {
             this.map.displayGeoJsonOnMap(cachedData);
@@ -195,9 +164,7 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
     const coords = val.map((trader) => this.swap(trader.confirmedLocation));
     return {
       traders: val.map((x) => ({ traderid: x.id })),
-      geo: this.storageService.loadCache(
-        this.navigationService.getCacheKey(coords)
-      ),
+      geo: this.storageService.loadCache(this.navigationService.getCacheKey(coords)),
     };
   }
 
@@ -226,45 +193,34 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
     }
     const currentBookmark = this.storageService.loadActiveBookmarkId();
 
-    this.loaderSubscription = this.bookmarksService
-      .loadActiveBookmarkList(currentBookmark)
-      .subscribe((bklist: BookmarkList) => {
-        if (!bklist || !bklist.bookmarks) {
-          return;
-        }
+    this.loaderSubscription = this.bookmarksService.loadActiveBookmarkList(currentBookmark).subscribe((bklist: BookmarkList) => {
+      if (!bklist || !bklist.bookmarks) {
+        return;
+      }
 
-        const bookmarkArray = bklist.bookmarks.map(
-          (traderlist) => traderlist.traderid
-        );
-        console.log('bookmarkArray', bookmarkArray);
-        if (bookmarkArray) {
-          from(
-            this.traderService.getTraderProfiles(
-              bookmarkArray,
-              TraderProfileStatus.PUBLIC
-            )
-          ).subscribe((x) => {
-            const tp: TraderProfilesPlus[] = [];
-            bookmarkArray.forEach((y) => {
-              const elem = x.find((z) => z.id === y);
-              if (elem) {
-                tp.push(elem);
-              }
-            });
-            this.traderProfiles$.next(tp);
+      const bookmarkArray = bklist.bookmarks.map((traderlist) => traderlist.traderid);
+      console.log('bookmarkArray', bookmarkArray);
+      if (bookmarkArray) {
+        from(this.traderService.getTraderProfiles(bookmarkArray, TraderProfileStatus.PUBLIC)).subscribe((x) => {
+          const tp: TraderProfilesPlus[] = [];
+          bookmarkArray.forEach((y) => {
+            const elem = x.find((z) => z.id === y);
+            if (elem) {
+              tp.push(elem);
+            }
           });
+          this.traderProfiles$.next(tp);
+        });
 
-          this.bookmarkList$ = of(bklist);
-          this.hasProfilesInBookmark$ = of(
-            bookmarkArray ? bookmarkArray.length : 0
-          );
-          this.map.clearRoute();
-          if (bklist.geojson) {
-            this.map.displayGeoJsonOnMap(JSON.parse(atob(bklist.geojson)));
-            this.showNavigationAttribution$ = of(true);
-          }
+        this.bookmarkList$ = of(bklist);
+        this.hasProfilesInBookmark$ = of(bookmarkArray ? bookmarkArray.length : 0);
+        this.map.clearRoute();
+        if (bklist.geojson) {
+          this.map.displayGeoJsonOnMap(JSON.parse(atob(bklist.geojson)));
+          this.showNavigationAttribution$ = of(true);
         }
-      });
+      }
+    });
   }
 
   openSharePrivateDialog() {
@@ -280,18 +236,16 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.tradersCounterSubscription = this.bookmarksService.bookmarkSubject
-      .pipe(distinctUntilChanged())
-      .subscribe((x) => {
-        if (x) {
-          console.log('FROM INIT');
-          this.load();
-          if (this.bookmarkUiList) {
-            this.bookmarkUiList.options.first.focus();
-            this.bookmarkUiList.options.first.selected = true;
-          }
+    this.tradersCounterSubscription = this.bookmarksService.bookmarkSubject.pipe(distinctUntilChanged()).subscribe((x) => {
+      if (x) {
+        console.log('FROM INIT - bookmark overview');
+        this.load();
+        if (this.bookmarkUiList) {
+          this.bookmarkUiList.options.first.focus();
+          this.bookmarkUiList.options.first.selected = true;
         }
-      });
+      }
+    });
   }
 
   private swap(input: number[]): number[] {

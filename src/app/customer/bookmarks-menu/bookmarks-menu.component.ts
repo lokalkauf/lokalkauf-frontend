@@ -31,15 +31,11 @@ export class BookmarksMenuComponent {
   }
 
   amISelected(): Observable<boolean> {
-    if (!this.bookmarkService.currentBookmarklist.getValue()) {
+    if (!this.currentBookmark || !this.currentBookmark.id || !this.bookmarkService.currentBookmarklist.getValue()) {
       return of(false);
     }
 
-    return this.bookmarkService.currentBookmarklist.pipe(
-      map((y) => {
-        return this.currentBookmark && this.currentBookmark.id && y && y.bookmarks.filter((x) => x.traderid === this.traderId).length > 0;
-      })
-    );
+    return of(this.bookmarkService.currentBookmarklist.getValue().bookmarks.find((x) => x.traderid === this.traderId) !== undefined);
   }
 
   amISelectedInCurrentList(bookmarkid: string): Observable<boolean> {
@@ -51,17 +47,6 @@ export class BookmarksMenuComponent {
         return this.currentBookmark && this.currentBookmark.id === bookmarkid && y && y.bookmarks.filter((x) => x.traderid === this.traderId).length > 0;
       })
     );
-  }
-
-  loadBookmarkList(id: string) {
-    if (id && id.length > 0) {
-      this.storageService.saveActiveBookmarkId({
-        id,
-        type: BOOKMARK_TYPE.PRIVATE,
-      });
-      this.bookmarkService.loadBookmarkList(id).subscribe();
-      this.currentBookmark = { id, type: BOOKMARK_TYPE.PRIVATE };
-    }
   }
 
   addToBookmarklist(bookmarkid: string) {
