@@ -28,8 +28,6 @@
     </ng-container>
 
     <mat-divider *ngIf="(localBookmarks | async).length > 0"></mat-divider>
-    <button mat-menu-item (click)="clearActiveBookmarkId()">
-      <mat-icon>playlist_add</mat-icon>Neu
-    </button>
+    <button mat-menu-item (click)="addNewBookmark()"><mat-icon>playlist_add</mat-icon>Neu</button>
   </mat-menu>
 </ng-container>

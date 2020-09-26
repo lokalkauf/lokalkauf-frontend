@@ -86,8 +86,10 @@ export class BookmarksMenuComponent {
     }
   }
 
-  clearActiveBookmarkId() {
+  addNewBookmark() {
+    // TODO: remove maybe
     this.bookmarkService.clearCurrentBookmarklist();
+
     this.dialog.open(BookmarksDialogComponent, {
       disableClose: true,
       data: { traderid: this.traderId },
