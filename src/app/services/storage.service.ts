@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GeoAddress } from '../models/geoAddress';
 import { LkSelectOptions } from '../reusables/lk-select/lk-select.component';
-import { Bookmark } from '../models/bookmark';
-import { LocalBookmark, BOOKMARK_TYPE, ActiveBookmark } from './bookmarks.service';
-import { ActivatedRoute } from '@angular/router';
+import { LocalBookmark, ActiveBookmark } from './bookmarks.service';
 
 @Injectable()
 export class StorageService {
