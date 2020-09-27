@@ -59,21 +59,10 @@ import { PipesModule } from './pipes/pipes.modules';
 import { RedirectComponent } from './redirect/redirect.component';
 import { PressComponent } from './press/press.component';
 import { filter } from 'rxjs/operators';
-import {
-  AngularFireAnalyticsModule,
-  CONFIG,
-  COLLECTION_ENABLED,
-  DEBUG_MODE,
-  ScreenTrackingService,
-  UserTrackingService,
-  APP_VERSION,
-} from '@angular/fire/analytics';
+import { AngularFireAnalyticsModule, CONFIG, COLLECTION_ENABLED, DEBUG_MODE, ScreenTrackingService, UserTrackingService, APP_VERSION } from '@angular/fire/analytics';
 import { CookieService } from 'ngx-cookie-service';
 
-import {
-  NgcCookieConsentModule,
-  NgcCookieConsentConfig,
-} from 'ngx-cookieconsent';
+import { NgcCookieConsentModule, NgcCookieConsentConfig } from 'ngx-cookieconsent';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { BrowserService } from './services/browser.service';
 import { BookmarksService } from './services/bookmarks.service';
@@ -138,20 +127,7 @@ const routes: Routes = [
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [
-    AppComponent,
-    AboutUsComponent,
-    ErrorDisplayComponent,
-    FeedbackComponent,
-    VerifyComponent,
-    SpinnerComponent,
-    SpinnerComponent,
-    StartComponent,
-    FaqComponent,
-    PressComponent,
-    SearchInputComponent,
-    RedirectComponent,
-  ],
+  declarations: [AppComponent, AboutUsComponent, ErrorDisplayComponent, FeedbackComponent, VerifyComponent, SpinnerComponent, SpinnerComponent, StartComponent, FaqComponent, PressComponent, SearchInputComponent, RedirectComponent],
   imports: [
     BrowserModule,
     CommonModule,
@@ -184,6 +160,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {
       anchorScrolling: 'enabled',
       scrollPositionRestoration: 'top',
+      onSameUrlNavigation: 'reload',
     }),
     ReusablesModule,
     PipesModule,
@@ -231,21 +208,19 @@ const routes: Routes = [
 })
 export class AppModule {
   constructor(router: Router, viewportScroller: ViewportScroller) {
-    router.events
-      .pipe(filter((e: any): e is Scroll => e instanceof Scroll))
-      .subscribe((e) => {
-        if (e.position) {
-          // backward navigation
-          viewportScroller.scrollToPosition(e.position);
-        } else if (e.anchor) {
-          // anchor navigation
-          viewportScroller.scrollToAnchor(e.anchor);
-        } else {
-          // forward navigation
-          viewportScroller.scrollToPosition([0, 0]);
-          // damn it, but it works
-          document.querySelector('.mat-sidenav-content').scrollTop = 0;
-        }
-      });
+    router.events.pipe(filter((e: any): e is Scroll => e instanceof Scroll)).subscribe((e) => {
+      if (e.position) {
+        // backward navigation
+        viewportScroller.scrollToPosition(e.position);
+      } else if (e.anchor) {
+        // anchor navigation
+        viewportScroller.scrollToAnchor(e.anchor);
+      } else {
+        // forward navigation
+        viewportScroller.scrollToPosition([0, 0]);
+        // damn it, but it works
+        document.querySelector('.mat-sidenav-content').scrollTop = 0;
+      }
+    });
   }
 }

@@ -90,12 +90,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
       this.currentBookmark = { id, type: BOOKMARK_TYPE.PRIVATE };
       console.log('nav to bookmark');
-      this.router.navigate(['/bookmarks']);
-      /*
-      this.bookmarkService.loadBookmarkList(id).subscribe(() => {
-        console.log('nav to bookmark');
-        this.router.navigate(['/bookmarks']);
-      });*/
+
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => this.router.navigate(['/bookmarks']));
     }
   }
 
@@ -108,6 +104,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
       this.currentBookmark = { id, type: BOOKMARK_TYPE.PUBLIC };
 
+      // FIX THAT TOO
       this.bookmarkService.loadPublicBookmarkList(id, true).subscribe(() => {
         this.router.navigate(['/bookmarks']);
       });

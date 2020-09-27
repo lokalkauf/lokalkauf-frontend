@@ -94,7 +94,7 @@ const routes: Routes = [
     CommonModule,
     MatCardModule,
     MatSnackBarModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' }),
     MatIconModule,
     MatInputModule,
     MatButtonModule,
