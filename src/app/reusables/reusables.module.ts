@@ -64,7 +64,7 @@ const routes: Routes = [];
     FormsModule,
     ReactiveFormsModule,
     LeafletModule.forRoot(),
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' }),
     MatIconModule,
     MatInputModule,
     MatButtonModule,

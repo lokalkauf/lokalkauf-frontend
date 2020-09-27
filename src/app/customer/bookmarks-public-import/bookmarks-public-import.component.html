@@ -12,22 +12,17 @@
       <lk-map></lk-map>
       <div class="openrouteservice" *ngIf="showNavigationAttribution$ | async">
         Routes by:
-        <a
-          href="https://openrouteservice.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          >openrouteservice.org</a
-        >
+        <a href="https://openrouteservice.org/" target="_blank" rel="noopener noreferrer">openrouteservice.org</a>
         | OpenStreetMap contributors
       </div>
-
+      <button mat-button class="btn" (click)="save()">
+        <mat-icon>save</mat-icon>
+        importieren
+      </button>
       <ul class="trader-list">
         <li *ngFor="let profile of traderProfiles$ | async">
           <strong>{{ profile.businessname }}</strong>
-          <br />{{ profile.street }} {{ profile.number }} <br />{{
-            profile.postcode
-          }}
-          {{ profile.city }}
+          <br />{{ profile.street }} {{ profile.number }} <br />{{ profile.postcode }} {{ profile.city }}
           <div class="trader-details">
             <ng-container *ngIf="profile.thumbUrl">
               <img src="{{ profile.thumbUrl }}" />
@@ -35,8 +30,9 @@
           </div>
         </li>
       </ul>
-      <button mat-button (click)="save()">
+      <button mat-button class="btn" (click)="save()">
         <mat-icon>save</mat-icon>
+        importieren
       </button>
     </ng-container>
   </ng-container>
@@ -49,7 +45,6 @@
     <br />
     <br />
     Bei Fragen wende Dich bitte an uns über das
-    <a [routerLink]="'/feedback'">Feedback-Formular</a>. <br />Gibt dabei bitte
-    die ID <span class="bold">{{ merklistenid }}</span> mit an!
+    <a [routerLink]="'/feedback'">Feedback-Formular</a>. <br />Gibt dabei bitte die ID <span class="bold">{{ merklistenid }}</span> mit an!
   </ng-container>
 </lk-container>
