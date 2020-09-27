@@ -3,18 +3,17 @@ import { BookmarksService, BOOKMARK_TYPE } from 'src/app/services/bookmarks.serv
 import { TraderService } from 'src/app/services/trader.service';
 import { Bookmark } from 'src/app/models/bookmark';
 import { Observable, from, of, BehaviorSubject, Subject, Subscription } from 'rxjs';
-import { map, tap, distinctUntilChanged } from 'rxjs/operators';
+import { map, distinctUntilChanged } from 'rxjs/operators';
 import { TraderProfileStatus, TraderProfile } from 'src/app/models/traderProfile';
 import { LkMapComponent } from 'src/app/reusables/lk-map/lk-map.component';
 import { ImageService } from 'src/app/services/image.service';
-import { MatStepper } from '@angular/material/stepper';
 import { NavigationService, Coords } from 'src/app/services/navigation.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { BookmarkList } from 'src/app/models/bookmarkList';
-import { throwMatDialogContentAlreadyAttachedError, MatDialog } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { BookmarksSharePrivateDialogComponent } from './bookmarks-share-private-dialog/bookmarks-share-private-dialog.component';
 import { BookmarksSharePublicDialogComponent } from './bookmarks-share-public-dialog/bookmarks-share-public-dialog.component';
-import { MatSelectionList, MatListOption } from '@angular/material/list';
+import { MatSelectionList } from '@angular/material/list';
 
 export interface TraderProfilesPlus extends TraderProfile {
   thumbUrl?: string;
@@ -36,6 +35,8 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
   tradersCounterSubscription: Subscription;
   loaderSubscription: Subscription;
   bookmarkList$: Observable<BookmarkList>;
+
+  isPublicBookmark: boolean;
 
   @ViewChild(LkMapComponent) map: LkMapComponent;
   @ViewChild('lst') private bookmarkUiList: MatSelectionList;
@@ -200,6 +201,8 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
 
       const bookmarkArray = bklist.bookmarks.map((traderlist) => traderlist.traderid);
       console.log('bookmarkArray', bookmarkArray);
+      this.isPublicBookmark = currentBookmark.type !== BOOKMARK_TYPE.PRIVATE;
+
       if (bookmarkArray) {
         from(this.traderService.getTraderProfiles(bookmarkArray, TraderProfileStatus.PUBLIC)).subscribe((x) => {
           const tp: TraderProfilesPlus[] = [];

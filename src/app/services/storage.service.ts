@@ -2,11 +2,7 @@ import { Injectable } from '@angular/core';
 import { GeoAddress } from '../models/geoAddress';
 import { LkSelectOptions } from '../reusables/lk-select/lk-select.component';
 import { Bookmark } from '../models/bookmark';
-import {
-  LocalBookmark,
-  BOOKMARK_TYPE,
-  ActiveBookmark,
-} from './bookmarks.service';
+import { LocalBookmark, BOOKMARK_TYPE, ActiveBookmark } from './bookmarks.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Injectable()
@@ -48,11 +44,7 @@ export class StorageService {
       return;
     }
     const privateBookmarks = this.loadPrivateBookmarks();
-    if (
-      !privateBookmarks ||
-      privateBookmarks.filter((local) => local.id === localBookmark.id)
-        .length === 0
-    ) {
+    if (!privateBookmarks || privateBookmarks.filter((local) => local.id === localBookmark.id).length === 0) {
       privateBookmarks.push(localBookmark);
       this.save('private-bookmarks', privateBookmarks, true);
     }
@@ -61,9 +53,7 @@ export class StorageService {
   removePrivateBookmark(bookmarkid: string) {
     const bookmarks = this.loadPrivateBookmarks();
     if (bookmarks) {
-      const privateBookmarks = bookmarks.filter(
-        (bookmark) => bookmark.id !== bookmarkid
-      );
+      const privateBookmarks = bookmarks.filter((bookmark) => bookmark.id !== bookmarkid);
       this.save('private-bookmarks', privateBookmarks, true);
     }
   }
@@ -78,11 +68,7 @@ export class StorageService {
       return;
     }
     const publicBookmarks = this.loadPublicBookmarks();
-    if (
-      !publicBookmarks ||
-      publicBookmarks.filter((local) => local.id === localBookmark.id)
-        .length === 0
-    ) {
+    if (!publicBookmarks || publicBookmarks.filter((local) => local.id === localBookmark.id).length === 0) {
       publicBookmarks.push(localBookmark);
       this.save('public-bookmarks', publicBookmarks, true);
     }
@@ -91,10 +77,8 @@ export class StorageService {
   removePublicBookmark(bookmarkid: string) {
     const bookmarks = this.loadPublicBookmarks();
     if (bookmarks) {
-      const publicBookmarks = bookmarks.filter(
-        (bookmark) => bookmark.id !== bookmarkid
-      );
-      this.save('private-bookmarks', publicBookmarks, true);
+      const publicBookmarks = bookmarks.filter((bookmark) => bookmark.id !== bookmarkid);
+      this.save('public-bookmarks', publicBookmarks, true);
     }
   }
 
@@ -130,19 +114,13 @@ export class StorageService {
   }
 
   private loadSimple(key: string, fromLocalStorage?: boolean) {
-    const storeItem =
-      fromLocalStorage === true
-        ? localStorage.getItem(key)
-        : sessionStorage.getItem(key);
+    const storeItem = fromLocalStorage === true ? localStorage.getItem(key) : sessionStorage.getItem(key);
 
     return storeItem ? storeItem : undefined;
   }
 
   private load<T>(key: string, fromLocalStorage?: boolean): T {
-    const storeItem =
-      fromLocalStorage === true
-        ? localStorage.getItem(key)
-        : sessionStorage.getItem(key);
+    const storeItem = fromLocalStorage === true ? localStorage.getItem(key) : sessionStorage.getItem(key);
 
     if (storeItem) {
       return JSON.parse(storeItem) as T;

@@ -12,14 +12,11 @@
   <div class="container">
     <div class="left-side">
       <ng-container *ngIf="(hasProfilesInBookmark$ | async) === 0">
-        Füge in der Händerübersicht Deiner Stadt interssante Läden und und
-        spannende Restaurants zu Deinem Einkaufbummel hinzu.
+        Füge in der Händerübersicht Deiner Stadt interssante Läden und und spannende Restaurants zu Deinem Einkaufbummel hinzu.
         <br />
-        <br />Unter jedem Geschäft befindet sich ein Herz. Wenn das Herz grün
-        leuchtet, dann hast Du es erfolgreich zugefügt. So einfach geht das!
+        <br />Unter jedem Geschäft befindet sich ein Herz. Wenn das Herz grün leuchtet, dann hast Du es erfolgreich zugefügt. So einfach geht das!
         <br />
-        <br />Wieviele Geschäfte und Orte Du entdecken willst, erkennst Du an
-        der Zahl über dem Herzsymbol oben im Menü.
+        <br />Wieviele Geschäfte und Orte Du entdecken willst, erkennst Du an der Zahl über dem Herzsymbol oben im Menü.
         <br />
         <br />Probiere es gleich aus!
       </ng-container>
@@ -32,12 +29,12 @@
           <!--<button mat-button (click)="save()">
             <mat-icon>save</mat-icon>
           </button>-->
-          <button mat-button class="btn" (click)="openSharePublicDialog()">
+          <button *ngIf="!this.isPublicBookmark" mat-button class="btn" (click)="openSharePublicDialog()">
             <mat-icon>share</mat-icon>
             Teilen
           </button>
 
-          <button mat-button class="btn" (click)="openSharePrivateDialog()">
+          <button *ngIf="!this.isPublicBookmark" mat-button class="btn" (click)="openSharePrivateDialog()">
             <mat-icon>important_devices</mat-icon>
             Geräte Share
           </button>
@@ -48,19 +45,8 @@
           </button>
         </div>
 
-        <mat-selection-list
-          cdkDropList
-          #lst
-          [multiple]="false"
-          (selectionChange)="listSelectionChange($event)"
-          (cdkDropListDropped)="resortList($event)"
-        >
-          <mat-list-option
-            cdkDrag
-            class="lst-row"
-            *ngFor="let profile of traderProfiles$ | async; let isFirst = first"
-            [value]="profile.id"
-          >
+        <mat-selection-list cdkDropList #lst [multiple]="false" (selectionChange)="listSelectionChange($event)" (cdkDropListDropped)="resortList($event)">
+          <mat-list-option cdkDrag class="lst-row" *ngFor="let profile of traderProfiles$ | async; let isFirst = first" [value]="profile.id">
             <div class="drag-drop-placeholder" *cdkDragPlaceholder></div>
             <div class="trader-profile-container">
               <div class="drag-indicator" cdkDragHandle>
@@ -69,12 +55,7 @@
               <div
                 class="thumb-image"
                 [ngStyle]="{
-                  'background-image':
-                    'url(' +
-                    (profile.thumbUrl
-                      ? profile.thumbUrl
-                      : '../../../assets/lokalkaufSocialMedia.png') +
-                    ')'
+                  'background-image': 'url(' + (profile.thumbUrl ? profile.thumbUrl : '../../../assets/lokalkaufSocialMedia.png') + ')'
                 }"
               ></div>
 
@@ -85,11 +66,7 @@
                   {{ profile.postcode }} {{ profile.city }}
                 </div>
                 <div class="address-link">
-                  <a
-                    class="fancy-link"
-                    [routerLink]="'/trader-detail/' + profile.id"
-                    >Geschäftsprofil anzeigen</a
-                  >
+                  <a class="fancy-link" [routerLink]="'/trader-detail/' + profile.id">Geschäftsprofil anzeigen</a>
                 </div>
               </div>
             </div>
@@ -100,17 +77,9 @@
     <div class="right-side">
       <lk-container>
         <lk-map (mapMarkerClick)="clickCallback($event)"></lk-map>
-        <div
-          class="openrouteservice"
-          *ngIf="showNavigationAttribution$ | async"
-        >
+        <div class="openrouteservice" *ngIf="showNavigationAttribution$ | async">
           Routes by:
-          <a
-            href="https://openrouteservice.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-            >openrouteservice.org</a
-          >
+          <a href="https://openrouteservice.org/" target="_blank" rel="noopener noreferrer">openrouteservice.org</a>
           | OpenStreetMap contributors
         </div>
       </lk-container>

@@ -27,14 +27,9 @@ export interface ActiveBookmark {
 export class BookmarksService {
   public bookmarkSubject: Subject<number> = new Subject<number>();
   currentBookmarklist = new BehaviorSubject<BookmarkList>(undefined);
-  currentBookmarklistType = new BehaviorSubject<BOOKMARK_TYPE>(
-    BOOKMARK_TYPE.UNKNOWN
-  );
+  currentBookmarklistType = new BehaviorSubject<BOOKMARK_TYPE>(BOOKMARK_TYPE.UNKNOWN);
 
-  constructor(
-    private readonly storageService: StorageService,
-    private readonly db: AngularFirestore
-  ) {
+  constructor(private readonly storageService: StorageService, private readonly db: AngularFirestore) {
     this.currentBookmarklist.subscribe((bookmarkList) => {
       if (bookmarkList) {
         this.bookmarkSubject.next(bookmarkList.bookmarks.length);
@@ -45,20 +40,13 @@ export class BookmarksService {
   }
 
   addTrader(bookmark: Bookmark) {
-    if (
-      this.currentBookmarklist &&
-      this.currentBookmarklistType.getValue() === BOOKMARK_TYPE.PRIVATE
-    ) {
+    if (this.currentBookmarklist && this.currentBookmarklistType.getValue() === BOOKMARK_TYPE.PRIVATE) {
       const currentList = this.currentBookmarklist.getValue();
       if (currentList) {
         if (currentList.bookmarks.length === 0) {
           currentList.bookmarks.push(bookmark);
         } else {
-          if (
-            currentList.bookmarks.filter(
-              (y) => y.traderid === bookmark.traderid
-            ).length === 0
-          ) {
+          if (currentList.bookmarks.filter((y) => y.traderid === bookmark.traderid).length === 0) {
             currentList.bookmarks.push(bookmark);
           }
         }
@@ -68,16 +56,11 @@ export class BookmarksService {
   }
 
   removeTrader(bookmark: Bookmark) {
-    if (
-      this.currentBookmarklist &&
-      this.currentBookmarklistType.getValue() === BOOKMARK_TYPE.PRIVATE
-    ) {
+    if (this.currentBookmarklist && this.currentBookmarklistType.getValue() === BOOKMARK_TYPE.PRIVATE) {
       const currentList = this.currentBookmarklist.getValue();
       if (currentList) {
         if (this.isTraderInBookmarks(bookmark.traderid)) {
-          currentList.bookmarks = currentList.bookmarks.filter(
-            (y) => y.traderid !== bookmark.traderid
-          );
+          currentList.bookmarks = currentList.bookmarks.filter((y) => y.traderid !== bookmark.traderid);
           this.updateBookmarkList(currentList);
         }
       }
@@ -89,25 +72,15 @@ export class BookmarksService {
       return await this.addTrader(bookmark);
     }
 
-    const remoteBookmark = await this.db
-      .collection<BookmarkList>(`Merkliste`)
-      .doc<BookmarkList>(bookmarkId)
-      .get()
-      .toPromise();
+    const remoteBookmark = await this.db.collection<BookmarkList>(`Merkliste`).doc<BookmarkList>(bookmarkId).get().toPromise();
 
     if (remoteBookmark) {
       const r = remoteBookmark.data();
       if (r) {
         console.log('ffffff', r, bookmark);
-        if (
-          r.bookmarks.filter((y) => y.traderid === bookmark.traderid).length ===
-          0
-        ) {
+        if (r.bookmarks.filter((y) => y.traderid === bookmark.traderid).length === 0) {
           r.bookmarks.push(bookmark);
-          await this.db
-            .collection(`Merkliste`)
-            .doc(bookmarkId)
-            .update({ bookmarks: r.bookmarks });
+          await this.db.collection(`Merkliste`).doc(bookmarkId).update({ bookmarks: r.bookmarks });
         }
       }
     }
@@ -118,34 +91,26 @@ export class BookmarksService {
   async deleteBookmark() {
     const bookmarkid = this.storageService.loadActiveBookmarkId();
     if (bookmarkid) {
-      this.storageService.removePrivateBookmark(bookmarkid.id);
-      await this.db
-        .collection<Omit<BookmarkList, 'id'>>(`Merkliste`)
-        .doc(bookmarkid.id)
-        .delete();
+      if (bookmarkid.type === BOOKMARK_TYPE.PRIVATE) {
+        this.storageService.removePrivateBookmark(bookmarkid.id);
+        await this.db.collection<Omit<BookmarkList, 'id'>>(`Merkliste`).doc(bookmarkid.id).delete();
+      } else {
+        this.storageService.removePublicBookmark(bookmarkid.id);
+      }
     }
     this.clearCurrentBookmarklist();
   }
 
   isTraderInBookmarks(traderid: string): boolean {
-    if (
-      this.currentBookmarklist.getValue() &&
-      this.currentBookmarklist.getValue().bookmarks
-    ) {
-      return (
-        this.currentBookmarklist
-          .getValue()
-          .bookmarks.filter((trader) => trader.traderid === traderid).length > 0
-      );
+    if (this.currentBookmarklist.getValue() && this.currentBookmarklist.getValue().bookmarks) {
+      return this.currentBookmarklist.getValue().bookmarks.filter((trader) => trader.traderid === traderid).length > 0;
     }
   }
 
   public async updateBookmarkList(bookmarkList: BookmarkList) {
     if (!bookmarkList.id) {
       console.log('new');
-      const result = await this.db
-        .collection<Omit<BookmarkList, 'id'>>('Merkliste')
-        .add(bookmarkList);
+      const result = await this.db.collection<Omit<BookmarkList, 'id'>>('Merkliste').add(bookmarkList);
       if (result) {
         this.storageService.savePrivateBookmark({
           id: result.id,
@@ -162,25 +127,18 @@ export class BookmarksService {
       }
     } else {
       console.log('upd', bookmarkList.id);
-      const update = this.db
-        .collection<Omit<BookmarkList, 'id'>>('Merkliste')
-        .doc<Omit<BookmarkList, 'id'>>(bookmarkList.id)
-        .update(bookmarkList);
+      const update = this.db.collection<Omit<BookmarkList, 'id'>>('Merkliste').doc<Omit<BookmarkList, 'id'>>(bookmarkList.id).update(bookmarkList);
       this.updateLocal(bookmarkList);
       return update;
     }
   }
 
-  public loadActiveBookmarkList(
-    activeBookmark: ActiveBookmark
-  ): Observable<BookmarkList> {
+  public loadActiveBookmarkList(activeBookmark: ActiveBookmark): Observable<BookmarkList> {
     if (!activeBookmark) {
       return of(undefined);
     }
 
-    return activeBookmark.type === BOOKMARK_TYPE.PRIVATE
-      ? this.loadBookmarkList(activeBookmark.id)
-      : this.loadPublicBookmarkList(activeBookmark.id);
+    return activeBookmark.type === BOOKMARK_TYPE.PRIVATE ? this.loadBookmarkList(activeBookmark.id) : this.loadPublicBookmarkList(activeBookmark.id);
   }
 
   public loadBookmarkList(id: string): Observable<BookmarkList> {
@@ -203,10 +161,7 @@ export class BookmarksService {
     return of(undefined);
   }
 
-  public loadPublicBookmarkList(
-    id: string,
-    loadForReal: boolean = false
-  ): Observable<BookmarkListPublic> {
+  public loadPublicBookmarkList(id: string, loadForReal: boolean = false): Observable<BookmarkListPublic> {
     if (id) {
       return this.db
         .collection<BookmarkListPublic>(`Merkliste_PUBLIC`)
@@ -239,15 +194,11 @@ export class BookmarksService {
   }
 
   public getLocalBookmarkLists(): LocalBookmark[] {
-    return this.storageService
-      .loadPrivateBookmarks()
-      .filter((bookmark) => bookmark.id !== '');
+    return this.storageService.loadPrivateBookmarks().filter((bookmark) => bookmark.id !== '');
   }
 
   public getLocalPublicBookmarklists(): LocalBookmark[] {
-    return this.storageService
-      .loadPublicBookmarks()
-      .filter((bookmark) => bookmark.id !== '');
+    return this.storageService.loadPublicBookmarks().filter((bookmark) => bookmark.id !== '');
   }
 
   public importToLocalStorage(bookmarkList: BookmarkList): boolean {
@@ -271,11 +222,9 @@ export class BookmarksService {
       if (bookmarkList.id) {
         let publicid: string;
         if (!bookmarkList.publicid) {
-          const result = await this.db
-            .collection<Omit<BookmarkListPublic, 'id'>>('Merkliste_PUBLIC')
-            .add({
-              creationdate: new Date().toLocaleString(),
-            } as BookmarkListPublic);
+          const result = await this.db.collection<Omit<BookmarkListPublic, 'id'>>('Merkliste_PUBLIC').add({
+            creationdate: new Date().toLocaleString(),
+          } as BookmarkListPublic);
           publicid = result.id;
         } else {
           publicid = bookmarkList.publicid;
@@ -310,10 +259,7 @@ export class BookmarksService {
     this.updateLocal(bookmarkList, BOOKMARK_TYPE.PUBLIC);
   }
 
-  private updateLocal(
-    bookmarklist: BookmarkList,
-    type: BOOKMARK_TYPE = BOOKMARK_TYPE.PRIVATE
-  ) {
+  private updateLocal(bookmarklist: BookmarkList, type: BOOKMARK_TYPE = BOOKMARK_TYPE.PRIVATE) {
     console.log('updateLocal', bookmarklist);
     this.currentBookmarklist.next(bookmarklist);
     this.currentBookmarklistType.next(type);
