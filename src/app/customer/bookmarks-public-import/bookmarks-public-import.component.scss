@@ -39,3 +39,13 @@ ul.trader-list {
 .bold {
   font-weight: 600;
 }
+
+.bookmarks-description {
+  text-align: center;
+
+  margin-bottom: 24px;
+
+  @media screen and (max-width: 850px) {
+    text-align: justify;
+  }
+}

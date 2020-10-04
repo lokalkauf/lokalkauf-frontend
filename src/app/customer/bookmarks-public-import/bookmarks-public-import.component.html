@@ -6,6 +6,10 @@
 
   <ng-container *ngIf="(isError | async) === false">
     <ng-container *ngIf="bookmarkListPublic$ | async as bmk">
+      <div class="bookmarks-description">
+        Folge dieser Liste und erhalte automatisch alle Aktualisierungen.
+      </div>
+
       <h2>{{ bmk.name }}</h2>
       <div [innerHTML]="bmk.description | nl2br: true"></div>
 
@@ -16,7 +20,7 @@
         | OpenStreetMap contributors
       </div>
       <button mat-button class="btn" (click)="save()">
-        <mat-icon>save</mat-icon>
+        <mat-icon>save_alt</mat-icon>
         importieren
       </button>
       <ul class="trader-list">
@@ -31,7 +35,7 @@
         </li>
       </ul>
       <button mat-button class="btn" (click)="save()">
-        <mat-icon>save</mat-icon>
+        <mat-icon>save_alt</mat-icon>
         importieren
       </button>
     </ng-container>
