@@ -117,6 +117,7 @@ const routes: Routes = [
   { path: 'press', component: PressComponent },
   { path: 'bookmarks', component: BookmarksOverviewComponent },
   { path: 'bookmarks-pi/:id', component: BookmarksPrivateImportComponent },
+  { path: 'bookmarks-public-redirect/:id', component: BookmarksPublicImportComponent },
   { path: 'bookmarks-public/:id', component: BookmarksPublicImportComponent },
   {
     path: 'redirect',

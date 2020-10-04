@@ -24,6 +24,10 @@
         "function": "traderDetail"
       },
       {
+        "source": "/bookmarks-public/**",
+        "function": "merklisteMetaPage"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
