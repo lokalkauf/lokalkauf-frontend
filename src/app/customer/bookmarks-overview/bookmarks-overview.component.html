@@ -58,9 +58,16 @@
 
               <div class="address">
                 <div class="address-headline">{{ profile.businessname }}</div>
-                <div class="address-details">
-                  {{ profile.street }} {{ profile.number }} <br />
-                  {{ profile.postcode }} {{ profile.city }}
+                <div class="address-details-container">
+                  <div class="address-details">
+                    {{ profile.street }} {{ profile.number }} <br />
+                    {{ profile.postcode }} {{ profile.city }}
+                  </div>
+                  <div class="address-delete" *ngIf="!this.isPublicBookmark">
+                    <button mat-button class="address-btn-small" (click)="deleteTraderFromBookmark(profile.id)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
                 </div>
                 <div class="address-link">
                   <a class="fancy-link" [routerLink]="'/trader-detail/' + profile.id">Geschäftsprofil anzeigen</a>

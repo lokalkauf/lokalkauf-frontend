@@ -129,6 +129,10 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
     this.hasProfilesInBookmark$ = of(0);
   }
 
+  deleteTraderFromBookmark(traderid) {
+    this.bookmarksService.removeTrader({ traderid } as Bookmark);
+  }
+
   navigate() {
     this.traderProfiles$
       .pipe(

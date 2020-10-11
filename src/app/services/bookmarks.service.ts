@@ -86,7 +86,9 @@ export class BookmarksService {
     }
   }
 
-  removeTraderFromBookmark(traderid: string, bookmarkId: string) {}
+  removeTraderFromBookmark(traderid: string, bookmarkId: string) {
+    throw new Error('not implemented yet.');
+  }
 
   async deleteBookmark() {
     const bookmarkid = this.storageService.loadActiveBookmarkId();
