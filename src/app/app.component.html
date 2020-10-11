@@ -29,7 +29,7 @@
           {{ bk.name }}
         </button>
       </ng-container>
-      <mat-divider *ngIf="(localBookmarks | async).length > 0"></mat-divider>
+      <mat-divider *ngIf="(localPublicBookmarks | async).length > 0"></mat-divider>
       <div class="mat-menu-headline" *ngIf="(localPublicBookmarks | async).length > 0">
         öffentliche Merkliste
       </div>
@@ -44,7 +44,6 @@
           {{ bk.name }}
         </button>
       </ng-container>
-      <mat-divider *ngIf="(localPublicBookmarks | async).length > 0"></mat-divider>
 
       <div class="mat-menu-headline-none" *ngIf="(localBookmarks | async).length == 0 && (localPublicBookmarks | async).length == 0">
         noch keine Liste vorhanden
