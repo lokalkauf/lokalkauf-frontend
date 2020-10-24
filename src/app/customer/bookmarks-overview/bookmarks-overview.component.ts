@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { BookmarksSharePrivateDialogComponent } from './bookmarks-share-private-dialog/bookmarks-share-private-dialog.component';
 import { BookmarksSharePublicDialogComponent } from './bookmarks-share-public-dialog/bookmarks-share-public-dialog.component';
 import { MatSelectionList } from '@angular/material/list';
+import { Router } from '@angular/router';
 
 export interface TraderProfilesPlus extends TraderProfile {
   thumbUrl?: string;
@@ -42,6 +43,7 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
   @ViewChild('lst') private bookmarkUiList: MatSelectionList;
 
   constructor(
+    public router: Router,
     readonly bookmarksService: BookmarksService,
     private readonly traderService: TraderService,
     private readonly imageService: ImageService,
@@ -127,6 +129,7 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
   deleteBookmark() {
     this.bookmarksService.deleteBookmark();
     this.hasProfilesInBookmark$ = of(0);
+    this.router.navigate(['/']);
   }
 
   deleteTraderFromBookmark(traderid) {
@@ -198,8 +201,9 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
     }
     const currentBookmark = this.storageService.loadActiveBookmarkId();
 
-    this.loaderSubscription = this.bookmarksService.loadActiveBookmarkList(currentBookmark).subscribe((bklist: BookmarkList) => {
+    this.loaderSubscription = this.bookmarksService.loadActiveBookmarkList(currentBookmark, true).subscribe((bklist: BookmarkList) => {
       if (!bklist || !bklist.bookmarks) {
+        this.isPublicBookmark = currentBookmark.type !== BOOKMARK_TYPE.PRIVATE;
         return;
       }
 
@@ -221,6 +225,9 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
 
         this.bookmarkList$ = of(bklist);
         this.hasProfilesInBookmark$ = of(bookmarkArray ? bookmarkArray.length : 0);
+        /*  if (this.isPublicBookmark && bookmarkArray) {
+          this.bookmarksService.overwriteBookmarkTraderCounter(bookmarkArray.length);
+        }*/
         this.map.clearRoute();
         if (bklist.geojson) {
           this.map.displayGeoJsonOnMap(JSON.parse(atob(bklist.geojson)));

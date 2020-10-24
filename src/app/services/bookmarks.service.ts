@@ -6,6 +6,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { BookmarkList } from '../models/bookmarkList';
 import { map, tap } from 'rxjs/operators';
 import { BookmarkListPublic } from '../models/bookmarkListPublic';
+import { count } from 'console';
 
 export interface LocalBookmark {
   id: string;
@@ -135,12 +136,12 @@ export class BookmarksService {
     }
   }
 
-  public loadActiveBookmarkList(activeBookmark: ActiveBookmark): Observable<BookmarkList> {
+  public loadActiveBookmarkList(activeBookmark: ActiveBookmark, loadIfPublic: boolean = false): Observable<BookmarkList> {
     if (!activeBookmark) {
       return of(undefined);
     }
 
-    return activeBookmark.type === BOOKMARK_TYPE.PRIVATE ? this.loadBookmarkList(activeBookmark.id) : this.loadPublicBookmarkList(activeBookmark.id);
+    return activeBookmark.type === BOOKMARK_TYPE.PRIVATE ? this.loadBookmarkList(activeBookmark.id) : this.loadPublicBookmarkList(activeBookmark.id, loadIfPublic);
   }
 
   public loadBookmarkList(id: string): Observable<BookmarkList> {
@@ -163,6 +164,14 @@ export class BookmarksService {
     return of(undefined);
   }
 
+  public overwriteBookmarkTraderCounter(counter: number) {
+    if (counter > 0) {
+      this.bookmarkSubject.next(counter);
+    } else {
+      this.bookmarkSubject.next(null);
+    }
+  }
+
   public loadPublicBookmarkList(id: string, loadForReal: boolean = false): Observable<BookmarkListPublic> {
     if (id) {
       return this.db
@@ -179,6 +188,9 @@ export class BookmarksService {
               }
               return retval;
             } else {
+              if (loadForReal) {
+                this.updateLocal(undefined, BOOKMARK_TYPE.PUBLIC);
+              }
               return undefined;
             }
           })

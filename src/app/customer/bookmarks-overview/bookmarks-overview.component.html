@@ -12,13 +12,22 @@
   <div class="container">
     <div class="left-side">
       <ng-container *ngIf="(hasProfilesInBookmark$ | async) === 0">
-        Füge in der Händerübersicht Deiner Stadt interssante Läden und und spannende Restaurants zu Deinem Einkaufbummel hinzu.
-        <br />
-        <br />Unter jedem Geschäft befindet sich ein Herz. Wenn das Herz grün leuchtet, dann hast Du es erfolgreich zugefügt. So einfach geht das!
-        <br />
-        <br />Wieviele Geschäfte und Orte Du entdecken willst, erkennst Du an der Zahl über dem Herzsymbol oben im Menü.
-        <br />
-        <br />Probiere es gleich aus!
+        <ng-container *ngIf="!this.isPublicBookmark">
+          Füge in der Händerübersicht Deiner Stadt interssante Läden und und spannende Restaurants zu Deinem Einkaufbummel hinzu.
+          <br />
+          <br />Unter jedem Geschäft befindet sich ein Herz. Wenn das Herz grün leuchtet, dann hast Du es erfolgreich zugefügt. So einfach geht das!
+          <br />
+          <br />Wieviele Geschäfte und Orte Du entdecken willst, erkennst Du an der Zahl über dem Herzsymbol oben im Menü.
+          <br />
+          <br />Probiere es gleich aus!
+        </ng-container>
+        <ng-container *ngIf="this.isPublicBookmark">
+          Diese Liste ist leider nicht mehr verfügbar :(
+          <br />
+          <br />Möchtest Du diese Liste entfernen?
+          <br />
+          <br /><lk-button type="button" (click)="deleteBookmark()">Liste Entfernen</lk-button>
+        </ng-container>
       </ng-container>
       <ng-container *ngIf="(hasProfilesInBookmark$ | async) > 0">
         <div class="button-container">
