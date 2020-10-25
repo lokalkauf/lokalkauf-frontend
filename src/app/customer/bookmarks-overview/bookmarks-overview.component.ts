@@ -119,9 +119,10 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
     if (!id) {
       return;
     }
-
     const elem = this.traderProfiles$.value.find((x) => x.id === id);
     if (elem) {
+      console.log(id, elem.mapid);
+      this.map.highlightMarker(elem.mapid);
       this.map.setCenter(elem.confirmedLocation);
     }
   }
