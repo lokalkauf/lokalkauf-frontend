@@ -7,6 +7,8 @@ import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
 import { from } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 import { ThumbnailsPosition } from '@ngx-gallery/core';
+import { MatLabel } from '@angular/material/form-field';
+import { NgLocalization } from '@angular/common';
 
 @Component({
   selector: 'lk-map',
