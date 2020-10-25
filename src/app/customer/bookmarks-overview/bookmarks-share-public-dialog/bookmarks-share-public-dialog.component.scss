@@ -1,6 +1,15 @@
 .abc {
   margin-top: 20px;
   margin-bottom: 20px;
+
+  button {
+    min-width: 140px;
+  }
+}
+.abc-button {
+  button {
+    min-width: 140px;
+  }
 }
 
 .qr-center {

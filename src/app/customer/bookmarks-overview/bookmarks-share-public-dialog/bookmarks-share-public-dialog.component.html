@@ -5,31 +5,21 @@
     <br />der ganzen Welt über Social Media teilen.
   </div>
   <div *ngIf="(isShared$ | async) === false">
-    <div>Aktuell ist deine Liste nicht geteilt</div>
-    <lk-button type="button" (click)="shareNow()">Jetzt teilen</lk-button>
+    <div class="abc">Aktuell ist Deine Liste nicht geteilt.</div>
+    <lk-button class="abc-button" type="button" (click)="shareNow()">Jetzt teilen</lk-button>
   </div>
   <div *ngIf="(isShared$ | async) === true">
     Teile diesen QR-Code:
     <div class="qr-center">
-      <qrcode
-        [qrdata]="getCurrentPublicUrl()"
-        [width]="256"
-        [errorCorrectionLevel]="'M'"
-        [elementType]="'svg'"
-      >
-      </qrcode>
+      <qrcode [qrdata]="getCurrentPublicUrl()" [width]="256" [errorCorrectionLevel]="'M'" [elementType]="'svg'"> </qrcode>
     </div>
     <div>
-      Oder teile diesen Link: <br /><a
-        href="{{ getCurrentPublicUrl() }}"
-        target="_blank"
-        >{{ getCurrentPublicUrl() }}</a
-      >
+      Oder teile diesen Link: <br /><a href="{{ getCurrentPublicUrl() }}" target="_blank">{{ getCurrentPublicUrl() }}</a>
       <button mat-button (click)="copyToClipboard()">
         <mat-icon>content_copy</mat-icon>
       </button>
     </div>
-    <div>
+    <div class="abc">
       <lk-button type="button" (click)="unshare()">Nicht mehr teilen</lk-button>
     </div>
   </div>
