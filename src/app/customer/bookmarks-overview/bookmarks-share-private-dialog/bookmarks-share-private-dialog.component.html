@@ -4,24 +4,12 @@
     Wenn du die Liste zusätzlich auf einem anderen Gerät verwalten
     <br />möchtest, dann kannst du auf dem Gerät diesen QR-Code scannen
   </div>
-  <div class="qr-red">
-    Bitte achte darauf, diesen Link nicht öffentlich zu teilen!
-  </div>
   <div class="qr-center">
-    <qrcode
-      [qrdata]="getCurrentPrivateUrl()"
-      [width]="256"
-      [errorCorrectionLevel]="'M'"
-      [elementType]="'svg'"
-    ></qrcode>
+    <qrcode [qrdata]="getCurrentPrivateUrl()" [width]="256" [errorCorrectionLevel]="'M'" [elementType]="'svg'"></qrcode>
   </div>
 
   <div>
-    Oder du rufst auf dem Gerät diesen Link auf: <br /><a
-      href="{{ getCurrentPrivateUrl() }}"
-      target="_blank"
-      >{{ getCurrentPrivateUrl() }}</a
-    >
+    Oder du rufst auf dem Gerät diesen Link auf: <br /><a href="{{ getCurrentPrivateUrl() }}" target="_blank">{{ getCurrentPrivateUrl() }}</a>
     <button mat-button (click)="copyToClipboard()">
       <mat-icon>content_copy</mat-icon>
     </button>
