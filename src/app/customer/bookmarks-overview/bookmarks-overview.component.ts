@@ -15,6 +15,7 @@ import { BookmarksSharePrivateDialogComponent } from './bookmarks-share-private-
 import { BookmarksSharePublicDialogComponent } from './bookmarks-share-public-dialog/bookmarks-share-public-dialog.component';
 import { MatSelectionList } from '@angular/material/list';
 import { Router } from '@angular/router';
+import { BookmarksYesNoDialogComponent } from './bookmarks-yes-no-dialog/bookmarks-yes-no-dialog.component';
 
 export interface TraderProfilesPlus extends TraderProfile {
   thumbUrl?: string;
@@ -128,13 +129,27 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
   }
 
   deleteBookmark() {
-    this.bookmarksService.deleteBookmark();
-    this.hasProfilesInBookmark$ = of(0);
-    this.router.navigate(['/']);
+    this.dialog
+      .open(BookmarksYesNoDialogComponent, { data: { question: 'Gesamte Merkliste vollständig löschen?' } })
+      .afterClosed()
+      .subscribe((x) => {
+        if (x === true) {
+          this.bookmarksService.deleteBookmark();
+          this.hasProfilesInBookmark$ = of(0);
+          this.router.navigate(['/']);
+        }
+      });
   }
 
   deleteTraderFromBookmark(traderid) {
-    this.bookmarksService.removeTrader({ traderid } as Bookmark);
+    this.dialog
+      .open(BookmarksYesNoDialogComponent, { data: { question: 'Händler von der Liste entfernen?' } })
+      .afterClosed()
+      .subscribe((x) => {
+        if (x === true) {
+          this.bookmarksService.removeTrader({ traderid } as Bookmark);
+        }
+      });
   }
 
   navigate() {

@@ -49,6 +49,7 @@ import { MatListModule } from '@angular/material/list';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { BookmarksMenuComponent } from './bookmarks-menu/bookmarks-menu.component';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
+import { BookmarksYesNoDialogComponent } from './bookmarks-overview/bookmarks-yes-no-dialog/bookmarks-yes-no-dialog.component';
 
 const routes: Routes = [
   {
@@ -78,6 +79,7 @@ const routes: Routes = [
     BookmarksPrivateImportComponent,
     BookmarksSharePrivateDialogComponent,
     BookmarksSharePublicDialogComponent,
+    BookmarksYesNoDialogComponent,
     BookmarksMenuComponent,
     ShoppingcartComponent,
     TraderOverviewComponent,
