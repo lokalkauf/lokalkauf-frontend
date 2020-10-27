@@ -1,58 +1,28 @@
 <lk-container>
   <div id="feedback-inset" *ngIf="!mailSent" [formGroup]="feedbackForm">
     <h1>Deine Ideen sind uns wichtig</h1>
-    <lk-textarea
-      formControlName="message"
-      [placeholder]="'Deine Nachricht an uns'"
-    >
-    </lk-textarea>
+    <lk-textarea formControlName="message" [placeholder]="'Deine Nachricht an uns'"> </lk-textarea>
 
-    <div class="content">
-      Möchtest Du Feedback von uns? <br />Dann hinterlasse hier Deine E-Mail
-      Adresse.
-    </div>
+    <div class="content">Möchtest Du Feedback von uns? <br />Dann hinterlasse hier Deine E-Mail Adresse.</div>
 
-    <lk-input
-      [type]="email"
-      formControlName="email"
-      [placeholder]="'E-Mail Adresse'"
-    ></lk-input>
+    <lk-input [type]="email" formControlName="email" [placeholder]="'E-Mail Adresse'"></lk-input>
 
     <div class="content">
       <label>
         <app-lk-checkbox formControlName="agbRead"></app-lk-checkbox>
         <div>
           Ich bestätige die
-          <a
-            href="https://www.info.lokalkauf.org/agb"
-            target="_blank"
-            rel="noopener noreferrer"
-            >AGB</a
-          >
+          <a href="https://www.info.lokalkauf.org/agb" target="_blank" rel="noopener noreferrer">AGB</a>
           und
-          <a
-            href="https://www.info.lokalkauf.org/datenschutz"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Datenschutzbestimmungen</a
-          >
+          <a href="https://www.info.lokalkauf.org/datenschutz" target="_blank" rel="noopener noreferrer">Datenschutzbestimmungen</a>
           gelesen zu haben und bin einverstanden
         </div>
       </label>
     </div>
 
     <div class="feedback-controls">
-      <lk-button
-        class="feedback-absenden"
-        (click)="absenden()"
-        label="absenden"
-      >
-      </lk-button>
-      <lk-button
-        class="feedback-verwerfen"
-        (click)="verwerfen()"
-        label="verwerfen"
-      ></lk-button>
+      <lk-button class="feedback-verwerfen" (click)="verwerfen()" label="verwerfen"></lk-button>
+      <lk-button class="feedback-absenden" (click)="absenden()" label="absenden"> </lk-button>
     </div>
   </div>
   <div class="feedback-error" *ngIf="showError">
