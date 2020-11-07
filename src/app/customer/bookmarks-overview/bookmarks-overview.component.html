@@ -95,6 +95,14 @@
           <a href="https://openrouteservice.org/" target="_blank" rel="noopener noreferrer">openrouteservice.org</a>
           | OpenStreetMap contributors
         </div>
+        <div *ngIf="!this.isPublicBookmark && this.isPubliclyShared">
+          Teile diesen Link auf Whatsapp, Facebook, Twitter oder schicke ihn Deinen Freunden und Bekannten:
+          <br />
+          <a href="{{ getCurrentPublicUrl() }}" target="_blank">{{ getCurrentPublicUrl() }}</a>
+          <button mat-button (click)="copyToClipboard()">
+            <mat-icon>content_copy</mat-icon>
+          </button>
+        </div>
       </lk-container>
     </div>
   </div>

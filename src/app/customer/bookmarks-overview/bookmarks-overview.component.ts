@@ -16,6 +16,7 @@ import { BookmarksSharePublicDialogComponent } from './bookmarks-share-public-di
 import { MatSelectionList } from '@angular/material/list';
 import { Router } from '@angular/router';
 import { BookmarksYesNoDialogComponent } from './bookmarks-yes-no-dialog/bookmarks-yes-no-dialog.component';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 export interface TraderProfilesPlus extends TraderProfile {
   thumbUrl?: string;
@@ -39,6 +40,7 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
   bookmarkList$: Observable<BookmarkList>;
 
   isPublicBookmark: boolean;
+  isPubliclyShared: boolean;
 
   @ViewChild(LkMapComponent) map: LkMapComponent;
   @ViewChild('lst') private bookmarkUiList: MatSelectionList;
@@ -50,6 +52,7 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
     private readonly imageService: ImageService,
     private readonly storageService: StorageService,
     private readonly navigationService: NavigationService,
+    private clipboard: Clipboard,
     public dialog: MatDialog
   ) {
     this.showNavigationAttribution$ = of(false);
@@ -226,7 +229,7 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
       const bookmarkArray = bklist.bookmarks.map((traderlist) => traderlist.traderid);
       console.log('bookmarkArray', bookmarkArray);
       this.isPublicBookmark = currentBookmark.type !== BOOKMARK_TYPE.PRIVATE;
-
+      this.isPubliclyShared = bklist.publicactive && bklist.publicid && bklist.publicid.length > 0;
       if (bookmarkArray) {
         from(this.traderService.getTraderProfiles(bookmarkArray, TraderProfileStatus.PUBLIC)).subscribe((x) => {
           const tp: TraderProfilesPlus[] = [];
@@ -263,6 +266,18 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
     this.dialog.open(BookmarksSharePublicDialogComponent, {
       disableClose: true,
     });
+  }
+
+  public getCurrentPublicUrl(): string {
+    const domain = window.location.host;
+    const currentbookmarkPresent = this.bookmarksService.currentBookmarklist && this.bookmarksService.currentBookmarklist.getValue();
+    if (domain && currentbookmarkPresent) {
+      return 'https://' + domain + '/bookmarks-public/' + this.bookmarksService.currentBookmarklist.getValue().publicid;
+    }
+  }
+
+  copyToClipboard() {
+    this.clipboard.copy(this.getCurrentPublicUrl());
   }
 
   ngOnInit(): void {
