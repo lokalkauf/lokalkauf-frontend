@@ -23,6 +23,8 @@ export class BookmarksMenuComponent {
 
   @Input() traderId: string;
 
+  @Input() matMini = false;
+
   constructor(private storageService: StorageService, private bookmarkService: BookmarksService, public dialog: MatDialog) {
     this.bookmarkService.currentBookmarklist.subscribe((x) => {
       this.currentBookmark = this.storageService.loadActiveBookmarkId();

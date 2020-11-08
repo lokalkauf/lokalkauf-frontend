@@ -15,8 +15,10 @@
         <mat-icon class="inlinesymbol vertical-align-middle">chevron_left</mat-icon>
         <span class="symboltext">Zurück zur Händlersuche</span>
       </a>
+
       <div class="merkliste">
-        <app-bookmarks-menu traderId="{{ trader.id }}"></app-bookmarks-menu>
+        <lk-some [someUrl]="this.getSomeUrl()"></lk-some>
+        <app-bookmarks-menu [matMini]="true" traderId="{{ this.traderid }}"></app-bookmarks-menu>
       </div>
     </div>
 
@@ -59,7 +61,8 @@
         <span class="symboltext">Zurück zur Händlersuche</span>
       </a>
       <div class="merkliste">
-        <app-bookmarks-menu traderId="{{ trader.id }}"></app-bookmarks-menu>
+        <lk-some [someUrl]="this.getSomeUrl()"></lk-some>
+        <app-bookmarks-menu [matMini]="true" traderId="{{ this.traderid }}"></app-bookmarks-menu>
       </div>
     </div>
   </lk-container>

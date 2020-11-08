@@ -1,12 +1,25 @@
 <ng-container>
-  <button mat-button [matMenuTriggerFor]="bookmarkMenuTrader">
-    <ng-container *ngIf="(amISelected() | async) === false">
-      <mat-icon>favorite_outline</mat-icon>
-    </ng-container>
-    <ng-container *ngIf="(amISelected() | async) === true">
-      <mat-icon color="primary">favorite</mat-icon>
-    </ng-container>
-  </button>
+  <ng-container *ngIf="!matMini">
+    <button mat-button [matMenuTriggerFor]="bookmarkMenuTrader">
+      <ng-container *ngIf="(amISelected() | async) === false">
+        <mat-icon>favorite_outline</mat-icon>
+      </ng-container>
+      <ng-container *ngIf="(amISelected() | async) === true">
+        <mat-icon color="primary">favorite</mat-icon>
+      </ng-container>
+    </button>
+  </ng-container>
+
+  <ng-container *ngIf="matMini">
+    <button color="mini-fab-background" mat-mini-fab [matMenuTriggerFor]="bookmarkMenuTrader">
+      <ng-container *ngIf="(amISelected() | async) === false">
+        <mat-icon>favorite_outline</mat-icon>
+      </ng-container>
+      <ng-container *ngIf="(amISelected() | async) === true">
+        <mat-icon color="primary">favorite</mat-icon>
+      </ng-container>
+    </button>
+  </ng-container>
 
   <mat-menu #bookmarkMenuTrader="matMenu" class="mat-elevation-z2">
     <ng-template matMenuContent>

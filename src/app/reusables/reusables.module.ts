@@ -32,6 +32,8 @@ import { MatCardModule } from '@angular/material/card';
 import { LkContainerFullComponent } from './lk-container-full/lk-container.component-full';
 import { LkAttributionComponent } from './lk-attribution/lk-attribution.component';
 import { PipesModule } from '../pipes/pipes.modules';
+import { LkSomeComponent } from './lk-some/lk-some.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const routes: Routes = [];
 
@@ -58,6 +60,7 @@ const routes: Routes = [];
     LkTestimonialComponent,
     LkProductItemComponent,
     LkAttributionComponent,
+    LkSomeComponent,
   ],
   imports: [
     CommonModule,
@@ -74,6 +77,7 @@ const routes: Routes = [];
     NgxStarRatingModule,
     MatChipsModule,
     PipesModule,
+    FontAwesomeModule,
   ],
   exports: [
     MapComponent,
@@ -96,6 +100,7 @@ const routes: Routes = [];
     LkTestimonialComponent,
     LkProductItemComponent,
     LkAttributionComponent,
+    LkSomeComponent,
   ],
 })
 export class ReusablesModule {}
