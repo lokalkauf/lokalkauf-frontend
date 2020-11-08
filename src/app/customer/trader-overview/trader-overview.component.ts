@@ -251,7 +251,7 @@ export class TraderOverviewComponent implements OnInit {
           // Show "no result page" if no shops were found
           // but dont show it if filters are selected.
           // Otherwise the filter cant be unselected.
-          if (filter.categories.length === 0 && searchtext.length === 0) {
+          if (filter.categories.length === 0 && !searchtext) {
             this.hasLocations$ = of(false);
           }
         }
