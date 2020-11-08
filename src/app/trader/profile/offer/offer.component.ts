@@ -1,10 +1,4 @@
-import {
-  Component,
-  AfterViewInit,
-  Input,
-  OnInit,
-  OnChanges,
-} from '@angular/core';
+import { Component, AfterViewInit, Input, OnInit, OnChanges } from '@angular/core';
 import { TraderProfileStatus } from 'src/app/models/traderProfile';
 import { UserService, LoggedInUserState } from 'src/app/services/user.service';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -55,19 +49,8 @@ export class OfferComponent implements OnInit, OnChanges {
       const blumengarten = form.get('blumengarten').value;
       const handwerk = form.get('handwerk').value;
       const sonstiges = form.get('sonstiges').value;
-      const selectedStoreTypes = [
-        gastronomie,
-        lebensmittel,
-        fashion,
-        buchhandlung,
-        homedecor,
-        blumengarten,
-        handwerk,
-        sonstiges,
-      ].filter((v) => v).length;
-      return selectedStoreTypes > 2 || selectedStoreTypes === 0
-        ? { storeCountError: true }
-        : null;
+      const selectedStoreTypes = [gastronomie, lebensmittel, fashion, buchhandlung, homedecor, blumengarten, handwerk, sonstiges].filter((v) => v).length;
+      return selectedStoreTypes > 2 || selectedStoreTypes === 0 ? { storeCountError: true } : null;
     }
   );
 
@@ -136,11 +119,7 @@ export class OfferComponent implements OnInit, OnChanges {
   constructor(private user: UserService) {}
 
   ngOnChanges(changes) {
-    if (
-      changes.loggedInUserState &&
-      !this.dataFormGroup.dirty &&
-      !this.storeFormGroup.dirty
-    ) {
+    if (changes.loggedInUserState && !this.dataFormGroup.dirty && !this.storeFormGroup.dirty) {
       this.updateForm(this.loggedInUserState);
       this.dataFormGroup.markAsPristine();
       this.storeFormGroup.markAsPristine();
@@ -200,12 +179,9 @@ export class OfferComponent implements OnInit, OnChanges {
       });
     }
 
-    this.public.setValue(
-      state.traderProfile.status === TraderProfileStatus.PUBLIC,
-      {
-        emitEvent: false,
-      }
-    );
+    this.public.setValue(state.traderProfile.status === TraderProfileStatus.PUBLIC, {
+      emitEvent: false,
+    });
   }
 
   async logout() {
@@ -213,6 +189,10 @@ export class OfferComponent implements OnInit, OnChanges {
   }
 
   async updateProfile() {
+    if (this.dataFormGroup.errors != null || this.storeFormGroup.errors != null) {
+      return;
+    }
+
     await this.user.updateTraderProfile({
       description: this.description.value || null,
       delivery: this.delivery.value || null,
@@ -230,9 +210,7 @@ export class OfferComponent implements OnInit, OnChanges {
         handwerk: this.handwerk.value || null,
         sonstiges: this.sonstiges.value || null,
       },
-      status: this.public.value
-        ? TraderProfileStatus.PUBLIC
-        : TraderProfileStatus.VERIFIED,
+      status: this.public.value ? TraderProfileStatus.PUBLIC : TraderProfileStatus.VERIFIED,
     });
 
     this.dataFormGroup.markAsPristine();
