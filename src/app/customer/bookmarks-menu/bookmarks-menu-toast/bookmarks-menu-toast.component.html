@@ -1,0 +1,14 @@
+<div class="container">
+  <ng-container *ngIf="data.isAdd"
+    ><mat-icon color="primary" class="bgWhite">favorite_round</mat-icon>
+    <div class="message-added">
+      Der Merkliste <span class="bold">{{ data.name }}</span> zugefügt
+    </div></ng-container
+  >
+  <ng-container *ngIf="!data.isAdd"
+    ><mat-icon>favorite_outline</mat-icon>
+    <div class="message">
+      Aus der Merkliste <span class="bold">{{ data.name }}</span> entfernt
+    </div></ng-container
+  >
+</div>

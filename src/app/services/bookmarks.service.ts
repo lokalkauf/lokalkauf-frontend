@@ -273,6 +273,11 @@ export class BookmarksService {
     this.updateLocal(bookmarkList, BOOKMARK_TYPE.PUBLIC);
   }
 
+  public getBookmarknameById(id: string): string {
+    const result = this.storageService.loadPrivateBookmarks().filter((x) => x.id === id);
+    return result && result.length > 0 ? result[0].name : undefined;
+  }
+
   private updateLocal(bookmarklist: BookmarkList, type: BOOKMARK_TYPE = BOOKMARK_TYPE.PRIVATE) {
     console.log('updateLocal', bookmarklist);
     this.currentBookmarklist.next(bookmarklist);
