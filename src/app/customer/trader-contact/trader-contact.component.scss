@@ -15,7 +15,18 @@
   }
 }
 
+.onlineshop {
+  margin-left: 170px;
+  @media screen and (max-width: 767px) {
+    margin-left: unset;
+  }
+}
+
 .contactButtons {
+  .button-row {
+    justify-content: space-between;
+  }
+
   h3 {
     margin-top: 46px;
   }
@@ -83,14 +94,15 @@ label {
   display: flex;
 }
 
-.contact-form-toggle-button {
-  padding-top: 20px;
-}
-
 .contact-form {
   margin-left: 60px;
 
   @media screen and (max-width: 632px) {
     margin-left: 0px;
   }
+}
+
+.button-bottom {
+  margin-top: auto;
+  padding-top: 20px;
 }

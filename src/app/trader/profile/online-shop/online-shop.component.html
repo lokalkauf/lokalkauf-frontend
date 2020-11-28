@@ -1,0 +1,53 @@
+<div>
+  <h2>Dein Online-Shop</h2>
+
+  Du hast einen eigenen Online-Shop?
+  <br />Dann hinterlege Deinen Shop hier und er wird prominient auf deiner
+  Händlerseite angezeigt:
+  <br />
+
+  <div class="onlineshop-container">
+    <div class="onlineshop-label"><br />Adresse:</div>
+    <form [formGroup]="onlineshopForm" (ngSubmit)="onSubmit()">
+      <div class="onlineshop-url">
+        <lk-input
+          placeholder="Dein Onlinehshop"
+          formControlName="eigenershop"
+          pattern="https?://.+"
+        ></lk-input>
+      </div>
+      <div>
+        <lk-button [disabled]="onlineshopForm.errors != null" type="submit"
+          >speichern</lk-button
+        >
+        <span *ngIf="this.saveSuccessful" class="success"
+          >&nbsp;speichern erfolgreich</span
+        >
+      </div>
+    </form>
+  </div>
+  <h4>Du hast noch keinen eigenen Online-Shop?</h4>
+  Wenn Du schnell und einfach einen Shop anlegen möchtest, schau Dir mal
+  <a href="https://www.sotrusty.com/" target="_blank"
+    >www.sotrusty.com <img src="./assets/so-trusty-mini.png"
+  /></a>
+  an. <br /><strong>Nachdem</strong> Du Deinen Shop angelegt hast, trägst Du
+  einfach Deinee Adresse oben in das Feld ein.
+  <br />
+  <div class="sotrusty-container">
+    <div class="sotrusty-label">
+      Schnell und einfach zum eigenen Online-Shop:
+    </div>
+    <div class="sotrusty-link">
+      <a href="https://www.sotrusty.com/" target="_blank"
+        ><img src="./assets/so-trusty-small.png"
+      /></a>
+      <a href="https://www.shopify.de/" target="_blank"
+        ><img src="./assets/shopify-small.png"
+      /></a>
+      <a href="https://www.wix.com/html5ecom/tae-store" target="_blank"
+        ><img src="./assets/wix-small.png"
+      /></a>
+    </div>
+  </div>
+</div>

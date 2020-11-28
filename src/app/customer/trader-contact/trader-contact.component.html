@@ -68,8 +68,27 @@
           {{ trader.homepage }}
         </a>
       </div>
+    </div>
+  </div>
 
-      <div class="contactButton floating contact-form-toggle-button">
+  <div class="contact-container">
+    <div class="contactButtons button-row">
+      <div class="contactButton floating button-bottom"></div>
+    </div>
+    <div class="contactButtons button-row onlineshop">
+      <div
+        *ngIf="trader.onlineshop"
+        class="contactButton floating button-bottom"
+      >
+        <lk-button
+          (click)="openOnlineshop()"
+          [label]="'Jetzt Online einkaufen!'"
+        >
+        </lk-button>
+      </div>
+    </div>
+    <div class="contactButtons button-row">
+      <div class="contactButton floating button-bottom">
         <lk-button
           [disabled]="!trader.storeEmail"
           (click)="toggleContactForm()"

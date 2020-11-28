@@ -1,0 +1,51 @@
+@import '../../../../theme/variables.scss';
+
+.onlineshop-container,
+.sotrusty-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  margin-top: 20px;
+  margin-bottom: 40px;
+
+  @media screen and (max-width: 440px) {
+    flex-direction: column;
+    align-items: unset;
+  }
+
+  .onlineshop-label,
+  .sotrusty-label {
+    margin-right: 12px;
+    align-self: start;
+  }
+  .sotrusty-label {
+    align-self: center;
+  }
+  .onlineshop-url,
+  .sotrusty-link {
+    flex-grow: 4;
+    max-width: 600px;
+  }
+  .sotrusty-link {
+    @media screen and (max-width: 440px) {
+      align-self: center;
+    }
+    a {
+      margin-left: 20px;
+    }
+  }
+  .onlineshop-url {
+    min-width: 300px;
+    @media screen and (max-width: 340px) {
+      min-width: 200px;
+    }
+  }
+}
+
+.success {
+  margin-top: 0px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  color: $darkgreen;
+}
