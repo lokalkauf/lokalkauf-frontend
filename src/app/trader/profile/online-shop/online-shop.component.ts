@@ -29,6 +29,9 @@ export class OnlineShopComponent implements OnInit {
   }
 
   async onSubmit() {
+    if (this.onlineshopForm.invalid) {
+      return;
+    }
     await this.user.updateTraderProfile({
       onlineshop: this.eigenershop.value || null,
     });
