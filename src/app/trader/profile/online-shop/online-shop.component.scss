@@ -2,10 +2,6 @@
 
 .onlineshop-container,
 .sotrusty-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
   margin-top: 20px;
   margin-bottom: 40px;
 
@@ -27,13 +23,17 @@
     flex-grow: 4;
     max-width: 600px;
   }
-  .sotrusty-link {
+  .ecommerce-providers-links {
     @media screen and (max-width: 440px) {
       align-self: center;
     }
     a {
       margin-left: 20px;
     }
+  }
+  .ecommerce-provider-logo {
+    margin-top: 30px;
+    height: 30px;
   }
   .onlineshop-url {
     min-width: 300px;
