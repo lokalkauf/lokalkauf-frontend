@@ -69,8 +69,15 @@ export class TraderContactComponent implements OnInit {
       `;
     }
   }
+
   toggleContactForm() {
     this.contactFormVisible = !this.contactFormVisible;
+  }
+
+  openOnlineshop() {
+    if (this.trader.onlineshop) {
+      window.open(this.trader.onlineshop, '_blank');
+    }
   }
 
   constructor(

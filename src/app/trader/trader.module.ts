@@ -23,6 +23,7 @@ import { OfferComponent } from './profile/offer/offer.component';
 import { ProductsComponent } from './profile/products/products.component';
 import { CreateProductComponent } from './profile/products/create-product/create-product.component';
 import { MatCardModule } from '@angular/material/card';
+import { OnlineShopComponent } from './profile/online-shop/online-shop.component';
 
 const routes: Routes = [
   { path: 'trader/profile', component: ProfileComponent },
@@ -37,6 +38,7 @@ const routes: Routes = [
   declarations: [
     OrdersComponent,
     ProductsComponent,
+    OnlineShopComponent,
     RegistrationComponent,
     ProfileComponent,
     LoginComponent,
