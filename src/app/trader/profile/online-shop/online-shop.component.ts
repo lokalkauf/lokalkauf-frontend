@@ -11,6 +11,29 @@ export class OnlineShopComponent implements OnInit {
   @Input() loggedInUserState: LoggedInUserState;
   saveSuccessful = false;
 
+  sotrusty = [
+    'Einfach zu bedienen',
+    'Online Bezahlung',
+    'Online in drei Stunden',
+    'Ab 0,-€ / Monat',
+  ];
+  wix = [
+    'Einfach zu bedienen',
+    'Online Bezahlung',
+    'Online in wenigen Tagen',
+    'Visueller Editor',
+    'Ab 16,-€ / Monat',
+  ];
+  shopify = [
+    'Sehr viele Einstellungen',
+    'Online Bezahlung',
+    'Mächtiger Onlineshop',
+    'Anbindung an eigene IT möglich',
+    'Viele Designvorlagen',
+    'Einrichtung in wenigen Wochen',
+    'Ab 9,-€ / Monat',
+  ];
+
   onlineshopForm = new FormGroup({
     eigenershop: new FormControl('', [Validators.required]),
   });
@@ -42,5 +65,20 @@ export class OnlineShopComponent implements OnInit {
     setTimeout(() => {
       this.saveSuccessful = false;
     }, 15000);
+  }
+
+  open(what: string) {
+    let url = 'https://sotrusty.com';
+    switch (what) {
+      case 'w':
+        url = 'https://www.wix.com/html5ecom/tae-store';
+        break;
+      case 's':
+        url = 'https://www.shopify.de/';
+        break;
+      default:
+        break;
+    }
+    window.open(url, '_blank');
   }
 }

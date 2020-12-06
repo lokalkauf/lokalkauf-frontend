@@ -49,3 +49,54 @@
   margin-bottom: 20px;
   color: $darkgreen;
 }
+
+.item-content {
+  background: beige;
+  padding-bottom: 40px;
+
+  .item-header {
+    background-color: $darkgreen;
+    text-transform: uppercase;
+    h3 {
+      background-color: $darkgreen;
+      color: $white;
+      padding: 15px;
+      margin-top: 0px;
+    }
+  }
+  .logo {
+    padding-top: 15px;
+    text-align: center;
+  }
+
+  .mat-list-item-content {
+    padding: 0px;
+  }
+
+  .bottom {
+    position: absolute;
+    bottom: 10px;
+    text-align: center;
+    width: 210px;
+    @media screen and (max-width: 700px) {
+      position: unset;
+      width: 100%;
+    }
+  }
+}
+
+.shops-container {
+  margin-top: 40px;
+  display: grid;
+  column-gap: 1px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  @media screen and (max-width: 700px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: autp;
+  }
+
+  max-width: 720px;
+  background-color: $darkgreen;
+  border: solid 1px $darkgreen;
+}
