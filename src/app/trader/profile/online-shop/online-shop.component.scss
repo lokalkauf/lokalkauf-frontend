@@ -51,14 +51,14 @@
 }
 
 .item-content {
-  background: beige;
+  background: #fafaf7;
   padding-bottom: 40px;
 
   .item-header {
-    background-color: $darkgreen;
+    background-color: $normalgreen;
     text-transform: uppercase;
     h3 {
-      background-color: $darkgreen;
+      background-color: $normalgreen;
       color: $white;
       padding: 15px;
       margin-top: 0px;
@@ -77,8 +77,8 @@
     position: absolute;
     bottom: 10px;
     text-align: center;
-    width: 210px;
-    @media screen and (max-width: 700px) {
+    width: calc(100% * 0.33333);
+    @media screen and (max-width: 870px) {
       position: unset;
       width: 100%;
     }
@@ -86,17 +86,15 @@
 }
 
 .shops-container {
-  margin-top: 40px;
   display: grid;
   column-gap: 1px;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr;
-  @media screen and (max-width: 700px) {
+  @media screen and (max-width: 870px) {
     grid-template-columns: 1fr;
-    grid-template-rows: autp;
+    grid-template-rows: auto;
   }
-
-  max-width: 720px;
-  background-color: $darkgreen;
-  border: solid 1px $darkgreen;
+  max-width: 1090px;
+  background-color: $normalgreen;
+  border: solid 1px $normalgreen;
 }
