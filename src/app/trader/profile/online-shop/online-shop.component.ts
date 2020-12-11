@@ -13,25 +13,27 @@ export class OnlineShopComponent implements OnInit {
 
   sotrusty = [
     'Einfach zu bedienen',
-    'Online Bezahlung',
+    'Erstellung eines individuellen E-Menüs',
     'Online in drei Stunden',
-    'Ab 0,-€ / Monat',
+    'Ab 0,-€ / Monat, zzgl. Transaktionsgebühren',
   ];
   wix = [
     'Einfach zu bedienen',
-    'Online Bezahlung',
+    'Unterschiedliche Layouts und Individualisierungsmöglichkeiten',
     'Online in wenigen Tagen',
-    'Visueller Editor',
-    'Ab 16,-€ / Monat',
+    'Kosten ab 19,50 € / Monat, zzgl. Transaktionsgebühren',
+    'Visueller Editor hilft bei der Einrichtung',
   ];
   shopify = [
-    'Sehr viele Einstellungen',
+    'Einfach zu bedienen',
     'Online Bezahlung',
-    'Mächtiger Onlineshop',
+    'Viele Einstellungs- und Individualisierungsmöglichkeiten',
+    'Online in wenigen Tagen',
+    'Kosten ab 29,-€ / Monat zzgl. Transaktionsgebühren',
     'Anbindung an eigene IT möglich',
-    'Viele Designvorlagen',
-    'Einrichtung in wenigen Wochen',
-    'Ab 9,-€ / Monat',
+    'Persönliche Unterstützung bei der Einrichtung möglich',
+    'Verknüpfung mit Social Media Kanälen möglich',
+    'Inkl. Analyse-Tool',
   ];
 
   onlineshopForm = new FormGroup({
