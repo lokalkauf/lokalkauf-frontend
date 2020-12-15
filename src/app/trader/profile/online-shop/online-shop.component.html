@@ -19,7 +19,10 @@
             pattern="https?://.+"
           ></lk-input>
         </div>
-
+        <div class="warning" *ngIf="eigenershop.invalid">
+          Deine Webshop muss mit http:// oder https:// beginnen, damit sie
+          aufrufbar ist.
+        </div>
         <div>
           <lk-button [disabled]="onlineshopForm.errors != null" type="submit"
             >Online-Shop speichern</lk-button
