@@ -16,7 +16,7 @@
           <lk-input
             placeholder="Dein Onlinehshop"
             formControlName="eigenershop"
-            pattern="https?://.+"
+            pattern="(h|H)(t|T)(t|T)(p|P)(s|S)?://.+"
           ></lk-input>
         </div>
         <div class="warning" *ngIf="eigenershop.invalid">
