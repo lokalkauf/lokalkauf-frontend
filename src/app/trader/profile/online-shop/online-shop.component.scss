@@ -98,3 +98,13 @@
   background-color: $normalgreen;
   border: solid 1px $normalgreen;
 }
+
+.stand {
+  margin-bottom: 20px;
+}
+
+.warning {
+  color: $errorcolor;
+  font-size: 0.7rem;
+  margin-bottom: 20px;
+}

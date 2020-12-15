@@ -26,7 +26,6 @@ export class OnlineShopComponent implements OnInit {
   ];
   shopify = [
     'Einfach zu bedienen',
-    'Online Bezahlung',
     'Viele Einstellungs- und Individualisierungsmöglichkeiten',
     'Online in wenigen Tagen',
     'Kosten ab 29,-€ / Monat zzgl. Transaktionsgebühren',
