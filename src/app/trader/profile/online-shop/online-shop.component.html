@@ -8,7 +8,7 @@
 
   <div class="onlineshop-container">
     <h4>
-      Gebe hier die Addresse Deines Online-Shops ein:
+      Gib hier die Addresse Deines Online-Shops ein:
     </h4>
     <div>
       <form [formGroup]="onlineshopForm" (ngSubmit)="onSubmit()">
@@ -16,10 +16,13 @@
           <lk-input
             placeholder="Dein Onlinehshop"
             formControlName="eigenershop"
-            pattern="https?://.+"
+            pattern="(h|H)(t|T)(t|T)(p|P)(s|S)?://.+"
           ></lk-input>
         </div>
-
+        <div class="warning" *ngIf="eigenershop.invalid">
+          Deine Webshop muss mit http:// oder https:// beginnen, damit sie
+          aufrufbar ist.
+        </div>
         <div>
           <lk-button [disabled]="onlineshopForm.errors != null" type="submit"
             >Online-Shop speichern</lk-button
@@ -41,6 +44,7 @@
   <br />
   <br />
   <h4>Übersicht möglicher Anbieter von Online-Shops:</h4>
+  <div class="stand">Stand: 11.12.2020</div>
 
   <div class="shops-container">
     <div class="item-content">
