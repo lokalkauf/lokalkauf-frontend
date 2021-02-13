@@ -32,6 +32,7 @@ import { MatCardModule } from '@angular/material/card';
 import { LkContainerFullComponent } from './lk-container-full/lk-container.component-full';
 import { LkAttributionComponent } from './lk-attribution/lk-attribution.component';
 import { PipesModule } from '../pipes/pipes.modules';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const routes: Routes = [];
 
@@ -74,6 +75,7 @@ const routes: Routes = [];
     NgxStarRatingModule,
     MatChipsModule,
     PipesModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     MapComponent,

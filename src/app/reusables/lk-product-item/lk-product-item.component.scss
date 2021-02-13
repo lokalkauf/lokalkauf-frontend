@@ -49,6 +49,13 @@ mat-card {
       padding: 16px;
       box-sizing: border-box;
     }
+
+    &.spinner {
+      background-color: $lightestgreen;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   mat-card-header {
