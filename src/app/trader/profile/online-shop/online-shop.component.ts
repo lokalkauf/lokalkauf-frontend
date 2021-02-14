@@ -36,7 +36,7 @@ export class OnlineShopComponent implements OnInit {
   ];
 
   onlineshopForm = new FormGroup({
-    eigenershop: new FormControl('', [Validators.required]),
+    eigenershop: new FormControl(''),
   });
 
   constructor(private user: UserService) {}
