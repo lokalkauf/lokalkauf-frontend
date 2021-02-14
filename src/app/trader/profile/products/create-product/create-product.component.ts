@@ -78,14 +78,12 @@ export class CreateProductComponent {
             ? this.updateProduct(loggedInUserState.uid, this.data.product.id)
             : this.createProduct(loggedInUserState.uid)
         ),
-        tap(console.log),
         flatMap(([userId, productId]) =>
           // if image input is dirty upload image
           this.productForm.get('image').dirty
             ? this.updateImage(userId, productId)
             : of(null)
-        ),
-        tap(console.log)
+        )
       )
       .subscribe(() => {
         this.snackBar.open(
