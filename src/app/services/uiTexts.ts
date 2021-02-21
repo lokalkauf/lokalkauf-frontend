@@ -46,6 +46,13 @@ export const uiTexts = {
     'Handel muss nicht zwangsläufig in einem Ladengeschäft stattfinden – diese Erkenntnis ist während der ' +
     'Corona-Krise notwendiger denn je.  Schon mehr als jeder zweite Einzelhändler bietet seine Produkte bereits online an.',
   start_presse_2_link: 'https://www.bitkom.org/Themen/Corona/Handel',
+  start_presse_3_date: '23.07.2020',
+  start_presse_3_title: '#WirVsVirus Solution Builder in the spotlight',
+  start_presse_3_content:
+    'We spoke with social innovators from three teams in the #WirVsVirus Solution Builder acceleration ' +
+    'programme to learn about their COVID-19 innovations.',
+  start_presse_3_link:
+    'https://berlin.impacthub.net/wirvsvirus-solutionbuilder/',
   start_presse_artikel: 'Artikel lesen',
   start_presse_alle_artikel: 'Alle Pressemitteilungen ansehen',
   testimonal_1_testee: 'Christiane Hesse – Casabiente, Wiesbaden',
