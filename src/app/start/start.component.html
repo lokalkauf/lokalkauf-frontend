@@ -48,6 +48,19 @@
   </div>
 </lk-container>
 
+<lk-container-full class="alternate-background">
+  <h2 class="campaign-headline">{{ text.start_ikl_headline | text }}</h2>
+  <div class="campaign-container">
+    <div class="campaign-image">
+      <img src="../../assets/ichkaufelokal-smaller.png" />
+    </div>
+    <div class="campaign-text">
+      <h3 [innerHtml]="text.start_ikl_subheadline | text"></h3>
+      <span [innerHtml]="text.start_ikl_text | text"></span>
+    </div>
+  </div>
+</lk-container-full>
+
 <lk-container class="alternate-background-user-voice">
   <div class="user-voice">
     <lk-testimonial

@@ -29,6 +29,15 @@ export const uiTexts = {
     '<br /><br />Wir sind das digitale Schaufenster des lokalen, stationären Einzelhandels, der Restaurants und der Geschäfte ' +
     'um die Ecke. Als Team, als Plattform und als Verein engagieren wir uns für den lokalen Einzelhandel.',
   start_mission_aboutus: 'Mehr über uns erfahren',
+  start_ikl_headline: 'Setz mit uns ein Zeichen für Deine Stadt #ichkaufelokal',
+  start_ikl_subheadline:
+    'Du willst, dass es weiterhin all die Geschäfte gibt, die Deine Stadt ausmachen?' +
+    '<br />Du kannst etwas dafür tun!',
+  start_ikl_text:
+    'Lade Dir spannende Filter und Profil-Rahmen herunter und zeige auf Social Media ' +
+    'Flagge für den lokalen Einzelhandel und die Gastronomie!' +
+    '<br />Das und noch einiges mehr findest Du auf unserer Kampangnenseite #ichkaufelokal. ' +
+    '<br /><br /><a href="https://www.ichkaufelokal.org/" target="_blank" rel="noopener noreferrer" class="fancy-link">Zur Kampagne</a>',
   start_wirvsvirus_headline: 'Im offiziellen Solution Enabler Programm von',
   start_presse_headline: 'Aktuelle Pressemeldungen',
   start_presse_1_date: '29.03.2020',
