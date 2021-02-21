@@ -92,6 +92,13 @@ export class StartComponent implements OnInit {
 
     this.press$ = of([
       {
+        date: textService.getText(uiTexts.start_presse_3_date),
+        title: textService.getText(uiTexts.start_presse_3_title),
+        content: textService.getText(uiTexts.start_presse_3_content),
+        link: textService.getText(uiTexts.start_presse_3_link),
+        img: 'logo-imapact-hub.png',
+      },
+      {
         date: textService.getText(uiTexts.start_presse_1_date),
         title: textService.getText(uiTexts.start_presse_1_title),
         content: textService.getText(uiTexts.start_presse_1_content),
