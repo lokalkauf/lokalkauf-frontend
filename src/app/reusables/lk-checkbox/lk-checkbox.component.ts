@@ -25,6 +25,8 @@ export class LkCheckboxComponent implements ControlValueAccessor {
 
   checked = false;
 
+  private onTouchedCallback: () => void = () => {};
+
   constructor() {}
 
   writeValue(value: boolean): void {
@@ -34,11 +36,17 @@ export class LkCheckboxComponent implements ControlValueAccessor {
   registerOnChange(fn: (value: boolean) => void): void {
     this.onChange$.subscribe(fn);
   }
+
   registerOnTouched(fn: any): void {
-    this.onTouch$.subscribe(fn);
+    this.onTouchedCallback = fn;
   }
+
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
+  }
+
+  onBlur() {
+    this.onTouchedCallback();
   }
 
   onInputChange(event: Event) {
@@ -47,6 +55,7 @@ export class LkCheckboxComponent implements ControlValueAccessor {
 
   onInputClick(event: Event) {
     event.stopPropagation();
+    this.onBlur();
 
     if (!this.disabled) {
       this.checked = !this.checked;

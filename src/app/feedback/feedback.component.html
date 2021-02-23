@@ -2,21 +2,29 @@
   <div id="feedback-inset" *ngIf="!mailSent" [formGroup]="feedbackForm">
     <h1>Deine Ideen sind uns wichtig</h1>
     <lk-textarea
+      [warn]="message.touched && message.invalid"
       formControlName="message"
-      [placeholder]="'Deine Nachricht an uns'"
+      placeholder="Deine Nachricht an uns*"
     >
     </lk-textarea>
+    <div class="warning" *ngIf="message.touched && message.invalid">
+      Bitte gib in diesem Feld dein Feedback an.
+    </div>
 
     <div class="content">
-      Möchtest Du Feedback von uns? <br />Dann hinterlasse hier Deine E-Mail
-      Adresse.
+      Bitte hinterlasse hier Deine E-Mail Adresse. So wissen wir, wie wir Dich
+      erreichen können.
     </div>
 
     <lk-input
+      [warn]="email.touched && email.invalid"
       [type]="email"
       formControlName="email"
-      [placeholder]="'E-Mail Adresse'"
+      placeholder="E-Mail Adresse*"
     ></lk-input>
+    <div class="warning" *ngIf="email.touched && email.invalid">
+      Bitte gib Deine E-Mail Adresse hier an.
+    </div>
 
     <div class="content">
       <label>
@@ -39,6 +47,9 @@
           gelesen zu haben und bin einverstanden
         </div>
       </label>
+      <div class="warning" *ngIf="agbRead.touched && agbRead.invalid">
+        Um Deine Daten verarbeiten zu dürfen, brauchen wir Deine Zustimmung.
+      </div>
     </div>
 
     <div class="feedback-controls">
@@ -56,7 +67,7 @@
     </div>
   </div>
   <div class="feedback-error" *ngIf="showError">
-    Bitte gebe einen Nachrichtentext ein und ggf. eine gültige E-Mail-Adresse.
+    Bitte gebe einen Nachrichtentext und eine gültige E-Mail-Adresse ein.
     <br />Bitte bestätige zudem die AGBs und Datenschutzbestimmungen.
   </div>
 
