@@ -70,8 +70,10 @@ export class TraderContactComponent implements OnInit {
     }
   }
 
-  toggleContactForm() {
-    this.contactFormVisible = !this.contactFormVisible;
+  toggleContactForm(isEnabled = true) {
+    if (isEnabled) {
+      this.contactFormVisible = !this.contactFormVisible;
+    }
   }
 
   openOnlineshop() {

@@ -91,7 +91,7 @@
       <div class="contactButton floating button-bottom">
         <lk-button
           [disabled]="!trader.storeEmail"
-          (click)="toggleContactForm()"
+          (click)="toggleContactForm(!!trader.storeEmail)"
           [label]="'Händler direkt kontaktieren'"
         >
         </lk-button>
