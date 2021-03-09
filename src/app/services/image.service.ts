@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { defer, from, of, pipe } from 'rxjs';
+import { retry, delay, retryWhen, take, tap, map } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
 import { ImageSource } from '../models/imageSource';
 
@@ -9,7 +11,7 @@ import { ImageSource } from '../models/imageSource';
 export class ImageService {
   constructor(private storage: AngularFireStorage) {}
 
-  async getThumbnailUrl(imagePath, size = '224x224'): Promise<string> {
+  async getThumbnailUrl(imagePath: string, size = '224x224'): Promise<string> {
     if (!imagePath) {
       return null;
     }
@@ -31,6 +33,12 @@ export class ImageService {
       '.jpg';
 
     return await this.storage.storage.ref(thumbnailPath).getDownloadURL();
+  }
+
+  waitForThumbnailUrl(imagePath, size = '224x224') {
+    const $ref = defer(() => from(this.getThumbnailUrl(imagePath)));
+
+    return $ref.pipe(retryWhen((errors) => errors.pipe(delay(2000), take(10))));
   }
 
   async getThumbnail(

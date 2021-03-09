@@ -14,7 +14,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class FeedbackComponent {
   feedbackForm = new FormGroup({
     message: new FormControl('', [Validators.required]),
-    email: new FormControl('', []),
+    email: new FormControl('', [Validators.required]),
     agbRead: new FormControl('', [Validators.requiredTrue]),
   });
 

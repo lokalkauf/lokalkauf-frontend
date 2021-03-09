@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { iif, Observable, of } from 'rxjs';
+import { flatMap, map } from 'rxjs/operators';
 import { Product } from 'src/app/models/product';
 import { ImageService } from 'src/app/services/image.service';
 
@@ -14,17 +16,17 @@ export class LkProductItemComponent implements OnInit {
   @Output() editClicked = new EventEmitter();
   @Output() removeClicked = new EventEmitter();
 
-  imageUrl: string;
+  imageUrl$: Observable<string>;
 
   constructor(private imageService: ImageService) {}
 
   ngOnInit(): void {
-    if (this.product.defaultImagePath) {
-      this.imageService
-        .getThumbnailUrl(this.product.defaultImagePath)
-        .then((thumbnailUrl) => {
-          this.imageUrl = thumbnailUrl;
-        });
-    }
+    this.imageUrl$ = of(this.product.defaultImagePath).pipe(
+      flatMap((image) =>
+        image == null
+          ? of('/assets/lokalkauf-pin.svg')
+          : this.imageService.waitForThumbnailUrl(image)
+      )
+    );
   }
 }

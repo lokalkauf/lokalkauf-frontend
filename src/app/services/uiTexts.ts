@@ -29,6 +29,15 @@ export const uiTexts = {
     '<br /><br />Wir sind das digitale Schaufenster des lokalen, stationären Einzelhandels, der Restaurants und der Geschäfte ' +
     'um die Ecke. Als Team, als Plattform und als Verein engagieren wir uns für den lokalen Einzelhandel.',
   start_mission_aboutus: 'Mehr über uns erfahren',
+  start_ikl_headline: 'Setz mit uns ein Zeichen für Deine Stadt #ichkaufelokal',
+  start_ikl_subheadline:
+    'Du willst, dass es weiterhin all die Geschäfte gibt, die Deine Stadt ausmachen?' +
+    '<br />Du kannst etwas dafür tun!',
+  start_ikl_text:
+    'Lade Dir spannende Filter und Profil-Rahmen herunter und zeige auf Social Media ' +
+    'Flagge für den lokalen Einzelhandel und die Gastronomie!' +
+    '<br />Das und noch einiges mehr findest Du auf unserer Kampangnenseite #ichkaufelokal. ' +
+    '<br /><br /><a href="https://www.ichkaufelokal.org/" target="_blank" rel="noopener noreferrer" class="fancy-link">Zur Kampagne</a>',
   start_wirvsvirus_headline: 'Im offiziellen Solution Enabler Programm von',
   start_presse_headline: 'Aktuelle Pressemeldungen',
   start_presse_1_date: '29.03.2020',
@@ -46,6 +55,14 @@ export const uiTexts = {
     'Handel muss nicht zwangsläufig in einem Ladengeschäft stattfinden – diese Erkenntnis ist während der ' +
     'Corona-Krise notwendiger denn je.  Schon mehr als jeder zweite Einzelhändler bietet seine Produkte bereits online an.',
   start_presse_2_link: 'https://www.bitkom.org/Themen/Corona/Handel',
+  start_presse_3_date: '23.07.2020',
+  start_presse_3_title:
+    '#WirVsVirus – the world’s biggest online hackathon – the nine teams selected for its Solution Builder',
+  start_presse_3_content:
+    'We caught up with representatives from three of these fledgling organisations: lokalkauf; quarano; and RemedyMatch, to hear ' +
+    'about their innovative solutions to COVID-19-related problems.',
+  start_presse_3_link:
+    'https://berlin.impacthub.net/wirvsvirus-solutionbuilder/',
   start_presse_artikel: 'Artikel lesen',
   start_presse_alle_artikel: 'Alle Pressemitteilungen ansehen',
   testimonal_1_testee: 'Christiane Hesse – Casabiente, Wiesbaden',
