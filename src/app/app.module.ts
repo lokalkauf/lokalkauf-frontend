@@ -74,6 +74,10 @@ import {
 } from 'ngx-cookieconsent';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { BrowserService } from './services/browser.service';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+
+registerLocaleData(localeDe);
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {

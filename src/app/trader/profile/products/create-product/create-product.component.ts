@@ -30,6 +30,7 @@ export class CreateProductComponent {
     price: new FormControl('', [
       Validators.required,
       Validators.min(0.01),
+      Validators.max(10000),
       Validators.pattern('^[0-9]*(.|,)?[0-9]?[0-9]?$'),
     ]),
     description: new FormControl('', [Validators.nullValidator]),
