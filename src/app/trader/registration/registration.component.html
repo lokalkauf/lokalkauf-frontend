@@ -44,7 +44,7 @@
         placeholder="Nachname"
       ></lk-input>
     </div>
-    <div class="registration-input">
+    <div class="registration-input tel">
       <lk-input
         [warn]="phone.touched && phone.invalid"
         type="tel"
@@ -77,6 +77,12 @@
             formControlName="streetnumber"
             placeholder="Nr.*"
           ></lk-input>
+          <div
+            class="warning"
+            *ngIf="streetnumber.touched && streetnumber.invalid"
+          >
+            Bitte gib eine Hausnummer ein
+          </div>
         </div>
         <div class="registration-input postcode">
           <lk-input
