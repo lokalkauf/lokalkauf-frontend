@@ -8,7 +8,6 @@ import {
 import { TraderProfileStatus } from 'src/app/models/traderProfile';
 import { UserService, LoggedInUserState } from 'src/app/services/user.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ReturnStatement } from '@angular/compiler';
 
 @Component({
   selector: 'lk-offer',
