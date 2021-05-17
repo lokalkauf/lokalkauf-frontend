@@ -4,9 +4,8 @@ import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
 import { Bookmark } from '../models/bookmark';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { BookmarkList } from '../models/bookmarkList';
-import { map, tap } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
 import { BookmarkListPublic } from '../models/bookmarkListPublic';
-import { count } from 'console';
 
 export interface LocalBookmark {
   id: string;
@@ -151,6 +150,7 @@ export class BookmarksService {
         .doc<Omit<BookmarkList, 'id'>>(id)
         .valueChanges()
         .pipe(
+          take(1),
           map((bookmarkList) => {
             console.log('load from remote', bookmarkList);
             const retval = { ...bookmarkList, id };
