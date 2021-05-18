@@ -1,16 +1,11 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import {
-  BookmarksService,
-  BOOKMARK_TYPE,
-} from 'src/app/services/bookmarks.service';
+import { BookmarksService, BOOKMARK_TYPE } from 'src/app/services/bookmarks.service';
 import { Trader } from 'src/app/models/trader';
 import { Bookmark } from 'src/app/models/bookmark';
 import { Observable, of, Subscription, BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { MatDialog } from '@angular/material/dialog';
 import { BookmarksDialogComponent } from '../bookmarks-dialog/bookmarks-dialog.component';
-import { Identifiers } from '@angular/compiler';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
@@ -24,11 +19,7 @@ export class TraderItemComponent implements OnInit, OnDestroy {
 
   bookmarklistSubsciption: Subscription;
 
-  constructor(
-    private readonly bookmarkService: BookmarksService,
-    private readonly storageService: StorageService,
-    public dialog: MatDialog
-  ) {}
+  constructor(private readonly bookmarkService: BookmarksService, private readonly storageService: StorageService, public dialog: MatDialog) {}
 
   ngOnDestroy(): void {
     if (this.bookmarklistSubsciption) {
@@ -41,9 +32,7 @@ export class TraderItemComponent implements OnInit, OnDestroy {
       .pipe(
         map((bookmark) => {
           if (bookmark) {
-            this.isTraderInBookmarks$ = of(
-              this.updateSelection(bookmark.bookmarks)
-            );
+            this.isTraderInBookmarks$ = of(this.updateSelection(bookmark.bookmarks));
           } else {
             this.isTraderInBookmarks$ = of(false);
           }
@@ -65,10 +54,7 @@ export class TraderItemComponent implements OnInit, OnDestroy {
 
   addBookmark(id: string) {
     const currentBookmark = this.storageService.loadActiveBookmarkId();
-    if (
-      !currentBookmark ||
-      (!currentBookmark.id && currentBookmark.type === BOOKMARK_TYPE.UNKNOWN)
-    ) {
+    if (!currentBookmark || (!currentBookmark.id && currentBookmark.type === BOOKMARK_TYPE.UNKNOWN)) {
       this.createBookmarksDialog(id);
     } else {
       this.bookmarkService.addTrader({ traderid: id } as Bookmark);
@@ -82,10 +68,7 @@ export class TraderItemComponent implements OnInit, OnDestroy {
 
   addBookmarkSmall($event: Event, id: string) {
     const currentBookmark = this.storageService.loadActiveBookmarkId();
-    if (
-      !currentBookmark ||
-      (!currentBookmark.id && currentBookmark.type === BOOKMARK_TYPE.UNKNOWN)
-    ) {
+    if (!currentBookmark || (!currentBookmark.id && currentBookmark.type === BOOKMARK_TYPE.UNKNOWN)) {
       this.createBookmarksDialog(id);
     } else {
       this.bookmarkService.addTrader({ traderid: id } as Bookmark);
@@ -107,9 +90,7 @@ export class TraderItemComponent implements OnInit, OnDestroy {
   updateSelection(bookmarks: Bookmark[]): boolean {
     const id = this.trader ? this.trader.id : undefined;
     if (id) {
-      return (
-        bookmarks.filter((bookmark) => bookmark.traderid === id).length > 0
-      );
+      return bookmarks.filter((bookmark) => bookmark.traderid === id).length > 0;
     }
     return false;
   }

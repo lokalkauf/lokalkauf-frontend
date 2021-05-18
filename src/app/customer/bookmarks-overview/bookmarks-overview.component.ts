@@ -220,6 +220,11 @@ export class BookmarksOverviewComponent implements OnInit, OnDestroy {
     }
     const currentBookmark = this.storageService.loadActiveBookmarkId();
 
+    if (this.loaderSubscription) {
+      console.log('I AM STILL STANDING');
+      this.loaderSubscription.unsubscribe();
+    }
+
     this.loaderSubscription = this.bookmarksService.loadActiveBookmarkList(currentBookmark, true).subscribe((bklist: BookmarkList) => {
       if (!bklist || !bklist.bookmarks) {
         this.isPublicBookmark = currentBookmark.type !== BOOKMARK_TYPE.PRIVATE;

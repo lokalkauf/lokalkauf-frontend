@@ -6,7 +6,7 @@ import { StorageService } from './services/storage.service';
 import { AngularFireAnalytics } from '@angular/fire/analytics';
 import { CookieService } from 'ngx-cookie-service';
 import { BookmarksService, LocalBookmark, ActiveBookmark, BOOKMARK_TYPE } from './services/bookmarks.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { faFacebookF, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { BookmarksDialogComponent } from './customer/bookmarks-dialog/bookmarks-dialog.component';
@@ -27,6 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
   localBookmarks: Observable<LocalBookmark[]>;
   localPublicBookmarks: Observable<LocalBookmark[]>;
   currentBookmark: ActiveBookmark;
+  publicSubList: Subscription;
 
   constructor(
     public router: Router,
@@ -68,7 +69,11 @@ export class AppComponent implements OnInit, OnDestroy {
     this.currentBookmark = this.storageService.loadActiveBookmarkId();
     if (this.currentBookmark) {
       if (this.currentBookmark.type === BOOKMARK_TYPE.PUBLIC) {
-        this.bookmarkService.loadPublicBookmarkList(this.currentBookmark.id, true).subscribe();
+        if (this.publicSubList) {
+          console.log('usub me ');
+          this.publicSubList.unsubscribe();
+        }
+        this.publicSubList = this.bookmarkService.loadPublicBookmarkList(this.currentBookmark.id, true).subscribe();
       } else {
         this.bookmarkService.loadBookmarkList(this.currentBookmark.id).subscribe();
       }

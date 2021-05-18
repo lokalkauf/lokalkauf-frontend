@@ -23,7 +23,7 @@ export interface ActiveBookmark {
   type: BOOKMARK_TYPE;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class BookmarksService {
   public bookmarkSubject: Subject<number> = new Subject<number>();
   currentBookmarklist = new BehaviorSubject<BookmarkList>(undefined);
