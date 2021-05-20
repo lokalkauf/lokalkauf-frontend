@@ -1,11 +1,12 @@
 <a [routerLink]="'/trader-detail/' + trader.id" name="scroller.{{ trader.id }}">
   <mat-card>
     <img
+      *ngIf="imageUrl$ | async as imageUrl; else loading"
       class="trader-thumbnail"
       [ngClass]="{
-        placeholder: trader && trader.thumbnailURL && trader.thumbnailURL.indexOf('lokalkauf-pin') > -1
+        placeholder: !imageUrl || imageUrl === '/assets/lokalkauf-pin.svg'
       }"
-      [src]="trader.thumbnailURL"
+      [src]="imageUrl || '../../../assets/lokalkauf-pin.svg'"
       [alt]="trader.businessname"
     />
     <mat-card-header>
@@ -40,3 +41,9 @@
   <app-bookmarks-menu traderId="{{ trader.id }}"></app-bookmarks-menu>
   {{ trader.distance | number: '1.2-2':'de' }} km
 </div>
+
+<ng-template #loading>
+  <div class="trader-thumbnail spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

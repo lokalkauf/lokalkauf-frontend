@@ -7,12 +7,7 @@ import { LkSelectOptions } from '../../reusables/lk-select/lk-select.component';
 import { TraderProfile } from '../../models/traderProfile';
 import { StorageService } from '../../services/storage.service';
 import { uiTexts } from '../../services/uiTexts';
-import {
-  faFacebookF,
-  faTwitter,
-  faWhatsapp,
-  faInstagram,
-} from '@fortawesome/free-brands-svg-icons';
+import { faFacebookF, faTwitter, faWhatsapp, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { FormControl, FormGroup } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { LocationService } from '../../services/location.service';
@@ -167,16 +162,11 @@ export class TraderOverviewComponent implements OnInit {
 
     this.route.params.subscribe((params) => {
       try {
-        this.userPosition = [
-          Number.parseFloat(params.lat),
-          Number.parseFloat(params.lng),
-        ];
+        this.userPosition = [Number.parseFloat(params.lat), Number.parseFloat(params.lng)];
 
         this.paramRadius = this.sanitizeRadius(Number.parseFloat(params.rad));
         this.setRange(this.paramRadius);
-        this.rangeGroup
-          .get('range')
-          .setValue(this.paramRadius, { emitEvent: false, onlySelf: true });
+        this.rangeGroup.get('range').setValue(this.paramRadius, { emitEvent: false, onlySelf: true });
         this.loadLocations();
       } catch {}
     });
@@ -238,14 +228,14 @@ export class TraderOverviewComponent implements OnInit {
             if (l.licence && l.licence !== '') {
               this.odblLicense$ = of(true);
             }
-            l.thumbnailURL = await this.imageService.getThumbnailUrl(
+            /* l.thumbnailURL = await this.imageService.getThumbnailUrl(
               l.defaultImagePath,
               '224x224'
             );
 
             if (!l.thumbnailURL) {
               l.thumbnailURL = '/assets/lokalkauf-pin.svg';
-            }
+            }*/
           });
         } else {
           // Show "no result page" if no shops were found
@@ -287,8 +277,7 @@ export class TraderOverviewComponent implements OnInit {
 
   getCategoryFilter() {
     return {
-      categories:
-        !this.storeType || this.storeType === 'alle' ? [] : [this.storeType],
+      categories: !this.storeType || this.storeType === 'alle' ? [] : [this.storeType],
     };
   }
 

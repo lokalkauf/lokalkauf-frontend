@@ -3,10 +3,11 @@ import { BookmarksService, BOOKMARK_TYPE } from 'src/app/services/bookmarks.serv
 import { Trader } from 'src/app/models/trader';
 import { Bookmark } from 'src/app/models/bookmark';
 import { Observable, of, Subscription, BehaviorSubject } from 'rxjs';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { distinctUntilChanged, flatMap, map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { BookmarksDialogComponent } from '../bookmarks-dialog/bookmarks-dialog.component';
 import { StorageService } from 'src/app/services/storage.service';
+import { ImageService } from 'src/app/services/image.service';
 
 @Component({
   selector: 'app-trader-item',
@@ -16,10 +17,10 @@ import { StorageService } from 'src/app/services/storage.service';
 export class TraderItemComponent implements OnInit, OnDestroy {
   @Input() trader: any;
   isTraderInBookmarks$: Observable<boolean>;
-
+  imageUrl$: Observable<string>;
   bookmarklistSubsciption: Subscription;
 
-  constructor(private readonly bookmarkService: BookmarksService, private readonly storageService: StorageService, public dialog: MatDialog) {}
+  constructor(private readonly bookmarkService: BookmarksService, private imageService: ImageService, private readonly storageService: StorageService, public dialog: MatDialog) {}
 
   ngOnDestroy(): void {
     if (this.bookmarklistSubsciption) {
@@ -28,6 +29,7 @@ export class TraderItemComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.imageUrl$ = of(this.trader.defaultImagePath).pipe(flatMap((image) => (!image || image == null ? of('/assets/lokalkauf-pin.svg') : this.imageService.waitForThumbnailUrl(image, '224x224', 2000))));
     this.bookmarklistSubsciption = this.bookmarkService.currentBookmarklist
       .pipe(
         map((bookmark) => {

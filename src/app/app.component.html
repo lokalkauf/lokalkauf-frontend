@@ -51,7 +51,7 @@
       </div>
     </mat-menu>
 
-    <a mat-button [matMenuTriggerFor]="storeMenu" class="geschaeft-accent fancy-link-90"> <mat-icon>store</mat-icon> <span>Geschäftsbereich</span> </a>
+    <a mat-button [matMenuTriggerFor]="storeMenu" class="geschaeft-accent fancy-link-90"><mat-icon>store</mat-icon><span>Geschäftslogin</span></a>
 
     <mat-menu #storeMenu="matMenu" class="mat-elevation-z2">
       <button mat-menu-item [routerLink]="'/trader/login'" *ngIf="(userService.isLoggedIn$ | async) === false">

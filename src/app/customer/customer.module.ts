@@ -52,6 +52,7 @@ import { BookmarksMenuComponent } from './bookmarks-menu/bookmarks-menu.componen
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { BookmarksYesNoDialogComponent } from './bookmarks-overview/bookmarks-yes-no-dialog/bookmarks-yes-no-dialog.component';
 import { BookmarksMenuToastComponent } from './bookmarks-menu/bookmarks-menu-toast/bookmarks-menu-toast.component';
+import { MatProgressSpinnerModule, MatSpinner } from '@angular/material/progress-spinner';
 
 const routes: Routes = [
   {
@@ -109,6 +110,7 @@ const routes: Routes = [
     MatMenuModule,
     MatExpansionModule,
     MatSliderModule,
+    MatProgressSpinnerModule,
     MatStepperModule,
     DragDropModule,
     FontAwesomeModule,

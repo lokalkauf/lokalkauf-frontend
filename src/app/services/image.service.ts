@@ -24,10 +24,10 @@ export class ImageService {
     return await this.storage.storage.ref(thumbnailPath).getDownloadURL();
   }
 
-  waitForThumbnailUrl(imagePath, size = '224x224') {
+  waitForThumbnailUrl(imagePath, size = '224x224', retryDelay = 2000) {
     const $ref = defer(() => from(this.getThumbnailUrl(imagePath)));
 
-    return $ref.pipe(retryWhen((errors) => errors.pipe(delay(2000), take(10))));
+    return $ref.pipe(retryWhen((errors) => errors.pipe(delay(retryDelay), take(10))));
   }
 
   async getThumbnail(image: ImageSource, size = '224x224'): Promise<ImageSource> {
