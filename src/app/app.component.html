@@ -4,50 +4,63 @@
       <img src="assets/lokalkauf-logo.svg" alt="lokalkauf" />
     </a>
     <div fxHide.lt-md>
-      <a mat-button (click)="navigateTraders()" routerLinkActive="active"
-        >H&auml;ndlersuche
-      </a>
+      <a mat-button (click)="navigateTraders()" routerLinkActive="active">H&auml;ndlersuche </a>
       <a mat-button [routerLink]="'/feedback'">Feedback</a>
       <a mat-button [routerLink]="'/aboutus'">Das sind wir</a>
       <a mat-button [routerLink]="'/press'">Presse</a>
       <a mat-button [routerLink]="'/faq'">Hilfe</a>
-      <a
-        mat-button
-        href="https://www.ichkaufelokal.org/"
-        target="_blank"
-        rel="noopener noreferrer"
-        >#ichkaufelokal</a
-      >
+      <a mat-button href="https://www.ichkaufelokal.org/" target="_blank" rel="noopener noreferrer">#ichkaufelokal</a>
     </div>
     <span class="menu-spacer"></span>
-    <a
-      mat-button
-      [matMenuTriggerFor]="storeMenu"
-      class="geschaeft-accent fancy-link-90"
-    >
-      <mat-icon>store</mat-icon> <span>Geschäftsbereich</span>
+    <a mat-button [matMenuTriggerFor]="bookmarkMenu" class="avatar bookmarks">
+      <mat-icon color="primary" [matBadgeHidden]="(bookmarks | async) <= 0" matBadge="{{ bookmarks | async }}" matBadgePosition="before" matBadgeColor="accent">favorite</mat-icon>
     </a>
+    <mat-menu #bookmarkMenu="matMenu" class="mat-elevation-z2">
+      <div class="mat-menu-headline" *ngIf="(localBookmarks | async).length > 0">
+        private Merkliste
+      </div>
+      <ng-container *ngFor="let bk of localBookmarks | async">
+        <button mat-menu-item (click)="loadBookmarkList(bk.id)">
+          <ng-container *ngIf="currentBookmark && bk.id === currentBookmark.id">
+            <mat-icon color="primary">favorite</mat-icon>
+          </ng-container>
+          <ng-container *ngIf="currentBookmark && bk.id !== currentBookmark.id">
+            <mat-icon>favorite_outline</mat-icon>
+          </ng-container>
+          {{ bk.name }}
+        </button>
+      </ng-container>
+      <mat-divider *ngIf="(localPublicBookmarks | async).length > 0"></mat-divider>
+      <div class="mat-menu-headline" *ngIf="(localPublicBookmarks | async).length > 0">
+        öffentliche Merkliste
+      </div>
+      <ng-container *ngFor="let bk of localPublicBookmarks | async">
+        <button mat-menu-item (click)="loadPublicBookmarkList(bk.id)">
+          <ng-container *ngIf="currentBookmark && bk.id === currentBookmark.id">
+            <mat-icon color="primary" class="custom-badge" matBadgePosition="below|before" matBadgeColor="accent" matBadge="cloud_download">favorite </mat-icon>
+          </ng-container>
+          <ng-container *ngIf="currentBookmark && bk.id !== currentBookmark.id">
+            <mat-icon class="custom-badge" matBadgePosition="below|before" matBadgeColor="accent" matBadge="cloud_download"> favorite_outline</mat-icon>
+          </ng-container>
+          {{ bk.name }}
+        </button>
+      </ng-container>
+
+      <div class="mat-menu-headline-none" *ngIf="(localBookmarks | async).length == 0 && (localPublicBookmarks | async).length == 0">
+        noch keine Liste vorhanden
+      </div>
+    </mat-menu>
+
+    <a mat-button [matMenuTriggerFor]="storeMenu" class="geschaeft-accent fancy-link-90"><mat-icon>store</mat-icon><span>Geschäftslogin</span></a>
 
     <mat-menu #storeMenu="matMenu" class="mat-elevation-z2">
-      <button
-        mat-menu-item
-        [routerLink]="'/trader/login'"
-        *ngIf="(userService.isLoggedIn$ | async) === false"
-      >
+      <button mat-menu-item [routerLink]="'/trader/login'" *ngIf="(userService.isLoggedIn$ | async) === false">
         H&auml;ndler Login
       </button>
-      <button
-        mat-menu-item
-        *ngIf="userService.isLoggedIn$ | async"
-        [routerLink]="'/trader/profile'"
-      >
+      <button mat-menu-item *ngIf="userService.isLoggedIn$ | async" [routerLink]="'/trader/profile'">
         Mein Händlerprofil
       </button>
-      <button
-        mat-menu-item
-        *ngIf="userService.isLoggedIn$ | async"
-        (click)="userService.logout()"
-      >
+      <button mat-menu-item *ngIf="userService.isLoggedIn$ | async" (click)="userService.logout()">
         Ausloggen
       </button>
     </mat-menu>
@@ -55,10 +68,6 @@
       <mat-icon>menu</mat-icon>
     </button>
   </mat-toolbar-row>
-
-  <!-- <mat-toolbar-row>
-      <span style="font-size: 12px;">SimpleCRM helps you easily manage your contacts</span>
-  </mat-toolbar-row> -->
 </mat-toolbar>
 
 <mat-sidenav-container>
@@ -67,12 +76,8 @@
       <mat-icon>close</mat-icon>
     </button>
     <mat-nav-list (click)="sidenav.close()">
-      <a mat-list-item (click)="navigateTraders()" routerLinkActive="active"
-        >H&auml;ndlersuche
-      </a>
-      <a mat-list-item (click)="sidenav.close()" [routerLink]="'/feedback'"
-        >Feedback</a
-      >
+      <a mat-list-item (click)="navigateTraders()" routerLinkActive="active">H&auml;ndlersuche </a>
+      <a mat-list-item (click)="sidenav.close()" [routerLink]="'/feedback'">Feedback</a>
       <a mat-list-item (click)="sidenav.close()" [routerLink]="'/aboutus'">
         Das sind wir
       </a>
@@ -82,34 +87,15 @@
       <a mat-list-item (click)="sidenav.close()" [routerLink]="'/faq'">
         Hilfe
       </a>
-      <a
-        mat-list-item
-        (click)="sidenav.close()"
-        href="https://www.ichkaufelokal.org/"
-        target="_blank"
-        rel="noopener noreferrer"
-        >#ichkaufelokal</a
-      >
+      <a mat-list-item (click)="sidenav.close()" href="https://www.ichkaufelokal.org/" target="_blank" rel="noopener noreferrer">#ichkaufelokal</a>
       <mat-divider></mat-divider>
-      <a
-        mat-list-item
-        [routerLink]="'/trader/login'"
-        *ngIf="(userService.isLoggedIn$ | async) === false"
-      >
+      <a mat-list-item [routerLink]="'/trader/login'" *ngIf="(userService.isLoggedIn$ | async) === false">
         H&auml;ndler Login
       </a>
-      <a
-        mat-list-item
-        *ngIf="userService.isLoggedIn$ | async"
-        [routerLink]="'/trader/profile'"
-      >
+      <a mat-list-item *ngIf="userService.isLoggedIn$ | async" [routerLink]="'/trader/profile'">
         Mein Händlerprofil
       </a>
-      <a
-        mat-list-item
-        *ngIf="userService.isLoggedIn$ | async"
-        (click)="userService.logout()"
-      >
+      <a mat-list-item *ngIf="userService.isLoggedIn$ | async" (click)="userService.logout()">
         Ausloggen
       </a>
     </mat-nav-list>
@@ -120,62 +106,30 @@
     </div>
     <div class="footer">
       <div class="some-footer">
-        <a
-          mat-icon-button
-          href="https://www.facebook.com/sharer/sharer.php?u=https%3A//www.lokalkauf.org"
-          target="_blank"
-        >
+        <a mat-icon-button href="https://www.facebook.com/sharer/sharer.php?u=https%3A//www.lokalkauf.org" target="_blank">
           <fa-icon [icon]="faFacebookF" size="2x" class="share-mono"></fa-icon>
         </a>
 
-        <a
-          mat-icon-button
-          href="https://www.instagram.com/lokalkauf/"
-          target="_blank"
-        >
+        <a mat-icon-button href="https://www.instagram.com/lokalkauf/" target="_blank">
           <fa-icon [icon]="faInstagram" size="2x" class="share-mono"></fa-icon>
         </a>
       </div>
       <div class="links-footer">
-        <a
-          mat-list-item
-          class="cookie-footer-link"
-          (click)="this.openCookieConsent()"
-        >
+        <a mat-list-item class="cookie-footer-link" (click)="this.openCookieConsent()">
           Cookies
         </a>
 
-        <a
-          mat-list-item
-          href="https://www.lokalkauf.org/3rdpartylicenses.txt"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a mat-list-item href="https://www.lokalkauf.org/3rdpartylicenses.txt" target="_blank" rel="noopener noreferrer">
           Lizenzen
         </a>
         <a mat-list-item [routerLink]="'/feedback'">Feedback</a>
-        <a
-          mat-list-item
-          href="https://www.info.lokalkauf.org/agb"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a mat-list-item href="https://www.info.lokalkauf.org/agb" target="_blank" rel="noopener noreferrer">
           AGB
         </a>
-        <a
-          mat-list-item
-          href="https://www.info.lokalkauf.org/impressum"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a mat-list-item href="https://www.info.lokalkauf.org/impressum" target="_blank" rel="noopener noreferrer">
           Impressum
         </a>
-        <a
-          mat-list-item
-          href="https://www.info.lokalkauf.org/datenschutz"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a mat-list-item href="https://www.info.lokalkauf.org/datenschutz" target="_blank" rel="noopener noreferrer">
           Datenschutzerklärung
         </a>
       </div>

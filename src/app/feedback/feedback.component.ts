@@ -33,11 +33,7 @@ export class FeedbackComponent {
   showError: boolean;
   mailSent = false;
 
-  constructor(
-    private location: Location,
-    private mailService: EMailService,
-    private errorService: ErrorService
-  ) {
+  constructor(private location: Location, private mailService: EMailService, private errorService: ErrorService) {
     this.showError = false;
   }
 
@@ -54,12 +50,7 @@ export class FeedbackComponent {
       return;
     }
 
-    if (
-      this.message &&
-      this.message.value &&
-      this.agbRead.value &&
-      (!this.email || this.validMail(this.email.value))
-    ) {
+    if (this.message && this.message.value && this.agbRead.value && (!this.email || this.validMail(this.email.value))) {
       try {
         this.mailService.send(
           {
@@ -78,11 +69,7 @@ export class FeedbackComponent {
         this.mailSent = true;
         this.showError = false;
       } catch (e) {
-        this.errorService.publishByText(
-          'Nachricht konnte nicht verschickt werden',
-          'Aufgrund eines Systemfehlers konnte die Nachricht an ' +
-            'den Händler nicht verschickt werden. Bitte versuche es erneut oder kontaktiere den Support.'
-        );
+        this.errorService.publishByText('Nachricht konnte nicht verschickt werden', 'Aufgrund eines Systemfehlers konnte die Nachricht an ' + 'den Händler nicht verschickt werden. Bitte versuche es erneut oder kontaktiere den Support.');
       }
     } else {
       this.showError = true;

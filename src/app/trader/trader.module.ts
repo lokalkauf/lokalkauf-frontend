@@ -36,23 +36,11 @@ const routes: Routes = [
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [
-    OrdersComponent,
-    ProductsComponent,
-    OnlineShopComponent,
-    RegistrationComponent,
-    ProfileComponent,
-    LoginComponent,
-    PasswordResetComponent,
-    DeleteUserComponent,
-    ImageUploadComponent,
-    OfferComponent,
-    CreateProductComponent,
-  ],
+  declarations: [OrdersComponent, ProductsComponent, OnlineShopComponent, RegistrationComponent, ProfileComponent, LoginComponent, PasswordResetComponent, DeleteUserComponent, ImageUploadComponent, OfferComponent, CreateProductComponent],
   imports: [
     CommonModule,
     MatFormFieldModule,
-    RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' }),
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'top', onSameUrlNavigation: 'reload' }),
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,

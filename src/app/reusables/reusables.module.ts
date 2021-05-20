@@ -32,6 +32,8 @@ import { MatCardModule } from '@angular/material/card';
 import { LkContainerFullComponent } from './lk-container-full/lk-container.component-full';
 import { LkAttributionComponent } from './lk-attribution/lk-attribution.component';
 import { PipesModule } from '../pipes/pipes.modules';
+import { LkSomeComponent } from './lk-some/lk-some.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const routes: Routes = [];
@@ -59,13 +61,14 @@ const routes: Routes = [];
     LkTestimonialComponent,
     LkProductItemComponent,
     LkAttributionComponent,
+    LkSomeComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     LeafletModule.forRoot(),
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' }),
     MatIconModule,
     MatInputModule,
     MatButtonModule,
@@ -75,6 +78,7 @@ const routes: Routes = [];
     NgxStarRatingModule,
     MatChipsModule,
     PipesModule,
+    FontAwesomeModule,
     MatProgressSpinnerModule,
   ],
   exports: [
@@ -98,6 +102,7 @@ const routes: Routes = [];
     LkTestimonialComponent,
     LkProductItemComponent,
     LkAttributionComponent,
+    LkSomeComponent,
   ],
 })
 export class ReusablesModule {}

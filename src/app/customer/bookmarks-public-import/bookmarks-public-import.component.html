@@ -1,0 +1,54 @@
+<lk-container>
+  <br />
+  <br />
+  <lk-page-title title="Öffentliche Liste"></lk-page-title>
+  <br />
+
+  <ng-container *ngIf="(isError | async) === false">
+    <ng-container *ngIf="bookmarkListPublic$ | async as bmk">
+      <div class="bookmarks-description">
+        Folge dieser Liste und erhalte automatisch alle Aktualisierungen.
+      </div>
+
+      <h2>{{ bmk.name }}</h2>
+      <div [innerHTML]="bmk.description | nl2br: true"></div>
+
+      <lk-map></lk-map>
+      <div class="openrouteservice" *ngIf="showNavigationAttribution$ | async">
+        Routes by:
+        <a href="https://openrouteservice.org/" target="_blank" rel="noopener noreferrer">openrouteservice.org</a>
+        | OpenStreetMap contributors
+      </div>
+      <button mat-button class="btn" (click)="save()">
+        <mat-icon>save_alt</mat-icon>
+        importieren
+      </button>
+      <ul class="trader-list">
+        <li *ngFor="let profile of traderProfiles$ | async">
+          <strong>{{ profile.businessname }}</strong>
+          <br />{{ profile.street }} {{ profile.number }} <br />{{ profile.postcode }} {{ profile.city }}
+          <div class="trader-details">
+            <ng-container *ngIf="profile.thumbUrl">
+              <img src="{{ profile.thumbUrl }}" />
+            </ng-container>
+          </div>
+        </li>
+      </ul>
+      <button mat-button class="btn" (click)="save()">
+        <mat-icon>save_alt</mat-icon>
+        importieren
+      </button>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="isError | async">
+    Leider hat das Laden nicht funktioniert.
+    <br />
+    <br />
+    Die öffentliche Liste ist entfernt worden oder der Link ist nicht korrekt.
+    <br />
+    <br />
+    Bei Fragen wende Dich bitte an uns über das
+    <a [routerLink]="'/feedback'">Feedback-Formular</a>. <br />Gibt dabei bitte die ID <span class="bold">{{ merklistenid }}</span> mit an!
+  </ng-container>
+</lk-container>

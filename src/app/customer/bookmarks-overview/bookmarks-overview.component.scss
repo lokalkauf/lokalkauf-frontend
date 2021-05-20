@@ -1,0 +1,197 @@
+.bookmarks-description {
+  text-align: center;
+
+  margin-bottom: 24px;
+
+  @media screen and (max-width: 850px) {
+    text-align: justify;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column-reverse;
+
+  @media screen and(min-width:850px) {
+    flex-direction: row;
+  }
+
+  width: 100%;
+
+  .left-side {
+    width: 100%;
+    max-width: 100%;
+
+    @media screen and(min-width:850px) {
+      height: calc(100vh - 500px);
+      min-height: 450px;
+      overflow-y: auto;
+    }
+
+    div.mat-step {
+      border-top: dotted 1px rgba(0, 0, 0, 0.1);
+    }
+
+    @media screen and(min-width:850px) {
+      width: 40%;
+      max-width: 40%;
+    }
+
+    .trader-details {
+      img {
+        width: 112px;
+        height: 112px;
+      }
+    }
+  }
+
+  .right-side {
+    width: 100%;
+    max-width: 100%;
+
+    lk-container {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+
+    @media screen and(min-width:850px) {
+      width: 60%;
+      max-width: 60%;
+    }
+  }
+}
+
+.button-container {
+  flex-direction: row;
+  display: flex;
+  align-items: stretch;
+
+  button {
+    white-space: pre-wrap !important;
+    flex-basis: 100%;
+
+    flex-direction: row-reverse;
+
+    @media screen and(min-width:850px) {
+      flex-direction: column-reverse;
+    }
+
+    text-align: center;
+    line-height: 1.5rem;
+    font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+
+    mat-icon {
+      width: 100%;
+      text-align: center;
+      padding-top: 5px;
+      padding-bottom: 20px;
+    }
+  }
+}
+
+.lst-row {
+  border-top: solid 1px #c4c4c4;
+}
+
+.trader-profile-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+
+  .drag-indicator {
+    align-self: center;
+  }
+
+  .thumb-image {
+    margin-top: 10px;
+    background-size: cover;
+    min-width: 80px;
+    height: 50px;
+  }
+
+  .address {
+    margin: 10px 10px 10px 20px;
+    width: 100%;
+
+    .address-headline {
+      font-weight: bold;
+    }
+
+    .address-details-container {
+      font-size: 13px;
+      color: #808080;
+      display: flex;
+      justify-content: space-between;
+
+      .address-details {
+        flex-grow: 4;
+      }
+
+      .address-delete {
+        flex-grow: 0;
+      }
+
+      .address-btn-small {
+        max-width: 40px;
+        width: 40px;
+        padding: 0 4px;
+        min-width: 40px;
+        color: #000000;
+      }
+    }
+
+    .address-link {
+      text-decoration: none !important;
+      font-size: 0.84rem;
+    }
+  }
+}
+
+.mat-list-option,
+.mat-list-item {
+  height: auto !important;
+}
+.mat-list-text {
+  padding-right: 0px !important;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.drag-drop-placeholder {
+  background: #ccc;
+  border: dotted 3px #999;
+  min-height: 80px;
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+lk-map {
+  position: relative;
+  z-index: 1;
+  display: block;
+
+  min-height: 450px;
+  height: 450px !important;
+
+  @media screen and(min-width:850px) {
+    height: 300px !important;
+  }
+
+  width: 100%;
+  margin-left: -1;
+}
+
+.openrouteservice {
+  font-size: 11px;
+}
+
+.display-none {
+  display: none;
+}

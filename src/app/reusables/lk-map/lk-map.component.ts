@@ -1,30 +1,14 @@
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  Output,
-  EventEmitter,
-  Input,
-} from '@angular/core';
-import {
-  Map,
-  tileLayer,
-  latLng,
-  marker,
-  CircleMarker,
-  circleMarker,
-  LatLng,
-  Marker,
-  layerGroup,
-  icon,
-  popup,
-} from 'leaflet';
+import { Component, OnInit, AfterViewInit, Output, EventEmitter, Input } from '@angular/core';
+import { Map, tileLayer, latLng, marker, GeoJSON, geoJSON, CircleMarker, circleMarker, LatLng, Marker, layerGroup, icon, popup } from 'leaflet';
 
 import { Location } from '../../models/location';
 import { GeoService } from '../../services/geo.service';
 import { GeoQuerySnapshot, GeoFirestoreTypes } from 'geofirestore';
 import { from } from 'rxjs';
 import { v4 as uuid } from 'uuid';
+import { ThumbnailsPosition } from '@ngx-gallery/core';
+import { MatLabel } from '@angular/material/form-field';
+import { NgLocalization } from '@angular/common';
 
 @Component({
   selector: 'lk-map',
@@ -40,10 +24,12 @@ export class LkMapComponent implements OnInit, AfterViewInit {
   @Output() flyEnd = new EventEmitter<any>();
   @Output() mapMove = new EventEmitter<any>();
   @Output() mapInit = new EventEmitter<any>();
+  @Output() mapMarkerClick = new EventEmitter<string>();
   locations: Array<Location> = new Array<Location>();
 
   // esriTiles = 'https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_v2/VectorTileServer/tile/{z}/{x}/{y}.pbf';
   defaultTiles = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  hilightedMarker: Marker = undefined;
 
   options = {
     layers: [
@@ -55,6 +41,16 @@ export class LkMapComponent implements OnInit, AfterViewInit {
     zoom: 15,
     center: latLng(52.518623, 13.376198),
   };
+
+  heartIconBigHilight = icon({
+    iconUrl: '/assets/lokalkauf-pin-blue-blue-transparent.svg',
+    iconSize: [30, 30],
+    iconAnchor: [16, 25],
+
+    shadowUrl: '/assets/pin-shadow.png',
+    shadowSize: [30, 22],
+    shadowAnchor: [8, 18],
+  });
 
   heartIconBig = icon({
     iconUrl: '/assets/lokalkauf-pin-blue-transparent.svg',
@@ -76,6 +72,8 @@ export class LkMapComponent implements OnInit, AfterViewInit {
     //   radius: 7,
     // }),
   ];
+
+  route: GeoJSON<any>;
 
   constructor(private geo: GeoService) {}
 
@@ -116,11 +114,57 @@ export class LkMapComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public addMarker(position?: number[]) {
+  public highlightMarker(markerid: string) {
+    if (markerid) {
+      const m: Marker = this.findMarkerById(markerid);
+      if (m) {
+        if (this.hilightedMarker) {
+          this.hilightedMarker.setIcon(this.heartIconBig);
+        }
+        m.setIcon(this.heartIconBigHilight);
+        this.hilightedMarker = m;
+      }
+    }
+  }
+
+  public displayGeoJsonOnMap(geo: any) {
+    const greenStyle = {
+      color: '#009300',
+      opacity: 0.65,
+    };
+
+    const newRoute = geoJSON(geo, { style: greenStyle });
+    this.route = newRoute;
+    newRoute.addTo(this.map);
+  }
+
+  public clearAllMarkers() {
+    if (this.markers && this.markers.length > 0) {
+      this.markers.forEach((m) => this.map.removeLayer(m));
+    }
+  }
+
+  public clearRoute() {
+    if (this.route) {
+      this.map.removeLayer(this.route);
+    }
+  }
+
+  public addMarker(position?: number[], emitClickEvent?: boolean) {
     const pos = position ? this.creeateLatLng(position) : this.map.getCenter();
 
     const id = uuid();
-    marker(pos, { alt: id, icon: this.heartIconBig }).addTo(this.map);
+    if (emitClickEvent) {
+      const myMarker = marker(pos, { alt: id, icon: this.heartIconBig });
+      myMarker.addTo(this.map).on('click', (e) => {
+        this.highlightMarker(id);
+        this.mapMarkerClick.emit(id);
+      });
+      this.markers.push(myMarker);
+    } else {
+      marker(pos, { alt: id, icon: this.heartIconBig }).addTo(this.map);
+    }
+
     return id;
   }
 

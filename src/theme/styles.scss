@@ -101,8 +101,8 @@ app-root {
 }
 
 .leaflet-tile-pane {
-  -webkit-filter: grayscale(100%);
-  filter: grayscale(100%);
+  -webkit-filter: grayscale(25%);
+  filter: grayscale(25%);
 }
 
 .cc-compliance {
@@ -180,4 +180,26 @@ div.cc-revoke {
   .g-box {
     background-color: #ffffff;
   }
+}
+
+mat-icon.custom-badge {
+  span.mat-badge-content {
+    width: 26px;
+    text-align: center;
+    border-radius: 12px;
+    background: rgba(136, 225, 245, 0);
+    left: 13px;
+    color: rgba(136, 225, 245, 0.75);
+    font-size: 22px;
+
+    font-family: 'Material Icons' !important;
+  }
+}
+
+.toastmessage-merkliste-added {
+  background-color: $darkgreen !important;
+}
+
+.toastmessage-merkliste-removed {
+  background-color: $appgrey !important;
 }

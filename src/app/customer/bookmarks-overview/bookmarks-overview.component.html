@@ -1,0 +1,109 @@
+<lk-container>
+  <br />
+  <br />
+  <lk-page-title title="Lieblingsläden"></lk-page-title>
+  <div class="bookmarks-description">
+    Genieße Deinen Ausflug in die Stadt und lerne sie ganz neu kennen.
+  </div>
+  <ng-container *ngIf="bookmarkList$ | async as bmk">
+    <h2>{{ bmk.name }}</h2>
+    <div [innerHTML]="bmk.description | nl2br: true"></div>
+  </ng-container>
+  <div class="container">
+    <div class="left-side">
+      <ng-container *ngIf="(hasProfilesInBookmark$ | async) === 0">
+        <ng-container *ngIf="!this.isPublicBookmark">
+          Füge in der Händerübersicht Deiner Stadt interssante Läden und und spannende Restaurants zu Deinem Einkaufbummel hinzu.
+          <br />
+          <br />Unter jedem Geschäft befindet sich ein Herz. Wenn das Herz grün leuchtet, dann hast Du es erfolgreich zugefügt. So einfach geht das!
+          <br />
+          <br />Wieviele Geschäfte und Orte Du entdecken willst, erkennst Du an der Zahl über dem Herzsymbol oben im Menü.
+          <br />
+          <br />Probiere es gleich aus!
+        </ng-container>
+        <ng-container *ngIf="this.isPublicBookmark">
+          Diese Liste ist leider nicht mehr verfügbar :(
+          <br />
+          <br />Möchtest Du diese Liste entfernen?
+          <br />
+          <br /><lk-button type="button" (click)="deleteBookmark()">Liste Entfernen</lk-button>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="(hasProfilesInBookmark$ | async) > 0">
+        <div class="button-container">
+          <button mat-button class="btn" (click)="navigate()">
+            <mat-icon>navigation</mat-icon>
+            Route
+          </button>
+          <button *ngIf="!this.isPublicBookmark" mat-button class="btn" (click)="openSharePublicDialog()">
+            <mat-icon>share</mat-icon>
+            Teilen
+          </button>
+
+          <button *ngIf="!this.isPublicBookmark" mat-button class="btn" (click)="openSharePrivateDialog()">
+            <mat-icon>important_devices</mat-icon>
+            Geräte Share
+          </button>
+
+          <button mat-button class="btn" (click)="deleteBookmark()">
+            <mat-icon>delete</mat-icon>
+            Liste löschen
+          </button>
+        </div>
+
+        <mat-selection-list cdkDropList #lst [multiple]="false" (selectionChange)="listSelectionChange($event)" (cdkDropListDropped)="resortList($event)">
+          <mat-list-option cdkDrag class="lst-row" *ngFor="let profile of traderProfiles$ | async; let isFirst = first" [value]="profile.id">
+            <div class="drag-drop-placeholder" *cdkDragPlaceholder></div>
+            <div class="trader-profile-container">
+              <div [class.display-none]="this.isPublicBookmark" class="drag-indicator" cdkDragHandle>
+                <mat-icon>drag_indicator</mat-icon>
+              </div>
+              <div
+                class="thumb-image"
+                [ngStyle]="{
+                  'background-image': 'url(' + (profile.thumbUrl ? profile.thumbUrl : '../../../assets/lokalkauf-icon-80-50.png') + ')'
+                }"
+              ></div>
+
+              <div class="address">
+                <div class="address-headline">{{ profile.businessname }}</div>
+                <div class="address-details-container">
+                  <div class="address-details">
+                    {{ profile.street }} {{ profile.number }} <br />
+                    {{ profile.postcode }} {{ profile.city }}
+                  </div>
+                  <div class="address-delete" *ngIf="!this.isPublicBookmark">
+                    <button mat-button class="address-btn-small" (click)="deleteTraderFromBookmark(profile.id)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+                <div class="address-link">
+                  <a class="fancy-link" [routerLink]="'/trader-detail/' + profile.id">Geschäftsprofil anzeigen</a>
+                </div>
+              </div>
+            </div>
+          </mat-list-option>
+        </mat-selection-list>
+      </ng-container>
+    </div>
+    <div class="right-side">
+      <lk-container>
+        <lk-map (mapMarkerClick)="clickCallback($event)"></lk-map>
+        <div class="openrouteservice" *ngIf="showNavigationAttribution$ | async">
+          Routes by:
+          <a href="https://openrouteservice.org/" target="_blank" rel="noopener noreferrer">openrouteservice.org</a>
+          | OpenStreetMap contributors
+        </div>
+        <div *ngIf="!this.isPublicBookmark && this.isPubliclyShared">
+          Teile diesen Link auf Whatsapp, Facebook, Twitter oder schicke ihn Deinen Freunden und Bekannten:
+          <br />
+          <a href="{{ getCurrentPublicUrl() }}" target="_blank">{{ getCurrentPublicUrl() }}</a>
+          <button mat-button (click)="copyToClipboard()">
+            <mat-icon>content_copy</mat-icon>
+          </button>
+        </div>
+      </lk-container>
+    </div>
+  </div>
+</lk-container>

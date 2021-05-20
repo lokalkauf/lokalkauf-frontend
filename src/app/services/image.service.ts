@@ -17,49 +17,24 @@ export class ImageService {
     }
 
     const foldername = imagePath.substring(0, imagePath.lastIndexOf('/') + 1);
-    const filenameWithoutExt = imagePath.substring(
-      imagePath.lastIndexOf('/') + 1,
-      imagePath.lastIndexOf('.')
-    );
+    const filenameWithoutExt = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('.'));
     const ext = imagePath.split('.').pop();
-    const thumbnailPath =
-      foldername +
-      'thumb_' +
-      size +
-      '_' +
-      filenameWithoutExt +
-      '.' +
-      ext +
-      '.jpg';
+    const thumbnailPath = foldername + 'thumb_' + size + '_' + filenameWithoutExt + '.' + ext + '.jpg';
 
     return await this.storage.storage.ref(thumbnailPath).getDownloadURL();
   }
 
-  waitForThumbnailUrl(imagePath, size = '224x224') {
+  waitForThumbnailUrl(imagePath, size = '224x224', retryDelay = 2000) {
     const $ref = defer(() => from(this.getThumbnailUrl(imagePath)));
 
-    return $ref.pipe(retryWhen((errors) => errors.pipe(delay(2000), take(10))));
+    return $ref.pipe(retryWhen((errors) => errors.pipe(delay(retryDelay), take(10))));
   }
 
-  async getThumbnail(
-    image: ImageSource,
-    size = '224x224'
-  ): Promise<ImageSource> {
+  async getThumbnail(image: ImageSource, size = '224x224'): Promise<ImageSource> {
     const foldername = image.path.substring(0, image.path.lastIndexOf('/') + 1);
-    const filenameWithoutExt = image.path.substring(
-      image.path.lastIndexOf('/') + 1,
-      image.path.lastIndexOf('.')
-    );
+    const filenameWithoutExt = image.path.substring(image.path.lastIndexOf('/') + 1, image.path.lastIndexOf('.'));
     const ext = image.path.split('.').pop();
-    const thumbnailPath =
-      foldername +
-      'thumb_' +
-      size +
-      '_' +
-      filenameWithoutExt +
-      '.' +
-      ext +
-      '.jpg';
+    const thumbnailPath = foldername + 'thumb_' + size + '_' + filenameWithoutExt + '.' + ext + '.jpg';
     const thumnbnailRef = await this.storage.storage.ref(thumbnailPath);
     return {
       url: await thumnbnailRef.getDownloadURL(),
@@ -70,16 +45,11 @@ export class ImageService {
   }
 
   async getAllTraderImages(traderId: string): Promise<ImageSource[]> {
-    const imageList = await this.storage.storage
-      .ref(`Traders/${traderId}/BusinessImages`)
-      .list();
+    const imageList = await this.storage.storage.ref(`Traders/${traderId}/BusinessImages`).list();
     const images = await Promise.all(
       imageList.items.map(async (item) => {
         const metadata = (await item.getMetadata()) as firebase.storage.FullMetadata;
-        if (
-          metadata.contentType.startsWith('image/') &&
-          !this.isThumbnail(metadata.fullPath)
-        ) {
+        if (metadata.contentType.startsWith('image/') && !this.isThumbnail(metadata.fullPath)) {
           return {
             url: await item.getDownloadURL(),
             size: metadata.size,

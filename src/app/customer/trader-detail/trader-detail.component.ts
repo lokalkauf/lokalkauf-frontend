@@ -29,7 +29,7 @@ export class TraderDetailComponent implements OnInit {
   products$: Observable<Array<Product>>;
 
   showMoreText = false;
-
+  traderid: string;
   traderLoadingStateSuccessful$: Observable<boolean>;
 
   constructor(
@@ -51,6 +51,7 @@ export class TraderDetailComponent implements OnInit {
           .valueChanges()
           .pipe(
             tap((trader) => {
+              this.traderid = params.id;
               this.traderLoadingStateSuccessful$ = of(!!trader);
               if (trader) {
                 this.analytics.logEvent('trader_detail', {
@@ -85,16 +86,12 @@ export class TraderDetailComponent implements OnInit {
       })
     );
 
-    this.products$ = this.route.params.pipe(
-      flatMap((params) => this.productService.getProductsOfTrader(params.id))
-    );
+    this.products$ = this.route.params.pipe(flatMap((params) => this.productService.getProductsOfTrader(params.id)));
 
     this.traderImages$ = this.route.params.pipe(
       flatMap(
         async (params) => {
-          const images = await this.imageService.getAllTraderImageUrls(
-            params.id
-          );
+          const images = await this.imageService.getAllTraderImageUrls(params.id);
           return images;
         }
 
@@ -116,11 +113,7 @@ export class TraderDetailComponent implements OnInit {
   changeUrl() {
     // Change URL to /trader-detail/id. This is needed in case we were redirected
     // form the function traderDetail
-    history.replaceState(
-      null,
-      '',
-      '/trader-detail/' + this.route.snapshot.params.id
-    );
+    history.replaceState(null, '', '/trader-detail/' + this.route.snapshot.params.id);
   }
 
   getCorrectUrl(url?: string) {
@@ -129,6 +122,10 @@ export class TraderDetailComponent implements OnInit {
       return !lowerurl.startsWith('http') ? 'https://' + lowerurl : lowerurl;
     }
     return url;
+  }
+
+  getSomeUrl() {
+    return 'https://' + window.location.host + '/trader-detail/' + this.traderid;
   }
 
   shortenText(inputText: string) {
@@ -142,12 +139,7 @@ export class TraderDetailComponent implements OnInit {
   navigateBackToOverview() {
     const city = this.storageService.loadLocation();
     if (city) {
-      this.router.navigate([
-        '/localtraders',
-        city.coordinates[0],
-        city.coordinates[1],
-        city.radius ? city.radius : 10,
-      ]);
+      this.router.navigate(['/localtraders', city.coordinates[0], city.coordinates[1], city.radius ? city.radius : 10]);
     } else {
       this.router.navigate(['/']);
     }

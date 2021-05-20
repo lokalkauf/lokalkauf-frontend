@@ -3,59 +3,38 @@
     <div class="trader-title-wrapper">
       <br />
       <br />
-      <lk-page-title
-        [title]="'Das Geschäft konnte leider nicht gefunden werden.'"
-      ></lk-page-title>
+      <lk-page-title [title]="'Das Geschäft konnte leider nicht gefunden werden.'"></lk-page-title>
       <br />
       <br />
-      <div class="trader-description text">
-        Suche in <a [routerLink]="['/']">Deiner Stadt</a> nach tollen
-        Alternativen.
-      </div>
+      <div class="trader-description text">Suche in <a [routerLink]="['/']">Deiner Stadt</a> nach tollen Alternativen.</div>
     </div>
   </lk-container>
   <lk-container *ngIf="traderLoadingStateSuccessful$ | async">
     <div class="floating-backbutton margin-boost">
-      <a
-        class="navigate-back"
-        (click)="navigateBackToOverview()"
-        alt="zurück zur Übersicht"
-      >
-        <mat-icon class="inlinesymbol vertical-align-middle"
-          >chevron_left</mat-icon
-        >
+      <a class="navigate-back" (click)="navigateBackToOverview()" alt="zurück zur Übersicht">
+        <mat-icon class="inlinesymbol vertical-align-middle">chevron_left</mat-icon>
         <span class="symboltext">Zurück zur Händlersuche</span>
       </a>
+
+      <div class="merkliste">
+        <lk-some [someUrl]="this.getSomeUrl()"></lk-some>
+        <app-bookmarks-menu [matMini]="true" traderId="{{ this.traderid }}"></app-bookmarks-menu>
+      </div>
     </div>
 
     <div class="trader-title-wrapper">
       <lk-page-title [title]="trader.businessname"></lk-page-title>
     </div>
 
-    <div
-      class="trader-description text"
-      *ngIf="trader.description && !showMoreText"
-    >
-      <span [innerHTML]="shortenText(trader.description) | nl2br: true"></span
-      >...
-      <div
-        *ngIf="trader.description.length > 200"
-        (click)="showMoreText = true"
-        class="toggleDetails"
-      >
+    <div class="trader-description text" *ngIf="trader.description && !showMoreText">
+      <span [innerHTML]="shortenText(trader.description) | nl2br: true"></span>...
+      <div *ngIf="trader.description.length > 200" (click)="showMoreText = true" class="toggleDetails">
         mehr lesen
       </div>
     </div>
-    <div
-      class="trader-description text"
-      *ngIf="trader.description && showMoreText"
-    >
+    <div class="trader-description text" *ngIf="trader.description && showMoreText">
       <span [innerHTML]="trader.description | nl2br: true"></span>
-      <div
-        *ngIf="trader.description.length > 200"
-        (click)="showMoreText = false"
-        class="toggleDetails"
-      >
+      <div *ngIf="trader.description.length > 200" (click)="showMoreText = false" class="toggleDetails">
         weniger
       </div>
     </div>
@@ -70,28 +49,21 @@
       <h3 class="products-headline">Unsere Produkte</h3>
 
       <div class="product-list" *ngIf="products$ | async as products">
-        <lk-product-item
-          *ngFor="let product of products"
-          [product]="product"
-          [enableInteraction]="false"
-        >
-        </lk-product-item>
+        <lk-product-item *ngFor="let product of products" [product]="product" [enableInteraction]="false"> </lk-product-item>
       </div>
     </ng-container>
 
     <lk-attribution licence="{{ trader.licence }}"></lk-attribution>
 
     <div class="floating-backbutton margin-boost">
-      <a
-        class="navigate-back"
-        (click)="navigateBackToOverview()"
-        alt="zurück zur Übersicht"
-      >
-        <mat-icon class="inlinesymbol vertical-align-middle"
-          >chevron_left</mat-icon
-        >
+      <a class="navigate-back" (click)="navigateBackToOverview()" alt="zurück zur Übersicht">
+        <mat-icon class="inlinesymbol vertical-align-middle">chevron_left</mat-icon>
         <span class="symboltext">Zurück zur Händlersuche</span>
       </a>
+      <div class="merkliste">
+        <lk-some [someUrl]="this.getSomeUrl()"></lk-some>
+        <app-bookmarks-menu [matMini]="true" traderId="{{ this.traderid }}"></app-bookmarks-menu>
+      </div>
     </div>
   </lk-container>
 </lk-container>

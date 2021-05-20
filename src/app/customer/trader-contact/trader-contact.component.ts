@@ -50,22 +50,15 @@ export class TraderContactComponent implements OnInit {
   getTraderMapLink() {
     if (this.trader.city) {
       const url = `${this.trader.street}+${this.trader.number}%2C${this.trader.city}%2C+Deutschland`;
-      return `https://www.google.com/maps/search/?api=1&query=${url.replace(
-        ' ',
-        '%20'
-      )}`;
+      return `https://www.google.com/maps/search/?api=1&query=${url.replace(' ', '%20')}`;
     }
   }
 
   getAdress() {
     // check for at least one mandantory field, if you visit the profile detail page at least once
     if (this.trader.city) {
-      return ` ${this.trader.street ? this.trader.street : ''} ${
-        this.trader.number ? this.trader.number : ''
-      }
-      <br />${this.trader.postcode ? this.trader.postcode : ''} ${
-        this.trader.city
-      }
+      return ` ${this.trader.street ? this.trader.street : ''} ${this.trader.number ? this.trader.number : ''}
+      <br />${this.trader.postcode ? this.trader.postcode : ''} ${this.trader.city}
       `;
     }
   }
@@ -82,23 +75,14 @@ export class TraderContactComponent implements OnInit {
     }
   }
 
-  constructor(
-    private router: Router,
-    public location: Location,
-    private mailService: EMailService,
-    private errorService: ErrorService
-  ) {}
+  constructor(private router: Router, public location: Location, private mailService: EMailService, private errorService: ErrorService) {}
 
   ngOnInit(): void {}
 
   async onSubmit(receiverName: string) {
     const receiverEmail = this.trader_mail;
     if (!this.agbRead) {
-      this.errorService.publishByText(
-        'AGB und Datenschutzerklärung wurden nicht gelesen',
-        'Bitte vergewissere dich, dass du die AGB und die Datenschutzerklärungen ' +
-          'gelesen hast, bevor du eine Nachricht an den Händler abschickst.'
-      );
+      this.errorService.publishByText('AGB und Datenschutzerklärung wurden nicht gelesen', 'Bitte vergewissere dich, dass du die AGB und die Datenschutzerklärungen ' + 'gelesen hast, bevor du eine Nachricht an den Händler abschickst.');
 
       return;
     }
@@ -129,11 +113,7 @@ export class TraderContactComponent implements OnInit {
       await this.mailService.send(email, templateVars);
       this.router.navigate(['/contacted']);
     } catch (e) {
-      this.errorService.publishByText(
-        'Nachricht konnte nicht verschickt werden',
-        'Aufgrund eines Systemfehlers konnte die Nachricht an ' +
-          'den Händler nicht verschickt werden. Bitte versuche es erneut oder kontaktiere den Support.'
-      );
+      this.errorService.publishByText('Nachricht konnte nicht verschickt werden', 'Aufgrund eines Systemfehlers konnte die Nachricht an ' + 'den Händler nicht verschickt werden. Bitte versuche es erneut oder kontaktiere den Support.');
     }
   }
 }

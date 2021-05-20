@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  justify-content: center;
+
+  .bgWhite {
+    background-color: white;
+    border-radius: 50px;
+    padding-left: 3px;
+    padding-top: 4px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+  }
+
+  .bold {
+    font-weight: bold;
+  }
+  .message,
+  .message-added {
+    padding-left: 10px;
+  }
+  .message-added {
+    padding-top: 4px;
+  }
+}

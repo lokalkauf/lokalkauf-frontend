@@ -4,6 +4,10 @@
   flex: 1 1 auto;
 }
 
+.bookmarks {
+  margin-right: 6px;
+}
+
 mat-toolbar {
   background-color: $white !important;
   box-shadow: 2px 5px 15px 0px rgba(0, 0, 0, 0.1);
@@ -153,4 +157,22 @@ button.mat-mini-fab.avatar {
       }
     }
   }
+}
+
+.mat-menu-headline {
+  font-family: Bitter, 'serif';
+  color: $normalgreen;
+  font-weight: 400;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.mat-menu-headline-none {
+  font-family: Bitter, 'serif';
+  color: $appblackGrey;
+  font-weight: 200;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
 }

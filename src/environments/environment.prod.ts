@@ -16,5 +16,8 @@ export const environment = {
     searchKey: '85739eacae698fba1aaf524e40fe1b99',
     indexName: 'prod_TRADERS',
   },
+  openrouteservice: {
+    apikey: '',
+  },
   version: require('../../package.json').version,
 };

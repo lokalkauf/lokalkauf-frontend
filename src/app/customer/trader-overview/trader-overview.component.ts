@@ -7,18 +7,15 @@ import { LkSelectOptions } from '../../reusables/lk-select/lk-select.component';
 import { TraderProfile } from '../../models/traderProfile';
 import { StorageService } from '../../services/storage.service';
 import { uiTexts } from '../../services/uiTexts';
-import {
-  faFacebookF,
-  faTwitter,
-  faWhatsapp,
-  faInstagram,
-} from '@fortawesome/free-brands-svg-icons';
+import { faFacebookF, faTwitter, faWhatsapp, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { FormControl, FormGroup } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { LocationService } from '../../services/location.service';
 import { ImageService } from 'src/app/services/image.service';
 import { SpinnerService } from 'src/app/services/spinner.service';
 import { AngularFireAnalytics } from '@angular/fire/analytics';
+import { MatDialog } from '@angular/material/dialog';
+import { BookmarksDialogComponent } from '../bookmarks-dialog/bookmarks-dialog.component';
 
 @Component({
   selector: 'app-trader-overview',
@@ -110,13 +107,13 @@ export class TraderOverviewComponent implements OnInit {
   });
   constructor(
     private route: ActivatedRoute,
-    public readonly storageService: StorageService,
-    public userService: UserService,
     private locationService: LocationService,
     private imageService: ImageService,
     private spinnerService: SpinnerService,
-    public device: DeviceDetectorService,
-    private analytics: AngularFireAnalytics
+    private analytics: AngularFireAnalytics,
+    public readonly storageService: StorageService,
+    public userService: UserService,
+    public device: DeviceDetectorService
   ) {
     this.storeTypes = of(this.STORE_TYPES);
     this.odblLicense$ = of(false);
@@ -138,6 +135,11 @@ export class TraderOverviewComponent implements OnInit {
         city: this.currentLocation,
       });
     }
+
+    const currentFilter = this.storageService.loadTraderFilter();
+    if (currentFilter && currentFilter.value) {
+      this.setStoreType(currentFilter);
+    }
   }
 
   ngOnInit() {
@@ -154,24 +156,17 @@ export class TraderOverviewComponent implements OnInit {
         location.radius = this.sanitizeRadius(value);
 
         this.storageService.saveLocation(location);
-
         this.loadLocations();
       }
     });
 
     this.route.params.subscribe((params) => {
       try {
-        this.userPosition = [
-          Number.parseFloat(params.lat),
-          Number.parseFloat(params.lng),
-        ];
+        this.userPosition = [Number.parseFloat(params.lat), Number.parseFloat(params.lng)];
 
         this.paramRadius = this.sanitizeRadius(Number.parseFloat(params.rad));
         this.setRange(this.paramRadius);
-        this.rangeGroup
-          .get('range')
-          .setValue(this.paramRadius, { emitEvent: false, onlySelf: true });
-
+        this.rangeGroup.get('range').setValue(this.paramRadius, { emitEvent: false, onlySelf: true });
         this.loadLocations();
       } catch {}
     });
@@ -206,11 +201,15 @@ export class TraderOverviewComponent implements OnInit {
     // and a category from Session Storage
     // is isn't equals 'all', then try again with the
     // category 'all' to repeat the initial search process.
-    if (!this.hasInitLocations && this.storeType !== 'alle') {
+    // This only works of event bubbling after changing the
+    //  value of the select box - kinda yolo
+    // think of something else, please!
+    /* if (!this.hasInitLocations && this.storeType !== 'alle') {
       this.selectedTraderCategory = this.STORE_TYPES[0];
       this.setStoreType(this.STORE_TYPES[0]);
       return;
     }
+    */
     this.odblLicense$ = of(false);
     this.locationService
       .nearBy(this.paramRadius, this.userPosition, searchtext, filter)
@@ -229,14 +228,14 @@ export class TraderOverviewComponent implements OnInit {
             if (l.licence && l.licence !== '') {
               this.odblLicense$ = of(true);
             }
-            l.thumbnailURL = await this.imageService.getThumbnailUrl(
+            /* l.thumbnailURL = await this.imageService.getThumbnailUrl(
               l.defaultImagePath,
               '224x224'
             );
 
             if (!l.thumbnailURL) {
               l.thumbnailURL = '/assets/lokalkauf-pin.svg';
-            }
+            }*/
           });
         } else {
           // Show "no result page" if no shops were found
@@ -271,15 +270,14 @@ export class TraderOverviewComponent implements OnInit {
     if (selEvent) {
       this.storeType = selEvent.value;
       this.storageService.saveTraderFilter(selEvent);
-
+      console.log('type', selEvent);
       this.loadLocations();
     }
   }
 
   getCategoryFilter() {
     return {
-      categories:
-        !this.storeType || this.storeType === 'alle' ? [] : [this.storeType],
+      categories: !this.storeType || this.storeType === 'alle' ? [] : [this.storeType],
     };
   }
 

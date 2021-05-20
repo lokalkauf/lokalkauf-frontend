@@ -2,8 +2,7 @@
   <h2>Dein Online-Shop</h2>
 
   Du hast einen eigenen Online-Shop?
-  <br />Dann hinterlege die URL hier und Dein Online-Shop wird prominent auf
-  Deiner Händlerseite angezeigt.
+  <br />Dann hinterlege die URL hier und Dein Online-Shop wird prominent auf Deiner Händlerseite angezeigt.
   <br />
 
   <div class="onlineshop-container">
@@ -13,33 +12,21 @@
     <div>
       <form [formGroup]="onlineshopForm" (ngSubmit)="onSubmit()">
         <div class="onlineshop-url">
-          <lk-input
-            placeholder="Dein Online-Shop"
-            formControlName="eigenershop"
-            pattern="(h|H)(t|T)(t|T)(p|P)(s|S)?://.+"
-          ></lk-input>
+          <lk-input placeholder="Dein Online-Shop" formControlName="eigenershop" pattern="(h|H)(t|T)(t|T)(p|P)(s|S)?://.+"></lk-input>
         </div>
         <div class="warning" *ngIf="eigenershop.invalid">
-          Deine Webshop muss mit http:// oder https:// beginnen, damit sie
-          aufrufbar ist.
+          Deine Webshop muss mit http:// oder https:// beginnen, damit sie aufrufbar ist.
         </div>
         <div>
-          <lk-button [disabled]="onlineshopForm.errors != null" type="submit"
-            >Speichern</lk-button
-          >
-          <span *ngIf="this.saveSuccessful" class="success"
-            >&nbsp;Speichern erfolgreich</span
-          >
+          <lk-button [disabled]="onlineshopForm.errors != null" type="submit">Speichern</lk-button>
+          <span *ngIf="this.saveSuccessful" class="success">&nbsp;Speichern erfolgreich</span>
         </div>
       </form>
     </div>
   </div>
   <h4>Du hast noch keinen eigenen Online-Shop?</h4>
-  Wenn Du schnell und einfach einen Online-Shop anlegen möchtest, schau Dir zum
-  Beispiel mal
-  <a href="https://www.sotrusty.com/" target="_blank">www.sotrusty.com</a> an.
-  <br />Nachdem Du Deinen Online-Shop angelegt hast, trägst Du einfach die URL
-  oben in das entsprechende Feld ein, um Deinen Shop auf Deiner Händlerseite zu
+  Wenn Du schnell und einfach einen Online-Shop anlegen möchtest, schau Dir zum Beispiel mal
+  <a href="https://www.sotrusty.com/" target="_blank">www.sotrusty.com</a> an. <br />Nachdem Du Deinen Online-Shop angelegt hast, trägst Du einfach die URL oben in das entsprechende Feld ein, um Deinen Shop auf Deiner Händlerseite zu
   präsentieren.
   <br />
   <br />
@@ -52,11 +39,7 @@
         <h3>Einsteiger</h3>
       </div>
       <div class="logo">
-        <a href="https://www.sotrusty.com/" target="_blank"
-          ><img
-            class="ecommerce-provider-logo"
-            src="./assets/so-trusty-small.png"
-        /></a>
+        <a href="https://www.sotrusty.com/" target="_blank"><img class="ecommerce-provider-logo" src="./assets/so-trusty-small.png" /></a>
       </div>
       <mat-list>
         <mat-list-item *ngFor="let x of sotrusty">
@@ -75,9 +58,7 @@
         </h3>
       </div>
       <div class="logo">
-        <a href="https://www.wix.com/html5ecom/tae-store" target="_blank"
-          ><img class="ecommerce-provider-logo" src="./assets/wix-small.png"
-        /></a>
+        <a href="https://www.wix.com/html5ecom/tae-store" target="_blank"><img class="ecommerce-provider-logo" src="./assets/wix-small.png" /></a>
       </div>
       <mat-list>
         <mat-list-item *ngFor="let x of wix">
@@ -96,11 +77,7 @@
         </h3>
       </div>
       <div class="logo">
-        <a href="https://www.shopify.de/" target="_blank"
-          ><img
-            class="ecommerce-provider-logo"
-            src="./assets/shopify-small.png"
-        /></a>
+        <a href="https://www.shopify.de/" target="_blank"><img class="ecommerce-provider-logo" src="./assets/shopify-small.png" /></a>
       </div>
       <mat-list>
         <mat-list-item *ngFor="let x of shopify">

@@ -2,27 +2,16 @@
   <div id="feedback-inset" *ngIf="!mailSent">
     <form [formGroup]="feedbackForm" (ngSubmit)="absenden()">
       <h1>Deine Ideen sind uns wichtig</h1>
-      <lk-textarea
-        [warn]="message.touched && message.invalid"
-        formControlName="message"
-        placeholder="Deine Nachricht an uns*"
-      >
-      </lk-textarea>
+      <lk-textarea [warn]="message.touched && message.invalid" formControlName="message" placeholder="Deine Nachricht an uns*"> </lk-textarea>
       <div class="warning" *ngIf="message.touched && message.invalid">
         Bitte gib in diesem Feld dein Feedback an.
       </div>
 
       <div class="content">
-        Bitte hinterlasse hier Deine E-Mail Adresse. So wissen wir, wie wir Dich
-        erreichen können.
+        Bitte hinterlasse hier Deine E-Mail Adresse. So wissen wir, wie wir Dich erreichen können.
       </div>
 
-      <lk-input
-        [warn]="email.touched && email.invalid"
-        [type]="email"
-        formControlName="email"
-        placeholder="E-Mail Adresse*"
-      ></lk-input>
+      <lk-input [warn]="email.touched && email.invalid" [type]="email" formControlName="email" placeholder="E-Mail Adresse*"></lk-input>
       <div class="warning" *ngIf="email.touched && email.invalid">
         Bitte gib Deine E-Mail Adresse hier an.
       </div>
@@ -32,19 +21,9 @@
           <app-lk-checkbox formControlName="agbRead"></app-lk-checkbox>
           <div>
             Ich bestätige die
-            <a
-              href="https://www.info.lokalkauf.org/agb"
-              target="_blank"
-              rel="noopener noreferrer"
-              >AGB</a
-            >
+            <a href="https://www.info.lokalkauf.org/agb" target="_blank" rel="noopener noreferrer">AGB</a>
             und
-            <a
-              href="https://www.info.lokalkauf.org/datenschutz"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Datenschutzbestimmungen</a
-            >
+            <a href="https://www.info.lokalkauf.org/datenschutz" target="_blank" rel="noopener noreferrer">Datenschutzbestimmungen</a>
             gelesen zu haben und bin einverstanden*
           </div>
         </label>
@@ -54,13 +33,8 @@
       </div>
 
       <div class="feedback-controls">
-        <lk-button type="submit" class="feedback-absenden" label="absenden">
-        </lk-button>
-        <lk-button
-          class="feedback-verwerfen"
-          (click)="verwerfen()"
-          label="verwerfen"
-        ></lk-button>
+        <lk-button type="submit" class="feedback-absenden" label="absenden"> </lk-button>
+        <lk-button class="feedback-verwerfen" (click)="verwerfen()" label="verwerfen"></lk-button>
       </div>
     </form>
   </div>

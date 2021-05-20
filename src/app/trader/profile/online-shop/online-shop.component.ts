@@ -11,19 +11,8 @@ export class OnlineShopComponent implements OnInit {
   @Input() loggedInUserState: LoggedInUserState;
   saveSuccessful = false;
 
-  sotrusty = [
-    'Einfach zu bedienen',
-    'Erstellung eines individuellen E-Menüs',
-    'Online in drei Stunden',
-    'Ab 0,-€ / Monat, zzgl. Transaktionsgebühren',
-  ];
-  wix = [
-    'Einfach zu bedienen',
-    'Unterschiedliche Layouts und Individualisierungsmöglichkeiten',
-    'Online in wenigen Tagen',
-    'Kosten ab 19,50 € / Monat, zzgl. Transaktionsgebühren',
-    'Visueller Editor hilft bei der Einrichtung',
-  ];
+  sotrusty = ['Einfach zu bedienen', 'Erstellung eines individuellen E-Menüs', 'Online in drei Stunden', 'Ab 0,-€ / Monat, zzgl. Transaktionsgebühren'];
+  wix = ['Einfach zu bedienen', 'Unterschiedliche Layouts und Individualisierungsmöglichkeiten', 'Online in wenigen Tagen', 'Kosten ab 19,50 € / Monat, zzgl. Transaktionsgebühren', 'Visueller Editor hilft bei der Einrichtung'];
   shopify = [
     'Einfach zu bedienen',
     'Viele Einstellungs- und Individualisierungsmöglichkeiten',

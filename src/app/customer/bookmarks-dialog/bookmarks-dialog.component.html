@@ -1,0 +1,14 @@
+<div>
+  <h1>Merkliste anlegen</h1>
+
+  <form [formGroup]="bookmarkForm" (ngSubmit)="onSubmit()">
+    <div>
+      <lk-input type="text" formControlName="name" placeholder="Name*"></lk-input>
+    </div>
+    <div>
+      <lk-textarea formControlName="description" placeholder="Beschreibung"></lk-textarea>
+    </div>
+    <lk-button type="button" (click)="closeDialog()">Abbrechen</lk-button>&nbsp;
+    <lk-button class="button-submit" type="submit" [disabled]="!bookmarkForm.valid">Anlegen </lk-button>
+  </form>
+</div>

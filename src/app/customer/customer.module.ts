@@ -13,12 +13,15 @@ import { TraderMapComponent } from './trader-map/trader-map.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ShoppingcartItemComponent } from './shoppingcart-item/shoppingcart-item.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductService } from '../services/product.service';
 import { ProductDetailFeedbackComponent } from './product-detail-feedback/product-detail-feedback.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TraderContactComponent } from './trader-contact/trader-contact.component';
 import { ReusablesModule } from '../reusables/reusables.module';
 import { InquiryConfirmationComponent } from './inquiry-confirmation/inquiry-confirmation.component';
@@ -28,6 +31,28 @@ import { MatSliderModule } from '@angular/material/slider';
 import { GalleryModule, GALLERY_CONFIG } from '@ngx-gallery/core';
 import { LightboxModule } from '@ngx-gallery/lightbox';
 import { GallerizeModule } from '@ngx-gallery/gallerize';
+import { BookmarksService } from '../services/bookmarks.service';
+import { BookmarksOverviewComponent } from './bookmarks-overview/bookmarks-overview.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { LkMapComponent } from '../reusables/lk-map/lk-map.component';
+import { BookmarksDialogComponent } from './bookmarks-dialog/bookmarks-dialog.component';
+import { QRCodeModule } from 'angularx-qrcode';
+import { BookmarksPrivateImportComponent } from './bookmarks-private-import/bookmarks-private-import.component';
+// tslint:disable-next-line:max-line-length
+import { BookmarksSharePrivateDialogComponent } from './bookmarks-overview/bookmarks-share-private-dialog/bookmarks-share-private-dialog.component';
+// tslint:disable-next-line:max-line-length
+import { BookmarksSharePublicDialogComponent } from './bookmarks-overview/bookmarks-share-public-dialog/bookmarks-share-public-dialog.component';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { BookmarksPublicImportComponent } from './bookmarks-public-import/bookmarks-public-import.component';
+import { MatListModule } from '@angular/material/list';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { BookmarksMenuComponent } from './bookmarks-menu/bookmarks-menu.component';
+import { MatMenu, MatMenuModule } from '@angular/material/menu';
+import { BookmarksYesNoDialogComponent } from './bookmarks-overview/bookmarks-yes-no-dialog/bookmarks-yes-no-dialog.component';
+import { BookmarksMenuToastComponent } from './bookmarks-menu/bookmarks-menu-toast/bookmarks-menu-toast.component';
+import { MatProgressSpinnerModule, MatSpinner } from '@angular/material/progress-spinner';
 
 const routes: Routes = [
   {
@@ -51,6 +76,15 @@ const routes: Routes = [
     ProductDetailComponent,
     ProductDetailFeedbackComponent,
     BuyConfirmationComponent,
+    BookmarksOverviewComponent,
+    BookmarksDialogComponent,
+    BookmarksPublicImportComponent,
+    BookmarksPrivateImportComponent,
+    BookmarksSharePrivateDialogComponent,
+    BookmarksSharePublicDialogComponent,
+    BookmarksYesNoDialogComponent,
+    BookmarksMenuToastComponent,
+    BookmarksMenuComponent,
     ShoppingcartComponent,
     TraderOverviewComponent,
     TraderItemComponent,
@@ -61,14 +95,24 @@ const routes: Routes = [
     InquiryConfirmationComponent,
   ],
   imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
     CommonModule,
     MatCardModule,
     MatSnackBarModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' }),
     MatIconModule,
     MatInputModule,
+    MatSlideToggleModule,
     MatButtonModule,
+    MatDialogModule,
+    MatListModule,
+    MatMenuModule,
+    MatExpansionModule,
     MatSliderModule,
+    MatProgressSpinnerModule,
+    MatStepperModule,
+    DragDropModule,
     FontAwesomeModule,
     ReusablesModule,
     PipesModule,
@@ -80,10 +124,12 @@ const routes: Routes = [
       backdropClass: 'gallery-lightbox',
     }),
     GallerizeModule,
+    QRCodeModule,
   ],
   exports: [ProductOverviewComponent],
   providers: [
     ProductService,
+    BookmarksService,
     {
       provide: GALLERY_CONFIG,
       useValue: {

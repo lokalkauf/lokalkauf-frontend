@@ -1,0 +1,26 @@
+<lk-container>
+  <br />
+  <br />
+  <lk-page-title title="Import"></lk-page-title>
+  <br />
+  <ng-container *ngIf="isError | async">
+    Es ist ein Fehler bei der Datenübernahme aufgetreten.
+    <br />
+    <br />
+    <br />Prüfe bitte folgende Dinge:
+    <ul>
+      <li>
+        Ist die ID <span class="bold">{{ merklistenid }}</span> korrekt?
+      </li>
+      <li>
+        Wurde die Liste in der Zwischenzeit über ein weiteres Gerät gelöscht?
+      </li>
+      <li>
+        Versuchst du eine öffentliche Liste als private Liste zu importieren?
+      </li>
+    </ul>
+    Bei Fragen wende Dich bitte an uns über das
+    <a [routerLink]="'/feedback'">Feedback-Formular</a>. <br />Gibt dabei bitte
+    die ID <span class="bold">{{ merklistenid }}</span> mit an!
+  </ng-container>
+</lk-container>

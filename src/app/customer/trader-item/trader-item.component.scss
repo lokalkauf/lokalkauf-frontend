@@ -5,6 +5,10 @@ a {
   text-decoration: none;
 }
 
+.green-bookmark-icon {
+  color: $normalgreen;
+}
+
 :host {
   display: block;
   width: 100%;
@@ -53,6 +57,13 @@ mat-card {
       background-color: $lightestgreen;
       padding: 16px;
       box-sizing: border-box;
+    }
+
+    &.spinner {
+      background-color: $lightestgreen;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 
@@ -125,5 +136,11 @@ mat-card {
     margin-right: 16px;
     margin-left: 16px;
     text-align: right;
+
+    .osm-large {
+      position: absolute;
+      top: 5px;
+      left: -10px;
+    }
   }
 }

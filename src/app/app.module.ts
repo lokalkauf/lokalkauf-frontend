@@ -9,6 +9,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -57,25 +59,22 @@ import { PipesModule } from './pipes/pipes.modules';
 import { RedirectComponent } from './redirect/redirect.component';
 import { PressComponent } from './press/press.component';
 import { filter } from 'rxjs/operators';
-import {
-  AngularFireAnalyticsModule,
-  CONFIG,
-  COLLECTION_ENABLED,
-  DEBUG_MODE,
-  ScreenTrackingService,
-  UserTrackingService,
-  APP_VERSION,
-} from '@angular/fire/analytics';
+import { AngularFireAnalyticsModule, CONFIG, COLLECTION_ENABLED, DEBUG_MODE, ScreenTrackingService, UserTrackingService, APP_VERSION } from '@angular/fire/analytics';
 import { CookieService } from 'ngx-cookie-service';
 
-import {
-  NgcCookieConsentModule,
-  NgcCookieConsentConfig,
-} from 'ngx-cookieconsent';
+import { NgcCookieConsentModule, NgcCookieConsentConfig } from 'ngx-cookieconsent';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { BrowserService } from './services/browser.service';
+
+import { BookmarksService } from './services/bookmarks.service';
+import { BookmarksOverviewComponent } from './customer/bookmarks-overview/bookmarks-overview.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
+import { NavigationService } from './services/navigation.service';
+import { QRCodeModule } from 'angularx-qrcode';
+import { BookmarksPrivateImportComponent } from './customer/bookmarks-private-import/bookmarks-private-import.component';
+import { BookmarksPublicImportComponent } from './customer/bookmarks-public-import/bookmarks-public-import.component';
 
 registerLocaleData(localeDe);
 
@@ -117,6 +116,10 @@ const routes: Routes = [
   { path: 'aboutus', component: AboutUsComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'press', component: PressComponent },
+  { path: 'bookmarks', component: BookmarksOverviewComponent },
+  { path: 'bookmarks-pi/:id', component: BookmarksPrivateImportComponent },
+  { path: 'bookmarks-public-redirect/:id', component: BookmarksPublicImportComponent },
+  { path: 'bookmarks-public/:id', component: BookmarksPublicImportComponent },
   {
     path: 'redirect',
     component: RedirectComponent,
@@ -126,20 +129,7 @@ const routes: Routes = [
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [
-    AppComponent,
-    AboutUsComponent,
-    ErrorDisplayComponent,
-    FeedbackComponent,
-    VerifyComponent,
-    SpinnerComponent,
-    SpinnerComponent,
-    StartComponent,
-    FaqComponent,
-    PressComponent,
-    SearchInputComponent,
-    RedirectComponent,
-  ],
+  declarations: [AppComponent, AboutUsComponent, ErrorDisplayComponent, FeedbackComponent, VerifyComponent, SpinnerComponent, SpinnerComponent, StartComponent, FaqComponent, PressComponent, SearchInputComponent, RedirectComponent],
   imports: [
     BrowserModule,
     CommonModule,
@@ -156,6 +146,9 @@ const routes: Routes = [
     MatListModule,
     MatInputModule,
     MatButtonModule,
+    MatStepperModule,
+    MatExpansionModule,
+    MatBadgeModule,
     MatProgressSpinnerModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
@@ -169,6 +162,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {
       anchorScrolling: 'enabled',
       scrollPositionRestoration: 'top',
+      onSameUrlNavigation: 'reload',
     }),
     ReusablesModule,
     PipesModule,
@@ -184,6 +178,7 @@ const routes: Routes = [
     NgcCookieConsentModule.forRoot(cookieConfig),
     DeviceDetectorModule.forRoot(),
     AngularFireAnalyticsModule,
+    QRCodeModule,
   ],
   exports: [RouterModule],
   providers: [
@@ -194,6 +189,8 @@ const routes: Routes = [
     TextService,
     SpinnerService,
     StorageService,
+    NavigationService,
+    BookmarksService,
     EMailService,
     ImageService,
     BrowserService,
@@ -213,21 +210,19 @@ const routes: Routes = [
 })
 export class AppModule {
   constructor(router: Router, viewportScroller: ViewportScroller) {
-    router.events
-      .pipe(filter((e: any): e is Scroll => e instanceof Scroll))
-      .subscribe((e) => {
-        if (e.position) {
-          // backward navigation
-          viewportScroller.scrollToPosition(e.position);
-        } else if (e.anchor) {
-          // anchor navigation
-          viewportScroller.scrollToAnchor(e.anchor);
-        } else {
-          // forward navigation
-          viewportScroller.scrollToPosition([0, 0]);
-          // damn it, but it works
-          document.querySelector('.mat-sidenav-content').scrollTop = 0;
-        }
-      });
+    router.events.pipe(filter((e: any): e is Scroll => e instanceof Scroll)).subscribe((e) => {
+      if (e.position) {
+        // backward navigation
+        viewportScroller.scrollToPosition(e.position);
+      } else if (e.anchor) {
+        // anchor navigation
+        viewportScroller.scrollToAnchor(e.anchor);
+      } else {
+        // forward navigation
+        viewportScroller.scrollToPosition([0, 0]);
+        // damn it, but it works
+        document.querySelector('.mat-sidenav-content').scrollTop = 0;
+      }
+    });
   }
 }

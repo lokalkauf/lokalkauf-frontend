@@ -19,6 +19,8 @@ lk-container {
     @media screen and (max-width: 767px) {
       text-align: justify;
     }
+
+    margin-bottom: 20px;
   }
 
   .product-amount {
@@ -142,6 +144,15 @@ lk-product-item {
   box-sizing: border-box;
   background-color: $white;
 }
+
 h3.products-headline {
   margin-top: 46px;
+}
+
+.merkliste {
+  margin-left: auto;
+
+  span .mat-button-wrapper {
+    padding-left: 0px;
+  }
 }

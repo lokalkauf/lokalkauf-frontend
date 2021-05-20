@@ -21,12 +21,6 @@ export class LkProductItemComponent implements OnInit {
   constructor(private imageService: ImageService) {}
 
   ngOnInit(): void {
-    this.imageUrl$ = of(this.product.defaultImagePath).pipe(
-      flatMap((image) =>
-        image == null
-          ? of('/assets/lokalkauf-pin.svg')
-          : this.imageService.waitForThumbnailUrl(image)
-      )
-    );
+    this.imageUrl$ = of(this.product.defaultImagePath).pipe(flatMap((image) => (image == null ? of('/assets/lokalkauf-pin.svg') : this.imageService.waitForThumbnailUrl(image))));
   }
 }

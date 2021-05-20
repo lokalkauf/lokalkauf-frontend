@@ -1,0 +1,11 @@
+<ng-container *ngIf="someUrl">
+  <a mat-mini-fab color="share-facebook" [href]="getFbLink()" target="_blank">
+    <fa-icon [icon]="faFacebookF" size="lg" [styles]="{ color: 'white' }"></fa-icon>
+  </a>
+  <a mat-mini-fab color="share-twitter" [href]="getTwitterLink()" target="_blank">
+    <fa-icon [icon]="faTwitter" size="lg" [styles]="{ color: 'white' }"></fa-icon>
+  </a>
+  <a mat-mini-fab color="share-whatsapp" [href]="getWhatsappLink()" target="_blank">
+    <fa-icon [icon]="faWhatsapp" size="lg" [styles]="{ color: 'white' }"></fa-icon>
+  </a>
+</ng-container>

@@ -1,0 +1,30 @@
+<div>
+  <h1>Merkliste teilen</h1>
+  <div class="abc">
+    Du kannst Deine Merkliste mit Deinen Freunden, Bekannten und
+    <br />der ganzen Welt über Social Media teilen.
+  </div>
+
+  <mat-slide-toggle #sharetoggle color="primary" [checked]="(isShared$ | async) === true" (change)="shareChange($event)">
+    Liste öffentlich zugänglich machen
+  </mat-slide-toggle>
+
+  <div *ngIf="(isShared$ | async) === false">
+    <div class="abc">Aktuell ist Deine Liste nicht geteilt.</div>
+  </div>
+  <div *ngIf="(isShared$ | async) === true">
+    <div class="abc">Teile diesen QR-Code:</div>
+    <div class="qr-center">
+      <qrcode [qrdata]="getCurrentPublicUrl()" [width]="256" [errorCorrectionLevel]="'M'" [elementType]="'svg'"> </qrcode>
+    </div>
+    <div>
+      Oder teile diesen Link: <br /><a href="{{ getCurrentPublicUrl() }}" target="_blank">{{ getCurrentPublicUrl() }}</a>
+      <button mat-button (click)="copyToClipboard()">
+        <mat-icon>content_copy</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="abc">
+    <lk-button type="button" (click)="closeDialog()">Schließen</lk-button>
+  </div>
+</div>
