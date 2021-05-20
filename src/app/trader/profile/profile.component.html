@@ -1,14 +1,10 @@
 <lk-container *ngIf="loggedInUserState$ | async as loggedInUserState">
-  <lk-page-title
-    [title]="loggedInUserState.traderProfile.businessname"
-  ></lk-page-title>
+  <lk-page-title [title]="loggedInUserState.traderProfile.businessname"></lk-page-title>
   <div *ngIf="!loggedInUserState.emailVerified" class="verify-mail-alert">
     Bitte bestätige Deine E-Mail-Adresse:
     {{ loggedInUserState.traderProfile.email }}<br />
     Du hast noch keine E-Mail von uns erhalten?
-    <a [routerLink]="" (click)="resendEmailVerification()"
-      >Bestätigungs-E-Mail erneut senden</a
-    ><br /><br />
+    <a [routerLink]="" (click)="resendEmailVerification()">Bestätigungs-E-Mail erneut senden</a><br /><br />
     {{ mailResendedMessage }}
   </div>
   <mat-tab-group *ngIf="loggedInUserState.emailVerified">
@@ -19,11 +15,21 @@
       <lk-products></lk-products>
     </mat-tab>
     <mat-tab label="Bilder">
-      <lk-image-upload
-        [loggedInUserState]="loggedInUserState"
-      ></lk-image-upload>
+      <lk-image-upload [loggedInUserState]="loggedInUserState"></lk-image-upload>
+    </mat-tab>
+    <mat-tab label="Online-Shop">
+      <lk-online-shop [loggedInUserState]="loggedInUserState"></lk-online-shop>
     </mat-tab>
     <mat-tab label="Allgemein">
+      <div *ngIf="loggedInUserState.traderProfile">
+        <br />{{ loggedInUserState.traderProfile.businessname }} <br />{{ loggedInUserState.traderProfile.ownerLastname }}
+        {{ loggedInUserState.traderProfile.ownerFirstname }}
+        <br />{{ loggedInUserState.traderProfile.street }}
+        {{ loggedInUserState.traderProfile.number }}
+        <br />{{ loggedInUserState.traderProfile.postcode }}
+        {{ loggedInUserState.traderProfile.city }}
+        <br />{{ loggedInUserState.traderProfile.telephone }}
+      </div>
       <p>
         Meine Adressdaten
         <a [routerLink]="['/trader/register/edit']">bearbeiten</a>

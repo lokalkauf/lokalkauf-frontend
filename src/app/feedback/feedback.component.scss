@@ -52,6 +52,13 @@
   padding: 1.2rem;
 }
 
+.warning {
+  color: $errorcolor;
+  font-size: 0.8rem;
+  margin-top: 1px;
+  text-align: center;
+}
+
 a {
   color: $appblack;
 }

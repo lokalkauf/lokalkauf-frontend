@@ -65,6 +65,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { NgcCookieConsentModule, NgcCookieConsentConfig } from 'ngx-cookieconsent';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { BrowserService } from './services/browser.service';
+
 import { BookmarksService } from './services/bookmarks.service';
 import { BookmarksOverviewComponent } from './customer/bookmarks-overview/bookmarks-overview.component';
 import { MatExpansionModule } from '@angular/material/expansion';

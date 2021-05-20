@@ -1,5 +1,6 @@
 <mat-card>
   <img
+    *ngIf="imageUrl$ | async as imageUrl; else loading"
     class="product-thumbnail"
     [ngClass]="{
       placeholder: !imageUrl
@@ -7,11 +8,12 @@
     [src]="imageUrl || '/assets/lokalkauf-pin.svg'"
     [alt]="product.name"
   />
+
   <mat-card-header>
     <mat-card-title>{{ product.name }}</mat-card-title>
     <mat-card-subtitle>
       <div class="text desc">{{ product.description }}</div>
-      <div class="text">{{ product.price | number: '1.2-2':'de' }} €</div>
+      <div class="text price">{{ product.price | number: '1.2-2':'de' }} €</div>
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-actions *ngIf="enableInteraction">
@@ -23,3 +25,9 @@
     </button>
   </mat-card-actions>
 </mat-card>
+
+<ng-template #loading>
+  <div class="product-thumbnail spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

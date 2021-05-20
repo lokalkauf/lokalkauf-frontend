@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  InjectionToken,
-  ElementRef,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit, InjectionToken, ElementRef, ViewChild } from '@angular/core';
 import { Link } from '../models/link';
 import { Router } from '@angular/router';
 import { ScrollStrategy } from '@angular/cdk/overlay';
@@ -30,13 +24,7 @@ export interface Press {
   styleUrls: ['./start.component.scss'],
 })
 export class StartComponent implements OnInit {
-  links = [
-    new Link('Bäcker', '/', true),
-    new Link('Fashion ', '#fashion', false),
-    new Link('Metzger', '#fleisch', false),
-    new Link('Kiosk', '#bier', false),
-    new Link('Weiteres', '/test', true),
-  ];
+  links = [new Link('Bäcker', '/', true), new Link('Fashion ', '#fashion', false), new Link('Metzger', '#fleisch', false), new Link('Kiosk', '#bier', false), new Link('Weiteres', '/test', true)];
 
   MAT_AUTOCOMPLETE_SCROLL_STRATEGY: InjectionToken<() => ScrollStrategy>;
   DEFAULT = 'DEFAULT';
@@ -64,12 +52,7 @@ export class StartComponent implements OnInit {
   press$: Observable<Press[]>;
 
   @ViewChild('searchInput', { read: ElementRef }) searchInput: any;
-  constructor(
-    public router: Router,
-    public userService: UserService,
-    private storageService: StorageService,
-    textService: TextService
-  ) {
+  constructor(public router: Router, public userService: UserService, private storageService: StorageService, textService: TextService) {
     this.disabledLosButton = true;
     this.userService.isLoggedIn$.subscribe((loggedin) => {
       this.isLoggedIn = loggedin;
@@ -91,6 +74,13 @@ export class StartComponent implements OnInit {
     ]);
 
     this.press$ = of([
+      {
+        date: textService.getText(uiTexts.start_presse_3_date),
+        title: textService.getText(uiTexts.start_presse_3_title),
+        content: textService.getText(uiTexts.start_presse_3_content),
+        link: textService.getText(uiTexts.start_presse_3_link),
+        img: 'logo-impact-hub.png',
+      },
       {
         date: textService.getText(uiTexts.start_presse_1_date),
         title: textService.getText(uiTexts.start_presse_1_title),
@@ -124,12 +114,7 @@ export class StartComponent implements OnInit {
       return;
     }
 
-    this.router.navigate([
-      '/localtraders',
-      val.coordinates[0],
-      val.coordinates[1],
-      val.radius,
-    ]);
+    this.router.navigate(['/localtraders', val.coordinates[0], val.coordinates[1], val.radius]);
 
     this.storageService.saveLocation(val);
   }

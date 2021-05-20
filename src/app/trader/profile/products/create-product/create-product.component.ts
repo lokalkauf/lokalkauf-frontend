@@ -27,11 +27,7 @@ export interface ProductDialogData {
 export class CreateProductComponent {
   productForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
-    price: new FormControl('', [
-      Validators.required,
-      Validators.min(0.01),
-      Validators.pattern('^[0-9]*(.|,)?[0-9]?[0-9]?$'),
-    ]),
+    price: new FormControl('', [Validators.required, Validators.min(0.01), Validators.max(10000), Validators.pattern('^[0-9]*(.|,)?[0-9]?[0-9]?$')]),
     description: new FormControl('', [Validators.nullValidator]),
     image: new FormControl(null),
   });
@@ -55,12 +51,10 @@ export class CreateProductComponent {
       this.productForm.get('price').setValue(data.product.price);
       this.productForm.get('description').setValue(data.product.description);
       if (this.data.product.defaultImagePath) {
-        this.imageService
-          .getImage(this.data.product.defaultImagePath)
-          .then((image) => {
-            this.imagePlaceholderUrl = image.url;
-            console.log(this.imagePlaceholderUrl);
-          });
+        this.imageService.getImage(this.data.product.defaultImagePath).then((image) => {
+          this.imagePlaceholderUrl = image.url;
+          console.log(this.imagePlaceholderUrl);
+        });
       }
       this.productForm.markAsPristine();
     }
@@ -74,29 +68,17 @@ export class CreateProductComponent {
         first(),
         flatMap(async (loggedInUserState) =>
           // if product exists update product else create product
-          this.data.product != null
-            ? this.updateProduct(loggedInUserState.uid, this.data.product.id)
-            : this.createProduct(loggedInUserState.uid)
+          this.data.product != null ? this.updateProduct(loggedInUserState.uid, this.data.product.id) : this.createProduct(loggedInUserState.uid)
         ),
-        tap(console.log),
         flatMap(([userId, productId]) =>
           // if image input is dirty upload image
-          this.productForm.get('image').dirty
-            ? this.updateImage(userId, productId)
-            : of(null)
-        ),
-        tap(console.log)
+          this.productForm.get('image').dirty ? this.updateImage(userId, productId) : of(null)
+        )
       )
       .subscribe(() => {
-        this.snackBar.open(
-          this.data.product
-            ? 'Produkt erfolgreich bearbeitet!'
-            : 'Produkt erfolgreich angelegt!',
-          undefined,
-          {
-            duration: 5000,
-          }
-        );
+        this.snackBar.open(this.data.product ? 'Produkt erfolgreich bearbeitet!' : 'Produkt erfolgreich angelegt!', undefined, {
+          duration: 5000,
+        });
 
         this.dialogRef.close();
       });
@@ -108,11 +90,7 @@ export class CreateProductComponent {
 
   private async createProduct(userId: string): Promise<[string, string]> {
     const name = this.productForm.get('name').value;
-    const price = Number.parseFloat(
-      this.productForm.get('price').value
-        ? (this.productForm.get('price').value as string).replace(',', '.')
-        : ''
-    );
+    const price = Number.parseFloat(this.productForm.get('price').value ? (this.productForm.get('price').value as string).replace(',', '.') : '');
     const description = this.productForm.get('description').value;
 
     const product = await this.products.createProduct(userId, {
@@ -123,15 +101,10 @@ export class CreateProductComponent {
     return [userId, product.id];
   }
 
-  private async updateProduct(
-    userId: string,
-    productId: string
-  ): Promise<[string, string]> {
+  private async updateProduct(userId: string, productId: string): Promise<[string, string]> {
     const name = this.productForm.get('name').value;
     const priceString = '' + this.productForm.get('price').value;
-    const price = Number.parseFloat(
-      priceString ? priceString.replace(',', '.') : ''
-    );
+    const price = Number.parseFloat(priceString ? priceString.replace(',', '.') : '');
     const description = this.productForm.get('description').value;
 
     const product = await this.products.updateProduct(userId, productId, {
@@ -143,11 +116,7 @@ export class CreateProductComponent {
   }
 
   private async updateImage(userId: string, productId: string) {
-    const task = this.imageService.uploadProductImage(
-      userId,
-      productId,
-      this.productForm.get('image').value
-    );
+    const task = this.imageService.uploadProductImage(userId, productId, this.productForm.get('image').value);
     this.imageUploadState = task.percentageChanges();
     const imagePath = (await task).ref.fullPath;
 

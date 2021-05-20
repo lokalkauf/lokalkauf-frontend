@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 import { RegistrationComponent } from './registration/registration.component';
 import { ProfileComponent } from './profile/profile.component';
 import { Routes, RouterModule } from '@angular/router';
@@ -23,6 +24,7 @@ import { OfferComponent } from './profile/offer/offer.component';
 import { ProductsComponent } from './profile/products/products.component';
 import { CreateProductComponent } from './profile/products/create-product/create-product.component';
 import { MatCardModule } from '@angular/material/card';
+import { OnlineShopComponent } from './profile/online-shop/online-shop.component';
 
 const routes: Routes = [
   { path: 'trader/profile', component: ProfileComponent },
@@ -34,7 +36,7 @@ const routes: Routes = [
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [OrdersComponent, ProductsComponent, RegistrationComponent, ProfileComponent, LoginComponent, PasswordResetComponent, DeleteUserComponent, ImageUploadComponent, OfferComponent, CreateProductComponent],
+  declarations: [OrdersComponent, ProductsComponent, OnlineShopComponent, RegistrationComponent, ProfileComponent, LoginComponent, PasswordResetComponent, DeleteUserComponent, ImageUploadComponent, OfferComponent, CreateProductComponent],
   imports: [
     CommonModule,
     MatFormFieldModule,
@@ -44,6 +46,7 @@ const routes: Routes = [
     MatInputModule,
     MatIconModule,
     MatButtonModule,
+    MatListModule,
     MatTabsModule,
     MatDialogModule,
     MatCardModule,

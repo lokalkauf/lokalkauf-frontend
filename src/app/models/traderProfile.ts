@@ -30,6 +30,7 @@ export interface TraderProfile {
     sonstiges: boolean;
   };
   currentDistance?: number;
+  onlineshop?: string;
 }
 
 export enum TraderProfileStatus {

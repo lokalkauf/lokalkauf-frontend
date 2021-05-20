@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { defer, from, of, pipe } from 'rxjs';
+import { retry, delay, retryWhen, take, tap, map } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
 import { ImageSource } from '../models/imageSource';
 
@@ -9,49 +11,30 @@ import { ImageSource } from '../models/imageSource';
 export class ImageService {
   constructor(private storage: AngularFireStorage) {}
 
-  async getThumbnailUrl(imagePath, size = '224x224'): Promise<string> {
+  async getThumbnailUrl(imagePath: string, size = '224x224'): Promise<string> {
     if (!imagePath) {
       return null;
     }
 
     const foldername = imagePath.substring(0, imagePath.lastIndexOf('/') + 1);
-    const filenameWithoutExt = imagePath.substring(
-      imagePath.lastIndexOf('/') + 1,
-      imagePath.lastIndexOf('.')
-    );
+    const filenameWithoutExt = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('.'));
     const ext = imagePath.split('.').pop();
-    const thumbnailPath =
-      foldername +
-      'thumb_' +
-      size +
-      '_' +
-      filenameWithoutExt +
-      '.' +
-      ext +
-      '.jpg';
+    const thumbnailPath = foldername + 'thumb_' + size + '_' + filenameWithoutExt + '.' + ext + '.jpg';
 
     return await this.storage.storage.ref(thumbnailPath).getDownloadURL();
   }
 
-  async getThumbnail(
-    image: ImageSource,
-    size = '224x224'
-  ): Promise<ImageSource> {
+  waitForThumbnailUrl(imagePath, size = '224x224') {
+    const $ref = defer(() => from(this.getThumbnailUrl(imagePath)));
+
+    return $ref.pipe(retryWhen((errors) => errors.pipe(delay(2000), take(10))));
+  }
+
+  async getThumbnail(image: ImageSource, size = '224x224'): Promise<ImageSource> {
     const foldername = image.path.substring(0, image.path.lastIndexOf('/') + 1);
-    const filenameWithoutExt = image.path.substring(
-      image.path.lastIndexOf('/') + 1,
-      image.path.lastIndexOf('.')
-    );
+    const filenameWithoutExt = image.path.substring(image.path.lastIndexOf('/') + 1, image.path.lastIndexOf('.'));
     const ext = image.path.split('.').pop();
-    const thumbnailPath =
-      foldername +
-      'thumb_' +
-      size +
-      '_' +
-      filenameWithoutExt +
-      '.' +
-      ext +
-      '.jpg';
+    const thumbnailPath = foldername + 'thumb_' + size + '_' + filenameWithoutExt + '.' + ext + '.jpg';
     const thumnbnailRef = await this.storage.storage.ref(thumbnailPath);
     return {
       url: await thumnbnailRef.getDownloadURL(),
@@ -62,16 +45,11 @@ export class ImageService {
   }
 
   async getAllTraderImages(traderId: string): Promise<ImageSource[]> {
-    const imageList = await this.storage.storage
-      .ref(`Traders/${traderId}/BusinessImages`)
-      .list();
+    const imageList = await this.storage.storage.ref(`Traders/${traderId}/BusinessImages`).list();
     const images = await Promise.all(
       imageList.items.map(async (item) => {
         const metadata = (await item.getMetadata()) as firebase.storage.FullMetadata;
-        if (
-          metadata.contentType.startsWith('image/') &&
-          !this.isThumbnail(metadata.fullPath)
-        ) {
+        if (metadata.contentType.startsWith('image/') && !this.isThumbnail(metadata.fullPath)) {
           return {
             url: await item.getDownloadURL(),
             size: metadata.size,

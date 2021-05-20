@@ -14,7 +14,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class FeedbackComponent {
   feedbackForm = new FormGroup({
     message: new FormControl('', [Validators.required]),
-    email: new FormControl('', []),
+    email: new FormControl('', [Validators.required]),
     agbRead: new FormControl('', [Validators.requiredTrue]),
   });
 
@@ -33,11 +33,7 @@ export class FeedbackComponent {
   showError: boolean;
   mailSent = false;
 
-  constructor(
-    private location: Location,
-    private mailService: EMailService,
-    private errorService: ErrorService
-  ) {
+  constructor(private location: Location, private mailService: EMailService, private errorService: ErrorService) {
     this.showError = false;
   }
 
@@ -46,12 +42,15 @@ export class FeedbackComponent {
   }
 
   absenden() {
-    if (
-      this.message &&
-      this.message.value &&
-      this.agbRead.value &&
-      (!this.email || this.validMail(this.email.value))
-    ) {
+    if (this.feedbackForm.invalid) {
+      console.log('okoko');
+      this.feedbackForm.get('message').markAsTouched();
+      this.feedbackForm.get('email').markAsTouched();
+      this.feedbackForm.get('agbRead').markAsTouched();
+      return;
+    }
+
+    if (this.message && this.message.value && this.agbRead.value && (!this.email || this.validMail(this.email.value))) {
       try {
         this.mailService.send(
           {
@@ -70,11 +69,7 @@ export class FeedbackComponent {
         this.mailSent = true;
         this.showError = false;
       } catch (e) {
-        this.errorService.publishByText(
-          'Nachricht konnte nicht verschickt werden',
-          'Aufgrund eines Systemfehlers konnte die Nachricht an ' +
-            'den Händler nicht verschickt werden. Bitte versuche es erneut oder kontaktiere den Support.'
-        );
+        this.errorService.publishByText('Nachricht konnte nicht verschickt werden', 'Aufgrund eines Systemfehlers konnte die Nachricht an ' + 'den Händler nicht verschickt werden. Bitte versuche es erneut oder kontaktiere den Support.');
       }
     } else {
       this.showError = true;

@@ -1,0 +1,93 @@
+<div>
+  <h2>Dein Online-Shop</h2>
+
+  Du hast einen eigenen Online-Shop?
+  <br />Dann hinterlege die URL hier und Dein Online-Shop wird prominent auf Deiner Händlerseite angezeigt.
+  <br />
+
+  <div class="onlineshop-container">
+    <h4>
+      Gebe hier die Adresse Deines Online-Shops ein:
+    </h4>
+    <div>
+      <form [formGroup]="onlineshopForm" (ngSubmit)="onSubmit()">
+        <div class="onlineshop-url">
+          <lk-input placeholder="Dein Online-Shop" formControlName="eigenershop" pattern="(h|H)(t|T)(t|T)(p|P)(s|S)?://.+"></lk-input>
+        </div>
+        <div class="warning" *ngIf="eigenershop.invalid">
+          Deine Webshop muss mit http:// oder https:// beginnen, damit sie aufrufbar ist.
+        </div>
+        <div>
+          <lk-button [disabled]="onlineshopForm.errors != null" type="submit">Speichern</lk-button>
+          <span *ngIf="this.saveSuccessful" class="success">&nbsp;Speichern erfolgreich</span>
+        </div>
+      </form>
+    </div>
+  </div>
+  <h4>Du hast noch keinen eigenen Online-Shop?</h4>
+  Wenn Du schnell und einfach einen Online-Shop anlegen möchtest, schau Dir zum Beispiel mal
+  <a href="https://www.sotrusty.com/" target="_blank">www.sotrusty.com</a> an. <br />Nachdem Du Deinen Online-Shop angelegt hast, trägst Du einfach die URL oben in das entsprechende Feld ein, um Deinen Shop auf Deiner Händlerseite zu
+  präsentieren.
+  <br />
+  <br />
+  <h4>Übersicht möglicher Anbieter von Online-Shops:</h4>
+  <div class="stand">Stand: 11.12.2020</div>
+
+  <div class="shops-container">
+    <div class="item-content">
+      <div class="item-header">
+        <h3>Einsteiger</h3>
+      </div>
+      <div class="logo">
+        <a href="https://www.sotrusty.com/" target="_blank"><img class="ecommerce-provider-logo" src="./assets/so-trusty-small.png" /></a>
+      </div>
+      <mat-list>
+        <mat-list-item *ngFor="let x of sotrusty">
+          <mat-icon mat-list-icon>done</mat-icon>
+          <mat-line>{{ x }}</mat-line>
+        </mat-list-item>
+      </mat-list>
+      <div class="bottom">
+        <lk-button label="Shop erstellen" (click)="open('st')"></lk-button>
+      </div>
+    </div>
+    <div class="item-content">
+      <div class="item-header">
+        <h3>
+          Fortgeschrittene
+        </h3>
+      </div>
+      <div class="logo">
+        <a href="https://www.wix.com/html5ecom/tae-store" target="_blank"><img class="ecommerce-provider-logo" src="./assets/wix-small.png" /></a>
+      </div>
+      <mat-list>
+        <mat-list-item *ngFor="let x of wix">
+          <mat-icon mat-list-icon>done</mat-icon>
+          <mat-line>{{ x }}</mat-line>
+        </mat-list-item>
+      </mat-list>
+      <div class="bottom">
+        <lk-button label="Shop erstellen" (click)="open('w')"></lk-button>
+      </div>
+    </div>
+    <div class="item-content">
+      <div class="item-header">
+        <h3>
+          Für Profis
+        </h3>
+      </div>
+      <div class="logo">
+        <a href="https://www.shopify.de/" target="_blank"><img class="ecommerce-provider-logo" src="./assets/shopify-small.png" /></a>
+      </div>
+      <mat-list>
+        <mat-list-item *ngFor="let x of shopify">
+          <mat-icon mat-list-icon>done</mat-icon>
+          <mat-line>{{ x }}</mat-line>
+        </mat-list-item>
+      </mat-list>
+      <div class="bottom">
+        <lk-button label="Shop erstellen" (click)="open('s')"></lk-button>
+      </div>
+    </div>
+  </div>
+</div>

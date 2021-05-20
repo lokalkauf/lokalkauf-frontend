@@ -3,31 +3,15 @@
     <div class="contactButtons">
       <h3>Unser Angebot</h3>
       <div class="contactButton floating">
-        <mat-icon
-          class="inlinesymbol vertical-align-middle"
-          *ngIf="trader.delivery"
-          >check</mat-icon
-        >
-        <mat-icon
-          class="inlinesymbol vertical-align-middle gray"
-          *ngIf="!trader.delivery"
-          >close</mat-icon
-        >
+        <mat-icon class="inlinesymbol vertical-align-middle" *ngIf="trader.delivery">check</mat-icon>
+        <mat-icon class="inlinesymbol vertical-align-middle gray" *ngIf="!trader.delivery">close</mat-icon>
         <div class="symboltext">
           Lieferung
         </div>
       </div>
       <div class="contactButton floating">
-        <mat-icon
-          class="inlinesymbol vertical-align-middle"
-          *ngIf="trader.pickup"
-          >check</mat-icon
-        >
-        <mat-icon
-          class="inlinesymbol vertical-align-middle"
-          *ngIf="!trader.pickup"
-          >close</mat-icon
-        >
+        <mat-icon class="inlinesymbol vertical-align-middle" *ngIf="trader.pickup">check</mat-icon>
+        <mat-icon class="inlinesymbol vertical-align-middle" *ngIf="!trader.pickup">close</mat-icon>
         <div class="symboltext">Abholung</div>
       </div>
     </div>
@@ -68,14 +52,21 @@
           {{ trader.homepage }}
         </a>
       </div>
+    </div>
+  </div>
 
-      <div class="contactButton floating contact-form-toggle-button">
-        <lk-button
-          [disabled]="!trader.storeEmail"
-          (click)="toggleContactForm()"
-          [label]="'Händler direkt kontaktieren'"
-        >
-        </lk-button>
+  <div class="contact-container">
+    <div class="contactButtons button-row">
+      <div class="contactButton floating button-bottom"></div>
+    </div>
+    <div class="contactButtons button-row onlineshop">
+      <div *ngIf="trader.onlineshop" class="contactButton floating button-bottom">
+        <lk-button (click)="openOnlineshop()" [label]="'Jetzt Online einkaufen!'"> </lk-button>
+      </div>
+    </div>
+    <div class="contactButtons button-row">
+      <div class="contactButton floating button-bottom">
+        <lk-button [disabled]="!trader.storeEmail" (click)="toggleContactForm(!!trader.storeEmail)" [label]="'Händler direkt kontaktieren'"> </lk-button>
       </div>
     </div>
   </div>
@@ -83,46 +74,21 @@
   <div *ngIf="contactFormVisible" class="contact-form">
     <form [formGroup]="contactForm" (ngSubmit)="onSubmit(trader.businessname)">
       <div class="text contactformdescription">
-        <lk-textarea
-          placeholder="Deine Nachricht an uns"
-          formControlName="mail_message"
-          type="mail_message"
-        >
-        </lk-textarea>
-        <lk-input
-          [warn]="mail_contact.touched && mail_contact.invalid"
-          placeholder="E-Mail oder Telefonnummer"
-          formControlName="mail_contact"
-        ></lk-input
-        ><br /><br />
+        <lk-textarea placeholder="Deine Nachricht an uns" formControlName="mail_message" type="mail_message"> </lk-textarea>
+        <lk-input [warn]="mail_contact.touched && mail_contact.invalid" placeholder="E-Mail oder Telefonnummer" formControlName="mail_contact"></lk-input><br /><br />
         <label>
           <app-lk-checkbox formControlName="agbRead"></app-lk-checkbox>
           <div class="agb-text">
             Ich bestätige die
-            <a
-              href="https://www.info.lokalkauf.org/agb"
-              target="blank"
-              rel="noopener noreferrer"
-              >AGB</a
-            >
+            <a href="https://www.info.lokalkauf.org/agb" target="blank" rel="noopener noreferrer">AGB</a>
             und
-            <a
-              href="https://www.info.lokalkauf.org/datenschutz"
-              target="blank"
-              rel="noopener noreferrer"
-              >Datenschutzbestimmungen</a
-            >
+            <a href="https://www.info.lokalkauf.org/datenschutz" target="blank" rel="noopener noreferrer">Datenschutzbestimmungen</a>
             gelesen zu haben und bin einverstanden
           </div>
         </label>
       </div>
       <div class="contactButton send-request">
-        <lk-button
-          [disabled]="!contactForm.valid"
-          type="submit"
-          label="Anfrage senden"
-        >
-        </lk-button>
+        <lk-button [disabled]="!contactForm.valid" type="submit" label="Anfrage senden"> </lk-button>
       </div>
     </form>
   </div>

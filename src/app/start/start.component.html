@@ -2,14 +2,8 @@
   <div class="hero-search-container">
     <lk-container>
       <form (submit)="navigateToLocation()">
-        <lk-search-input
-          [formControl]="locationFormControl"
-          #searchInput
-        ></lk-search-input>
-        <lk-button
-          type="submit"
-          [label]="text.start_button_geschaeft_suchen | text"
-        ></lk-button>
+        <lk-search-input [formControl]="locationFormControl" #searchInput></lk-search-input>
+        <lk-button type="submit" [label]="text.start_button_geschaeft_suchen | text"></lk-button>
       </form>
     </lk-container>
   </div>
@@ -19,16 +13,7 @@
   <div class="intro">
     <h1>{{ text.start_zusammen_headline | text }}</h1>
     <p [innerHTML]="text.start_zusammen_text | text"></p>
-    <lk-button
-      color="accent"
-      [routerLink]="isLoggedIn ? ['/trader/profile'] : ['/trader/register/new']"
-      [label]="
-        isLoggedIn
-          ? (text.start_button_haender_bearbeiten | text)
-          : (text.start_button_haender_anmelden | text)
-      "
-    >
-    </lk-button>
+    <lk-button color="accent" [routerLink]="isLoggedIn ? ['/trader/profile'] : ['/trader/register/new']" [label]="isLoggedIn ? (text.start_button_haender_bearbeiten | text) : (text.start_button_haender_anmelden | text)"> </lk-button>
   </div>
 </lk-container>
 
@@ -41,19 +26,27 @@
     <h2>{{ text.start_mission_headline | text }}</h2>
     <p [innerHTML]="text.start_mission_text | text"></p>
     <p>
-      <a class="fancy-link" [routerLink]="['/aboutus']">
-        {{ text.start_mission_aboutus | text }}</a
-      >
+      <a class="fancy-link" [routerLink]="['/aboutus']"> {{ text.start_mission_aboutus | text }}</a>
     </p>
   </div>
 </lk-container>
 
+<lk-container-full class="alternate-background">
+  <h2 class="campaign-headline">{{ text.start_ikl_headline | text }}</h2>
+  <div class="campaign-container">
+    <div class="campaign-image">
+      <img src="../../assets/ichkaufelokal-smaller.png" />
+    </div>
+    <div class="campaign-text">
+      <h3 [innerHtml]="text.start_ikl_subheadline | text"></h3>
+      <span [innerHtml]="text.start_ikl_text | text"></span>
+    </div>
+  </div>
+</lk-container-full>
+
 <lk-container class="alternate-background-user-voice">
   <div class="user-voice">
-    <lk-testimonial
-      [testimonialList]="testimonialsAsync$"
-      [config]="{ speed: 11000 }"
-    ></lk-testimonial>
+    <lk-testimonial [testimonialList]="testimonialsAsync$" [config]="{ speed: 11000 }"></lk-testimonial>
   </div>
 </lk-container>
 
@@ -64,12 +57,7 @@
     </div>
 
     <div class="wirvsvirus-content wirvsvirus">
-      <a
-        href="https://wirvsvirushackathon.org/"
-        target="_blank"
-        rel="noopener noreferrer"
-        ><img src="../../assets/wirvs-virus-project-200.png"
-      /></a>
+      <a href="https://wirvsvirushackathon.org/" target="_blank" rel="noopener noreferrer"><img src="../../assets/wirvs-virus-project-200.png" /></a>
     </div>
   </div>
 </lk-container-full>
@@ -86,33 +74,19 @@
         <h2>{{ press.title }}</h2>
         <div class="press-content-content">{{ press.content }}</div>
         <div class="press-content-link">
-          <a
-            href="{{ press.link }}"
-            class="fancy-link"
-            target="_blank"
-            rel="noopener noreferrer"
-            >{{ text.start_presse_artikel | text }}</a
-          >
+          <a href="{{ press.link }}" class="fancy-link" target="_blank" rel="noopener noreferrer">{{ text.start_presse_artikel | text }}</a>
         </div>
       </div>
     </ng-container>
   </div>
-  <a [routerLink]="['/press']" class="fancy-link">{{
-    text.start_presse_alle_artikel
-  }}</a>
+  <a [routerLink]="['/press']" class="fancy-link">{{ text.start_presse_alle_artikel }}</a>
 </lk-container>
 
 <lk-container-full class="center-content alternate-background search-bottom">
   <img src="../../assets/lokalkauf-pin.svg" alt="<3 lokalkauf" />
   <h1 [innerHTML]="text.start_searchbottom_headline | text"></h1>
   <form (submit)="navigateToLocation()">
-    <lk-search-input
-      [formControl]="locationFormControl"
-      #searchInput
-    ></lk-search-input>
-    <lk-button
-      type="submit"
-      [label]="text.start_button_geschaeft_suchen | text"
-    ></lk-button>
+    <lk-search-input [formControl]="locationFormControl" #searchInput></lk-search-input>
+    <lk-button type="submit" [label]="text.start_button_geschaeft_suchen | text"></lk-button>
   </form>
 </lk-container-full>

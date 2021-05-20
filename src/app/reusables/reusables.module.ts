@@ -34,6 +34,7 @@ import { LkAttributionComponent } from './lk-attribution/lk-attribution.componen
 import { PipesModule } from '../pipes/pipes.modules';
 import { LkSomeComponent } from './lk-some/lk-some.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const routes: Routes = [];
 
@@ -78,6 +79,7 @@ const routes: Routes = [];
     MatChipsModule,
     PipesModule,
     FontAwesomeModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     MapComponent,
