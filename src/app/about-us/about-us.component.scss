@@ -34,10 +34,9 @@
     text-align: center;
     margin-bottom: 40px;
     ul {
-      list-style: none;
-      li {
-        margin-top: 10px;
-      }
+      list-style-position: outside;
+      list-style-type: none;
+      line-height: 40px;
     }
   }
-}
+
