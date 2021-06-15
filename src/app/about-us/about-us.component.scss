@@ -9,7 +9,7 @@
   }
 
   .about-us-content {
-    text-align: justify;
+    text-align: center;
   }
 
   .supporters-container {
@@ -32,7 +32,12 @@
 
   .about-us-names {
     text-align: center;
-    font-size: 0.8rem;
     margin-bottom: 40px;
+    ul {
+      list-style: none;
+      li {
+        margin-top: 10px;
+      }
+    }
   }
 }
