@@ -31,7 +31,12 @@ lk-warning-box {
     padding: 0px;
   }
 
+  .tel {
+    max-width: 550px;
+  }
+
   .address {
+    max-width: 550px;
     display: grid;
     grid-template-columns: 6rem 1fr 5rem;
     grid-template-rows: auto;

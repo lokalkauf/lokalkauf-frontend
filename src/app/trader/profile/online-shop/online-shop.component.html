@@ -8,13 +8,13 @@
 
   <div class="onlineshop-container">
     <h4>
-      Gib hier die Addresse Deines Online-Shops ein:
+      Gebe hier die Adresse Deines Online-Shops ein:
     </h4>
     <div>
       <form [formGroup]="onlineshopForm" (ngSubmit)="onSubmit()">
         <div class="onlineshop-url">
           <lk-input
-            placeholder="Dein Onlinehshop"
+            placeholder="Dein Online-Shop"
             formControlName="eigenershop"
             pattern="(h|H)(t|T)(t|T)(p|P)(s|S)?://.+"
           ></lk-input>
@@ -25,7 +25,7 @@
         </div>
         <div>
           <lk-button [disabled]="onlineshopForm.errors != null" type="submit"
-            >Online-Shop speichern</lk-button
+            >Speichern</lk-button
           >
           <span *ngIf="this.saveSuccessful" class="success"
             >&nbsp;Speichern erfolgreich</span

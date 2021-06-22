@@ -21,10 +21,12 @@
           {{ trader.city }}
         </div>
         <div class="distance-small">
-          {{ trader.distance | number: '1.2-2' }} km
+          {{ trader.distance | number: '1.2-2':'de' }} km
         </div>
       </mat-card-subtitle>
     </mat-card-header>
   </mat-card>
 </a>
-<div class="distance-large">{{ trader.distance | number: '1.2-2' }} km</div>
+<div class="distance-large">
+  {{ trader.distance | number: '1.2-2':'de' }} km
+</div>

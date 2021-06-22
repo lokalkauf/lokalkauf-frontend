@@ -27,6 +27,17 @@
       <lk-online-shop [loggedInUserState]="loggedInUserState"></lk-online-shop>
     </mat-tab>
     <mat-tab label="Allgemein">
+      <div *ngIf="loggedInUserState.traderProfile">
+        <br />{{ loggedInUserState.traderProfile.businessname }} <br />{{
+          loggedInUserState.traderProfile.ownerLastname
+        }}
+        {{ loggedInUserState.traderProfile.ownerFirstname }}
+        <br />{{ loggedInUserState.traderProfile.street }}
+        {{ loggedInUserState.traderProfile.number }}
+        <br />{{ loggedInUserState.traderProfile.postcode }}
+        {{ loggedInUserState.traderProfile.city }}
+        <br />{{ loggedInUserState.traderProfile.telephone }}
+      </div>
       <p>
         Meine Adressdaten
         <a [routerLink]="['/trader/register/edit']">bearbeiten</a>

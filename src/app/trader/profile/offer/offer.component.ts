@@ -213,6 +213,13 @@ export class OfferComponent implements OnInit, OnChanges {
   }
 
   async updateProfile() {
+    if (
+      this.dataFormGroup.errors != null ||
+      this.storeFormGroup.errors != null
+    ) {
+      return;
+    }
+
     await this.user.updateTraderProfile({
       description: this.description.value || null,
       delivery: this.delivery.value || null,

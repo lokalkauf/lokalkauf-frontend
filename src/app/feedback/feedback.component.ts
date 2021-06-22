@@ -46,6 +46,14 @@ export class FeedbackComponent {
   }
 
   absenden() {
+    if (this.feedbackForm.invalid) {
+      console.log('okoko');
+      this.feedbackForm.get('message').markAsTouched();
+      this.feedbackForm.get('email').markAsTouched();
+      this.feedbackForm.get('agbRead').markAsTouched();
+      return;
+    }
+
     if (
       this.message &&
       this.message.value &&
