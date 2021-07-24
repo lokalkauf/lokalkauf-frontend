@@ -3,10 +3,10 @@
 
   <form [formGroup]="bookmarkForm" (ngSubmit)="onSubmit()">
     <div>
-      <lk-input type="text" formControlName="name" placeholder="Name*"></lk-input>
+      <lk-input type="text" formControlName="name" placeholder="Name*" maxLength="20"></lk-input>
     </div>
     <div>
-      <lk-textarea formControlName="description" placeholder="Beschreibung"></lk-textarea>
+      <lk-textarea formControlName="description" placeholder="Beschreibung" maxLength="240"></lk-textarea>
     </div>
     <lk-button type="button" (click)="closeDialog()">Abbrechen</lk-button>&nbsp;
     <lk-button class="button-submit" type="submit" [disabled]="!bookmarkForm.valid">Anlegen </lk-button>

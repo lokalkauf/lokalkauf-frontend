@@ -1,17 +1,11 @@
 <mat-form-field>
   <mat-label>{{ placeholder }}</mat-label>
-  <input
-    matInput
-    [type]="type"
-    [name]="name"
-    [pattern]="pattern"
-    [placeholder]="placeholder"
-    [(ngModel)]="value"
-    [maxLength]="maxLength"
-    (blur)="onBlur()"
-  />
+  <input matInput [type]="type" [name]="name" [pattern]="pattern" [placeholder]="placeholder" [(ngModel)]="value" [maxLength]="maxLength" (blur)="onBlur()" />
   <!-- <mat-error *ngIf="value.invalid">erro: {{getErrorMessage()}}</mat-error> -->
+  <mat-hint *ngIf="this.maxLength != 32767" [innerHTML]="this.lenChangedText"></mat-hint>
 </mat-form-field>
+
+<div *ngIf="this.maxLength != 32767" class="spacer-for-hint"></div>
 
 <!-- <input
   [type]="type"

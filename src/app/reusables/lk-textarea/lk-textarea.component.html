@@ -1,13 +1,9 @@
 <mat-form-field>
   <mat-label>{{ placeholder }}</mat-label>
-  <textarea
-    matInput
-    [placeholder]="placeholder"
-    [(ngModel)]="value"
-    (blur)="onBlur()"
-    cdkTextareaAutosize
-  ></textarea>
+  <textarea matInput [placeholder]="placeholder" [(ngModel)]="value" (blur)="onBlur()" [maxLength]="maxLength" cdkTextareaAutosize></textarea>
+  <mat-hint *ngIf="this.maxLength != 32767" [innerHTML]="this.lenChangedText"></mat-hint>
 </mat-form-field>
+<div *ngIf="this.maxLength != 32767" class="spacer-for-hint"></div>
 
 <!-- <textarea
   [placeholder]="placeholder"

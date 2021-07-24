@@ -21,6 +21,8 @@ export class LkInputComponent implements ControlValueAccessor {
   @Input() pattern: string;
   @Input() maxLength = 32767;
 
+  public lenChangedText: string;
+
   // The internal data model
   private innerValue: any = '';
 
@@ -39,6 +41,14 @@ export class LkInputComponent implements ControlValueAccessor {
     if (v !== this.innerValue) {
       this.innerValue = v;
       this.onChangeCallback(v);
+      this.updateMaxLenText();
+    }
+  }
+
+  private updateMaxLenText() {
+    if (this.maxLength && this.maxLength !== 32767) {
+      const len = this.innerValue.toString().length;
+      this.lenChangedText = `(${len} / ${this.maxLength})`;
     }
   }
 

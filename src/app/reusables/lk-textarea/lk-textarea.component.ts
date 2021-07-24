@@ -1,17 +1,5 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  ViewChild,
-  ElementRef,
-  Output,
-  EventEmitter,
-} from '@angular/core';
-import {
-  FormControl,
-  NG_VALUE_ACCESSOR,
-  ControlValueAccessor,
-} from '@angular/forms';
+import { Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { fromEvent, Subject, merge } from 'rxjs';
 
 @Component({
@@ -28,11 +16,13 @@ import { fromEvent, Subject, merge } from 'rxjs';
 })
 export class LkTextareaComponent implements ControlValueAccessor {
   @Input() placeholder: string;
+  @Input() maxLength = 32767;
 
   constructor() {}
 
   // The internal data model
   private innerValue: any = '';
+  public lenChangedText: string;
 
   // Placeholders for the callbacks which are later provided
   // by the Control Value Accessor
@@ -49,12 +39,20 @@ export class LkTextareaComponent implements ControlValueAccessor {
     if (v !== this.innerValue) {
       this.innerValue = v;
       this.onChangeCallback(v);
+      this.updateMaxLenText();
     }
   }
 
   // Set touched on blur
   onBlur() {
     this.onTouchedCallback();
+  }
+
+  private updateMaxLenText() {
+    if (this.maxLength && this.maxLength !== 32767) {
+      const len = this.innerValue.toString().length;
+      this.lenChangedText = `(${len} / ${this.maxLength})`;
+    }
   }
 
   // From ControlValueAccessor interface
