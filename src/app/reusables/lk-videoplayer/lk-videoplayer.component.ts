@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 export interface LkVideo {
   small: string;
   big: string;
+  preview?: string;
 }
 
 @Component({
