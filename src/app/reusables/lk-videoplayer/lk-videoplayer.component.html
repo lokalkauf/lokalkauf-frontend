@@ -11,29 +11,24 @@
 </script>
 <div class="lk-videoplayer-container">
   <ng-container *ngFor="let vid of videoList | async">
-    <div class="vid-container">
-      <ng-container *ngIf="!isMobile">
-        <video
-          playsinline
-          preload="metadata"
-          poster="{{ vid.preview }}"
-          loop
-          onclick="this.paused? this.play() : this.pause()"
-          onmouseover="play(this)"
-          onmouseout="pause(this)"
-        >
-          <source src="{{ vid.small }}#t=0.001" type="video/mp4" />
-        </video>
-        <a href="{{ vid.big }}" target="_blank"
-          ><div class="lnk"><mat-icon>search</mat-icon></div></a
-        >
-      </ng-container>
-      <ng-container *ngIf="isMobile">
-        <img src="{{ vid.preview }}" class="preview-image" />
-        <a href="{{ vid.big }}" target="_blank"
-          ><div class="lnk"><mat-icon>search</mat-icon></div></a
-        >
-      </ng-container>
+    <div
+      class="vid-container"
+      *ngIf="(vid.showOnMobile && isMobile) || !isMobile"
+    >
+      <video
+        playsinline
+        preload="metadata"
+        poster="{{ vid.preview }}"
+        loop
+        onclick="this.paused? this.play() : this.pause()"
+        onmouseover="play(this)"
+        onmouseout="pause(this)"
+      >
+        <source src="{{ vid.small }}#t=0.001" type="video/mp4" />
+      </video>
+      <a href="{{ vid.big }}" target="_blank"
+        ><div class="lnk"><mat-icon>search</mat-icon></div></a
+      >
     </div>
   </ng-container>
 </div>
