@@ -6,7 +6,8 @@
   .vid-container {
     position: relative;
 
-    video {
+    video,
+    .preview-image {
       margin: 20px;
     }
 

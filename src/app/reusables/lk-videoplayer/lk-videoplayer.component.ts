@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { BrowserService } from 'src/app/services/browser.service';
 
 export interface LkVideo {
   small: string;
@@ -15,6 +16,12 @@ export interface LkVideo {
 export class LkVideoplayerComponent implements OnInit {
   @Input()
   videoList: Observable<LkVideo[]>;
+
+  isMobile: boolean;
+
+  constructor(private readonly browserService: BrowserService) {
+    this.isMobile = browserService.isMobile();
+  }
 
   ngOnInit(): void {}
 }
