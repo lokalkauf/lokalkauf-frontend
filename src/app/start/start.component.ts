@@ -69,46 +69,55 @@ export class StartComponent implements OnInit {
       small: '../../assets/campaign/LK_Baecker-270.mp4',
       big: '../../assets/campaign/LK_Baecker-1080.mp4',
       preview: '../../assets/campaign/LK_Baecker-270.png',
+      showOnMobile: false,
     },
     {
       small: '../../assets/campaign/LK_Bauer-270.mp4',
       big: '../../assets/campaign/LK_Bauer-1080.mp4',
       preview: '../../assets/campaign/LK_Bauer-270.png',
+      showOnMobile: false,
     },
     {
       small: '../../assets/campaign/LK_Boutique-270.mp4',
       big: '../../assets/campaign/LK_Boutique-1080.mp4',
       preview: '../../assets/campaign/LK_Boutique-270.png',
+      showOnMobile: false,
     },
     {
       small: '../../assets/campaign/LK_Buchhandlung-270.mp4',
       big: '../../assets/campaign/LK_Buchhandlung-1080.mp4',
       preview: '../../assets/campaign/LK_Buchhandlung-270.png',
+      showOnMobile: false,
     },
     {
       small: '../../assets/campaign/LK_DingDong-270.mp4',
       big: '../../assets/campaign/LK_DingDong-1080.mp4',
       preview: '../../assets/campaign/LK_DingDong-270.png',
+      showOnMobile: false,
     },
     {
       small: '../../assets/campaign/LK_Floristin-270.mp4',
       big: '../../assets/campaign/LK_Floristin-1080.mp4',
       preview: '../../assets/campaign/LK_Floristin-270.png',
+      showOnMobile: false,
     },
     {
       small: '../../assets/campaign/LK_Friseur-270.mp4',
       big: '../../assets/campaign/LK_Friseur-1080.mp4',
       preview: '../../assets/campaign/LK_Friseur-270.png',
+      showOnMobile: false,
     },
     {
       small: '../../assets/campaign/LK_Deine Stadt_02-270.mp4',
       big: '../../assets/campaign/LK_Deine Stadt_02-1080.mp4',
       preview: '../../assets/campaign/LK_Deine Stadt_02-270.png',
+      showOnMobile: false,
     },
     {
       small: '../../assets/campaign/LK_Deine Stadt_03-270.mp4',
       big: '../../assets/campaign/LK_Deine Stadt_03-1080.mp4',
       preview: '../../assets/campaign/LK_Deine Stadt_03-270.png',
+      showOnMobile: true,
     },
   ]);
 

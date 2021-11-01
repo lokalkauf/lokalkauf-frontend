@@ -6,6 +6,7 @@ export interface LkVideo {
   small: string;
   big: string;
   preview?: string;
+  showOnMobile: boolean;
 }
 
 @Component({
