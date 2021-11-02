@@ -15,6 +15,7 @@ import { uiTexts } from 'src/app/services/uiTexts';
 import { TextService } from '../services/text.service';
 import { Testimonial } from '../reusables/lk-testimonal/lk-testimonial.component';
 import { Observable, of } from 'rxjs';
+import { LkVideo } from '../reusables/lk-videoplayer/lk-videoplayer.component';
 
 export interface Press {
   date: string;
@@ -62,6 +63,63 @@ export class StartComponent implements OnInit {
 
   testimonialsAsync$: Observable<Testimonial[]>;
   press$: Observable<Press[]>;
+
+  adCampaignVideos$: Observable<LkVideo[]> = of([
+    {
+      small: '../../assets/campaign/LK_Baecker-270.mp4',
+      big: '../../assets/campaign/LK_Baecker-1080.mp4',
+      preview: '../../assets/campaign/LK_Baecker-270.png',
+      showOnMobile: false,
+    },
+    {
+      small: '../../assets/campaign/LK_Bauer-270.mp4',
+      big: '../../assets/campaign/LK_Bauer-1080.mp4',
+      preview: '../../assets/campaign/LK_Bauer-270.png',
+      showOnMobile: false,
+    },
+    {
+      small: '../../assets/campaign/LK_Boutique-270.mp4',
+      big: '../../assets/campaign/LK_Boutique-1080.mp4',
+      preview: '../../assets/campaign/LK_Boutique-270.png',
+      showOnMobile: false,
+    },
+    {
+      small: '../../assets/campaign/LK_Buchhandlung-270.mp4',
+      big: '../../assets/campaign/LK_Buchhandlung-1080.mp4',
+      preview: '../../assets/campaign/LK_Buchhandlung-270.png',
+      showOnMobile: false,
+    },
+    {
+      small: '../../assets/campaign/LK_DingDong-270.mp4',
+      big: '../../assets/campaign/LK_DingDong-1080.mp4',
+      preview: '../../assets/campaign/LK_DingDong-270.png',
+      showOnMobile: false,
+    },
+    {
+      small: '../../assets/campaign/LK_Floristin-270.mp4',
+      big: '../../assets/campaign/LK_Floristin-1080.mp4',
+      preview: '../../assets/campaign/LK_Floristin-270.png',
+      showOnMobile: false,
+    },
+    {
+      small: '../../assets/campaign/LK_Friseur-270.mp4',
+      big: '../../assets/campaign/LK_Friseur-1080.mp4',
+      preview: '../../assets/campaign/LK_Friseur-270.png',
+      showOnMobile: false,
+    },
+    {
+      small: '../../assets/campaign/LK_Deine Stadt_02-270.mp4',
+      big: '../../assets/campaign/LK_Deine Stadt_02-1080.mp4',
+      preview: '../../assets/campaign/LK_Deine Stadt_02-270.png',
+      showOnMobile: false,
+    },
+    {
+      small: '../../assets/campaign/LK_Deine Stadt_03-270.mp4',
+      big: '../../assets/campaign/LK_Deine Stadt_03-1080.mp4',
+      preview: '../../assets/campaign/LK_Deine Stadt_03-270.png',
+      showOnMobile: true,
+    },
+  ]);
 
   @ViewChild('searchInput', { read: ElementRef }) searchInput: any;
   constructor(

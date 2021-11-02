@@ -33,7 +33,7 @@ import { LkContainerFullComponent } from './lk-container-full/lk-container.compo
 import { LkAttributionComponent } from './lk-attribution/lk-attribution.component';
 import { PipesModule } from '../pipes/pipes.modules';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
+import { LkVideoplayerComponent } from './lk-videoplayer/lk-videoplayer.component';
 const routes: Routes = [];
 
 @NgModule({
@@ -53,6 +53,7 @@ const routes: Routes = [];
     RatingStarComponent,
     LkContainerComponent,
     LkContainerFullComponent,
+    LkVideoplayerComponent,
     LkChipListComponent,
     LkMapComponent,
     LkSliderComponent,
@@ -86,6 +87,7 @@ const routes: Routes = [];
     LkPageTitleComponent,
     LkCheckboxComponent,
     LkSelectComponent,
+    LkVideoplayerComponent,
     ImageChooserComponent,
     FullscreenModalComponent,
     LkWarningBoxComponent,

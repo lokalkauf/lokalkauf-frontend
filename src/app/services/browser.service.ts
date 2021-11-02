@@ -73,6 +73,11 @@ export class BrowserService {
     return this.deviceDetectorService.browser;
   }
 
+  isMobile(): boolean {
+    console.log(this.deviceDetectorService);
+    return !this.deviceDetectorService.isDesktop();
+  }
+
   isBrowserSupported(): boolean {
     const isDesktop = this.deviceDetectorService.isDesktop();
 
