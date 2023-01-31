@@ -11,13 +11,14 @@
       <a mat-button [routerLink]="'/aboutus'">Das sind wir</a>
       <a mat-button [routerLink]="'/press'">Presse</a>
       <a mat-button [routerLink]="'/faq'">Hilfe</a>
-      <a
+      <a mat-button [routerLink]="'/campaign'">#ichkaufelokal</a>
+      <!--      <a
         mat-button
         href="https://www.ichkaufelokal.org/"
         target="_blank"
         rel="noopener noreferrer"
         >#ichkaufelokal</a
-      >
+      >-->
     </div>
     <span class="menu-spacer"></span>
     <a
@@ -82,14 +83,17 @@
       <a mat-list-item (click)="sidenav.close()" [routerLink]="'/faq'">
         Hilfe
       </a>
-      <a
+      <a mat-list-item (click)="sidenav.close()" [routerLink]="'/campaign'"
+        >#ichkaufelokal</a
+      >
+      <!-- <a
         mat-list-item
         (click)="sidenav.close()"
         href="https://www.ichkaufelokal.org/"
         target="_blank"
         rel="noopener noreferrer"
         >#ichkaufelokal</a
-      >
+      >-->
       <mat-divider></mat-divider>
       <a
         mat-list-item

@@ -57,6 +57,9 @@
     <div class="campaign-text">
       <h3 [innerHtml]="text.start_ikl_subheadline | text"></h3>
       <span [innerHtml]="text.start_ikl_text | text"></span>
+      <span
+        ><a [routerLink]="'/campaign'" class="fancy-link">Zur Kampagne</a></span
+      >
     </div>
   </div>
 </lk-container-full>

@@ -36,13 +36,15 @@ h3,
 h4,
 h5,
 h6,
-.fancy-link {
+.fancy-link,
+.campaign-headline {
   font-family: Bitter, 'serif';
   color: $normalgreen;
   font-weight: 400;
 }
 
-h1 {
+h1,
+.campaign-headline {
   font-size: 1.6rem;
 }
 

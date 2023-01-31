@@ -56,6 +56,7 @@ import { MuiService } from './services/mui.service';
 import { PipesModule } from './pipes/pipes.modules';
 import { RedirectComponent } from './redirect/redirect.component';
 import { PressComponent } from './press/press.component';
+import { CampaignComponent } from './campaign/campaign.component';
 import { filter } from 'rxjs/operators';
 import {
   AngularFireAnalyticsModule,
@@ -117,6 +118,7 @@ const routes: Routes = [
   { path: 'aboutus', component: AboutUsComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'press', component: PressComponent },
+  { path: 'campaign', component: CampaignComponent },
   {
     path: 'redirect',
     component: RedirectComponent,
@@ -139,6 +141,7 @@ const routes: Routes = [
     PressComponent,
     SearchInputComponent,
     RedirectComponent,
+    CampaignComponent,
   ],
   imports: [
     BrowserModule,
