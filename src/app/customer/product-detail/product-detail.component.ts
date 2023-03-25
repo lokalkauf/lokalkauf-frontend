@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Product } from '../../models/product';
 import { ShoppingcartService } from '../../services/shoppingcart.service';
 import { ProductService } from '../../services/product.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { ProductDetailFeedbackComponent } from '../product-detail-feedback/product-detail-feedback.component';
 
 @Component({

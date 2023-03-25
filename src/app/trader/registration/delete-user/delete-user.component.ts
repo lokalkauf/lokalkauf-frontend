@@ -3,7 +3,7 @@ import { UntypedFormControl, Validators } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
 import { Router } from '@angular/router';
 import { ErrorService } from '../../../services/error.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 @Component({
   selector: 'app-delete-user',
   templateUrl: './delete-user.component.html',

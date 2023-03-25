@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { CreateProductComponent } from './create-product/create-product.component';
 import { ProductService } from '../../../services/product.service';
 import { Product } from '../../../models/product';

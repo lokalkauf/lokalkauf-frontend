@@ -13,8 +13,11 @@ import { TraderService } from 'src/app/services/trader.service';
 import { UserService } from 'src/app/services/user.service';
 import { first, map, flatMap, tap } from 'rxjs/operators';
 import { ProductService } from '../../../../services/product.service';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {
+  MatLegacyDialogRef as MatDialogRef,
+  MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
+} from '@angular/material/legacy-dialog';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Product } from '../../../../models/product';
 import { ImageService } from 'src/app/services/image.service';
 import { BrowserService } from 'src/app/services/browser.service';

@@ -24,7 +24,7 @@ import {
   startWith,
   withLatestFrom,
 } from 'rxjs/operators';
-import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatLegacyAutocompleteTrigger as MatAutocompleteTrigger } from '@angular/material/legacy-autocomplete';
 import { GeoService } from 'src/app/services/geo.service';
 import { GeoAddress } from 'src/app/models/geoAddress';
 import { TextService } from 'src/app/services/text.service';

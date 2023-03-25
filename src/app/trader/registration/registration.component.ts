@@ -13,7 +13,7 @@ import {
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { TraderProfile, TraderProfileStatus } from '../../models/traderProfile';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { DeleteUserComponent } from './delete-user/delete-user.component';
 import { GeoService } from 'src/app/services/geo.service';
 import { LkMapComponent } from 'src/app/reusables/lk-map/lk-map.component';
