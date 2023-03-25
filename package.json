@@ -16,7 +16,7 @@
     "@angular/compiler": "^14.3.0",
     "@angular/core": "^14.3.0",
     "@angular/fire": "^7.5.0",
-    "@angular/flex-layout": "12.0.0-beta.35",
+    "@angular/flex-layout": "13.0.0-beta.37",
     "@angular/forms": "^14.3.0",
     "@angular/material": "^13.3.9",
     "@angular/platform-browser": "^14.3.0",
