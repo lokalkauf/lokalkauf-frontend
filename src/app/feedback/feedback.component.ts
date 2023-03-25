@@ -4,7 +4,11 @@ import * as EmailValidatorTS from 'email-validator';
 import { EMailService } from '../services/email.service';
 import { EMail } from '../models/email';
 import { ErrorService } from '../services/error.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormControl,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-feedback',
@@ -12,10 +16,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./feedback.component.scss'],
 })
 export class FeedbackComponent {
-  feedbackForm = new FormGroup({
-    message: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required]),
-    agbRead: new FormControl('', [Validators.requiredTrue]),
+  feedbackForm = new UntypedFormGroup({
+    message: new UntypedFormControl('', [Validators.required]),
+    email: new UntypedFormControl('', [Validators.required]),
+    agbRead: new UntypedFormControl('', [Validators.requiredTrue]),
   });
 
   get email() {

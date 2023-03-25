@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { uiTexts } from './../../services/uiTexts';
 
@@ -10,9 +10,9 @@ import { uiTexts } from './../../services/uiTexts';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  loginForm = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
+  loginForm = new UntypedFormGroup({
+    email: new UntypedFormControl(''),
+    password: new UntypedFormControl(''),
   });
 
   texts = uiTexts;

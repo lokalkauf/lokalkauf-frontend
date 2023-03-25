@@ -5,7 +5,11 @@ import {
   ViewChild,
   AfterViewInit,
 } from '@angular/core';
-import { Validators, FormControl, FormGroup } from '@angular/forms';
+import {
+  Validators,
+  UntypedFormControl,
+  UntypedFormGroup,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { TraderProfile, TraderProfileStatus } from '../../models/traderProfile';
@@ -114,24 +118,24 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
       }
     }
   }
-  registrationForm = new FormGroup(
+  registrationForm = new UntypedFormGroup(
     {
-      businessname: new FormControl('', [Validators.required]),
-      ownerFirstname: new FormControl(''),
-      ownerLastname: new FormControl(''),
-      phone: new FormControl('', [Validators.required]),
-      postcode: new FormControl('', [
+      businessname: new UntypedFormControl('', [Validators.required]),
+      ownerFirstname: new UntypedFormControl(''),
+      ownerLastname: new UntypedFormControl(''),
+      phone: new UntypedFormControl('', [Validators.required]),
+      postcode: new UntypedFormControl('', [
         Validators.required,
         Validators.maxLength(5),
         Validators.minLength(5),
       ]),
-      city: new FormControl('', [Validators.required]),
-      street: new FormControl('', [Validators.required]),
-      streetnumber: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.email]),
-      password: new FormControl('', [Validators.required]),
-      passwordRepeat: new FormControl('', [Validators.required]),
-      agbRead: new FormControl('', [Validators.requiredTrue]),
+      city: new UntypedFormControl('', [Validators.required]),
+      street: new UntypedFormControl('', [Validators.required]),
+      streetnumber: new UntypedFormControl('', [Validators.required]),
+      email: new UntypedFormControl('', [Validators.email]),
+      password: new UntypedFormControl('', [Validators.required]),
+      passwordRepeat: new UntypedFormControl('', [Validators.required]),
+      agbRead: new UntypedFormControl('', [Validators.requiredTrue]),
     },
     [
       (formGroup) => {
@@ -308,7 +312,8 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   }
 
   additionalValidationErrors(): boolean {
-    this.additionalValidation.errors.confirmCoordinates = this.needConfirmation();
+    this.additionalValidation.errors.confirmCoordinates =
+      this.needConfirmation();
     return this.additionalValidation.errors.confirmCoordinates;
   }
 

@@ -1,5 +1,9 @@
 import { Component, Input, Inject, OnInit } from '@angular/core';
-import { Validators, FormControl, FormGroup } from '@angular/forms';
+import {
+  Validators,
+  UntypedFormControl,
+  UntypedFormGroup,
+} from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { v4 as uuid } from 'uuid';
@@ -25,16 +29,16 @@ export interface ProductDialogData {
   styleUrls: ['./create-product.component.scss'],
 })
 export class CreateProductComponent {
-  productForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    price: new FormControl('', [
+  productForm = new UntypedFormGroup({
+    name: new UntypedFormControl('', [Validators.required]),
+    price: new UntypedFormControl('', [
       Validators.required,
       Validators.min(0.01),
       Validators.max(10000),
       Validators.pattern('^[0-9]*(.|,)?[0-9]?[0-9]?$'),
     ]),
-    description: new FormControl('', [Validators.nullValidator]),
-    image: new FormControl(null),
+    description: new UntypedFormControl('', [Validators.nullValidator]),
+    image: new UntypedFormControl(null),
   });
 
   imagePlaceholderUrl: string;

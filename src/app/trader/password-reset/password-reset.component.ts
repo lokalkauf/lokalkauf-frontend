@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -8,8 +8,8 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./password-reset.component.scss'],
 })
 export class PasswordResetComponent {
-  passwordResetForm = new FormGroup({
-    email: new FormControl(''),
+  passwordResetForm = new UntypedFormGroup({
+    email: new UntypedFormControl(''),
   });
 
   emailSent = false;

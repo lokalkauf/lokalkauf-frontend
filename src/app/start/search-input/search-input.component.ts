@@ -1,6 +1,6 @@
 import { Component, OnInit, forwardRef, ViewChild, Input } from '@angular/core';
 import {
-  FormControl,
+  UntypedFormControl,
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
 } from '@angular/forms';
@@ -46,7 +46,7 @@ type PlaceHolderAddress = GeoAddress & { display: string };
   ],
 })
 export class SearchInputComponent implements OnInit, ControlValueAccessor {
-  myControl = new FormControl();
+  myControl = new UntypedFormControl();
 
   standorte: Array<GeoAddress> = [
     {
@@ -144,9 +144,10 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
 
     const placeHolderAddress$ = combineLatest([
       this.userGeoAddress$,
-      concat(of(null), of(storageService.loadLocation())) as Observable<
-        GeoAddress
-      >,
+      concat(
+        of(null),
+        of(storageService.loadLocation())
+      ) as Observable<GeoAddress>,
     ]).pipe(map((x) => this.computePlaceHolderAddress(x)));
 
     this.valueChanges$ = combineLatest([

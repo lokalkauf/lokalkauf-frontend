@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { ScrollStrategy } from '@angular/cdk/overlay';
 import { UserService } from '../services/user.service';
 import { StorageService } from '../services/storage.service';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { uiTexts } from 'src/app/services/uiTexts';
 import { TextService } from '../services/text.service';
 import { Testimonial } from '../reusables/lk-testimonal/lk-testimonial.component';
@@ -57,7 +57,7 @@ export class StartComponent implements OnInit {
 
   preSelectedValue: any;
 
-  locationFormControl = new FormControl(null, [Validators.required]);
+  locationFormControl = new UntypedFormControl(null, [Validators.required]);
 
   testimonials = [];
 

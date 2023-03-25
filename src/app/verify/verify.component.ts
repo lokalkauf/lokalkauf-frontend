@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { ErrorService } from '../services/error.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { MustMatch } from './must-match.validator';
 import { DOCUMENT } from '@angular/common';
 import { filter } from 'rxjs/operators';
@@ -41,7 +41,7 @@ export class VerifyComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private errorService: ErrorService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     @Inject(DOCUMENT) private document: Document
   ) {}
 

@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { TraderProfileStatus } from 'src/app/models/traderProfile';
 import { UserService, LoggedInUserState } from 'src/app/services/user.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'lk-offer',
@@ -17,16 +17,16 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class OfferComponent implements OnInit, OnChanges {
   @Input() loggedInUserState: LoggedInUserState;
 
-  dataFormGroup = new FormGroup(
+  dataFormGroup = new UntypedFormGroup(
     {
-      delivery: new FormControl(false),
-      pickup: new FormControl(false),
-      sonstiges: new FormControl(false),
-      description: new FormControl(''),
-      storeEmail: new FormControl(''),
-      homepage: new FormControl(''),
-      public: new FormControl(true),
-      soMeShare: new FormControl(false),
+      delivery: new UntypedFormControl(false),
+      pickup: new UntypedFormControl(false),
+      sonstiges: new UntypedFormControl(false),
+      description: new UntypedFormControl(''),
+      storeEmail: new UntypedFormControl(''),
+      homepage: new UntypedFormControl(''),
+      public: new UntypedFormControl(true),
+      soMeShare: new UntypedFormControl(false),
     },
     (form) => {
       const pickup = form.get('pickup').value;
@@ -35,16 +35,16 @@ export class OfferComponent implements OnInit, OnChanges {
     }
   );
 
-  storeFormGroup = new FormGroup(
+  storeFormGroup = new UntypedFormGroup(
     {
-      gastronomie: new FormControl(false),
-      lebensmittel: new FormControl(false),
-      fashion: new FormControl(false),
-      buchhandlung: new FormControl(false),
-      homedecor: new FormControl(false),
-      blumengarten: new FormControl(false),
-      handwerk: new FormControl(false),
-      sonstiges: new FormControl(false),
+      gastronomie: new UntypedFormControl(false),
+      lebensmittel: new UntypedFormControl(false),
+      fashion: new UntypedFormControl(false),
+      buchhandlung: new UntypedFormControl(false),
+      homedecor: new UntypedFormControl(false),
+      blumengarten: new UntypedFormControl(false),
+      handwerk: new UntypedFormControl(false),
+      sonstiges: new UntypedFormControl(false),
     },
     (form) => {
       const gastronomie = form.get('gastronomie').value;

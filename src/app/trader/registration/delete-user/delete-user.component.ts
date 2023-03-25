@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
 import { Router } from '@angular/router';
 import { ErrorService } from '../../../services/error.service';
@@ -10,7 +10,7 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./delete-user.component.scss'],
 })
 export class DeleteUserComponent implements OnInit {
-  password = new FormControl('', Validators.required);
+  password = new UntypedFormControl('', Validators.required);
 
   constructor(
     public dialogRef: MatDialogRef<DeleteUserComponent>,

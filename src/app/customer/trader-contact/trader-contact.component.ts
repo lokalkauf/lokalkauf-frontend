@@ -4,7 +4,11 @@ import { Location } from '@angular/common';
 
 import { EMail } from '../../models/email';
 import { EMailService } from '../../services/email.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { TraderProfile } from '../../models/traderProfile';
 import { ErrorService } from '../../services/error.service';
 import { StorageService } from '../../services/storage.service';
@@ -21,10 +25,10 @@ export class TraderContactComponent implements OnInit {
 
   contactFormVisible = false;
 
-  contactForm = new FormGroup({
-    mail_message: new FormControl('', [Validators.required]),
-    mail_contact: new FormControl('', [Validators.required]),
-    agbRead: new FormControl(false, [Validators.requiredTrue]),
+  contactForm = new UntypedFormGroup({
+    mail_message: new UntypedFormControl('', [Validators.required]),
+    mail_contact: new UntypedFormControl('', [Validators.required]),
+    agbRead: new UntypedFormControl(false, [Validators.requiredTrue]),
   });
 
   get mail_contact() {

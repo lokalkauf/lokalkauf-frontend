@@ -13,7 +13,7 @@ import {
   faWhatsapp,
   faInstagram,
 } from '@fortawesome/free-brands-svg-icons';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { LocationService } from '../../services/location.service';
 import { ImageService } from 'src/app/services/image.service';
@@ -92,8 +92,8 @@ export class TraderOverviewComponent implements OnInit {
   text = uiTexts;
 
   searchEntries: Observable<LkSelectOptions[]>;
-  traderSearchForm = new FormGroup({
-    searchText: new FormControl(''),
+  traderSearchForm = new UntypedFormGroup({
+    searchText: new UntypedFormControl(''),
   });
 
   rangeChanging$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
@@ -105,8 +105,8 @@ export class TraderOverviewComponent implements OnInit {
     return this.rangeGroup.get('range');
   }
 
-  rangeGroup = new FormGroup({
-    range: new FormControl(0),
+  rangeGroup = new UntypedFormGroup({
+    range: new UntypedFormControl(0),
   });
   constructor(
     private route: ActivatedRoute,

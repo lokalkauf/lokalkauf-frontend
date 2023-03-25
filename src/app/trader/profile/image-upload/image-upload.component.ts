@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ImageSource } from 'src/app/models/imageSource';
 import { UserService, LoggedInUserState } from 'src/app/services/user.service';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ImageService } from 'src/app/services/image.service';
 import { ErrorService } from 'src/app/services/error.service';
@@ -17,7 +17,7 @@ export class ImageUploadComponent implements OnInit {
   @Input() loggedInUserState: LoggedInUserState;
   images: Array<ImageSource>;
 
-  businessImage = new FormControl();
+  businessImage = new UntypedFormControl();
   imageUploadState?: Observable<number>;
 
   isBrowserSupported: boolean;

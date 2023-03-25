@@ -1,5 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { LoggedInUserState, UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -35,8 +39,8 @@ export class OnlineShopComponent implements OnInit {
     'Inkl. Analyse-Tool',
   ];
 
-  onlineshopForm = new FormGroup({
-    eigenershop: new FormControl(''),
+  onlineshopForm = new UntypedFormGroup({
+    eigenershop: new UntypedFormControl(''),
   });
 
   constructor(private user: UserService) {}
