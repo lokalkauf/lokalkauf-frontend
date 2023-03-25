@@ -1,5 +1,5 @@
 @import './lk-theme';
-@import '~@angular/material/theming';
+@import '@angular/material/theming';
 
 $lk-primary: map-get($lk-theme, primary);
 $lk-accent: map-get($lk-theme, accent);
