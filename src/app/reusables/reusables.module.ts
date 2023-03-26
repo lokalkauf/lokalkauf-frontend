@@ -21,7 +21,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
 import { LkSelectComponent } from './lk-select/lk-select.component';
 import { LkWarningBoxComponent } from './lk-warning-box/lk-warning-box.component';
-import { NgxStarRatingModule } from 'ngx-star-rating';
 import { RatingStarComponent } from './rating-star/rating-star.component';
 import { LkContainerComponent } from './lk-container/lk-container.component';
 import { LkSliderComponent } from './lk-slider/lk-slider.component';
@@ -73,7 +72,6 @@ const routes: Routes = [];
     MatSliderModule,
     MatCardModule,
     MatTooltipModule,
-    NgxStarRatingModule,
     MatChipsModule,
     PipesModule,
     MatProgressSpinnerModule,
