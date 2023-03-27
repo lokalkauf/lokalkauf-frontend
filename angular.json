@@ -170,5 +170,8 @@
       }
     }
   },
-  "defaultProject": "lokalkauf-frontend"
+  "defaultProject": "lokalkauf-frontend",
+  "cli": {
+    "analytics": false
+  }
 }
