@@ -57,6 +57,7 @@ import { PipesModule } from './pipes/pipes.modules';
 import { RedirectComponent } from './redirect/redirect.component';
 import { PressComponent } from './press/press.component';
 import { CampaignComponent } from './campaign/campaign.component';
+import { ImprintComponent } from './imprint/imprint.component';
 import { filter } from 'rxjs/operators';
 import {
   AngularFireAnalyticsModule,
@@ -77,6 +78,8 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
 import { BrowserService } from './services/browser.service';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { AgbComponent } from './agb/agb.component';
 
 registerLocaleData(localeDe);
 
@@ -116,6 +119,9 @@ const routes: Routes = [
   { path: 'feedback', component: FeedbackComponent },
   { path: 'verify', component: VerifyComponent },
   { path: 'aboutus', component: AboutUsComponent },
+  { path: 'imprint', component: ImprintComponent },
+  { path: 'privacy', component: PrivacyComponent },
+  { path: 'agb', component: AgbComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'press', component: PressComponent },
   { path: 'campaign', component: CampaignComponent },
@@ -131,7 +137,10 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     AboutUsComponent,
+    AgbComponent,
     ErrorDisplayComponent,
+    ImprintComponent,
+    PrivacyComponent,
     FeedbackComponent,
     VerifyComponent,
     SpinnerComponent,
