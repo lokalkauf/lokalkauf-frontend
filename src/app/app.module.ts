@@ -101,7 +101,7 @@ const cookieConfig: NgcCookieConsentConfig = {
     allow: 'Zulassen',
     deny: 'Ablehnen',
     link: 'Datenschutzerklärung',
-    href: 'https://www.info.lokalkauf.org/datenschutz',
+    href: 'https://www.lokalkauf.org/datenschutz',
     message: `<div class="cookie-content-container"><img src="../../assets/cookie.svg"
           alt="<3 Cookies" />
           <div>Wir verwenden Cookies, um Zugriffe auf unserer Website zu analysieren. Außerdem geben wir Informationen zu
