@@ -216,18 +216,10 @@
         <app-lk-checkbox formControlName="agbRead"></app-lk-checkbox>
         <div>
           Mit meiner Anmeldung versichere ich, dass ich die
-          <a
-            href="https://www.info.lokalkauf.org/agb"
-            target="_blank"
-            rel="noopener noreferrer"
-            >AGB</a
-          >
+          <a [routerLink]="['/agb']" target="_blank">AGBs</a>
           und die
-          <a
-            href="https://www.info.lokalkauf.org/datenschutz"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Datenschutzrichtlinen</a
+          <a [routerLink]="['/privacy']" target="_blank"
+            >Datenschutzbestimmungen</a
           >
           gelesen habe und damit einverstanden bin.
         </div>
