@@ -56,6 +56,8 @@ import { MuiService } from './services/mui.service';
 import { PipesModule } from './pipes/pipes.modules';
 import { RedirectComponent } from './redirect/redirect.component';
 import { PressComponent } from './press/press.component';
+import { CampaignComponent } from './campaign/campaign.component';
+import { ImprintComponent } from './imprint/imprint.component';
 import { filter } from 'rxjs/operators';
 import {
   AngularFireAnalyticsModule,
@@ -76,6 +78,8 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
 import { BrowserService } from './services/browser.service';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { AgbComponent } from './agb/agb.component';
 
 registerLocaleData(localeDe);
 
@@ -97,7 +101,7 @@ const cookieConfig: NgcCookieConsentConfig = {
     allow: 'Zulassen',
     deny: 'Ablehnen',
     link: 'Datenschutzerklärung',
-    href: 'https://www.info.lokalkauf.org/datenschutz',
+    href: 'https://www.lokalkauf.org/datenschutz',
     message: `<div class="cookie-content-container"><img src="../../assets/cookie.svg"
           alt="<3 Cookies" />
           <div>Wir verwenden Cookies, um Zugriffe auf unserer Website zu analysieren. Außerdem geben wir Informationen zu
@@ -115,8 +119,12 @@ const routes: Routes = [
   { path: 'feedback', component: FeedbackComponent },
   { path: 'verify', component: VerifyComponent },
   { path: 'aboutus', component: AboutUsComponent },
+  { path: 'imprint', component: ImprintComponent },
+  { path: 'privacy', component: PrivacyComponent },
+  { path: 'agb', component: AgbComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'press', component: PressComponent },
+  { path: 'campaign', component: CampaignComponent },
   {
     path: 'redirect',
     component: RedirectComponent,
@@ -129,7 +137,10 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     AboutUsComponent,
+    AgbComponent,
     ErrorDisplayComponent,
+    ImprintComponent,
+    PrivacyComponent,
     FeedbackComponent,
     VerifyComponent,
     SpinnerComponent,
@@ -139,6 +150,7 @@ const routes: Routes = [
     PressComponent,
     SearchInputComponent,
     RedirectComponent,
+    CampaignComponent,
   ],
   imports: [
     BrowserModule,

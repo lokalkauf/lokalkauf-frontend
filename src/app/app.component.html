@@ -11,13 +11,14 @@
       <a mat-button [routerLink]="'/aboutus'">Das sind wir</a>
       <a mat-button [routerLink]="'/press'">Presse</a>
       <a mat-button [routerLink]="'/faq'">Hilfe</a>
-      <a
+      <a mat-button [routerLink]="'/campaign'">#ichkaufelokal</a>
+      <!--      <a
         mat-button
         href="https://www.ichkaufelokal.org/"
         target="_blank"
         rel="noopener noreferrer"
         >#ichkaufelokal</a
-      >
+      >-->
     </div>
     <span class="menu-spacer"></span>
     <a
@@ -82,14 +83,17 @@
       <a mat-list-item (click)="sidenav.close()" [routerLink]="'/faq'">
         Hilfe
       </a>
-      <a
+      <a mat-list-item (click)="sidenav.close()" [routerLink]="'/campaign'"
+        >#ichkaufelokal</a
+      >
+      <!-- <a
         mat-list-item
         (click)="sidenav.close()"
         href="https://www.ichkaufelokal.org/"
         target="_blank"
         rel="noopener noreferrer"
         >#ichkaufelokal</a
-      >
+      >-->
       <mat-divider></mat-divider>
       <a
         mat-list-item
@@ -135,6 +139,10 @@
         >
           <fa-icon [icon]="faInstagram" size="2x" class="share-mono"></fa-icon>
         </a>
+
+        <a mat-icon-button href="https://twitter.com/lokalkauf" target="_blank">
+          <fa-icon [icon]="faTwitter" size="2x" class="share-mono"></fa-icon>
+        </a>
       </div>
       <div class="links-footer">
         <a
@@ -154,28 +162,9 @@
           Lizenzen
         </a>
         <a mat-list-item [routerLink]="'/feedback'">Feedback</a>
-        <a
-          mat-list-item
-          href="https://www.info.lokalkauf.org/agb"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          AGB
-        </a>
-        <a
-          mat-list-item
-          href="https://www.info.lokalkauf.org/impressum"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Impressum
-        </a>
-        <a
-          mat-list-item
-          href="https://www.info.lokalkauf.org/datenschutz"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a mat-list-item [routerLink]="'/agb'"> AGB </a>
+        <a mat-list-item [routerLink]="'/imprint'"> Impressum </a>
+        <a mat-list-item mat-list-item [routerLink]="'/privacy'">
           Datenschutzerklärung
         </a>
       </div>

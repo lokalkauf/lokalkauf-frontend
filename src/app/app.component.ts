@@ -5,7 +5,11 @@ import { UserService } from './services/user.service';
 import { StorageService } from './services/storage.service';
 import { AngularFireAnalytics } from '@angular/fire/analytics';
 import { CookieService } from 'ngx-cookie-service';
-import { faFacebookF, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import {
+  faFacebookF,
+  faInstagram,
+  faTwitter,
+} from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
   opened: boolean;
   faFacebookF = faFacebookF;
   faInstagram = faInstagram;
+  faTwitter = faTwitter;
 
   constructor(
     public router: Router,

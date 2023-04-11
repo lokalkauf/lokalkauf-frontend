@@ -1,0 +1,275 @@
+<div class="campaign-container">
+  <div class="header-container">
+    <div class="header-text">
+      <div class="question">
+        <span>Du willst, dass es weiterhin all die Geschäfte gibt,</span>
+        <br /><span>die Deine Stadt ausmachen?</span> <br /><span
+          >Du kannst etwas dafür tun!</span
+        >
+      </div>
+
+      <div>
+        <br /><span class="campaign-headline">Setz mit uns ein</span>
+        <br /><span class="campaign-headline">Zeichen für Deine</span>
+        <br /><span class="campaign-headline">Stadt</span> <br /><span
+          class="campaign-headline"
+          >#ichkaufelokal</span
+        >
+      </div>
+    </div>
+
+    <div class="header-vid">
+      <video playsinline preload="metadata" loop autoplay="true">
+        <source src="{{ vid }}#t=0.001" type="video/mp4" />
+      </video>
+    </div>
+  </div>
+
+  <div class="content-container">
+    <div>
+      Du findest auch, dass die Geschäfte um die Ecke wichtig für unser
+      Zusammenleben sind?
+      <br />Dann schaffe mit uns ein Bewusstsein, dass jeder, jeden Tag eine
+      Entscheidung treffen kann, um diese Geschäfte zu unterstützen.
+    </div>
+
+    <div class="bold">#ichkaufelokal - eine Entscheidung für Deine Stadt</div>
+
+    <div class="yt-player">
+      <iframe
+        width="100%"
+        height="100%"
+        src="https://www.youtube-nocookie.com/embed/-liMI1XDcfw"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+
+    <lk-container class="left">
+      <h1>Mit diesen drei Ideen kannst Du Geschäfte vor Ort unterstützen:</h1>
+    </lk-container>
+
+    <div class="support-container">
+      <div class="heart left-block">
+        <img src="../../assets/campaign/heart-zeichen-01.png" />
+      </div>
+      <div class="center-block">
+        <div class="bold">Teile ein Zeichen, um Zeichen zu setzen</div>
+        <p>
+          Zeige Deine Loyalität mit Deinem Lieblingsladen mit einem einfachen
+          „Finger-L“. Mach ein Foto davon, nutze einen unserer Filter auf
+          Facebook oder Instagram und poste es mit #ichkaufelokal
+        </p>
+        <p>
+          Mit dem
+          <a
+            href="https://www.facebook.com/fbcameraeffects/tryit/362017314840629/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Facebook "Ich kaufe lokal" Filter</a
+          >
+          kannst Du zeigen, dass Du gerade lokal shoppen bist.
+        </p>
+        <p>
+          Mit dem
+          <a
+            href="http://www.facebook.com/fbcameraeffects/tryit/353054795843201/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Facebook Rahmen Filter</a
+          >
+          fotografierst Du z.B. Produkte oder Schaufenster und machst
+          gleichzeitig Werbung für Deinen Lieblingsladen.
+        </p>
+        <p><a (click)="showHideSample()"> Beispiel-Video ansehen</a></p>
+        <p *ngIf="showSample$ | async">
+          <video
+            playsinline
+            preload="metadata"
+            muted="true"
+            [muted]="true"
+            loop
+            autoplay="true"
+          >
+            <source
+              src="../../assets/campaign/campaign-filter.mp4"
+              type="video/mp4"
+            />
+          </video>
+        </p>
+      </div>
+      <div class="right-block">
+        <img src="../../assets/campaign/campaign-zeichen-01.png" />
+      </div>
+    </div>
+
+    <div class="support-container align-right">
+      <div class="heart left-block">
+        <img src="../../assets/campaign/heart-zeichen-02.png" />
+      </div>
+      <div class="center-block">
+        <div class="bold">Setze ein Zeichen mit Deinem Profilbild</div>
+        <p>
+          Mit dem
+          <a
+            href="http://www.facebook.com/profilepicframes/?selected_overlay_id=964288164049884"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Social Good Profilrahmen</a
+          >
+          auf Facebook kann jeder seine Haltung #ichkaufelokal an seine Freunde
+          kommunizieren
+        </p>
+      </div>
+      <div class="right-block">
+        <img src="../../assets/campaign/campaign-zeichen-02.png" />
+      </div>
+    </div>
+
+    <div class="support-container">
+      <div class="heart left-block">
+        <img src="../../assets/campaign/heart-zeichen-03.png" />
+      </div>
+      <div class="center-block">
+        <div class="bold">Gehe lokal einkaufen</div>
+        <p>
+          Die beste Hilfe für den lokalen Einzelhandel ist natürlich, wenn Du
+          auch lokal einkaufen gehst!
+        </p>
+        <p>
+          Du brauchst noch Inspiration? Dann schau bei www.lokalkauf.org vorbei
+          und finde lokale Händler in Deiner Nähe.
+        </p>
+      </div>
+      <div class="right-block">
+        <img src="../../assets/campaign/campaign-zeichen-03.png" />
+      </div>
+    </div>
+
+    <div class="support-container align-right">
+      <div class="heart left-block">
+        <img src="../../assets/campaign/heart-zeichen-04.png" />
+      </div>
+      <div class="center-block">
+        <div class="bold">Unterstütze die Kampagne</div>
+        <p>
+          Wir sind ein Verein, der auf eigene Kosten und durch Spenden, den
+          lokalen Einzelhandel unterstützt. Du möchtest uns helfen die Kampagne
+          weiter zu verbreiten?
+        </p>
+        <p>
+          Dann teile unsere Kampagne auf allen Kanälen und unterstütze uns mit
+          einer Spende. Jeder Euro zählt und wird direkt in Mediabudget und in
+          die Produktion von Stickern umgewandelt.​
+        </p>
+        <p>
+          <span class="lnk"
+            ><a
+              href="https://www.facebook.com/lokalkauf"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><img src="../../assets/campaign/campaign-fb.png" /></a
+          ></span>
+          <span class="lnk"
+            ><a
+              href="https://twitter.com/lokalkauf"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><img src="../../assets/campaign/campaign-twitter.png" /></a
+          ></span>
+          <span class="lnk"
+            ><a
+              href="https://www.instagram.com/lokalkauf/"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><img src="../../assets/campaign/campaign-insta.png" /></a
+          ></span>
+        </p>
+      </div>
+      <div class="right-block">
+        <img src="../../assets/campaign/campaign-zeichen-04.png" />
+      </div>
+    </div>
+
+    <lk-container class="left">
+      <h1>Zeichen setzen...</h1>
+    </lk-container>
+
+    <div class="side-by-side-container">
+      <img class="smaller" src="../../assets/campaign/campaign-l-01.png" />
+      <img class="smaller" src="../../assets/campaign/campaign-l-02.png" />
+      <img class="smaller" src="../../assets/campaign/campaign-l-03.png" />
+    </div>
+
+    <br />
+    <br />
+
+    <lk-container class="left">
+      <h1>Du kannst etwas bewegen:</h1>
+    </lk-container>
+    <div class="side-by-side-container">
+      <div class="left">
+        <p>Lokal einkaufen heißt in die eigene Nachbarschaft investieren.</p>
+        <p>
+          Wir glauben, dass jedes Geschäft um die Ecke wichtig für unser
+          Zusammenleben ist und wir möchten ein Bewusstsein schaffen, dass
+          jeder, jeden Tag eine Entscheidung treffen kann – ich kaufe lokal.
+        </p>
+        <p>Dein nächster Einkauf bewegt mehr als Du denkst!</p>
+        <p>
+          Indem Du bei lokalen Geschäften in Deiner Nachbarschaft einkaufst,
+          sorgst Du dafür, dass Dein Geld in Deiner Stadt bleibt und investiert
+          werden kann.
+        </p>
+      </div>
+      <div class="right">
+        <img src="../../assets/campaign/campaign-bewegen.png" />
+      </div>
+    </div>
+
+    <br />
+    <br />
+
+    <lk-container class="left">
+      <h1>Warum?</h1>
+    </lk-container>
+    <div class="side-by-side-container">
+      <div class="left">
+        <p>
+          50.000 Einzelhändler stehen vor dem Bankrott. Die Covid-19 Pandemie
+          hat die deutschen Innenstädte nachhaltig geschwächt und gleichzeitig
+          wachsen Online-Riesen wie Amazon um 40% und zahlen in Deutschland kaum
+          Steuern (Quelle:
+          <a
+            href="https://www.spiegel.de/wirtschaft/unternehmen/amazon-profitiert-stark-in-der-coronakrise-40-prozent-mehr-umsatz-a-79e7b2b2-e9f3-4ec7-8b28-79d31a60933f"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Spiegel</a
+          >).
+        </p>
+        <p>
+          Onlineshopping ist unkompliziert und jeder von uns praktiziert es. Und
+          das ist auch ok. Wir möchten für ein selektives Shopping
+          sensibilisieren: Also die Überlegung, ob und welches Produkt online
+          gekauft wird und wenn online, ob es von einem internationalen Konzern
+          oder vielleicht doch besser von einem deutschen, regionalen oder sogar
+          lokalen Anbieter bezogen werden kann.
+        </p>
+        <p>
+          Viele Artikel findest Du auch in Deiner Nachbarschaft oder sind über
+          Deinen Händler um die Ecke bestellbar. Wenn das nicht möglich ist,
+          gibt es alternative Shops mit Sitz in Deutschland. Sie tragen etwas zu
+          unserer Wirtschaft, unserer Region und letztendlich auch zu unserem
+          Zusammenleben bei!
+        </p>
+      </div>
+      <div class="right">
+        <img src="../../assets/campaign/campaign-haendler.png" />
+      </div>
+    </div>
+
+    <div class="bold">#ichkaufelokal – eine Entscheidung für Deine Stadt</div>
+  </div>
+</div>

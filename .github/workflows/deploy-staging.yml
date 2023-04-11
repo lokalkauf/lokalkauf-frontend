@@ -16,7 +16,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v1
       with:
-        node-version: '12.x'
+        node-version: '16.x'
 
     - name: Init. Node.js Cache
       uses: actions/cache@v1
@@ -51,7 +51,7 @@ jobs:
         path: ./dist
 
     - name: Deploy
-      uses: w9jds/firebase-action@v1.3.0
+      uses: w9jds/firebase-action@v11.22.0
       with:
         args: deploy -P staging --only hosting
       env:
