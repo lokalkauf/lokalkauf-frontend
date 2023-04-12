@@ -3,7 +3,7 @@ name: Production Build & Deploy
 on:
   push:
     branches:
-    - master
+    - main
 
 jobs:
   build:
@@ -11,15 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Clone Repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Setup Node.js
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: '16.x'
 
     - name: Init. Node.js Cache
-      uses: actions/cache@v1
+      uses: actions/cache@v3
       with:
         path: ~/.npm
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -32,7 +32,7 @@ jobs:
     - name: Build
       run: npm run build -- --configuration production
 
-    - uses: actions/upload-artifact@v1
+    - uses: actions/upload-artifact@v3
       with:
         name: app
         path: ./dist
@@ -43,9 +43,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Clone Repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
-    - uses: actions/download-artifact@v1
+    - uses: actions/download-artifact@v3
       with:
         name: app
         path: ./dist
