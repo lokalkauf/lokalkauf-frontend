@@ -14,6 +14,27 @@
     </lk-container>
   </div>
 </div>
+<lk-container>
+  <div class="intro">
+    <p [innerHTML]="text.start_wir_vs_vs_content"></p>
+  </div>
+</lk-container>
+
+<lk-container-full class="alternate-background">
+  <h2 class="campaign-headline">{{ text.start_ikl_headline | text }}</h2>
+  <div class="campaign-container">
+    <div class="campaign-image">
+      <img src="../../assets/ichkaufelokal-smaller.png" />
+    </div>
+    <div class="campaign-text">
+      <h3 [innerHtml]="text.start_ikl_subheadline | text"></h3>
+      <span [innerHtml]="text.start_ikl_text | text"></span>
+      <span
+        ><a [routerLink]="'/campaign'" class="fancy-link">Zur Kampagne</a></span
+      >
+    </div>
+  </div>
+</lk-container-full>
 
 <lk-container>
   <div class="intro">
@@ -47,22 +68,6 @@
     </p>
   </div>
 </lk-container>
-
-<lk-container-full class="alternate-background">
-  <h2 class="campaign-headline">{{ text.start_ikl_headline | text }}</h2>
-  <div class="campaign-container">
-    <div class="campaign-image">
-      <img src="../../assets/ichkaufelokal-smaller.png" />
-    </div>
-    <div class="campaign-text">
-      <h3 [innerHtml]="text.start_ikl_subheadline | text"></h3>
-      <span [innerHtml]="text.start_ikl_text | text"></span>
-      <span
-        ><a [routerLink]="'/campaign'" class="fancy-link">Zur Kampagne</a></span
-      >
-    </div>
-  </div>
-</lk-container-full>
 
 <lk-container>
   <lk-videoplayer [videoList]="adCampaignVideos$"></lk-videoplayer>
