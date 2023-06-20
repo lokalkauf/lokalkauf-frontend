@@ -11,6 +11,19 @@ export const uiTexts = {
   umkreissuche_userlocation_text: 'Wohnort oder Postleitzahl',
   umkreissuche_userlocation_gpsenabled: ' (mein Standort)',
   start_button_geschaeft_suchen: 'Geschäft finden',
+  start_wir_vs_vs_content: 'Diese Idee und Webpage wurde gemeinsam von 14 sich damals noch ' +
+  'fremden Menschen und vielen Unterstützern während des ' +
+  '<a href="https://wirvsvirus.org/" target="_blank" rel="noopener noreferrer">www.wirvsvirus.org</a> ' +
+  'Hackathon der Bundesregierung im März 2020 in der Corona-Krise geschaffen.<br />' +
+  'Vom 20. bis 22. März haben in 48 Stunden 28.361 Menschen zusammen an über 1.500 Lösungen gearbeitet. ' +
+  'Das war der #WirVsVirus Hackathon.<br />' +
+  'Von 1.500 Initiativen sind wir unter die Top 130 des ' +
+  '<a href="https://wirvsvirus.org/solution-enabler/" target="_blank" rel="noopener noreferrer">Solution ' +
+  'Enabler Programms</a> und dann unter die Top 10 für den ' +
+  '<a href="https://wirvsvirus.org/solution-builder/" target="_blank" rel="noopener noreferrer">Solution ' +
+  'Builder</a> gewählt worden!<br /><br />' +
+  'Diese Webseite steht für gesellschaftliches Engagement während der Corona-Krise und zeigt, wie die Problemlösungskompetenz der ' +
+  'Zivilgesellschaft aktiver für die Herausforderungen unserer Zeit genutzt werden kann!',
   start_zusammen_headline: 'Buy local - Act global',
   start_zusammen_text:
     'Finde Deine Lieblingsprodukte direkt bei Dir in der Nähe und unterstütze beim Kauf nicht nur ' +
